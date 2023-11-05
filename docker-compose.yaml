@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  nginx: #web server container
+    #https://www.docker.com/blog/how-to-use-the-official-nginx-docker-image/
+    image: nginx:stable-bullseye
+    restart: unless-stopped
+    volumes:
+      - nginx-data:/usr/share/nginx/html
+    environment:
+      TEST: "mama mia"
+    ports:
+     - "8080:80"
+          
+  postgres:
+      #https://www.docker.com/blog/how-to-use-the-postgres-docker-official-image/
+      image: postgres:12.16-bullseye
+      restart: unless-stopped
+      volumes:
+        - pgdata:/var/lib/postgresql/data 
+      environment:
+        POSTGRES_PASSWORD: example
+  
+  php:
+      image: php:fpm-bullseye
+      restart: unless-stopped
+      volumes:
+        - phpdata:/var/www/html
+      
+volumes:
+  nginx-data:
+  pgdata:
+  phpdata:

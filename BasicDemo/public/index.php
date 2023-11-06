@@ -10,7 +10,7 @@
 <body>
     <h2>Enter information regarding book</h2>
     <ul>
-        <form name="insert" action="insert.php" method="POST" >
+        <form name="insert" action="index.php" method="POST" >
             <li>Book ID:</li><li><input type="text" name="bookid" /></li>
             <li>Book Name:</li><li><input type="text" name="book_name" /></li>
             <li>Author:</li><li><input type="text" name="author" /></li>
@@ -24,7 +24,7 @@
 </html>
 
 <?php
-$host = "localhost";
+$host = "postgres";
 $port = "5432";
 $dbname = "postgres";
 $user = "postgres";
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $price = $_POST['price'];
 
     // Use a prepared statement to prevent SQL injection
-    $query = "INSERT INTO book (bookid, book_name, author, publisher, dop, price) VALUES ($1, $2, $3, $4, $5, $6)";
+    $query = "INSERT INTO book (book_id, book_name, author, publisher, date_of_publication, price) VALUES ($1, $2, $3, $4, $5, $6)";
     
     $result = pg_query_params($db, $query, array($bookid, $book_name, $author, $publisher, $dop, $price));
 

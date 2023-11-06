@@ -1,36 +1,47 @@
 version: '3.9'
 
+# php:
+#   build:
+#     context: .
+#     dockerfile: Dockerfile
+#   container_name: keymgr_php
+#   restart: unless-stopped
+#   volumes:
+#     - ./BasicDemo:/var/www/html
+#   ports:
+#     - "9000:9000"
+#   networks:
+#     - keymgr
+
 services:
-  nginx: #web server container
-    #https://www.docker.com/blog/how-to-use-the-official-nginx-docker-image/
+  nginx:
     image: nginx:stable-bullseye
+    container_name: keymgr_nginx
     restart: unless-stopped
     volumes:
-      # - nginx-data:/usr/share/nginx/html
-      - ./src:/var/www/html
-      - ./default.conf:/etc/nginx/conf.d/default.conf
+      - ./BasicDemo:/var/www/html
+      - ./docker/nginx/site.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/logs/nginx:/var/logs/nginx
+    depends_on:
+      - php-fpm
+      - postgres
     ports:
-     - "8080:80"
-          
+      - "8080:80"
+
   postgres:
-      #https://www.docker.com/blog/how-to-use-the-postgres-docker-official-image/
-      image: postgres:12.16-bullseye
-      restart: unless-stopped
-      ports:
-        - 5432:5432
-      volumes:
-        - pgdata:/var/lib/postgresql/data
-      environment:
-        POSTGRES_PASSWORD: example
-  
+    image: postgres:12.16-bullseye
+    container_name: keymgr_postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: example
+
   php-fpm:
-      image: php:fpm-bullseye
-      restart: unless-stopped
-      volumes:
-        # - phpdata:/var/www/html
-        - ./src:/var/www/html
-      
-volumes:
-#   nginx-data:
-  pgdata:
-#   phpdata:
+    image: php:fpm-bullseye
+    container_name: keymgr_php
+    restart: unless-stopped
+    volumes:
+      - ./BasicDemo:/var/www/html

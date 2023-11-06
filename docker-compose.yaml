@@ -1,7 +1,5 @@
 version: '3.9'
 
-
-
 services:
   nginx:
     image: nginx:stable-bullseye
@@ -28,13 +26,9 @@ services:
 
     environment:
       POSTGRES_PASSWORD: example
-
-  # php-fpm:
-  #   image: php:fpm-bullseye
-  #   container_name: keymgr_php
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ./BasicDemo:/var/www/html
+      #ideally we specify POSTGRES_USER and POSTGRES_DB so that we're not using the superadmin.
+      #eventually user:keymgr, database:keymgr. 
+      #Otherwise, this defaults to 'postgres' for both
 
   php-fpm:
     build:
@@ -45,5 +39,4 @@ services:
     volumes:
       - ./BasicDemo:/var/www/html:rw
 
-# volumes:
-#   - pgdata:
+

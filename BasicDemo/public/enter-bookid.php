@@ -16,11 +16,12 @@ li {list-style: none;}
 </body>
 </html>
 <?php
-$db = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=example");
-$result = pg_query($db, "SELECT * FROM book where book_id = '$_POST[bookid]'");
-$row = pg_fetch_assoc($result);
+$db = pg_connect("host=postgres port=5432 dbname=postgres user=postgres password=example");
+
 if (isset($_POST['submit']))
 {
+$result = pg_query($db, "SELECT * FROM book where book_id = '$_POST[bookid]'");
+$row = pg_fetch_assoc($result);
 echo "<ul>
 <form name='update' action='enter-bookid.php' method='POST' >
 <li>Book ID:</li><li><input type='text' name='bookid_updated' value='$row[book_id]'  /></li>

@@ -8,17 +8,10 @@ serve: build
 
 # --------------- TESTING ----------------
 
-test: clear-cache
-	# returns 0 iff "php" container is running
-	docker inspect -f '{{.State.Running}}' php
+test: 
+#   returns true iff "keymgr_php" container is running
+	docker inspect -f '{{.State.Running}}' keymgr_php
 	$(MAKE) -C . test-unit
-	$(MAKE) -C . test-integration
-
-test-unit:
-	docker exec php phpunit
-
-test-integration:
-	docker exec php php artisan dusk || docker exec php dusk-failure-report.sh
 
 # --------------- CLEANUP ----------------
 

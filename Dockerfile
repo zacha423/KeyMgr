@@ -12,5 +12,3 @@ RUN apt-get update && apt-get install -y libpq-dev \
 
 # Set your working directory
 WORKDIR /var/www/html
-
-

@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y libpq-dev \
 # For example, if you need more extensions like gd, mbstring, etc., you can add them here.
 
 # Copy your PHP application code to the container (replace '/app' with your app path)
-COPY ./BasicDemo/public var/www/html
+#COPY ./BasicDemo/public var/www/html
 
 # Set your working directory
 WORKDIR /var/www/html

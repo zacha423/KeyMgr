@@ -6,9 +6,9 @@ services:
     container_name: keymgr_nginx
     restart: unless-stopped
     volumes:
-      - ./BasicDemo:/var/www/html:rw
+      - ${WEB_DATA}:/var/www/html:rw
       - ./docker/nginx/site.conf:/etc/nginx/conf.d/default.conf
-      - ./docker/logs/nginx:/var/logs/nginx
+      - ./${LOGDIR}/nginx:/var/logs2/nginx
     depends_on:
       - php-fpm
       - postgres
@@ -21,14 +21,12 @@ services:
     restart: unless-stopped
     ports:
       - 5432:5432
-    volumes:
-      - ./docker/postgres:/var/lib/postgresql/data
+    volumes: #Store database in local volume to prevent conflicts between developers.
+      - postgres-data:/var/lib/postgresql/data
+      - ./${LOGDIR}/postgres
 
     environment:
-      POSTGRES_PASSWORD: example
-      #ideally we specify POSTGRES_USER and POSTGRES_DB so that we're not using the superadmin.
-      #eventually user:keymgr, database:keymgr. 
-      #Otherwise, this defaults to 'postgres' for both
+      POSTGRES_PASSWORD: "${PG_PASSWORD}"
 
   php-fpm:
     build:
@@ -37,6 +35,8 @@ services:
     container_name: keymgr_php
     restart: unless-stopped
     volumes:
-      - ./BasicDemo:/var/www/html:rw
+      - ${WEB_DATA}:/var/www/html:rw
+volumes:
+  postgres-data:
 
 

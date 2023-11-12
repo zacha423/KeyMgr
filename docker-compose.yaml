@@ -23,7 +23,7 @@ services:
       - 5432:5432
     volumes: #Store database in local volume to prevent conflicts between developers.
       - postgres-data:/var/lib/postgresql/data
-      - ${LOGDIR}/postgres
+      - ${LOGDIR}/postgres:/var/log/postgresql
 
     environment:
       POSTGRES_PASSWORD: "${PG_PASSWORD}"
@@ -39,5 +39,3 @@ services:
 
 volumes:
   postgres-data:
-
-

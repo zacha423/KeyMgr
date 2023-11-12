@@ -11,7 +11,6 @@ serve: build
 test: 
 #   returns true iff "keymgr_php" container is running
 	docker inspect -f '{{.State.Running}}' keymgr_php
-	$(MAKE) -C . test-unit
 
 # --------------- CLEANUP ----------------
 

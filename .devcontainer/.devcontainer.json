@@ -1,0 +1,11 @@
+{
+  "name":"KeyMgr-Developer",
+  "dockerComposeFile":"docker-compose.yaml",
+  "service":"developerapp",
+  "workspaceFolder":"/workspaces/${localWorkspaceFolderBasename}", // we'll see if this works
+  "features":{
+    "ghcr.io/devcontainers/features/sshd:1":{}//,
+    //"ghcr.io/devcontainers/features/node:1":{} //NodeJS if we need it?
+  },
+  "shutdownAction":"stopCompose" // Microsoft had this in their example, chadd didn't...
+}

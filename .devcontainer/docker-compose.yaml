@@ -12,6 +12,8 @@ services:
       - php-fpm
       - postgres
       - nginx
+    volumes:
+      - ../../:/workspaces:cached
 
   nginx:
     image: nginx:stable-bullseye

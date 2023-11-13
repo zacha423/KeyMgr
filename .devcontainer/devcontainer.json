@@ -7,5 +7,6 @@
     "ghcr.io/devcontainers/features/sshd:1":{}//,
     //"ghcr.io/devcontainers/features/node:1":{} //NodeJS if we need it?
   },
-  "shutdownAction":"stopCompose" // Microsoft had this in their example, chadd didn't...
+  "shutdownAction":"stopCompose", // Microsoft had this in their example, chadd didn't...
+  "forwardPorts": [8080, 5432]
 }

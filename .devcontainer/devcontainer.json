@@ -2,11 +2,12 @@
   "name":"KeyMgr-Developer",
   "dockerComposeFile":"docker-compose.yaml",
   "service":"developerapp",
-  "workspaceFolder":"/workspaces/${localWorkspaceFolderBasename}", // we'll see if this works
+  "workspaceFolder":"/workspaces/${localWorkspaceFolderBasename}",
   "features":{
     "ghcr.io/devcontainers/features/sshd:1":{}//,
     //"ghcr.io/devcontainers/features/node:1":{} //NodeJS if we need it?
   },
   "shutdownAction":"stopCompose", // Microsoft had this in their example, chadd didn't...
-  "forwardPorts": [8080, 5432]
+  "forwardPorts": [8080, 5432],
+  "postCreateCommand": "chmod 700 /root/.ssh/*"
 }

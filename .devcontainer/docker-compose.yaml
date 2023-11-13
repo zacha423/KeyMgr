@@ -14,6 +14,7 @@ services:
       - nginx
     volumes:
       - ../../:/workspaces:cached
+      - ~/.ssh:/root/.ssh #Cheap way to provide SSH access per user
 
   nginx:
     image: nginx:stable-bullseye

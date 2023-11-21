@@ -51,6 +51,10 @@ services:
     restart: unless-stopped
     volumes:
       - ${WEB_DATA}:/var/www/html:rw
+    #This feels hacky, but I can't find a better solution.
+    command: >
+      | sh && chown -R www-data.www-data /var/www
+    
 
 volumes:
   postgres-data:

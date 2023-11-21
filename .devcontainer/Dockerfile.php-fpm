@@ -6,7 +6,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN apt-get update && apt-get install -y libpq-dev 
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/include/postgresql/
 RUN docker-php-ext-install pdo_pgsql pgsql 
-RUN chown -R www-data /var/www/html && chgrp -R www-data /var/www/html
+#not the greatest, but it makes things work...
+RUN usermod -aG www-data root 
+
 
 
 # Optionally, you can install other PHP extensions or dependencies as needed.

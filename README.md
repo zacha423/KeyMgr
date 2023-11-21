@@ -6,6 +6,7 @@ KeyMgr (Key Manager) is a Linux based tool for facilities departments to track a
 Copy .devcontainer/.example.env to .devcontainer/.env and customize any values as needed.
 ### 2. Prepare Laravel environment variables.
 Copy KeyMgr/.env.example to KeyMgr/.env
-
-### 3. Start Docker
-run docker-compose up in a terminal to start the containers
+### 3. Reload VSCode in a DevContainer
+>Dev Containers: Rebuild and reload container.
+### 4. Install composer dependencies
+cd KeyMgr; composer install

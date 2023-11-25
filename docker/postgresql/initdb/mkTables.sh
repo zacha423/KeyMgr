@@ -1,4 +1,11 @@
 #!/bin/sh
+###############################################################################
+# Filename: mkTables.sh
+# Author:   Zachary Abela-Gale
+# Date:     2023/11/25
+# Purpose:  Add tables to the public schema for KeyMgr's database.
+###############################################################################
+
 #psql
 #HEREDOC tags, write SQL...
 

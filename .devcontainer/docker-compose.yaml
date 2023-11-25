@@ -1,6 +1,14 @@
+###############################################################################
+# Filename:   docker-compose.yaml
+# Authors:    Zachary Abela-Gale, Liam Henry
+# Date:       2023/11/25
+# Purpose:    Configures VSCode devcontainer, and supporting services.
+###############################################################################
+
 version: '3.9'
 
 services:
+  # Container used by VSCode
   developerapp:
     build:
       context: .

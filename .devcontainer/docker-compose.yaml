@@ -37,13 +37,13 @@ services:
     ports:
       - 5432:5432
     volumes: #Store database in local volume to prevent conflicts between developers.
-      - postgres-data:/var/lib/postgresql/data
+      #- postgres-data:/var/lib/postgresql/data
       - ${LOGDIR}/postgres:/var/log/postgresql
       - ${INIT_SCRIPTS}:/docker-entrypoint-initdb.d/
 
     environment:
+      #POSTGRES_DB: "${PG_DB}"
       POSTGRES_PASSWORD: "${PG_PASSWORD}"
-      POSTGRES_DB: "${PG_DB}"
 
   php-fpm:
     build:
@@ -58,5 +58,5 @@ services:
       | sh && chown -R www-data.www-data /var/www
     
 
-volumes:
-  postgres-data:
+#volumes:
+  #postgres-data:

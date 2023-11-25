@@ -39,6 +39,7 @@ services:
     volumes: #Store database in local volume to prevent conflicts between developers.
       - postgres-data:/var/lib/postgresql/data
       - ${LOGDIR}/postgres:/var/log/postgresql
+      - ${INIT_SCRIPTS}:/docker-entrypoint-initdb.d/
 
     environment:
       POSTGRES_PASSWORD: "${PG_PASSWORD}"

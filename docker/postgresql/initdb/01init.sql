@@ -4,8 +4,7 @@
 -- Date:     2023/11/24
 -- Purpose:  Defines the roles and database for use by KeyManager
 -- ****************************************************************************
--- This is all run by the 'postgres' user. 
--- It is also connected to the 'postgres' database, not the 'keymgr' databse we create.
+-- Docker runs this script as the default 'postgres' user on the default 'postgres' database.
 
 CREATE ROLE "keymgr" WITH 
   NOLOGIN 
@@ -24,14 +23,16 @@ CREATE ROLE "keymgr_webro_u" WITH
   LOGIN
   NOSUPERUSER
   NOCREATEDB
-  NOCREATEROLE;
+  NOCREATEROLE
+  PASSWORD 'abc123';
 COMMENT ON ROLE "keymgr_webro_u" IS 'Read only user for web server connections.';
 
 CREATE ROLE "keymgr_webrw_u" WITH
   LOGIN
   NOSUPERUSER
   NOCREATEDB
-  NOCREATEROLE;
+  NOCREATEROLE
+  PASSWORD 'cba321';
 COMMENT ON ROLE "keymgr_webrw_u" IS 'Read/write user for web server connections.';
 
 CREATE DATABASE keymgr

@@ -12,8 +12,6 @@ GRANT CONNECT ON DATABASE keymgr TO keymgr;
 GRANT CONNECT ON DATABASE keymgr TO keymgr_readonly;
 GRANT CONNECT ON DATABASE keymgr TO keymgr_readwrite;
 
--- https://aws.amazon.com/blogs/database/managing-postgresql-users-and-roles/
-
 -- ****************************************************************************
 -- Configure permissions for read only user.
 -- ****************************************************************************
@@ -27,7 +25,11 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO keymgr_reado
 -- ****************************************************************************
 -- Configure permissions for read and write user.
 -- ****************************************************************************
+GRANT USAGE ON SCHEMA public to keymgr_readwrite;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO keymgr_readwrite;
 
+-- Presets the above grant for any future tables.
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO keymgr_readwrite;
 
 
 -- ****************************************************************************

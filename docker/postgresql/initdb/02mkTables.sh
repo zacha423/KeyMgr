@@ -1,6 +1,6 @@
 #!/bin/sh
 ###############################################################################
-# Filename: mkTables.sh
+# Filename: 02mkTables.sh
 # Author:   Zachary Abela-Gale
 # Date:     2023/11/25
 # Purpose:  Add tables to the public schema for KeyMgr's database.

@@ -44,10 +44,15 @@ services:
     restart: unless-stopped
     ports:
       - 5432:5432
-    volumes: #Store database in local volume to prevent conflicts between developers.
+    volumes:
+      # Use the postgres-data volume if you want to persist data locally. 
+      # (Also uncomment volumes below.)
       #- postgres-data:/var/lib/postgresql/data
       - ${LOGDIR}/postgres:/var/log/postgresql
       - ${INIT_SCRIPTS}:/docker-entrypoint-initdb.d/
+    
+    # Use the tmpfs mount if you want to reset the database 
+    tmpfs: /var/lib/postgresql/data
 
     environment:
       #POSTGRES_DB: "${PG_DB}"

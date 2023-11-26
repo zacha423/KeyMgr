@@ -19,6 +19,20 @@ CREATE ROLE "keymgr_readwrite" WITH
   NOINHERIT;
 COMMENT ON ROLE "keymgr_readwrite" IS 'Read/write role for keymgr users.';
 
+CREATE ROLE "keymgr_webro_u" WITH
+  LOGIN
+  NOSUPERUSER
+  NOCREATEDB
+  NOCREATEROLE;
+COMMENT ON ROLE "keymgr_webro_u" IS 'Read only user for web server connections.';
+
+CREATE ROLE "keymgr_webrw_u" WITH
+  LOGIN
+  NOSUPERUSER
+  NOCREATEDB
+  NOCREATEROLE;
+COMMENT ON ROLE "keymgr_webrw_u" IS 'Read/write user for web server connections.';
+
 CREATE DATABASE keymgr
   WITH OWNER = "keymgr" 
   ENCODING = 'UTF8' 

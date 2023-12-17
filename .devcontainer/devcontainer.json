@@ -4,36 +4,26 @@
   "service":"devcontainer",
   "workspaceFolder":"/workspaces/${localWorkspaceFolderBasename}",
   "features":{
-    "ghcr.io/devcontainers/features/common-utils:2": {//taken from microsoft
+    "ghcr.io/devcontainers/features/common-utils:2": {
 			"installZsh": "true",
 			"username": "vscode",
 			"userUid": "1000",
 			"userGid": "1000",
 			"upgradePackages": "true"
 		},
-		"ghcr.io/devcontainers/features/git:1": {//taken from microsoft
+		"ghcr.io/devcontainers/features/git:1": {
       "version": "latest",
       "ppa": "false"
     },
     //Used to remote SSH into container, if desired... though devcontainers does magic
     "ghcr.io/devcontainers/features/sshd:1":{} //May not actually be needed
   },
-  "shutdownAction":"stopCompose", // Microsoft had this in their example, chadd didn't...
+  "shutdownAction":"stopCompose",
   "forwardPorts": [
     8080, // Nginx / Web Server
     5432  // Postgres / Database
   ],
   "postCreateCommand": "sudo chown -R vscode ~/.ssh/* /workspaces",
-  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}", //supposed to fix safe error
-  // "initializeCommand": "touch .devcontainer/compose.env && touch compose.env",
-//   "remoteEnv": {
-//    // #General Variables
-// "LOGDIR":"../docker/logs",
-// "WEB_DATA":"../KeyMgr",
-
-// ///#PostgreSQL Variables
-// "PG_PASSWORD":"keymgr",
-// "INIT_SCRIPTS":"../PostgresScripts"
-//   },
-  "remoteUser": "vscode" //taken from Microsoft
+  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+  "remoteUser": "vscode"
 }

@@ -4,10 +4,22 @@
   "service":"developerapp",
   "workspaceFolder":"/workspaces/${localWorkspaceFolderBasename}",
   "features":{
-    "ghcr.io/devcontainers/features/sshd:1":{}//,
-    //"ghcr.io/devcontainers/features/node:1":{} //NodeJS if we need it?
+    "ghcr.io/devcontainers/features/common-utils:2": {//taken from microsoft
+			"installZsh": "true",
+			"username": "vscode",
+			"userUid": "1000",
+			"userGid": "1000",
+			"upgradePackages": "true"
+		},
+		"ghcr.io/devcontainers/features/git:1": {//taken from microsoft
+      "version": "latest",
+      "ppa": "false"
+    },
+    //Used to remote SSH into container, if desired... though devcontainers does magic
+    "ghcr.io/devcontainers/features/sshd:1":{} //May not actually be needed
   },
   "shutdownAction":"stopCompose", // Microsoft had this in their example, chadd didn't...
   "forwardPorts": [8080, 5432],
-  "postCreateCommand": "chmod 700 /root/.ssh/*"
+  "postCreateCommand": "chmod 700 ~/.ssh/*",
+  "remoteUser": "vscode" //taken from Microsoft
 }

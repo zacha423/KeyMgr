@@ -20,6 +20,7 @@
   },
   "shutdownAction":"stopCompose", // Microsoft had this in their example, chadd didn't...
   "forwardPorts": [8080, 5432],
-  "postCreateCommand": "chmod 700 ~/.ssh/*",
+  "postCreateCommand": "sudo chown -R vscode ~/.ssh/* /workspaces",
+  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}", //supposed to fix safe error
   "remoteUser": "vscode" //taken from Microsoft
 }

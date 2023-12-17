@@ -21,7 +21,7 @@ services:
       - nginx
     volumes:
       - ../../:/workspaces:cached
-      - ~/.ssh:/root/.ssh #Cheap way to use host SSH keys per user
+      - ~/.ssh:/home/vscode/.ssh:rw #Cheap way to use host SSH keys per user
     networks:
       - KeyMgr
 

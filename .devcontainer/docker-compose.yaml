@@ -32,7 +32,6 @@ services:
     volumes:
       - ${WEB_DATA}:/var/www/html:rw
       - ../docker/nginx/site.conf:/etc/nginx/conf.d/default.conf
-      - ${LOGDIR}/nginx:/var/logs2/nginx #wtf
     depends_on:
       - php-fpm
       - postgres
@@ -51,7 +50,6 @@ services:
       # Use the postgres-data volume if you want to persist data locally. 
       # (Also uncomment volumes below.)
       #- postgres-data:/var/lib/postgresql/data
-      - ${LOGDIR}/postgres:/var/log/postgresql
       - ${INIT_SCRIPTS}:/docker-entrypoint-initdb.d/
     
     # Use the tmpfs mount if you want to reset the database 

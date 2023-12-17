@@ -50,7 +50,7 @@ services:
       # Use the postgres-data volume if you want to persist data locally. 
       # (Also uncomment volumes below.)
       #- postgres-data:/var/lib/postgresql/data
-      - ../PostgresScripts:/docker-entrypoint-initdb.d/
+      - ../docker/postgresql/initdb:/docker-entrypoint-initdb.d/
     
     # Use the tmpfs mount if you want to reset the database 
     tmpfs: /var/lib/postgresql/data

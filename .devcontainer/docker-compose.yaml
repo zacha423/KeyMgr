@@ -9,6 +9,7 @@ version: '3.9'
 services:
   
   devcontainer:
+    env_file: compose.env
     build:
       context: .
       dockerfile: Dockerfile.developmentapp
@@ -26,12 +27,13 @@ services:
       - KeyMgr
 
   nginx:
+    env_file: compose.env
     image: nginx:stable-bullseye
     container_name: keymgr_nginx
     restart: unless-stopped
     volumes:
-      # - ${WEB_DATA}:/var/www/html:rw
-      - ../KeyMgr:/var/www/html:rw
+      - ${WEB_DATA}:/var/www/html
+      # - ../KeyMgr:/var/www/html:rw
       - ../docker/nginx/site.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php-fpm
@@ -42,6 +44,7 @@ services:
       - KeyMgr
 
   postgres:
+    env_file: compose.env
     image: postgres:12.16-bullseye
     container_name: keymgr_postgres
     restart: unless-stopped
@@ -51,33 +54,33 @@ services:
       # Use the postgres-data volume if you want to persist data locally. 
       # (Also uncomment volumes below.)
       #- postgres-data:/var/lib/postgresql/data
-      # - ${INIT_SCRIPTS}:/docker-entrypoint-initdb.d/
-      - ../PostgresScripts:/docker-entrypoint-initdb.d/
+      - ${INIT_SCRIPTS}:/docker-entrypoint-initdb.d/
+      # - ../PostgresScripts:/docker-entrypoint-initdb.d/
     
     # Use the tmpfs mount if you want to reset the database 
     tmpfs: /var/lib/postgresql/data
 
     environment:
-      # POSTGRES_PASSWORD: "${PG_PASSWORD}"
-      POSTGRES_PASSWORD: "keymgr"
+      POSTGRES_PASSWORD: "${PG_PASSWORD}"
+      # POSTGRES_PASSWORD: "keymgr"
     networks:
       - KeyMgr
 
   php-fpm:
+    env_file: compose.env
     build:
       context: .
       dockerfile: Dockerfile.php-fpm
     container_name: keymgr_php
     restart: unless-stopped
     volumes:
-      # - ${WEB_DATA}:/var/www/html:rw
-      - ../KeyMgr:/var/www/html
+      - ${WEB_DATA}:/var/www/html:rw
+      # - ../KeyMgr:/var/www/html
     #This feels hacky, but I can't find a better solution.
     command: >
       | sh && chown -R www-data.www-data /var/www
     networks:
-      - KeyMgr
-    
+      - KeyMgr    
 
 #volumes:
   #postgres-data:

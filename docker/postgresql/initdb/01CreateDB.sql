@@ -1,4 +1,9 @@
--- Created using PGAdmin4
+-- *****************************************************************************
+-- Filename:  01CreateDB.sql
+-- Authors:   Zachary Abela-Gale
+-- Date:      2023/12/17
+-- Purpose:   Create database and roles for KeyMgr.
+-- *****************************************************************************
 
 -- Create KeyMgr admin role
 CREATE ROLE keymgr_global WITH

@@ -76,12 +76,6 @@ COMMENT ON ROLE keymgr_webrw_u IS 'Read/write user for web server connections.';
 
 -- Create KeyMgr DB
 ALTER DATABASE "KeyMgr" OWNER TO keymgr_global;
--- CREATE DATABASE "KeyMgr"
---   WITH
---   OWNER = keymgr_global
---   ENCODING = 'UTF8'
---   CONNECTION LIMIT = -1
---   IS_TEMPLATE = False;
 
 COMMENT ON DATABASE "KeyMgr"
   IS 'Data for KeyMgr application';
@@ -110,17 +104,3 @@ GRANT SELECT ON TABLES TO keymgr_readonly;
 
 ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA "KeyMgr"
 GRANT INSERT, SELECT, UPDATE, DELETE ON TABLES TO keymgr_readwrite;
-
-
--- Sample Table
-DROP TABLE IF EXISTS "KeyMgr".book;
-CREATE TABLE IF NOT EXISTS "KeyMgr".book (
-  book_id character varying(10) NOT NULL,
-  book_name character varying(50) NOT NULL,
-  author character varying(25),
-  publisher character varying(25),
-  date_of_publication date,
-  price numeric(8, 2)
-);
-ALTER TABLE IF EXISTS "KeyMgr".book
-  OWNER to keymgr_global;

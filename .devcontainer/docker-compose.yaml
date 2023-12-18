@@ -57,6 +57,7 @@ services:
 
     environment:
       POSTGRES_PASSWORD: "keymgr"
+      POSTGRES_DB: KeyMgr
     networks:
       - KeyMgr
 

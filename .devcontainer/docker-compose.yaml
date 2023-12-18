@@ -21,7 +21,8 @@ services:
       - nginx
     volumes:
       - ../../:/workspaces:cached
-      - ~/.ssh:/home/vscode/.ssh #Cheap way to use host SSH keys per user
+      # Might be a better way to transfer host SSH keys, but it works.
+      - ~/.ssh:/home/vscode/.ssh
     networks:
       - KeyMgr
 
@@ -69,14 +70,30 @@ services:
     restart: unless-stopped
     volumes:
       - ../KeyMgr:/var/www/html
-    #This feels hacky, but I can't find a better solution.
     command: >
       | sh && chown -R www-data.www-data /var/www
     networks:
       - KeyMgr
-    
-
-#volumes:
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+      - ../docker/pgadmin/servers.json:/pgadmin4/servers.json
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@keymgr.com
+      PGADMIN_DEFAULT_PASSWORD: keymgr
+      PGADMIN_DISABLE_POSTFIX: "disabled"
+    networks:
+      - KeyMgr
+    ports:
+      - "8081:80"
+  
+volumes:
+  pgadmin-data:
   #postgres-data:
 
 networks:

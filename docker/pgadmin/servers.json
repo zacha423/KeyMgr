@@ -1,0 +1,80 @@
+{
+    "Servers": {
+        "1": {
+            "Name": "postgres",
+            "Group": "Servers",
+            "Host": "postgres",
+            "Port": 5432,
+            "MaintenanceDB": "postgres",
+            "Username": "postgres",
+            "Comment": "Default postgres user",
+            "UseSSHTunnel": 0,
+            "TunnelPort": "22",
+            "TunnelAuthentication": 0,
+            "KerberosAuthentication": false,
+            "ConnectionParameters": {
+                "sslmode": "prefer",
+                "connect_timeout": 10,
+                "sslcert": "<STORAGE_DIR>/.postgresql/postgresql.crt",
+                "sslkey": "<STORAGE_DIR>/.postgresql/postgresql.key"
+            }
+        },
+        "2": {
+            "Name": "keymgr_global_u",
+            "Group": "Servers",
+            "Host": "postgres",
+            "Port": 5432,
+            "MaintenanceDB": "postgres",
+            "Username": "keymgr_global_u",
+            "Comment": "Admin for all KeyMgr resources",
+            "UseSSHTunnel": 0,
+            "TunnelPort": "22",
+            "TunnelAuthentication": 0,
+            "KerberosAuthentication": false,
+            "ConnectionParameters": {
+                "sslmode": "prefer",
+                "connect_timeout": 10,
+                "sslcert": "<STORAGE_DIR>/.postgresql/postgresql.crt",
+                "sslkey": "<STORAGE_DIR>/.postgresql/postgresql.key"
+            }
+        },
+        "3": {
+            "Name": "keymgr_webro_u",
+            "Group": "Servers",
+            "Host": "postgres",
+            "Port": 5432,
+            "MaintenanceDB": "postgres",
+            "Username": "keymgr_webro_u",
+            "Comment": "User with read only permissions to KeyMgr resources.",
+            "UseSSHTunnel": 0,
+            "TunnelPort": "22",
+            "TunnelAuthentication": 0,
+            "KerberosAuthentication": false,
+            "ConnectionParameters": {
+                "sslmode": "prefer",
+                "connect_timeout": 10,
+                "sslcert": "<STORAGE_DIR>/.postgresql/postgresql.crt",
+                "sslkey": "<STORAGE_DIR>/.postgresql/postgresql.key"
+            }
+        },
+        "4": {
+            "Name": "keymgr_webrw_u",
+            "Group": "Servers",
+            "Host": "postgres",
+            "Port": 5432,
+            "MaintenanceDB": "postgres",
+            "Username": "keymgr_webrw_u",
+            "Comment": "User with read/write privileges on KeyMgr resources",
+            "UseSSHTunnel": 0,
+            "TunnelPort": "22",
+            "TunnelAuthentication": 0,
+            "KerberosAuthentication": false,
+            "ConnectionParameters": {
+                "sslmode": "prefer",
+                "connect_timeout": 10,
+                "sslcert": "<STORAGE_DIR>/.postgresql/postgresql.crt",
+                "sslkey": "<STORAGE_DIR>/.postgresql/postgresql.key"
+            }
+        }
+    }
+}

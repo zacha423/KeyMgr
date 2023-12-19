@@ -87,6 +87,8 @@ services:
       PGADMIN_DEFAULT_EMAIL: admin@keymgr.com
       PGADMIN_DEFAULT_PASSWORD: keymgr
       PGADMIN_DISABLE_POSTFIX: "disabled"
+      PGADMIN_CONFIG_PROXY_X_HOST_COUNT: 1
+      PGADMIN_CONFIG_PROXY_X_PREFIX_COUNT: 1
     networks:
       - KeyMgr
     ports:

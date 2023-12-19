@@ -21,6 +21,7 @@
   "shutdownAction":"stopCompose",
   "forwardPorts": [
     8080, // Nginx / Web Server
+    8081, // PGAdmin4 Web Server
     5432  // Postgres / Database
   ],
   "postCreateCommand": "sudo chown -R vscode ~/.ssh/* /workspaces",

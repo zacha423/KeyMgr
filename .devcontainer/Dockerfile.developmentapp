@@ -18,6 +18,10 @@ RUN yes | pecl install xdebug \
   && echo "xdebug.client_port = 9000" >> /usr/local/etc/php/conf.d/xdebug.ini \
   && rm -rf /tmp/pear
 
+# Install Synth
+ENV SYNTH_INSTALL_PATH=/bin
+RUN (curl -sSL https://getsynth.com/install | sh)
+
 WORKDIR /var/www/html
 
 USER root

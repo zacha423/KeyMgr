@@ -67,7 +67,7 @@ ALTER TABLE IF EXISTS "KeyMgr"."PostalCodes"
   OWNER TO keymgr_global;
 
 DROP TABLE IF EXISTS "KeyMgr"."Addresses";
-CREATE TABLE "KeyMgr"."Address"
+CREATE TABLE "KeyMgr"."Addresses"
 (
   AddressID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
   StreetAddress character varying (150) NOT NULL,

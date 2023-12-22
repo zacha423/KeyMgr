@@ -17,7 +17,7 @@
 -- Country Table (per ISO3166)
 -- https://www.iso.org/iso-3166-country-codes.html
 -- -----------------------------------------------------------------------------
-INSERT INTO "KeyMgr"."Country" (ISO_Code3, Name) VALUES 
+INSERT INTO "KeyMgr"."Countries" (ISO_Code3, Name) VALUES 
   ('CAN', 'Canada'), 
   ('USA', 'United States of America'), 
   ('MEX', 'Mexico') ;
@@ -30,9 +30,9 @@ WITH states (Name, Abbreviation, Country) AS ( VALUES
   ('Washington', 'WA', 'USA'),
   ('California', 'CA', 'USA')
 )
-INSERT INTO "KeyMgr"."State" (Name, Abbreviation, CountryID)
+INSERT INTO "KeyMgr"."States" (Name, Abbreviation, CountryID)
 SELECT states.Name, states.Abbreviation, CountryID
-FROM "KeyMgr"."Country" JOIN states ON (states.Country = ISO_Code3);
+FROM "KeyMgr"."Countries" JOIN states ON (states.Country = ISO_Code3);
 
 -- -----------------------------------------------------------------------------
 -- City Table

@@ -10,8 +10,8 @@
 -- -----------------------------------------------------------------------------
 
 -- Country
-DROP TABLE IF EXISTS "KeyMgr"."Country";
-CREATE TABLE "KeyMgr"."Country"
+DROP TABLE IF EXISTS "KeyMgr"."Countries";
+CREATE TABLE "KeyMgr"."Countries"
 (
   CountryID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
   ISO_Code3 character(3) NOT NULL,
@@ -19,11 +19,11 @@ CREATE TABLE "KeyMgr"."Country"
   PRIMARY KEY (CountryID)
 );
 
-ALTER TABLE IF EXISTS "KeyMgr"."Country"
+ALTER TABLE IF EXISTS "KeyMgr"."Countries"
   OWNER to keymgr_global;
 
-DROP TABLE IF EXISTS "KeyMgr"."State";
-CREATE TABLE "KeyMgr"."State"
+DROP TABLE IF EXISTS "KeyMgr"."States";
+CREATE TABLE "KeyMgr"."States"
 (
   StateID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
   Name character varying(50) NOT NULL,
@@ -31,42 +31,42 @@ CREATE TABLE "KeyMgr"."State"
   CountryID bigint NOT NULL,
   PRIMARY KEY (StateID),
   CONSTRAINT State_Country_FK FOREIGN KEY (CountryID)
-    REFERENCES "KeyMgr"."Country" (CountryID) MATCH FULL
+    REFERENCES "KeyMgr"."Countries" (CountryID) MATCH FULL
     ON UPDATE NO ACTION
     ON DELETE CASCADE
 );
 
-ALTER TABLE IF EXISTS "KeyMgr"."State"
+ALTER TABLE IF EXISTS "KeyMgr"."States"
   OWNER to keymgr_global;
 
-DROP TABLE IF EXISTS "KeyMgr"."City";
-CREATE TABLE "KeyMgr"."City"
+DROP TABLE IF EXISTS "KeyMgr"."Cities";
+CREATE TABLE "KeyMgr"."Cities"
 (
   CityID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
   Name character varying (50) NOT NULL,
   StateID bigint NOT NULL,
   PRIMARY KEY (CityID),
   CONSTRAINT City_State_FK FOREIGN KEY (StateID)
-    REFERENCES "KeyMgr"."State" (StateID) MATCH FULL
+    REFERENCES "KeyMgr"."States" (StateID) MATCH FULL
     ON UPDATE NO ACTION
     ON DELETE CASCADE
 );
 
-ALTER TABLE IF EXISTS "KeyMgr"."City"
+ALTER TABLE IF EXISTS "KeyMgr"."Cities"
   OWNER TO keymgr_global;
 
-DROP TABLE IF EXISTS "KeyMgr"."PostalCode";
-CREATE TABLE "KeyMgr"."PostalCode"
+DROP TABLE IF EXISTS "KeyMgr"."PostalCodes";
+CREATE TABLE "KeyMgr"."PostalCodes"
 (
   PostalCodeID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
   Code varchar(15) NOT NULL,
   PRIMARY KEY (PostalCodeID)
 );
 
-ALTER TABLE IF EXISTS "KeyMgr"."PostalCode"
+ALTER TABLE IF EXISTS "KeyMgr"."PostalCodes"
   OWNER TO keymgr_global;
 
-DROP TABLE IF EXISTS "KeyMgr"."Address";
+DROP TABLE IF EXISTS "KeyMgr"."Addresses";
 CREATE TABLE "KeyMgr"."Address"
 (
   AddressID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
@@ -75,16 +75,16 @@ CREATE TABLE "KeyMgr"."Address"
   PostalID bigint NOT NULL,
   PRIMARY KEY (AddressID),
   CONSTRAINT Address_City_FK FOREIGN KEY (CityID)
-    REFERENCES "KeyMgr"."City" (CityID) MATCH FULL
+    REFERENCES "KeyMgr"."Cities" (CityID) MATCH FULL
     ON UPDATE NO ACTION
     ON DELETE CASCADE,
   CONSTRAINT Address_Postal_FK FOREIGN KEY (PostalID)
-    REFERENCES "KeyMgr"."PostalCode" (PostalCodeID) MATCH FULL
+    REFERENCES "KeyMgr"."PostalCodes" (PostalCodeID) MATCH FULL
     ON UPDATE NO ACTION
     ON DELETE CASCADE
 );
 
-ALTER TABLE IF EXISTS "KeyMgr"."Address"
+ALTER TABLE IF EXISTS "KeyMgr"."Addresses"
   OWNER TO keymgr_global;
 -- -----------------------------------------------------------------------------
 -- Tables to represent a door to a room in a building.

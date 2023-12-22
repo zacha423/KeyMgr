@@ -86,6 +86,41 @@ CREATE TABLE "KeyMgr"."Addresses"
 
 ALTER TABLE IF EXISTS "KeyMgr"."Addresses"
   OWNER TO keymgr_global;
+
+
 -- -----------------------------------------------------------------------------
 -- Tables to represent a door to a room in a building.
+-- -----------------------------------------------------------------------------
+DROP TABLE IF EXISTS "KeyMgr"."Campuses";
+CREATE TABLE "KeyMgr"."Campuses" (
+  CampusID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+  Name character varying (100) NOT NULL,
+  AddressID bigint NOT NULL,
+  PRIMARY KEY (CampusID),
+  CONSTRAINT Campuses_Address_FK FOREIGN KEY (AddressID)
+    REFERENCES "KeyMgr"."Addresses" (AddressID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+);
+
+ALTER TABLE IF EXISTS "KeyMgr"."Campuses"
+  OWNER TO keymgr_global;
+
+-- -----------------------------------------------------------------------------
+-- Tables to represent a lock.
+-- -----------------------------------------------------------------------------
+
+
+-- -----------------------------------------------------------------------------
+-- Tables to represent a key.
+-- -----------------------------------------------------------------------------
+
+
+-- -----------------------------------------------------------------------------
+-- Tables to represent a Person
+-- -----------------------------------------------------------------------------
+
+
+-- -----------------------------------------------------------------------------
+-- Tables to represent a key authorization agreement.
 -- -----------------------------------------------------------------------------

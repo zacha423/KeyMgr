@@ -60,7 +60,20 @@ WITH addresses (StreetAddress, CityName, PostalCode) AS (VALUES
   ('190 SE 8th Ave', 'Hillsboro', '97123'),       -- HPC2
   ('1370 N Adair St', 'Cornelius', '97113')       -- Cornelius Public Library
 )
+INSERT INTO "KeyMgr"."Addresses" (StreetAddress, CityID, PostalID)
 SELECT addresses.StreetAddress, CityID, PostalCodeID
 FROM addresses
 JOIN "KeyMgr"."PostalCodes" ON Code = addresses.PostalCode
 JOIN "KeyMgr"."Cities" on Name = addresses.CityName;
+
+-- -----------------------------------------------------------------------------
+-- Campuses Table
+-- -----------------------------------------------------------------------------
+WITH campuses (Name, StreetAddress) AS (VALUES 
+  ('Forest Grove Campus','2043 College Way'),
+  ('Hillsboro Health Professions Campus','222 SE 8th Ave')
+)
+INSERT INTO "KeyMgr"."Campuses" (Name, AddressID)
+SELECT campuses.Name, AddressID
+FROM campuses
+JOIN "KeyMgr"."Addresses" ON "KeyMgr"."Addresses".StreetAddress = campuses.StreetAddress;

@@ -58,7 +58,8 @@ WITH addresses (StreetAddress, CityName, PostalCode) AS (VALUES
   ('2125 College Way', 'Forest Grove', '97116'),  -- AuCoin Hall
   ('222 SE 8th Ave', 'Hillsboro', '97123'),       -- Creighton Hall
   ('190 SE 8th Ave', 'Hillsboro', '97123'),       -- HPC2
-  ('1370 N Adair St', 'Cornelius', '97113')       -- Cornelius Public Library
+  ('1370 N Adair St', 'Cornelius', '97113'),      -- Cornelius Public Library
+  ('1355 N Barlow St', 'Cornelius', '97113')      -- Cornelius City Hall
 )
 INSERT INTO "KeyMgr"."Addresses" (StreetAddress, CityID, PostalID)
 SELECT addresses.StreetAddress, CityID, PostalCodeID
@@ -71,9 +72,28 @@ JOIN "KeyMgr"."Cities" on Name = addresses.CityName;
 -- -----------------------------------------------------------------------------
 WITH campuses (Name, StreetAddress) AS (VALUES 
   ('Forest Grove Campus','2043 College Way'),
-  ('Hillsboro Health Professions Campus','222 SE 8th Ave')
+  ('Hillsboro Health Professions Campus','222 SE 8th Ave'),
+  ('City of Cornelius', '1355 N Barlow St')
 )
 INSERT INTO "KeyMgr"."Campuses" (Name, AddressID)
 SELECT campuses.Name, AddressID
 FROM campuses
 JOIN "KeyMgr"."Addresses" ON "KeyMgr"."Addresses".StreetAddress = campuses.StreetAddress;
+
+-- -----------------------------------------------------------------------------
+-- Buildings Table
+-- -----------------------------------------------------------------------------
+WITH buildings (Name, StreetAddress, Campus) AS (VALUES
+  ('Marsh Hall', '2043 College Way', 'Forest Grove Campus'),
+  ('Price Hall', '2150 Cedar Street', 'Forest Grove Campus'),
+  ('Strain Science Center', '2172 Cedar Street', 'Forest Grove Campus'),
+  ('AuCoin Hall', '2125 College Way', 'Forest Grove Campus'),
+  ('Creighton Hall', '222 SE 8th Ave', 'Hillsboro Health Professions Campus'),
+  ('Health Professions Campus 2', '190 SE 8th Ave', 'Hillsboro Health Professions Campus'),
+  ('Cornelius Public Library', '1370 N Adair St', 'City of Cornelius')
+)
+INSERT INTO "KeyMgr"."Buildings" (Name, AddressID, CampusID)
+SELECT buildings.Name, "KeyMgr"."Addresses".AddressID, CampusID
+FROM buildings
+JOIN "KeyMgr"."Addresses" ON "KeyMgr"."Addresses".StreetAddress = buildings.StreetAddress
+JOIN "KeyMgr"."Campuses" ON "KeyMgr"."Campuses".Name = buildings.Campus;

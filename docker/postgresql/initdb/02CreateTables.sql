@@ -106,6 +106,26 @@ CREATE TABLE "KeyMgr"."Campuses" (
 ALTER TABLE IF EXISTS "KeyMgr"."Campuses"
   OWNER TO keymgr_global;
 
+DROP TABLE IF EXISTS "KeyMgr"."Buildings";
+CREATE TABLE "KeyMgr"."Buildings" (
+  BuildingID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+  Name character varying (50) NOT NULL,
+  AddressID bigint NOT NULL,
+  CampusID bigint NOT NULL,
+  PRIMARY KEY (BuildingID),
+  CONSTRAINT Buidlings_Address_FK FOREIGN KEY (AddressID)
+    REFERENCES "KeyMgr"."Addresses" (AddressID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE,
+  CONSTRAINT Buildings_Campus_FK FOREIGN KEY (CampusID)
+    REFERENCES "KeyMgr"."Campuses" (CampusID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+);
+
+ALTER TABLE IF EXISTS "KeyMgr"."Buildings"
+  OWNER TO keymgr_global;
+
 -- -----------------------------------------------------------------------------
 -- Tables to represent a lock.
 -- -----------------------------------------------------------------------------

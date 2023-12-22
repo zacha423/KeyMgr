@@ -26,8 +26,8 @@ DROP TABLE IF EXISTS "KeyMgr"."State";
 CREATE TABLE "KeyMgr"."State"
 (
   StateID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
-  name character varying(50) NOT NULL,
-  abbreviation character varying(3) NOT NULL,
+  Name character varying(50) NOT NULL,
+  Abbreviation character varying(3) NOT NULL,
   CountryID bigint NOT NULL,
   PRIMARY KEY (StateID),
   CONSTRAINT State_Country_FK FOREIGN KEY (CountryID)

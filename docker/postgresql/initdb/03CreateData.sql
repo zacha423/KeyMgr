@@ -17,15 +17,23 @@
 -- Country Table (per ISO3166)
 -- https://www.iso.org/iso-3166-country-codes.html
 -- -----------------------------------------------------------------------------
--- Canada CAN
--- United States of America USA
--- Mexico MEX
+INSERT INTO "KeyMgr"."Country" (ISO_Code3, Name) VALUES 
+  ('CAN', 'Canada'), 
+  ('USA', 'United States of America'), 
+  ('MEX', 'Mexico') ;
+
 -- -----------------------------------------------------------------------------
 -- State Table
 -- -----------------------------------------------------------------------------
--- Oregon, OR, //get US ID
--- Washington, WA // get US ID
--- California, CA // get US ID
+WITH states (Name, Abbreviation, Country) AS ( VALUES
+  ('Oregon', 'OR', 'USA'),
+  ('Washington', 'WA', 'USA'),
+  ('California', 'CA', 'USA')
+)
+INSERT INTO "KeyMgr"."State" (Name, Abbreviation, CountryID)
+SELECT states.Name, states.Abbreviation, CountryID
+FROM "KeyMgr"."Country" JOIN states ON (states.Country = ISO_Code3);
+
 -- -----------------------------------------------------------------------------
 -- City Table
 -- -----------------------------------------------------------------------------

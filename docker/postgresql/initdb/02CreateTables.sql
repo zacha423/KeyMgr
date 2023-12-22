@@ -15,7 +15,7 @@ CREATE TABLE "KeyMgr"."Countries"
 (
   CountryID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
   ISO_Code3 character(3) NOT NULL,
-  Name character varying(50) NOT NULL,
+  Name text NOT NULL,
   PRIMARY KEY (CountryID)
 );
 
@@ -26,8 +26,8 @@ DROP TABLE IF EXISTS "KeyMgr"."States";
 CREATE TABLE "KeyMgr"."States"
 (
   StateID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
-  Name character varying(50) NOT NULL,
-  Abbreviation character varying(3) NOT NULL,
+  Name text NOT NULL,
+  Abbreviation text NOT NULL,
   CountryID bigint NOT NULL,
   PRIMARY KEY (StateID),
   CONSTRAINT State_Country_FK FOREIGN KEY (CountryID)
@@ -43,7 +43,7 @@ DROP TABLE IF EXISTS "KeyMgr"."Cities";
 CREATE TABLE "KeyMgr"."Cities"
 (
   CityID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
-  Name character varying (50) NOT NULL,
+  Name text NOT NULL,
   StateID bigint NOT NULL,
   PRIMARY KEY (CityID),
   CONSTRAINT City_State_FK FOREIGN KEY (StateID)
@@ -59,7 +59,7 @@ DROP TABLE IF EXISTS "KeyMgr"."PostalCodes";
 CREATE TABLE "KeyMgr"."PostalCodes"
 (
   PostalCodeID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
-  Code varchar(15) NOT NULL,
+  Code text NOT NULL,
   PRIMARY KEY (PostalCodeID)
 );
 
@@ -70,7 +70,7 @@ DROP TABLE IF EXISTS "KeyMgr"."Addresses";
 CREATE TABLE "KeyMgr"."Addresses"
 (
   AddressID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
-  StreetAddress character varying (150) NOT NULL,
+  StreetAddress text NOT NULL,
   CityID bigint NOT NULL,
   PostalID bigint NOT NULL,
   PRIMARY KEY (AddressID),
@@ -94,7 +94,7 @@ ALTER TABLE IF EXISTS "KeyMgr"."Addresses"
 DROP TABLE IF EXISTS "KeyMgr"."Campuses";
 CREATE TABLE "KeyMgr"."Campuses" (
   CampusID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
-  Name character varying (100) NOT NULL,
+  Name text NOT NULL,
   AddressID bigint NOT NULL,
   PRIMARY KEY (CampusID),
   CONSTRAINT Campuses_Address_FK FOREIGN KEY (AddressID)
@@ -109,7 +109,7 @@ ALTER TABLE IF EXISTS "KeyMgr"."Campuses"
 DROP TABLE IF EXISTS "KeyMgr"."Buildings";
 CREATE TABLE "KeyMgr"."Buildings" (
   BuildingID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
-  Name character varying (50) NOT NULL,
+  Name text NOT NULL,
   AddressID bigint NOT NULL,
   CampusID bigint NOT NULL,
   PRIMARY KEY (BuildingID),

@@ -109,4 +109,21 @@ WITH rooms (RoomNumber, Description, BuildingName) AS (VALUES
 )
 INSERT INTO "KeyMgr"."Rooms" (RoomNumber, Description, BuildingID)
 SELECT rooms.RoomNumber, rooms.Description, BuildingID FROM rooms
-JOIN "KeyMgr"."Buildings" ON name = BuildingName
+JOIN "KeyMgr"."Buildings" ON name = BuildingName;
+
+-- -----------------------------------------------------------------------------
+-- Doors Table
+-- -----------------------------------------------------------------------------
+WITH doors (Description, HardwareDescription, RoomNumber, BuildingName) AS ( VALUES
+  ('always locked', 'lever handle', '222', 'Strain Science Center'),
+  ('solid oak door, minor damage', 'lockable lever handle', 'LL6', 'Marsh Hall'),
+  ('western entry', 'crashbar interior, lever exterior', '204', 'AuCoin Hall'),
+  ('eastern entry', 'crashbar interior, lever exterior', '204', 'AuCoin Hall'),
+  ('test', 'lever handle', '204', 'Price Hall')
+)
+INSERT INTO "KeyMgr"."Doors" (Description, HardwareDescription, RoomID)
+SELECT doors.Description, HardwareDescription, RoomID 
+FROM doors
+JOIN "KeyMgr"."Buildings" ON "KeyMgr"."Buildings".Name = doors.BuildingName
+JOIN "KeyMgr"."Rooms" ON "KeyMgr"."Rooms".RoomNumber = doors.RoomNumber 
+  AND "KeyMgr"."Rooms".BuildingID = "KeyMgr"."Buildings".BuildingID;

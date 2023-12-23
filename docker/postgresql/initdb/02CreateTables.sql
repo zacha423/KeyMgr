@@ -126,6 +126,22 @@ CREATE TABLE "KeyMgr"."Buildings" (
 ALTER TABLE IF EXISTS "KeyMgr"."Buildings"
   OWNER TO keymgr_global;
 
+DROP TABLE IF EXISTS "KeyMgr"."Rooms";
+CREATE TABLE "KeyMgr"."Rooms" (
+  RoomID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+  RoomNumber text NOT NULL,
+  Description text,
+  BuildingID bigint NOT NULL,
+  PRIMARY KEY (RoomID),
+  CONSTRAINT Rooms_BuildingID_FK FOREIGN KEY (BuildingID)
+    REFERENCES "KeyMgr"."Buildings" (BuildingID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+);
+
+ALTER TABLE IF EXISTS "KeyMgr"."Rooms"
+  OWNER TO keymgr_global;
+
 -- -----------------------------------------------------------------------------
 -- Tables to represent a lock.
 -- -----------------------------------------------------------------------------

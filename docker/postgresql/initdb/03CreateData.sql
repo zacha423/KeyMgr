@@ -2,7 +2,7 @@
 -- Filename:  03CreateData.sql
 -- Authors:   Zachary Abela-Gale
 -- Date:      2023/12/21
--- Purpose:   Generates sample Data for the database
+-- Purpose:   Generates realistic sample Data for the database
 -- -----------------------------------------------------------------------------
 
 -- -----------------------------------------------------------------------------
@@ -97,3 +97,16 @@ SELECT buildings.Name, "KeyMgr"."Addresses".AddressID, CampusID
 FROM buildings
 JOIN "KeyMgr"."Addresses" ON "KeyMgr"."Addresses".StreetAddress = buildings.StreetAddress
 JOIN "KeyMgr"."Campuses" ON "KeyMgr"."Campuses".Name = buildings.Campus;
+
+-- -----------------------------------------------------------------------------
+-- Rooms Table
+-- -----------------------------------------------------------------------------
+WITH rooms (RoomNumber, Description, BuildingName) AS (VALUES
+  ('LL6', 'UIS Helpdesk', 'Marsh Hall'),
+  ('222', 'Computer Science Lab', 'Strain Science Center'),
+  ('204', '', 'Price Hall'),
+  ('204', 'Computer Lab', 'AuCoin Hall')
+)
+INSERT INTO "KeyMgr"."Rooms" (RoomNumber, Description, BuildingID)
+SELECT rooms.RoomNumber, rooms.Description, BuildingID FROM rooms
+JOIN "KeyMgr"."Buildings" ON name = BuildingName

@@ -127,3 +127,7 @@ FROM doors
 JOIN "KeyMgr"."Buildings" ON "KeyMgr"."Buildings".Name = doors.BuildingName
 JOIN "KeyMgr"."Rooms" ON "KeyMgr"."Rooms".RoomNumber = doors.RoomNumber 
   AND "KeyMgr"."Rooms".BuildingID = "KeyMgr"."Buildings".BuildingID;
+
+-- -----------------------------------------------------------------------------
+-- Keyways Table
+-- -----------------------------------------------------------------------------

@@ -172,3 +172,22 @@ INSERT INTO "KeyMgr"."LockModels" (MACS, Name, ManufacturerID)
 SELECT locks.MACS, locks.Name, ManufacturerID 
 FROM locks
 JOIN "KeyMgr"."Manufacturers" ON "KeyMgr"."Manufacturers".Name = locks.MfrName;
+
+-- -----------------------------------------------------------------------------
+-- MasterKeySystems Table
+-- -----------------------------------------------------------------------------
+WITH parentSystems (Name) AS (VALUES
+  ('Strain'),
+  ('Price')
+)
+INSERT INTO "KeyMgr"."MasterKeySystems" (Name) SELECT * FROM parentSystems;
+
+WITH childSystems (Name, ParentName) AS (VALUES 
+  ('Computer Science', 'Strain'),
+  ('Physics', 'Strain'),
+  ('Math', 'Price')
+)
+INSERT INTO "KeyMgr"."MasterKeySystems" (Name, ParentMKSID) 
+SELECT childSystems.Name, "KeyMgr"."MasterKeySystems".MKSID 
+FROM childSystems 
+JOIN "KeyMgr"."MasterKeySystems" ON "KeyMgr"."MasterKeySystems".Name = childSystems.ParentName;

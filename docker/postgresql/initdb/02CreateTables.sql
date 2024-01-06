@@ -195,6 +195,18 @@ CREATE TABLE "KeyMgr"."LockModels" (
 );
 
 ALTER TABLE IF EXISTS "KeyMgr"."LockModels" OWNER TO keymgr_global;
+
+DROP TABLE IF EXISTS "KeyMgr"."MasterKeySystems";
+CREATE TABLE "KeyMgr"."MasterKeySystems" (
+  MKSID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+  Name text NOT NULL,
+  ParentMKSID bigint,
+  PRIMARY KEY (MKSID),
+  CONSTRAINT MasterKeySystem_ParentMKSID_FK FOREIGN KEY (ParentMKSID)
+    REFERENCES "KeyMgr"."MasterKeySystems" (MKSID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+);
 -- -----------------------------------------------------------------------------
 -- Tables to represent a key.
 -- -----------------------------------------------------------------------------

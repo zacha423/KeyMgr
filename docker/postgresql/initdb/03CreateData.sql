@@ -148,10 +148,27 @@ INSERT INTO "KeyMgr"."Keyways" (Name) VALUES
   ('KW10'), -- Kwikset
   ('KS');   -- Kwikset
 
+-- -----------------------------------------------------------------------------
+-- Manufacturers Table
+-- -----------------------------------------------------------------------------
 INSERT INTO "KeyMgr"."Manufacturers" (Name) VALUES 
   ('Schlage'),
   ('Kwikset'),
   ('Medeco'),
   ('Arrow');
 
--- Kwikset lock models: Kwikset [Class, Titan, Smart Key]
+-- -----------------------------------------------------------------------------
+-- LockModels Table
+-- -----------------------------------------------------------------------------
+-- https://cdn.shopify.com/s/files/1/0839/9519/files/MACS.pdf?v=1614759443
+WITH locks (MACS, Name, MfrName) AS (VALUES 
+  (7, 'Everest', 'Schlage'),
+  (7, 'SecureKey', 'Schlage'),
+  (5, 'Classic', 'Kwikset'),
+  (5, 'Titan', 'Kwikset'),
+  (5, 'Smart Key', 'Kwikset')
+)
+INSERT INTO "KeyMgr"."LockModels" (MACS, Name, ManufacturerID) 
+SELECT locks.MACS, locks.Name, ManufacturerID 
+FROM locks
+JOIN "KeyMgr"."Manufacturers" ON "KeyMgr"."Manufacturers".Name = locks.MfrName;

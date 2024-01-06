@@ -180,7 +180,21 @@ CREATE TABLE "KeyMgr"."Manufacturers" (
 
 ALTER TABLE IF EXISTS "KeyMgr"."Manufacturers" 
   OWNER TO keymgr_global;
-  
+
+DROP TABLE IF EXISTS "KeyMgr"."LockModels";
+CREATE TABLE "KeyMgr"."LockModels" (
+  LockModelID bigint NOT NULL GENERATED ALWAYS AS IDENTITY, 
+  MACS smallint NOT NULL, 
+  Name text NOT NULL, 
+  ManufacturerID bigint NOT NULL, 
+  PRIMARY KEY (LockModelID),
+  CONSTRAINT LockModels_ManufacturerID_FK FOREIGN KEY (ManufacturerID)
+    REFERENCES "KeyMgr"."Manufacturers" (ManufacturerID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+);
+
+ALTER TABLE IF EXISTS "KeyMgr"."LockModels" OWNER TO keymgr_global;
 -- -----------------------------------------------------------------------------
 -- Tables to represent a key.
 -- -----------------------------------------------------------------------------

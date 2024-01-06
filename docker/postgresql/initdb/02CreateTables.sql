@@ -221,6 +221,38 @@ CREATE TABLE "KeyMgr"."MessageTemplates" (
 
 ALTER TABLE IF EXISTS "KeyMgr"."MessageTemplates"
   OWNER TO keymgr_global;
+
+DROP TABLE IF EXISTS "KeyMgr"."Locks";
+CREATE TABLE "KeyMgr"."Locks" (
+  LockID bigint NOT NULL  GENERATED ALWAYS AS IDENTITY,
+  numPins smallint NOT NULL,
+  upperPinLengths smallint[],
+  masterPinLengths smallint[],
+  lowerPinLengths smallint[],
+  dateUpdated timestamptz NOT NULL,
+  installDate date NOT NULL,
+  KeywayID bigint NOT NULL,
+  LockModelID bigint NOT NULL,
+  MasterKeySystemID bigint,
+  PRIMARY KEY (LockID),
+  CONSTRAINT Locks_KeywayID_FK FOREIGN KEY (KeywayID)
+    REFERENCES "KeyMgr"."Keyways" (KeywayID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE,
+  CONSTRAINT Locks_LockModelID_FK FOREIGN KEY (LockModelID)
+    REFERENCES "KeyMgr"."LockModels" (LockModelID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE,
+  CONSTRAINT Locks_MKSID_FK FOREIGN KEY (MasterKeySystemID)
+    REFERENCES "KeyMgr"."MasterKeySystems" (MKSID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+);
+
+ALTER TABLE IF EXISTS "KeyMgr"."Locks"
+  OWNER TO keymgr_global;
+
+
 -- -----------------------------------------------------------------------------
 -- Tables to represent a key.
 -- -----------------------------------------------------------------------------

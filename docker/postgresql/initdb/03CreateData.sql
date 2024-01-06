@@ -132,7 +132,6 @@ JOIN "KeyMgr"."Rooms" ON "KeyMgr"."Rooms".RoomNumber = doors.RoomNumber
 -- Keyways Table
 -- -----------------------------------------------------------------------------
 INSERT INTO "KeyMgr"."Keyways" (Name) VALUES
-  ('C'),    -- Schlage
   ('L'),    -- Schlage
   ('H'),    -- Schlage
   ('J'),    -- Schlage
@@ -199,3 +198,25 @@ INSERT INTO "KeyMgr"."MessageTemplates" (Name, Message) VALUES
   ('Hello World','Hello World'),
   ('Due Date Reminder', 'You have a key due soon. Login for more info.'),
   ('Authorization Completed', 'New keys have been added to your account. Login for more info.');
+
+-- -----------------------------------------------------------------------------
+-- Locks Table
+-- -----------------------------------------------------------------------------
+WITH locks (numPins, installDate, keyway, model, keySystem) AS (VALUES
+ (6, '2023-07-22'::date, 'C', 'Everest', 'Computer Science'),
+ (6, '2023-07-23'::date, 'C', 'Everest', 'Computer Science'),
+ (6, '2023-07-24'::date, 'C', 'Everest', 'Strain'),
+ (5, '2022-08-25'::date, 'KW1', 'Classic', 'Price'),
+ (5, '2020-09-30'::date, 'KW10', 'Classic', '')
+)
+INSERT INTO "KeyMgr"."Locks" (numPins, dateUpdated, installDate, KeyWayID, LockModelID, MasterKeySystemID)
+SELECT locks.numPins, 
+  (NOW() + (random() * (interval '90 days')) + '30 days'), 
+  locks.installDate, 
+  "KeyMgr"."Keyways".KeywayID, 
+  "KeyMgr"."LockModels".LockModelID, 
+  "KeyMgr"."MasterKeySystems".MKSID
+FROM locks
+JOIN "KeyMgr"."Keyways" ON "KeyMgr"."Keyways".Name = locks.keyway
+JOIN "KeyMgr"."LockModels" ON "KeyMgr"."LockModels".Name = locks.model
+LEFT OUTER JOIN "KeyMgr"."MasterKeySystems" ON "KeyMgr"."MasterKeySystems".Name = locks.keySystem;

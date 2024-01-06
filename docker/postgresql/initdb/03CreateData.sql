@@ -191,3 +191,11 @@ INSERT INTO "KeyMgr"."MasterKeySystems" (Name, ParentMKSID)
 SELECT childSystems.Name, "KeyMgr"."MasterKeySystems".MKSID 
 FROM childSystems 
 JOIN "KeyMgr"."MasterKeySystems" ON "KeyMgr"."MasterKeySystems".Name = childSystems.ParentName;
+
+-- -----------------------------------------------------------------------------
+-- MessageTemplates Table
+-- -----------------------------------------------------------------------------
+INSERT INTO "KeyMgr"."MessageTemplates" (Name, Message) VALUES
+  ('Hello World','Hello World'),
+  ('Due Date Reminder', 'You have a key due soon. Login for more info.'),
+  ('Authorization Completed', 'New keys have been added to your account. Login for more info.');

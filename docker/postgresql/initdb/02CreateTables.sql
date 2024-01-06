@@ -207,6 +207,20 @@ CREATE TABLE "KeyMgr"."MasterKeySystems" (
     ON UPDATE NO ACTION
     ON DELETE CASCADE
 );
+
+ALTER TABLE IF EXISTS "KeyMgr"."MasterKeySystems" 
+  OWNER TO keymgr_global;
+
+DROP TABLE IF EXISTS "KeyMgr"."MessageTemplates";
+CREATE TABLE "KeyMgr"."MessageTemplates" (
+  TemplateID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+  Name text NOT NULL,
+  Message text NOT NULL,
+  PRIMARY KEY (TemplateID)
+);
+
+ALTER TABLE IF EXISTS "KeyMgr"."MessageTemplates"
+  OWNER TO keymgr_global;
 -- -----------------------------------------------------------------------------
 -- Tables to represent a key.
 -- -----------------------------------------------------------------------------

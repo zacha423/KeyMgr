@@ -131,3 +131,27 @@ JOIN "KeyMgr"."Rooms" ON "KeyMgr"."Rooms".RoomNumber = doors.RoomNumber
 -- -----------------------------------------------------------------------------
 -- Keyways Table
 -- -----------------------------------------------------------------------------
+INSERT INTO "KeyMgr"."Keyways" (Name) VALUES
+  ('C'),    -- Schlage
+  ('L'),    -- Schlage
+  ('H'),    -- Schlage
+  ('J'),    -- Schlage
+  ('K'),    -- Schlage
+  ('C'),    -- Schlage
+  ('CE'),   -- Schlage
+  ('E'),    -- Schlage
+  ('EF'),   -- Schlage
+  ('F'),    -- Schlage
+  ('FG'),   -- Schlage
+  ('G'),    -- Schlage
+  ('KW1'),  -- Kwikset
+  ('KW10'), -- Kwikset
+  ('KS');   -- Kwikset
+
+INSERT INTO "KeyMgr"."Manufacturers" (Name) VALUES 
+  ('Schlage'),
+  ('Kwikset'),
+  ('Medeco'),
+  ('Arrow');
+
+-- Kwikset lock models: Kwikset [Class, Titan, Smart Key]

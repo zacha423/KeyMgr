@@ -161,16 +161,26 @@ ALTER TABLE IF EXISTS "KeyMgr"."Doors"
 -- -----------------------------------------------------------------------------
 -- Tables to represent a lock.
 -- -----------------------------------------------------------------------------
-DROP TABLE IF EXISTS "KeyMgr"."Keyway";
-CREATE TABLE "KeyMgr"."Keyway" (
+DROP TABLE IF EXISTS "KeyMgr"."Keyways";
+CREATE TABLE "KeyMgr"."Keyways" (
   KeywayID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
   Name text NOT NULL,
   PRIMARY KEY (KeywayID)
 );
 
-ALTER TABLE IF EXISTS "KeyMgr"."Keyway"
+ALTER TABLE IF EXISTS "KeyMgr"."Keyways"
   OWNER TO keymgr_global;
 
+DROP TABLE IF EXISTS "KeyMgr"."Manufacturers";
+CREATE TABLE "KeyMgr"."Manufacturers" (
+  ManufacturerID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+  Name text NOT NULL,
+  PRIMARY KEY (ManufacturerID)
+);
+
+ALTER TABLE IF EXISTS "KeyMgr"."Manufacturers" 
+  OWNER TO keymgr_global;
+  
 -- -----------------------------------------------------------------------------
 -- Tables to represent a key.
 -- -----------------------------------------------------------------------------

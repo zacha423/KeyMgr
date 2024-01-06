@@ -270,13 +270,37 @@ CREATE TABLE "KeyMgr"."LockMessages" (
 
 ALTER TABLE IF EXISTS "KeyMgr"."LockMessages" 
   OWNER TO keymgr_global;
--- -----------------------------------------------------------------------------
--- Tables to represent a key.
--- -----------------------------------------------------------------------------
-
 
 -- -----------------------------------------------------------------------------
 -- Tables to represent a Person
+-- -----------------------------------------------------------------------------
+DROP TABLE IF EXISTS "KeyMgr"."UserRoles";
+CREATE TABLE "KeyMgr"."UserRoles" (
+  RoleID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+  Name text NOT NULL,
+  PRIMARY KEY (RoleID)
+);
+
+ALTER TABLE IF EXISTS "KeyMgr"."UserRoles"
+  OWNER TO keymgr_global;
+
+DROP TABLE IF EXISTS "KeyMgr"."PersonGroups";
+CREATE TABLE "KeyMgr"."PersonGroups" (
+  PersonGroupID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+  Name text NOT NULL,
+  ParentGroupID bigint,
+  PRIMARY KEY (PersonGroupID),
+  CONSTRAINT PersonGroups_ParentGroupID_FK FOREIGN KEY (ParentGroupID)
+    REFERENCES "KeyMgr"."PersonGroups" (PersonGroupID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+);
+
+ALTER TABLE IF EXISTS "KeyMgr"."PersonGroups"
+  OWNER TO keymgr_global;
+
+-- -----------------------------------------------------------------------------
+-- Tables to represent a key.
 -- -----------------------------------------------------------------------------
 
 

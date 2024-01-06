@@ -233,4 +233,32 @@ SELECT "KeyMgr"."Locks".LockID, "KeyMgr"."MessageTemplates".TemplateID, (CURRENT
 FROM locksAndTemplates
 JOIN "KeyMgr"."MasterKeySystems" ON "KeyMgr"."MasterKeySystems".Name = locksAndTemplates.keySystemName
 JOIN "KeyMgr"."Locks" ON "KeyMgr"."Locks".MasterKeySystemID = "KeyMgr"."MasterKeySystems".MKSID
-JOIN "KeyMgr"."MessageTemplates" ON "KeyMgr"."MessageTemplates".Name = locksAndTemplates.templateName
+JOIN "KeyMgr"."MessageTemplates" ON "KeyMgr"."MessageTemplates".Name = locksAndTemplates.templateName;
+
+-- -----------------------------------------------------------------------------
+-- UserRoles Table
+-- -----------------------------------------------------------------------------
+INSERT INTO "KeyMgr"."UserRoles" (Name) VALUES 
+  ('Key Holder'),
+  ('Key Requestor'),
+  ('Key Authority'),
+  ('Key Issuer'),
+  ('Locksmith'),
+  ('Administrator');
+
+-- -----------------------------------------------------------------------------
+-- PersonGroups Table
+-- -----------------------------------------------------------------------------
+INSERT INTO "KeyMgr"."PersonGroups" (Name) VALUES ('School of Natural Sciences');
+WITH groups (GroupName, ParentName) AS (VALUES
+  ('Computer Sciencec', 'School of Natural Sciences'),
+  ('Data Science', 'School of Natural Sciences'),
+  ('Mathematics', 'School of Natural Sciences'),
+  ('Undergraduate Students', ''),
+  ('Staff', ''),
+  ('Faculty', '')
+)
+INSERT INTO "KeyMgr"."PersonGroups" (Name, ParentGroupID)
+SELECT groups.GroupName, "KeyMgr"."PersonGroups".PersonGroupID
+FROM groups
+LEFT OUTER JOIN "KeyMgr"."PersonGroups" ON "KeyMgr"."PersonGroups".Name = groups.ParentName;

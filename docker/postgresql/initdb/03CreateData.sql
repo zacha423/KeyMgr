@@ -220,3 +220,17 @@ FROM locks
 JOIN "KeyMgr"."Keyways" ON "KeyMgr"."Keyways".Name = locks.keyway
 JOIN "KeyMgr"."LockModels" ON "KeyMgr"."LockModels".Name = locks.model
 LEFT OUTER JOIN "KeyMgr"."MasterKeySystems" ON "KeyMgr"."MasterKeySystems".Name = locks.keySystem;
+
+-- -----------------------------------------------------------------------------
+-- Locks/MessageTemplates (LockMessages) Junction Table
+-- -----------------------------------------------------------------------------
+WITH locksAndTemplates (keySystemName, templateName) AS (VALUES 
+  ('Computer Science', 'Hello World'),
+  ('Strain', 'Due Date Reminder')
+)
+INSERT INTO "KeyMgr"."LockMessages" (LockID, MessageID, MaintenanceDate)
+SELECT "KeyMgr"."Locks".LockID, "KeyMgr"."MessageTemplates".TemplateID, (CURRENT_DATE + (random() * (interval '90 days')) + '30 days')::date
+FROM locksAndTemplates
+JOIN "KeyMgr"."MasterKeySystems" ON "KeyMgr"."MasterKeySystems".Name = locksAndTemplates.keySystemName
+JOIN "KeyMgr"."Locks" ON "KeyMgr"."Locks".MasterKeySystemID = "KeyMgr"."MasterKeySystems".MKSID
+JOIN "KeyMgr"."MessageTemplates" ON "KeyMgr"."MessageTemplates".Name = locksAndTemplates.templateName

@@ -252,7 +252,24 @@ CREATE TABLE "KeyMgr"."Locks" (
 ALTER TABLE IF EXISTS "KeyMgr"."Locks"
   OWNER TO keymgr_global;
 
+DROP TABLE IF EXISTS "KeyMgr"."LockMessages";
+CREATE TABLE "KeyMgr"."LockMessages" (
+  LockID bigint NOT NULL,
+  MessageID bigint NOT NULL,
+  MaintenanceDate date NOT NULL,
+  PRIMARY KEY (LockID, MessageID),
+  CONSTRAINT LockMessages_LockID_FK FOREIGN KEY (LocKID)
+    REFERENCES "KeyMgr"."Locks" (LockID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE,
+  CONSTRAINT LocKMessages_MessageID_FK FOREIGN KEY (MessageID)
+    REFERENCES "KeyMgr"."MessageTemplates" (TemplateID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+);
 
+ALTER TABLE IF EXISTS "KeyMgr"."LockMessages" 
+  OWNER TO keymgr_global;
 -- -----------------------------------------------------------------------------
 -- Tables to represent a key.
 -- -----------------------------------------------------------------------------

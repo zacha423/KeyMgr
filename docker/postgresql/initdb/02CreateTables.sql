@@ -352,7 +352,47 @@ ALTER TABLE IF EXISTS "KeyMgr"."PersonRoleMemberships"
 -- -----------------------------------------------------------------------------
 -- Tables to represent a key.
 -- -----------------------------------------------------------------------------
+DROP TABLE IF EXISTS "KeyMgr"."KeyStorages";
+CREATE TABLE "KeyMgr"."KeyStorages" (
+  KeyStorageID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+  Name text NOT NULL,
+  NumRows smallint NOT NULL,
+  NumCols smallint NOT NULL,
+  PRIMARY KEY (KeyStorageID)
+);
 
+ALTER TABLE IF EXISTS "KeyMgr"."KeyStorages"
+  OWNER TO keymgr_global;
+
+DROP TABLE IF EXISTS "KeyMgr"."StorageColLabels";
+CREATE TABLE "KeyMgr"."StorageColLabels" (
+  StorageID bigint NOT NULL,
+  ColNumber bigint NOT NULL,
+  Label text NOT NULL,
+  PRIMARY KEY (StorageID, ColNumber),
+  CONSTRAINT StorageColLabels_KeyStorageID_FK FOREIGN KEY (StorageID)
+    REFERENCES "KeyMgr"."KeyStorages" (KeyStorageID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+);
+
+ALTER TABLE IF EXISTS "KeyMgr"."StorageColLabels"
+  OWNER TO keymgr_global;
+
+DROP TABLE IF EXISTS "KeyMgr"."StorageRowLabels";
+CREATE TABLE "KeyMgr"."StorageRowLabels" (
+  StorageID bigint NOT NULL,
+  RowNumber bigint NOT NULL,
+  Label text NOT NULL,
+  PRIMARY KEY (StorageID, RowNumber),
+  CONSTRAINT StorageRowLabels_KeyStorageID_FK FOREIGN KEY (StorageID)
+    REFERENCES "KeyMgr"."KeyStorages" (KeyStorageID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+);
+
+ALTER TABLE IF EXISTS "KeyMgr"."StorageRowLabels"
+  OWNER TO keymgr_global;
 
 -- -----------------------------------------------------------------------------
 -- Tables to represent a key authorization agreement.

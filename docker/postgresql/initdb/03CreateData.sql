@@ -335,3 +335,33 @@ SELECT "KeyMgr"."Persons".PersonID, "KeyMgr"."UserRoles".RoleID
 FROM locksmiths 
 JOIN "KeyMgr"."Persons" ON "KeyMgr"."Persons".Username = locksmiths.Name 
 JOIN "KeyMgr"."UserRoles" ON "KeyMgr"."UserRoles".Name = 'Locksmith';
+
+-- -----------------------------------------------------------------------------
+-- KeyStorages Table
+-- -----------------------------------------------------------------------------
+INSERT INTO "KeyMgr"."KeyStorages" (Name, NumRows, NumCols) VALUES ('Cabinet A', 2, 3);
+
+-- -----------------------------------------------------------------------------
+-- StorageColLabels Table
+-- -----------------------------------------------------------------------------
+WITH colLabels (cabinetName, col, label) AS (VALUES
+  ('Cabinet A', 1, '1'),
+  ('Cabinet A', 2, '2'),
+  ('Cabinet A', 3, '3')
+)
+INSERT INTO "KeyMgr"."StorageColLabels" (StorageID, ColNumber, Label)
+SELECT "KeyMgr"."KeyStorages".KeyStorageID, colLabels.col, colLabels.label
+FROM colLabels
+JOIN "KeyMgr"."KeyStorages" ON "KeyMgr"."KeyStorages".Name = colLabels.cabinetName;
+
+-- -----------------------------------------------------------------------------
+-- StorageRowLabels Table
+-- -----------------------------------------------------------------------------
+WITH rowLabels (cabinetName, row, label) AS (VALUES
+  ('Cabinet A', 1, 'A'),
+  ('Cabinet A', 2, 'B')
+)
+INSERT INTO "KeyMgr"."StorageRowLabels" (StorageID, RowNumber, Label)
+SELECT "KeyMgr"."KeyStorages".KeyStorageID, rowLabels.row, rowLabels.label
+FROM rowLabels
+JOIN "KeyMgr"."KeyStorages" ON "KeyMgr"."KeyStorages".Name = rowLabels.cabinetName;

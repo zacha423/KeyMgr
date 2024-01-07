@@ -394,6 +394,22 @@ CREATE TABLE "KeyMgr"."StorageRowLabels" (
 ALTER TABLE IF EXISTS "KeyMgr"."StorageRowLabels"
   OWNER TO keymgr_global;
 
+DROP TABLE IF EXISTS "KeyMgr"."StorageHooks";
+CREATE TABLE "KeyMgr"."StorageHooks" (
+  HookID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+  rowNum smallint NOT NULL,
+  colNum smallint NOT NULL,
+  StorageID bigint NOT NULL,
+  PRIMARY KEY (HookID),
+  CONSTRAINT StorageHooks_KeyStoragesID_FK FOREIGN KEY (StorageID)
+    REFERENCES "KeyMgr"."KeyStorages" (KeyStorageID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+);
+
+ALTER TABLE IF EXISTS "KeyMgr"."StorageHooks"
+  OWNER TO keymgr_global;
+
 -- -----------------------------------------------------------------------------
 -- Tables to represent a key authorization agreement.
 -- -----------------------------------------------------------------------------

@@ -365,3 +365,19 @@ INSERT INTO "KeyMgr"."StorageRowLabels" (StorageID, RowNumber, Label)
 SELECT "KeyMgr"."KeyStorages".KeyStorageID, rowLabels.row, rowLabels.label
 FROM rowLabels
 JOIN "KeyMgr"."KeyStorages" ON "KeyMgr"."KeyStorages".Name = rowLabels.cabinetName;
+
+-- -----------------------------------------------------------------------------
+-- StorageHooks Table
+-- -----------------------------------------------------------------------------
+WITH hooks (cabinetName, row, col) AS (VALUES
+  ('Cabinet A', 1, 1),
+  ('Cabinet A', 1, 2),
+  ('Cabinet A', 1, 3),
+  ('Cabinet A', 2, 1),
+  ('Cabinet A', 2, 2),
+  ('Cabinet A', 2, 3)
+)
+INSERT INTO "KeyMgr"."StorageHooks" (StorageID, RowNum, ColNum)
+SELECT "KeyMgr"."KeyStorages".KeyStorageID, hooks.row, hooks.col
+FROM hooks
+JOIN "KeyMgr"."KeyStorages" ON "KeyMgr"."KeyStorages".Name = hooks.cabinetName;

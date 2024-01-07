@@ -381,3 +381,20 @@ INSERT INTO "KeyMgr"."StorageHooks" (StorageID, RowNum, ColNum)
 SELECT "KeyMgr"."KeyStorages".KeyStorageID, hooks.row, hooks.col
 FROM hooks
 JOIN "KeyMgr"."KeyStorages" ON "KeyMgr"."KeyStorages".Name = hooks.cabinetName;
+
+-- -----------------------------------------------------------------------------
+-- KeyStatus Table
+-- -----------------------------------------------------------------------------
+INSERT INTO "KeyMgr"."KeyStatus" (Name, Description) VALUES
+  ('Lost', 'Key is lost'),
+  ('In', ''),
+  ('Out', ''),
+  ('Damaged', ''),
+  ('Missing', '');
+
+-- -----------------------------------------------------------------------------
+-- KeyType Table
+-- -----------------------------------------------------------------------------
+INSERT INTO "KeyMgr"."KeyType" (Name) VALUES 
+  ('Change Key'), 
+  ('Master Key');

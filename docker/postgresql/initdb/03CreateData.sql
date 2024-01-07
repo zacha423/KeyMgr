@@ -262,3 +262,4 @@ INSERT INTO "KeyMgr"."PersonGroups" (Name, ParentGroupID)
 SELECT groups.GroupName, "KeyMgr"."PersonGroups".PersonGroupID
 FROM groups
 LEFT OUTER JOIN "KeyMgr"."PersonGroups" ON "KeyMgr"."PersonGroups".Name = groups.ParentName;
+

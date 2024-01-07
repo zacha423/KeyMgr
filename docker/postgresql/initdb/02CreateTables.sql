@@ -299,6 +299,56 @@ CREATE TABLE "KeyMgr"."PersonGroups" (
 ALTER TABLE IF EXISTS "KeyMgr"."PersonGroups"
   OWNER TO keymgr_global;
 
+DROP TABLE IF EXISTS "KeyMgr"."Persons";
+CREATE TABLE "KeyMgr"."Persons" (
+  PersonID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+  Username text NOT NULL,
+  FirstName text NOT NULL,
+  LastName text NOT NULL,
+  Email text NOT NULL,
+  Password text NOT NULL,
+  PRIMARY KEY (PersonID)
+);
+
+ALTER TABLE IF EXISTS "KeyMgr"."Persons"
+  OWNER TO keymgr_global;
+
+
+DROP TABLE IF EXISTS "KeyMgr"."PersonGroupMemberships"; 
+CREATE TABLE "KeyMgr"."PersonGroupMemberships" (
+  PersonID bigint NOT NULL,
+  GroupID bigint NOT NULL,
+  PRIMARY KEY (PersonID, GroupID),
+  CONSTRAINT PersonGroupMemberships_PersonID_FK FOREIGN KEY (PersonID)
+    REFERENCES "KeyMgr"."Persons" (PersonID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE,
+  CONSTRAINT PersonGroupMemberships_GroupID_FK FOREIGN KEY (GroupID)
+    REFERENCES "KeyMgr"."PersonGroups" (PersonGroupID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+);
+
+ALTER TABLE IF EXISTS "KeyMgr"."PersonGroupMemberships"
+  OWNER TO keymgr_global;
+
+DROP TABLE IF EXISTS "KeyMgr"."PersonRoleMemberships";
+CREATE TABLE "KeyMgr"."PersonRoleMemberships" (
+  PersonID bigint NOT NULL,
+  RoleID bigint NOT NULL,
+  PRIMARY KEY (PersonID, RoleID),
+  CONSTRAINT PersonRoleMemberships_PersonID_FK FOREIGN KEY (PersonID)
+    REFERENCES "KeyMgr"."Persons" (PersonID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE,
+  CONSTRAINT PersonRoleMemberships_RoleID_FK FOREIGN KEY (RoleID)
+    REFERENCES "KeyMgr"."UserRoles" (RoleID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+);
+
+ALTER TABLE IF EXISTS "KeyMgr"."PersonRoleMemberships"
+  OWNER TO keymgr_global;
 -- -----------------------------------------------------------------------------
 -- Tables to represent a key.
 -- -----------------------------------------------------------------------------

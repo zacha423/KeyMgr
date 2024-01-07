@@ -263,3 +263,75 @@ SELECT groups.GroupName, "KeyMgr"."PersonGroups".PersonGroupID
 FROM groups
 LEFT OUTER JOIN "KeyMgr"."PersonGroups" ON "KeyMgr"."PersonGroups".Name = groups.ParentName;
 
+-- -----------------------------------------------------------------------------
+-- Persons Table
+-- -----------------------------------------------------------------------------
+INSERT INTO "KeyMgr"."Persons" (Username, FirstName, LastName, Email, Password) VALUES 
+  ('admin', 'KeyMgr', 'Admin', 'admin@keymgr.com', 'admin123'),
+  ('locksmith', 'Lock', 'Smith', 'locksmith@keymgr.com', 'locksmith123'),
+  ('issuer', 'Key', 'Issuer', 'KeyIssuer@keymgr.com', 'keyissuer123'),
+  
+  ('authority', 'Department', 'Assistant', 'depassist@keymgr.com', 'Spring2024!'),
+  ('requestor', 'Prof', 'CompSci', 'prof@keymgr.com', 'Spring2024!'),
+  ('holder', 'Student', 'CompSci', 'student@keymgr.com', 'Spring2024!');
+
+-- -----------------------------------------------------------------------------
+-- Person/PersonGroups (PersonGroupMemberships) Table
+-- -----------------------------------------------------------------------------
+WITH usersAndGroups (Username, GroupName) AS (VALUES
+  ('authority', 'School of Natural Sciences'),
+  ('authority', 'Staff'),
+  ('requestor', 'Computer Science'),
+  ('requestor', 'Faculty'),
+  ('holder', 'Computer Science'),
+  ('holder', 'Undergraduate Students')  
+)
+INSERT INTO "KeyMgr"."PersonGroupMemberships" (PersonID, GroupID)
+Select "KeyMgr"."Persons".PersonID, "KeyMgr"."PersonGroups".PersonGroupID
+FROM usersAndGroups
+JOIN "KeyMgr"."Persons" ON "KeyMgr"."Persons".Username = usersAndGroups.Username
+JOIN "KeyMgr"."PersonGroups" ON "KeyMgr"."PersonGroups".Name = usersAndGroups.GroupName;
+
+-- -----------------------------------------------------------------------------
+-- Users/Roles (PersonRoleMemberships)
+-- -----------------------------------------------------------------------------
+INSERT INTO "KeyMgr"."PersonRoleMemberships" (PersonID, RoleID)
+SELECT "KeyMgr"."Persons".PersonID, "KeyMgr"."UserRoles".RoleID 
+FROM "KeyMgr"."Persons" 
+JOIN "KeyMgr"."UserRoles" ON "KeyMgr"."UserRoles".Name = 'Key Holder';
+
+WITH requestors (Name) AS (VALUES
+  ('authority'), ('requestor'), ('locksmith'), ('issuer')
+)
+INSERT INTO "KeyMgr"."PersonRoleMemberships" (PersonID, RoleID)
+SELECT "KeyMgr"."Persons".PersonID, "KeyMgr"."UserRoles".RoleID 
+FROM requestors 
+JOIN "KeyMgr"."Persons" ON "KeyMgr"."Persons".Username = requestors.Name 
+JOIN "KeyMgr"."UserRoles" ON "KeyMgr"."UserRoles".Name = 'Key Requestor';
+
+WITH authorities (Name) AS (VALUES
+  ('authority'), ('issuer'), ('locksmith')
+)
+INSERT INTO "KeyMgr"."PersonRoleMemberships" (PersonID, RoleID)
+SELECT "KeyMgr"."Persons".PersonID, "KeyMgr"."UserRoles".RoleID
+FROM authorities
+JOIN "KeyMgr"."Persons" ON "KeyMgr"."Persons".Username = authorities.Name
+JOIN "KeyMgr"."UserRoles" ON "KeyMgr"."UserRoles".Name = 'Key Authority';
+
+WITH issuers (Name) AS (VALUES
+  ('issuer')
+)
+INSERT INTO "KeyMgr"."PersonRoleMemberships" (PersonID, RoleID)
+SELECT "KeyMgr"."Persons".PersonID, "KeyMgr"."UserRoles".RoleID
+FROM issuers
+JOIN "KeyMgr"."Persons" ON "KeyMgr"."Persons".Username = issuers.Name 
+JOIN "KeyMgr"."UserRoles" ON "KeyMgr"."UserRoles".Name = 'Key Issuer';
+
+WITH locksmiths (Name) AS (VALUES
+  ('locksmith')
+)
+INSERT INTO "KeyMgr"."PersonRoleMemberships" (PersonID, RoleID)
+SELECT "KeyMgr"."Persons".PersonID, "KeyMgr"."UserRoles".RoleID 
+FROM locksmiths 
+JOIN "KeyMgr"."Persons" ON "KeyMgr"."Persons".Username = locksmiths.Name 
+JOIN "KeyMgr"."UserRoles" ON "KeyMgr"."UserRoles".Name = 'Locksmith';

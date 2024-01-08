@@ -531,3 +531,23 @@ CREATE TABLE "KeyMgr"."KeyAuthorizations" (
 
 ALTER TABLE IF EXISTS "KeyMgr"."KeyAuthorizations"
   OWNER TO keymgr_global;
+
+DROP TABLE IF EXISTS "KeyMgr"."AuthorizedKeys";
+CREATE TABLE "KeyMgr"."AuthorizedKeys" (
+  AuthID bigint NOT NULL,
+  KeyID bigint NOT NULL,
+  DueDate date,
+  Deposit numeric (10, 4) DEFAULT 0,
+  PRIMARY KEY (AuthID, KeyID),
+  CONSTRAINT AuthorizedKeys_AutHID_FK FOREIGN KEY (AuthID)
+    REFERENCES "KeyMgr"."KeyAuthorizations" (AuthID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE,
+  CONSTRAINT AuthorizedKeys_KeyID_FK FOREIGN KEY (KeyID)
+    REFERENCES "KeyMgr"."Keys" (KeyID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+);
+
+ALTER TABLE IF EXISTS "KeyMgr"."AuthorizedKeys"
+  OWNER TO keymgr_global;

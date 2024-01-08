@@ -456,3 +456,18 @@ FROM agreements
 JOIN "KeyMgr"."KeyAuthStatus" ON "KeyMgr"."KeyAuthStatus".Name = agreements.statusName
 JOIN "KeyMgr"."Persons" Requestors ON Requestors.Username = agreements.requestorUName 
 JOIN "KeyMgr"."Persons" Holders ON Holders.Username = agreements.holderUName;
+
+-- -----------------------------------------------------------------------------
+-- KeyAuthorizations/Keys (AuthorizedKeys) Junction Tables
+-- -----------------------------------------------------------------------------
+WITH authkeys (KeyHolder, KeySerial, KeyCopy, DueDate, Deposit) AS (VALUES 
+  ('holder', 'ACE20', 16, '2024/05/18', 25.00),
+  ('requestor', 'ACE20', 15, NULL, NULL),
+  ('authority', 'ACC19', 16, NULL, NULL)
+)
+INSERT INTO "KeyMgr"."AuthorizedKeys" (AuthID, KeyID, DueDate, Deposit)
+SELECT "KeyMgr"."KeyAuthorizations".AuthID, keys.KeyID, authkeys.DueDate::date, authKeys.Deposit::numeric(10,4)
+FROM authkeys
+JOIN "KeyMgr"."Persons" ON "KeyMgr"."Persons".Username = authkeys.KeyHolder
+JOIN "KeyMgr"."KeyAuthorizations" ON "KeyMgr"."KeyAuthorizations".KeyHolderID = "KeyMgr"."Persons".PersonID
+JOIN "KeyMgr"."Keys" keys ON keys.SerialNumber = authkeys.KeySerial and keys.CopyNumber = authkeys.KeyCopy;

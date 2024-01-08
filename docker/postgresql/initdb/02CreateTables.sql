@@ -506,3 +506,25 @@ CREATE TABLE "KeyMgr"."KeyAuthStatus" (
 
 ALTER TABLE IF EXISTS "KeyMgr"."KeyAuthStatus"
   OWNER TO keymgr_global;
+
+DROP TABLE IF EXISTS "KeyMgr"."KeyAuthorizations";
+CREATE TABLE "KeyMgr"."KeyAuthorizations" (
+  AuthID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+  Agreement text NOT NULL, -- probably needs refinement still
+  StatusID bigint NOT NULL,
+  KeyHolderID bigint NOT NULL,
+  KeyRequestorID bigint NOT NULL,
+  PRIMARY KEY (AuthID),
+  CONSTRAINT KeyAuthorizations_StatusID_FK FOREIGN KEY (StatusID)
+    REFERENCES "KeyMgr"."KeyAuthStatus" (StatusID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE,
+  CONSTRAINT KeyAuthorizations_KeyHolderID_FK FOREIGN KEY (KeyHolderID)
+    REFERENCES "KeyMgr"."Persons" (PersonID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE,
+  CONSTRAINT KeyAuthorizations_KeyRequestorID_FK FOREIGN KEY (KeyRequestorID)
+    REFERENCES "KeyMgr"."Persons" (PersonID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+);

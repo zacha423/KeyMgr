@@ -431,7 +431,7 @@ SELECT keys.KeyID, "KeyMgr"."Locks".LockID
 FROM keys
 JOIN "KeyMgr"."Rooms" ON "KeyMgr"."Rooms".RoomNumber = '222'
 JOIN "KeyMgr"."Doors" ON "KeyMgr"."Doors".RoomID = "KeyMgr"."Rooms".RoomID
-JOIN "KeyMgr"."Locks" ON "KeyMgr"."Locks".DoorID = "KeyMgr"."Doors".DoorID
+JOIN "KeyMgr"."Locks" ON "KeyMgr"."Locks".DoorID = "KeyMgr"."Doors".DoorID;
 
 -- -----------------------------------------------------------------------------
 -- KeyAuthStatus Table
@@ -441,3 +441,18 @@ INSERT INTO "KeyMgr"."KeyAuthStatus" (Name, Description) VALUES
   ('Active', ''),
   ('Ready for pickup', ''),
   ('Requested', 'Request has been submitted');
+
+-- -----------------------------------------------------------------------------
+-- KeyAuthorizations Table
+-- -----------------------------------------------------------------------------
+WITH agreements (agreement, statusName, requestorUName, holderUName) AS (VALUES
+  ('yes', 'Pending', 'requestor', 'holder'),
+  ('agree', 'Active', 'requestor', 'requestor'),
+  ('I suppose so', 'Ready for pickup', 'authority', 'authority')
+)
+INSERT INTO "KeyMgr"."KeyAuthorizations" (Agreement, StatusID, KeyHolderID, KeyRequestorID)
+SELECT agreements.agreement, "KeyMgr"."KeyAuthStatus".StatusID, Holders.PersonID, Requestors.PersonID
+FROM agreements
+JOIN "KeyMgr"."KeyAuthStatus" ON "KeyMgr"."KeyAuthStatus".Name = agreements.statusName
+JOIN "KeyMgr"."Persons" Requestors ON Requestors.Username = agreements.requestorUName 
+JOIN "KeyMgr"."Persons" Holders ON Holders.Username = agreements.holderUName;

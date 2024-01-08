@@ -425,4 +425,10 @@ JOIN "KeyMgr"."KeyStatus" ON "KeyMgr"."KeyStatus".Name = keys.Status;
 -- -----------------------------------------------------------------------------
 -- Keys/Locks (LocksOpenedByKeys) Junction Table
 -- -----------------------------------------------------------------------------
-
+WITH keys AS (SELECT * FROM "KeyMgr"."Keys" WHERE SerialNumber ='ACE20')
+INSERT INTO "KeyMgr"."LocksOpenedByKeys" (KeyID, LockID)
+SELECT keys.KeyID, "KeyMgr"."Locks".LockID
+FROM keys
+JOIN "KeyMgr"."Rooms" ON "KeyMgr"."Rooms".RoomNumber = '222'
+JOIN "KeyMgr"."Doors" ON "KeyMgr"."Doors".RoomID = "KeyMgr"."Rooms".RoomID
+JOIN "KeyMgr"."Locks" ON "KeyMgr"."Locks".DoorID = "KeyMgr"."Doors".DoorID

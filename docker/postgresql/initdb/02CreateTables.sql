@@ -473,7 +473,6 @@ CREATE TABLE "KeyMgr"."Keys" (
     ON DELETE CASCADE
 );
 
--- Junction table for a key's openable locks
 DROP TABLE IF EXISTS "KeyMgr"."LocksOpenedByKeys";
 CReATE TABLE "KeyMgr"."LocksOpenedByKeys" (
   KeyID bigint NOT NULL,

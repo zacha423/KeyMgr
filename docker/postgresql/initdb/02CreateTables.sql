@@ -551,3 +551,21 @@ CREATE TABLE "KeyMgr"."AuthorizedKeys" (
 
 ALTER TABLE IF EXISTS "KeyMgr"."AuthorizedKeys"
   OWNER TO keymgr_global;
+
+DROP TABLE IF EXISTS "KeyMgr"."KeyHolderContacts";
+CREATE TABLE "KeyMgr"."KeyHolderContacts" (
+  AuthID bigint NOT NULL,
+  PersonID bigint NOT NULL,
+  PRIMARY KEY (AuthID, PersonID),
+  CONSTRAINT KeyHolderContacts_AuthID_FK FOREIGN KEY (AuthID)
+    REFERENCES "KeyMgr"."KeyAuthorizations" (AuthID)
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE,
+  CONSTRAINT KeyHolderContacts_PersonID_FK FOREIGN KEY (PersonID)
+    REFERENCES "KeyMgr"."Persons" (PersonID)
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+);
+
+ALTER TABLE IF EXISTS "KeyMgr"."KeyHolderContacts"
+  OWNER TO keymgr_global;

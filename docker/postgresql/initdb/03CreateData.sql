@@ -471,3 +471,18 @@ FROM authkeys
 JOIN "KeyMgr"."Persons" ON "KeyMgr"."Persons".Username = authkeys.KeyHolder
 JOIN "KeyMgr"."KeyAuthorizations" ON "KeyMgr"."KeyAuthorizations".KeyHolderID = "KeyMgr"."Persons".PersonID
 JOIN "KeyMgr"."Keys" keys ON keys.SerialNumber = authkeys.KeySerial and keys.CopyNumber = authkeys.KeyCopy;
+
+-- -----------------------------------------------------------------------------
+-- KeyAuthorizations/Persons (KeyHolderContacts) Junction Table
+-- -----------------------------------------------------------------------------
+WITH contacts (KeyHolder, Contact) AS (VALUES 
+  ('requestor', 'authority'),
+  ('holder', 'requestor'),
+  ('holder', 'authority')
+)
+INSERT INTO "KeyMgr"."KeyHolderContacts" (AuthID, PersonID)
+SELECT Auths.AuthID, People.PersonID 
+FROM contacts
+JOIN "KeyMgr"."Persons" Holders ON Holders.Username = contacts.KeyHolder
+JOIN "KeyMgr"."Persons" People ON People.Username = contacts.Contact
+JOIN "KeyMgr"."KeyAuthorizations" Auths ON Auths.KeyHolderID = Holders.PersonID;

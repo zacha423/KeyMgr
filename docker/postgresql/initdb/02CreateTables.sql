@@ -430,6 +430,48 @@ CREATE TABLE "KeyMgr"."KeyType" (
 
 ALTER TABLE IF EXISTS "KeyMgr"."KeyType"
   OWNER TO keymgr_global;
+
+DROP TABLE IF EXISTS "KeyMgr"."Keys";
+CREATE TABLE "KeyMgr"."Keys" (
+  KeyID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+  KeyLevel text NOT NULL,
+  KeySystem text,
+  CopyNumber smallint NOT NULL DEFAULT 0,
+  SerialNumber text NOT NULL GENERATED ALWAYS AS (KeyLevel::text || KeySystem::text) STORED,
+  Bitting smallint[],
+  BlindCode text,
+  MainAngles text,
+  DoubleAngles text,
+  ReplacementCost numeric (10, 4),
+  ValidCut boolean,
+  DateUpdated timestamptz,
+  StorageHookID bigint NOT NULL,
+  StatusID bigint NOT NULL,
+  KeywayID bigint NOT NULL,
+  MasterKeySystemID bigint NOT NULL,
+  PRIMARY KEY (KeyID),
+  CONSTRAINT Keys_StorageHookID_FK FOREIGN KEY (StorageHookID)
+    REFERENCES "KeyMgr"."StorageHooks" (HookID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE,
+  CONSTRAINT Keys_StatusID_FK FOREIGN KEY (StatusID)
+    REFERENCES "KeyMgr"."KeyStatus" (StatusID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE,
+  CONSTRAINT Keys_KeywayID_FK FOREIGN KEY (KeywayID)
+    REFERENCES "KeyMgr"."Keyways" (KeywayID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE,
+  CONSTRAINT Keys_MasterKeySystemID_FK FOREIGN KEY (MasterKeySystemID)
+    REFERENCES "KeyMgr"."MasterKeySystems" (MKSID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+);
+
+-- Junction table for a key's openable locks
+
+
+-- 
 -- -----------------------------------------------------------------------------
 -- Tables to represent a key authorization agreement.
 -- -----------------------------------------------------------------------------

@@ -398,3 +398,23 @@ INSERT INTO "KeyMgr"."KeyStatus" (Name, Description) VALUES
 INSERT INTO "KeyMgr"."KeyType" (Name) VALUES 
   ('Change Key'), 
   ('Master Key');
+
+-- -----------------------------------------------------------------------------
+-- Keys Table
+-- -----------------------------------------------------------------------------
+WITH keys (KeyLevel, KeySystem, CopyNumber, Cabinet, Row, Col, Status, Keyway, MKS) AS (VALUES
+  ('ACE', '20', 16, 'Cabinet A', 1, 1, 'Out', 'KW1', 'Computer Science'),
+  ('ACE', '20', 15, 'Cabinet A', 1, 1, 'Out', 'KW1', 'Computer Science'),
+  ('ACC', '19', 16, 'Cabinet A', 1, 2, 'In', 'KW1', 'Computer Science'),
+  ('ACE', '20', 1, 'Cabinet A', 2, 1, 'Lost', 'KW10', 'Computer Science')
+)
+INSERT INTO "KeyMgr"."Keys" (KeyLevel, KeySystem, CopyNumber, StorageHookID, StatusID, KeywayID, MasterKeySystemID)
+SELECT keys.KeyLevel, keys.KeySystem, keys.CopyNumber, "KeyMgr"."StorageHooks".HookID, "KeyMgr"."KeyStatus".StatusID, "KeyMgr"."Keyways".KeywayID, "KeyMgr"."MasterKeySystems".MKSID 
+FROM keys
+JOIN "KeyMgr"."KeyStorages" ON "KeyMgr"."KeyStorages".Name = keys.Cabinet
+JOIN "KeyMgr"."StorageHooks" ON "KeyMgr"."StorageHooks".StorageID = "KeyMgr"."KeyStorages".KeyStorageID 
+AND "KeyMgr"."StorageHooks".RowNum = keys.Row 
+AND "KeyMgr"."StorageHooks".ColNum = keys.Col
+JOIN "KeyMgr"."Keyways" ON "KeyMgr"."Keyways".Name = keys.Keyway
+JOIN "KeyMgr"."MasterKeySystems" ON "KeyMgr"."MasterKeySystems".Name = keys.MKS
+JOIN "KeyMgr"."KeyStatus" ON "KeyMgr"."KeyStatus".Name = keys.Status;

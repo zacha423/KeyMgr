@@ -9,7 +9,6 @@
 -- Tables to represent an address.
 -- -----------------------------------------------------------------------------
 
--- Country
 DROP TABLE IF EXISTS "KeyMgr"."Countries";
 CREATE TABLE "KeyMgr"."Countries"
 (
@@ -486,9 +485,21 @@ CReATE TABLE "KeyMgr"."LocksOpenedByKeys" (
     REFERENCES "KeyMgr"."Locks" (LockID) MATCH FULL
     ON UPDATE NO ACTION
     ON DELETE CASCADE
-)
+);
 
--- 
+ALTER TABLE IF EXISTS "KeyMgr"."LocksOpenedByKeys"
+  OWNER TO keymgr_global;
+
 -- -----------------------------------------------------------------------------
 -- Tables to represent a key authorization agreement.
 -- -----------------------------------------------------------------------------
+DROP TABLE IF EXISTS "KeyMgr"."KeyAuthStatus";
+CREATE TABLE "KeyMgr"."KeyAuthStatus" (
+  StatusID bigint NOT NULL  GENERATED ALWAYS  AS IDENTITY,
+  Name text NOT NULL,
+  Description text,
+  PRIMARY KEY (StatusID)
+);
+
+ALTER TABLE IF EXISTS "KeyMgr"."KeyAuthStatus"
+  OWNER TO keymgr_global;

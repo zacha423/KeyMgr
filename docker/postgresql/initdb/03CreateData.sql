@@ -222,7 +222,7 @@ JOIN "KeyMgr"."Keyways" ON "KeyMgr"."Keyways".Name = locks.keyway
 JOIN "KeyMgr"."LockModels" ON "KeyMgr"."LockModels".Name = locks.model
 LEFT OUTER JOIN "KeyMgr"."MasterKeySystems" ON "KeyMgr"."MasterKeySystems".Name = locks.keySystem
 JOIN "KeyMgr"."Rooms" ON "KeyMgr"."Rooms".RoomNumber = locks.RoomNumber
-JOIN "KeyMgr"."Doors" ON "KeyMgr"."Doors".RoomID = "KeyMgr"."Rooms".RoomID
+JOIN "KeyMgr"."Doors" ON "KeyMgr"."Doors".RoomID = "KeyMgr"."Rooms".RoomID;
 
 -- -----------------------------------------------------------------------------
 -- Locks/MessageTemplates (LockMessages) Junction Table
@@ -432,3 +432,12 @@ FROM keys
 JOIN "KeyMgr"."Rooms" ON "KeyMgr"."Rooms".RoomNumber = '222'
 JOIN "KeyMgr"."Doors" ON "KeyMgr"."Doors".RoomID = "KeyMgr"."Rooms".RoomID
 JOIN "KeyMgr"."Locks" ON "KeyMgr"."Locks".DoorID = "KeyMgr"."Doors".DoorID
+
+-- -----------------------------------------------------------------------------
+-- KeyAuthStatus Table
+-- -----------------------------------------------------------------------------
+INSERT INTO "KeyMgr"."KeyAuthStatus" (Name, Description) VALUES 
+  ('Pending', ''),
+  ('Active', ''),
+  ('Ready for pickup', ''),
+  ('Requested', 'Request has been submitted');

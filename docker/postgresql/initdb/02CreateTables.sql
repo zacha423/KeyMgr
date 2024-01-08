@@ -472,6 +472,9 @@ CREATE TABLE "KeyMgr"."Keys" (
     ON DELETE CASCADE
 );
 
+ALTER TABLE IF EXISTS "KeyMgr"."Keys"
+  OWNER TO keymgr_global;
+
 DROP TABLE IF EXISTS "KeyMgr"."LocksOpenedByKeys";
 CReATE TABLE "KeyMgr"."LocksOpenedByKeys" (
   KeyID bigint NOT NULL,

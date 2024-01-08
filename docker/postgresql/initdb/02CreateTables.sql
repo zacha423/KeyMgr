@@ -528,3 +528,6 @@ CREATE TABLE "KeyMgr"."KeyAuthorizations" (
     ON UPDATE NO ACTION
     ON DELETE CASCADE
 );
+
+ALTER TABLE IF EXISTS "KeyMgr"."KeyAuthorizations"
+  OWNER TO keymgr_global;

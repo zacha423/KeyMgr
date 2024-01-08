@@ -558,14 +558,34 @@ CREATE TABLE "KeyMgr"."KeyHolderContacts" (
   PersonID bigint NOT NULL,
   PRIMARY KEY (AuthID, PersonID),
   CONSTRAINT KeyHolderContacts_AuthID_FK FOREIGN KEY (AuthID)
-    REFERENCES "KeyMgr"."KeyAuthorizations" (AuthID)
+    REFERENCES "KeyMgr"."KeyAuthorizations" (AuthID) MATCH FULL
     ON UPDATE NO ACTION
     ON DELETE CASCADE,
   CONSTRAINT KeyHolderContacts_PersonID_FK FOREIGN KEY (PersonID)
-    REFERENCES "KeyMgr"."Persons" (PersonID)
+    REFERENCES "KeyMgr"."Persons" (PersonID) MATCH FULL
     ON UPDATE NO ACTION
     ON DELETE CASCADE
 );
 
 ALTER TABLE IF EXISTS "KeyMgr"."KeyHolderContacts"
+  OWNER TO keymgr_global;
+
+DROP TABLE IF EXISTS "KeyMgr"."KeyAuthorizationMessages";
+CREATE TABLE "KeyMgr"."KeyAuthorizationMessages" (
+  AuthKeyMsgID bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+  KeyAuthID bigint NOT NULL,
+  KeyID bigint NOT NULL,
+  MessageTemplateID bigint NOT NULL,
+  PRIMARY KEY (AuthKeyMsgID),
+  CONSTRAINT KeyAuthMsg_AuthKeyMsg_ID_FK FOREIGN KEY (KeyAuthID, KeyID)
+    REFERENCES "KeyMgr"."AuthorizedKeys" (AuthID, KeyID) 
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE,
+  CONSTRAINT KeyAuthMsg_MessageTemplateID_FK FOREIGN KEY (MessageTemplateID) 
+    REFERENCES "KeyMgr"."MessageTemplates" (TemplateID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+);  
+
+ALTER TABLE IF EXISTS "KeyMgr"."KeyAuthorizationMessages"
   OWNER TO keymgr_global;

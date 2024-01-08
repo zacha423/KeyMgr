@@ -486,3 +486,12 @@ FROM contacts
 JOIN "KeyMgr"."Persons" Holders ON Holders.Username = contacts.KeyHolder
 JOIN "KeyMgr"."Persons" People ON People.Username = contacts.Contact
 JOIN "KeyMgr"."KeyAuthorizations" Auths ON Auths.KeyHolderID = Holders.PersonID;
+
+-- -----------------------------------------------------------------------------
+-- KeyAuthorizationMessages Table
+-- -----------------------------------------------------------------------------
+WITH AuthKeys AS (SELECT * FROM "KeyMgr"."AuthorizedKeys" AuthKey WHERE AuthKey.DueDate IS NOT NULL)
+INSERT INTO "KeyMgr"."KeyAuthorizationMessages" (KeyAuthID, KeyID, MessageTemplateID)
+SELECT AuthKeys.AuthID, AuthKeys.KeyID, Msg.TemplateID
+FROM AuthKeys
+JOIN "KeyMgr"."MessageTemplates" Msg ON Msg.Name = 'Due Date Reminder';

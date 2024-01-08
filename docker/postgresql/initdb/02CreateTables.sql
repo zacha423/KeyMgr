@@ -234,6 +234,7 @@ CREATE TABLE "KeyMgr"."Locks" (
   KeywayID bigint NOT NULL,
   LockModelID bigint NOT NULL,
   MasterKeySystemID bigint,
+  DoorID bigint,
   PRIMARY KEY (LockID),
   CONSTRAINT Locks_KeywayID_FK FOREIGN KEY (KeywayID)
     REFERENCES "KeyMgr"."Keyways" (KeywayID) MATCH FULL
@@ -245,6 +246,10 @@ CREATE TABLE "KeyMgr"."Locks" (
     ON DELETE CASCADE,
   CONSTRAINT Locks_MKSID_FK FOREIGN KEY (MasterKeySystemID)
     REFERENCES "KeyMgr"."MasterKeySystems" (MKSID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE,
+  CONSTRAINT Locks_DoorID_FK FOREIGN KEY (DoorID)
+    REFERENCES "KeyMgr"."Doors" (DoorID) MATCH FULL
     ON UPDATE NO ACTION
     ON DELETE CASCADE
 );
@@ -469,7 +474,20 @@ CREATE TABLE "KeyMgr"."Keys" (
 );
 
 -- Junction table for a key's openable locks
-
+DROP TABLE IF EXISTS "KeyMgr"."LocksOpenedByKeys";
+CReATE TABLE "KeyMgr"."LocksOpenedByKeys" (
+  KeyID bigint NOT NULL,
+  LockID bigint NOT NULL,
+  PRIMARY KEY (KeyID, LockID),
+  CONSTRAINT LocksOpenedByKeys_KeyID_FK FOREIGN KEY (KeyID)
+    REFERENCES "KeyMgr"."Keys" (KeyID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE,
+  CONSTRAINT LocksOpenedByKeys_LockID_FK FOREIGN KEY (LockID)
+    REFERENCES "KeyMgr"."Locks" (LockID) MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+)
 
 -- 
 -- -----------------------------------------------------------------------------

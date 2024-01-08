@@ -202,24 +202,27 @@ INSERT INTO "KeyMgr"."MessageTemplates" (Name, Message) VALUES
 -- -----------------------------------------------------------------------------
 -- Locks Table
 -- -----------------------------------------------------------------------------
-WITH locks (numPins, installDate, keyway, model, keySystem) AS (VALUES
- (6, '2023-07-22'::date, 'C', 'Everest', 'Computer Science'),
- (6, '2023-07-23'::date, 'C', 'Everest', 'Computer Science'),
- (6, '2023-07-24'::date, 'C', 'Everest', 'Strain'),
- (5, '2022-08-25'::date, 'KW1', 'Classic', 'Price'),
- (5, '2020-09-30'::date, 'KW10', 'Classic', '')
+WITH locks (numPins, installDate, keyway, model, keySystem, RoomNumber) AS (VALUES
+ (6, '2023-07-22'::date, 'C', 'Everest', 'Computer Science', ''),
+ (6, '2023-07-23'::date, 'C', 'Everest', 'Computer Science', '222'),
+ (6, '2023-07-24'::date, 'C', 'Everest', 'Strain', ''),
+ (5, '2022-08-25'::date, 'KW1', 'Classic', 'Price', ''),
+ (5, '2020-09-30'::date, 'KW10', 'Classic', '', '')
 )
-INSERT INTO "KeyMgr"."Locks" (numPins, dateUpdated, installDate, KeyWayID, LockModelID, MasterKeySystemID)
+INSERT INTO "KeyMgr"."Locks" (numPins, dateUpdated, installDate, KeyWayID, LockModelID, MasterKeySystemID, DoorID)
 SELECT locks.numPins, 
   (NOW() + (random() * (interval '90 days')) + '30 days'), 
   locks.installDate, 
   "KeyMgr"."Keyways".KeywayID, 
   "KeyMgr"."LockModels".LockModelID, 
-  "KeyMgr"."MasterKeySystems".MKSID
+  "KeyMgr"."MasterKeySystems".MKSID,
+  "KeyMgr"."Doors".DoorID
 FROM locks
 JOIN "KeyMgr"."Keyways" ON "KeyMgr"."Keyways".Name = locks.keyway
 JOIN "KeyMgr"."LockModels" ON "KeyMgr"."LockModels".Name = locks.model
-LEFT OUTER JOIN "KeyMgr"."MasterKeySystems" ON "KeyMgr"."MasterKeySystems".Name = locks.keySystem;
+LEFT OUTER JOIN "KeyMgr"."MasterKeySystems" ON "KeyMgr"."MasterKeySystems".Name = locks.keySystem
+JOIN "KeyMgr"."Rooms" ON "KeyMgr"."Rooms".RoomNumber = locks.RoomNumber
+JOIN "KeyMgr"."Doors" ON "KeyMgr"."Doors".RoomID = "KeyMgr"."Rooms".RoomID
 
 -- -----------------------------------------------------------------------------
 -- Locks/MessageTemplates (LockMessages) Junction Table
@@ -418,3 +421,8 @@ AND "KeyMgr"."StorageHooks".ColNum = keys.Col
 JOIN "KeyMgr"."Keyways" ON "KeyMgr"."Keyways".Name = keys.Keyway
 JOIN "KeyMgr"."MasterKeySystems" ON "KeyMgr"."MasterKeySystems".Name = keys.MKS
 JOIN "KeyMgr"."KeyStatus" ON "KeyMgr"."KeyStatus".Name = keys.Status;
+
+-- -----------------------------------------------------------------------------
+-- Keys/Locks (LocksOpenedByKeys) Junction Table
+-- -----------------------------------------------------------------------------
+

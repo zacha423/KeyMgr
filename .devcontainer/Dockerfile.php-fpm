@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y libpq-dev
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/include/postgresql/
 RUN docker-php-ext-install pdo_pgsql pgsql 
 
+RUN usermod -u 1000 www-data
 # Optionally, you can install other PHP extensions or dependencies as needed.
 # For example, if you need more extensions like gd, mbstring, etc., you can add them here.
 

@@ -71,7 +71,7 @@ services:
     volumes:
       - ../KeyMgr:/var/www/html
     command: >
-      | sh && chown -R www-data.www-data /var/www
+      | sh && chown -R www-data.www-data /var/www/html
     networks:
       - KeyMgr
   pgadmin:

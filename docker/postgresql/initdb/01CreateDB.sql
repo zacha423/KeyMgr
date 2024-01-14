@@ -26,7 +26,7 @@ CREATE ROLE keymgr_global_u WITH
 	INHERIT
 	NOREPLICATION
 	CONNECTION LIMIT -1
-	PASSWORD 'xxxxxx';
+	PASSWORD 'AdminPassword';
 GRANT keymgr_global TO keymgr_global_u WITH ADMIN OPTION;
 COMMENT ON ROLE keymgr_global_u IS 'Admin user for all KeyMgr resources';
 
@@ -51,7 +51,7 @@ CREATE ROLE keymgr_webro_u WITH
 	INHERIT
 	NOREPLICATION
 	CONNECTION LIMIT -1
-	PASSWORD 'abc123'; -- How to do shared/dynamic secret at load time?
+	PASSWORD 'ROPassword'; -- How to do shared/dynamic secret at load time?
 
 GRANT keymgr_readonly TO keymgr_webro_u;
 COMMENT ON ROLE keymgr_webro_u IS 'Read only user for web server connections.';
@@ -77,7 +77,7 @@ CREATE ROLE keymgr_webrw_u WITH
 	INHERIT
 	NOREPLICATION
 	CONNECTION LIMIT -1
-	PASSWORD 'cba321';
+	PASSWORD 'RWPassword';
 
 GRANT keymgr_readwrite TO keymgr_webrw_u;
 COMMENT ON ROLE keymgr_webrw_u IS 'Read/write user for web server connections.';

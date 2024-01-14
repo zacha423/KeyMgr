@@ -26,5 +26,13 @@
   ],
   "postCreateCommand": "sudo chown -R vscode ~/.ssh/* /workspaces",
   "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
-  "remoteUser": "vscode"
+  "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "xdebug.php-debug",     // IntelePhense may also be useful.
+        "hediet.vscode-drawio",
+        "theumletteam.umlet"]
+    }
+  }
 }

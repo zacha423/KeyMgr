@@ -6,7 +6,7 @@ RUN curl -sSL https://getcomposer.org/installer | php \
   && mv composer.phar /usr/local/bin/composer
 
 # Install Dependencies
-RUN apt-get update && apt-get install -y libpq-dev zip unzip\
+RUN apt-get update && apt-get install -y libpq-dev zip unzip postgresql \
   && docker-php-ext-configure pgsql -with-pgsql=/usr/include/postgresql/ \
   && docker-php-ext-install pdo_pgsql pgsql
 

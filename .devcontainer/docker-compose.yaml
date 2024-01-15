@@ -21,18 +21,20 @@ services:
       - nginx
     volumes:
       - ../../:/workspaces:cached
-      # Might be a better way to transfer host SSH keys, but it works.
+      # SSH-Agent would be a better way to transfer host SSH keys, 
+      # but this doesn't require admin rights if not an agent is not already installed.
       - ~/.ssh:/home/vscode/.ssh
     networks:
       - KeyMgr
 
   nginx:
-    image: nginx:stable-bullseye
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
     container_name: keymgr_nginx
     restart: unless-stopped
     volumes:
       - ../KeyMgr:/var/www/html
-      - ../docker/nginx/site.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php-fpm
       - postgres
@@ -74,6 +76,9 @@ services:
       | sh && chown -R www-data.www-data /var/www/html
     networks:
       - KeyMgr
+    environment:
+      XDEBUG_MODE: "debug,develop"
+      XDEBUG_CONFIG: client_host=keymgr_developer client_port=9003
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin4

@@ -80,7 +80,9 @@ services:
       XDEBUG_MODE: "debug,develop"
       XDEBUG_CONFIG: client_host=keymgr_developer client_port=9003
   pgadmin:
-    image: dpage/pgadmin4
+    build:
+      context: .
+      dockerfile: Dockerfile.pgadmin
     container_name: pgadmin4
     restart: unless-stopped
     depends_on:

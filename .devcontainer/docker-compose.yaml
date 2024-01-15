@@ -44,7 +44,7 @@ services:
       - KeyMgr
 
   postgres:
-    image: postgres:12.16-bullseye
+    image: postgres:16-alpine
     container_name: keymgr_postgres
     restart: unless-stopped
     ports:
@@ -53,7 +53,7 @@ services:
       # Use the postgres-data volume if you want to persist data locally. 
       # (Also uncomment volumes below.)
       #- postgres-data:/var/lib/postgresql/data
-      - postgres:/docker-entrypoint-initdb.d/
+      - ./postgres/:/docker-entrypoint-initdb.d/
     
     # Use the tmpfs mount if you want to reset the database 
     tmpfs: /var/lib/postgresql/data

@@ -13,17 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserRole extends Model
 {
   use HasFactory;
-
-  // /**
-  //  * The Primary key associated with the table. 
-  //  * (String is the content of the variable, not the PK data type.)
-  //  * 
-  //  * @var string
-  //  */
-  // protected $primaryKey = 'RoleID';
   public $timestamps = false;
-  // public $incrementing = true;
-  // protected $table = 'KeyMgr.UserRole';
 
   /**
    * Mass assignable attributes

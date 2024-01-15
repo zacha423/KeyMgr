@@ -5,9 +5,6 @@ namespace Database\Factories;
 use App\Models\UserRole;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserRole>
- */
 class UserRoleFactory extends Factory
 {
   /**
@@ -29,4 +26,3 @@ class UserRoleFactory extends Factory
    */
   protected $model = UserRole::class;
 }
-//https://laracasts.com/discuss/channels/laravel/pass-parameter-to-factory

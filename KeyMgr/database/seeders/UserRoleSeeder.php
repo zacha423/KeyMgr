@@ -26,18 +26,6 @@ class UserRoleSeeder extends Seeder
       ['name' => 'Admin'],
     );
 
-    // foreach ($roles as $role) {
-    //   UserRole::create($role);
-    // }
-
     UserRole::factory()->createMany($roles);
-
-
-    // $role = UserRole::create($roles[0]);
-    // $role->save();
-    // UserRole::createMany ($roles);
-    // $roles->save();
-    // UserRole::insert($roles);
-    // DB::table('user_roles')->insert($roles);
   }
 }

@@ -22,7 +22,8 @@
   "forwardPorts": [
     8080, // Nginx / Web Server
     8081, // PGAdmin4 Web Server
-    5432  // Postgres / Database
+    5432, // Postgres / Database
+    9003  // Xdebug
   ],
   "postCreateCommand": "sudo chown -R vscode ~/.ssh/* /workspaces",
   "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
@@ -30,9 +31,11 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "xdebug.php-debug",     // IntelePhense may also be useful.
+        "xdebug.php-debug",    
         "hediet.vscode-drawio",
-        "theumletteam.umlet"]
+        "theumletteam.umlet",
+        "devsense.phptools-vscode" // Intelephense is another option.
+      ]
     }
   }
 }

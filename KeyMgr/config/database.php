@@ -66,8 +66,10 @@ return [
     'pgsql' => [
       'read' => [
         'host' => env('DB_HOST', '127.0.0.1'),
-        'username' => env('DB_RO_USERNAME', 'ROUser'),
-        'password' => env('DB_RO_PASSWORD', 'ROPass'),
+        // 'username' => env('DB_RO_USERNAME', 'ROUser'),
+        // 'password' => env('DB_RO_PASSWORD', 'ROPass'),
+        'username' => env('DB_RW_USERNAME', 'RWUser'),
+        'password' => env('DB_RW_PASSWORD', 'RWPass'),
       ],
       'write' => [
         'host' => env('DB_HOST', '127.0.0.1'),

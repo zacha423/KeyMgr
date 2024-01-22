@@ -30,7 +30,7 @@ class UserGroup extends Model
     /**
      * Not mass assignable attributes
      * 
-     * @var array<int, unsignedBigInteger>
+     * @var array<int, mixed>
      */
     protected $guarded = [
       'parent_id_fk',

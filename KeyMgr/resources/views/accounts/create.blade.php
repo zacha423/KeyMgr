@@ -8,6 +8,6 @@
   <input name="username" type="text">username</input>
   <input name="email" type="email">email</input>
   <input name="password" type="password">password</input>
-  <input name="password_confirmed" type="password">confirm password</input>
+  <input name="password_confirmation" type="password">confirm password</input>
   <input type="submit"></input>
 </form>

@@ -5,71 +5,84 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
-    public function __construct() //temporary for testing
-    {
-        $this->middleware("auth")->except(["index","store","create","update","show","edit"]);
-    }
-    
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $users = User::all();
-        // return view ('viewpath/viewname');
-        return view ('accounts/index');
-        // return redirect ('/'); //do your logic to render a blade here.
-    }
+  public function __construct() //temporary for testing
+  {
+    $this->middleware("auth")->except(["index", "store", "create", "update", "show", "edit"]);
+  }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view ('accounts/create');
-    }
+  /**
+   * Display a listing of the resource.
+   */
+  public function index()
+  {
+    $users = User::all();
+    // return view ('viewpath/viewname');
+    return view('accounts/index');
+    // return redirect ('/'); //do your logic to render a blade here.
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreUserRequest $request)
-    {
-        //
-        return redirect ('/accounts');
-    }
+  /**
+   * Show the form for creating a new resource.
+   */
+  public function create()
+  {
+    return view('accounts/create');
+  }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        return view ('accounts/show');
-    }
+  /**
+   * Store a newly created resource in storage.
+   * 
+   * Expected form data:
+   * firstName             - the first name of the user
+   * lastName              - the last name of the user
+   * username              - the username for the account
+   * email                 - the user's email address
+   * password              - the user's password
+   * password_confirmation - confirming the user's password
+   */
+  public function store(StoreUserRequest $request)
+  {
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
-    {
-        return view ('accounts/edit');
-    }
+    $validated = $request->safe();
+    // return redirect('/accounts');
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateUserRequest $request, User $user)
-    {
-        return redirect ('/accounts');
-    }
+    User::factory()->create($validated->toArray());
+    return $validated->toArray();
+  }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        //needs delete header, later problem
-    }
+  /**
+   * Display the specified resource.
+   */
+  public function show(User $user)
+  {
+    return view('accounts/show');
+  }
+
+  /**
+   * Show the form for editing the specified resource.
+   */
+  public function edit(User $user)
+  {
+    return view('accounts/edit');
+  }
+
+  /**
+   * Update the specified resource in storage.
+   */
+  public function update(UpdateUserRequest $request, User $user)
+  {
+    return redirect('/accounts');
+  }
+
+  /**
+   * Remove the specified resource from storage.
+   */
+  public function destroy(User $user)
+  {
+    //needs delete header, later problem
+  }
 }

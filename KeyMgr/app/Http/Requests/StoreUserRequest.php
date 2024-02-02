@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illluminate\Validation\Rules\Password;
+use Illuminate\Validation\Rules\Password;
 
 class StoreUserRequest extends FormRequest
 {
@@ -29,9 +29,9 @@ class StoreUserRequest extends FormRequest
       'firstName' => 'required',
       'lastName' => 'required',
       'username' => ['required', 'unique:App\Models\User,username'],
-      // Email not yet validated to facilitate easier test accounts :)
+      // Email not yet validated beyond required to facilitate easier test account creation. :)
       'email' => ['required'/*, 'email:rfc,dns,spoof'*/],
-      'password' => ['required', 'confirmed', Password::min(self::PW_MIN_LEN)->letters()->mixedCase()->numbers()->symbols()->uncompromised()],
+      'password' => ['required', 'confirmed'],//, Password::min(self::PW_MIN_LEN)->letters()->mixedCase()->numbers()->symbols()->uncompromised()],
     ];
   }
 }

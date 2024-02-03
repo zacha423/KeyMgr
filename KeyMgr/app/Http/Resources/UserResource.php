@@ -17,12 +17,16 @@ class UserResource extends JsonResource
         // return parent::toArray($request);
         return [
             'id' => $this->id,
-            'firstName' => $this->firstName,
-            'lastName' => $this->lastName,
+            'name' => $this->getFullname(),
             'email' => $this->email,
             'username' => $this->username,
             'created' => $this->created_at,
             'updated' => $this->updated_at,
+            // TO DO: Add conditional attrib once RBAC configured / ready to implement.
+            // Q: Can cond. attrib. be based on route?
+            // for attrib: 
+            // 'firstName' => $this->firstName,
+            // 'lastName' => $this->lastName,
         ];
     }
 }

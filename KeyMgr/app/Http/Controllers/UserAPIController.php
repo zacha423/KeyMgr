@@ -32,7 +32,8 @@ class UserAPIController extends Controller
      */
     public function show(User $account)
     {
-        return new UserResource($account);
+        // return new UserResource($account);
+        return $account->toJson();
     }
 
     /**

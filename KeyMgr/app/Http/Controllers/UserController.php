@@ -14,7 +14,7 @@ class UserController extends Controller
 {
   public function __construct() //temporary for testing
   {
-    $this->middleware("auth")->except(["index", "store", "create", "update", "show", "edit"]);
+    $this->middleware("auth")->except(["index", "store", "create", "update", "show", "edit","destroy"]);
   }
 
   /**
@@ -58,15 +58,15 @@ class UserController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(User $user)
+  public function show(User $account)
   {
-    return view('accounts/show');
+    return view('accounts/show', ['account'=>$account->toJson(),]);
   }
 
   /**
    * Show the form for editing the specified resource.
    */
-  public function edit(User $user)
+  public function edit(User $account)
   {
     return view('accounts/edit');
   }
@@ -82,8 +82,10 @@ class UserController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(User $user)
+  public function destroy(User $account): RedirectResponse
   {
-    //needs delete header, later problem
+    $account->delete();
+
+    return redirect('/accounts');
   }
 }

@@ -6,7 +6,10 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
+use App\Http\Controllers\UserAPIController as UserAPI;
 class UserController extends Controller
 {
   public function __construct() //temporary for testing
@@ -44,14 +47,19 @@ class UserController extends Controller
    * password              - the user's password
    * password_confirmation - confirming the user's password
    */
-  public function store(StoreUserRequest $request)
+  public function store(/*StoreUser*/Request $request)
   {
+    // $temp = UserAPI::store($request);
+    $temp = Http::post ('localhost:/api/accounts', $request->all () );
+    return $temp;
+    // $validated = $request->safe();
+    
 
-    $validated = $request->safe();
+    // User::factory()->create($validated->toArray());
+    // return $validated->toArray();
     // return redirect('/accounts');
 
-    User::factory()->create($validated->toArray());
-    return $validated->toArray();
+
   }
 
   /**

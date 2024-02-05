@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Resources\UserResource;
 use App\Http\Resources\UserCollection;
+use App\Http\Requests\StoreUserRequest;
+use Illuminate\Http\Response;
 
 class UserAPIController extends Controller
 {
@@ -22,9 +23,17 @@ class UserAPIController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+      // $User = User::factory()->create($request->safe()->toArray());
+      // $err = $request->messages();
+      // response:
+      // http code 201
+      // URI goes in the Location header
+      // return $request->safe();
+      return 'test';
+      // return Response('', 201)->header('Content-Type', 'text/plain')->header('location',"/accounts/{$User->toArray()['id']}");
+
     }
 
     /**

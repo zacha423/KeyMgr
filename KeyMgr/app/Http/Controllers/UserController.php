@@ -47,19 +47,12 @@ class UserController extends Controller
    * password              - the user's password
    * password_confirmation - confirming the user's password
    */
-  public function store(/*StoreUser*/Request $request)
+  public function store(StoreUserRequest $request)
   {
-    // $temp = UserAPI::store($request);
-    $temp = Http::post ('localhost:/api/accounts', $request->all () );
-    return $temp;
-    // $validated = $request->safe();
+    $validated = $request->safe();
+    User::factory()->create($validated->toArray());
     
-
-    // User::factory()->create($validated->toArray());
-    // return $validated->toArray();
-    // return redirect('/accounts');
-
-
+    return redirect('/accounts');
   }
 
   /**

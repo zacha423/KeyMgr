@@ -29,3 +29,5 @@
     </li>
   </ol>
 </p>
+<h2>Errors</h2>
+{{ $errors }}

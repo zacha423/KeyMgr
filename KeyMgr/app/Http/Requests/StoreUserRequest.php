@@ -40,7 +40,8 @@ class StoreUserRequest extends FormRequest
   public function failedValidation(Validator $validator) {
     $errors = $validator->errors();
 
-    $response = response()->json(['errors' => $errors->messages(),], 400);
-    throw new HttpResponseException($response);
+    // $response = response()->json(['errors' => $errors->messages(),], 400);
+    // throw new HttpResponseException($response);
+    return view ('accounts/create', ['errors' => $errors->messages(),]);
   }
 }

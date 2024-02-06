@@ -50,13 +50,8 @@ services:
     ports:
       - 5432:5432
     volumes:
-      # Use the postgres-data volume if you want to persist data locally. 
-      # (Also uncomment volumes below.)
-      #- postgres-data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
       - ./postgres/:/docker-entrypoint-initdb.d/
-    
-    # Use the tmpfs mount if you want to reset the database 
-    tmpfs: /var/lib/postgresql/data
 
     environment:
       POSTGRES_PASSWORD: "keymgr"
@@ -102,7 +97,7 @@ services:
   
 volumes:
   pgadmin-data:
-  #postgres-data:
+  postgres-data:
 
 networks:
   KeyMgr:

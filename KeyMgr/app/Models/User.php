@@ -48,7 +48,10 @@ class User extends Authenticatable
     'password' => 'hashed',
   ];
 
-  public function getFullname () 
+  /**
+   * @return string Returns the fullname of the user.
+   */
+  public function getFullname () : string
   {
     return $this->firstName .' '. $this->lastName;
   }

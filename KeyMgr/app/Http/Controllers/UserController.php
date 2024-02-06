@@ -14,7 +14,9 @@ class UserController extends Controller
 {
   public function __construct() //temporary for testing
   {
-    $this->middleware("auth")->except(["index", "store", "create", "update", "show", "edit","destroy"]);
+    // If you need to remove the authentication prereq for testing, uncomment this line.
+    // Also add '*' to app/Http/Middleware/VerifyCSRFToken.php
+    // $this->middleware("auth")->except(["index", "store", "create", "update", "show", "edit","destroy"]);
   }
 
   /**
@@ -23,9 +25,8 @@ class UserController extends Controller
   public function index()
   {
     $users = User::all();
-    // return view ('viewpath/viewname');
+    
     return view('accounts/index');
-    // return redirect ('/'); //do your logic to render a blade here.
   }
 
   /**
@@ -68,15 +69,39 @@ class UserController extends Controller
    */
   public function edit(User $account)
   {
-    return view('accounts/edit');
+    return view('accounts/edit', ['user' => $account->toJson()]);
   }
 
   /**
    * Update the specified resource in storage.
    */
-  public function update(UpdateUserRequest $request, User $user)
+  public function update(UpdateUserRequest $request, User $account)
   {
-    return redirect('/accounts');
+    $data = $request->safe();
+
+    if (isset ($data['firstName'])) {
+      $account->firstName = $data['firstName'];
+    }
+
+    if (isset ($data['lastName'])) {
+      $account->lastName = $data['lastName'];
+    }
+
+    if (isset ($data['username'])) {
+      $account->username = $data['username'];
+    }
+
+    if (isset ($data['email'])) {
+      $account->email = $data['email'];
+    }
+
+    if (isset ($data['password'])) {
+      $account->password = $data['password'];
+    }
+
+    $account->save ();
+
+    return redirect("/accounts/$account->id");
   }
 
   /**

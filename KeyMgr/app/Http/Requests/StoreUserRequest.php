@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\Rules\Password;
 
@@ -40,8 +39,6 @@ class StoreUserRequest extends FormRequest
   public function failedValidation(Validator $validator) {
     $errors = $validator->errors();
 
-    // $response = response()->json(['errors' => $errors->messages(),], 400);
-    // throw new HttpResponseException($response);
     return view ('accounts/create', ['errors' => $errors->messages(),]);
   }
 }

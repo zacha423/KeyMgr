@@ -22,6 +22,7 @@ class StateFactory extends Factory
     return [
       'name' => $city.Address::state(),
       'abbreviation' => $city.Address::stateAbbr(),
+      'country_id' => 1,
     ];
   }
 }

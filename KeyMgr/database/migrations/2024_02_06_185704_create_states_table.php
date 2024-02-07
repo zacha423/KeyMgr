@@ -16,6 +16,7 @@ return new class extends Migration {
       $table->id();
       $table->string('name');
       $table->string('abbreviation')->unique();
+      $table->foreignId('country_id')->constrained();
       $table->timestamps();
     });
   }

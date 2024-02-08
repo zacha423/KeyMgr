@@ -5,7 +5,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Faker\Provider\en_US\Address;
+use Illuminate\Support\Facades\DB;
+use App\Models\Country;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\State>
  */
@@ -18,11 +19,14 @@ class StateFactory extends Factory
    */
   public function definition(): array
   {
-    $city = fake()->city();
+    if (DB::table('countries')->count() <= 0) {
+      Country::factory()->createMany(3);
+    }
+
     return [
-      'name' => $city.Address::state(),
-      'abbreviation' => $city.Address::stateAbbr(),
-      'country_id' => 1,
+      'name' => fake()->state(),
+      'abbreviation' => fake()->stateAbbr(),
+      'country_id' => Country::all()->random(1)->first()->id,
     ];
   }
 }

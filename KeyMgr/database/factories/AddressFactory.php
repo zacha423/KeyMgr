@@ -24,21 +24,18 @@ class AddressFactory extends Factory
    */
   public function definition(): array
   {
-    
-    if (DB::table('countries')->count() <= 0) {
-      Country::factory()->createMany(3);
-    }
-    if (DB::table('states')->count() <= 0) {
-      State::factory()->createMany(3);
-    }
     if (DB::table('cities')->count() <= 0) {
       City::factory()->createMany(3);
     }
     if (DB::table('postal_codes')->count() <= 0) {
       PostalCode::factory()->createMany(3);
     }
+
+    
     return [
       'streetAddress' => fake()->streetAddress(),
+      'city_id' => City::all()->random(1)->first()->id,
+      'postal_code_id' => PostalCode::all()->random(1)->first()->id,
     ];
   }
 }

@@ -46,21 +46,20 @@ class AddressSeeder extends Seeder
       'name' => 'Forest Grove',
       'state_id' => $Oregon->id,
     ]);
+    
+    //create $addresses and foreach the array, or implement buildAddresses
     $this->buildAddress([
       'address' => '1370 N Adair St',
       'city' => 'Cornelius',
       'postal' => 97113
     ]);
 
-    // $codes = [['code' => 97113], ['code' => 97116], ['code' => 97123]];
-    // $Postals = PostalCode::factory()->createMany($codes);
-    // need array with iso3, country nme, state name, state abbrev, city, address, postalcode
-    // $data = fake()->address();
-    // echo $data;
-
-
+    $this->bulk();
   }
 
+  /**
+   * @return Address - the (newly created) address
+   */
   protected function buildAddress($address): Address
   {
     $city = City::where(['name' => $address['city']])->first();
@@ -70,9 +69,5 @@ class AddressSeeder extends Seeder
       'city_id' => $city->id, 
       'postal_code_id' => $postal->id
     ]);
-    // $address->address
-    // $address->city
-    // $address->postal
-    // return Address::first();
   }
 }

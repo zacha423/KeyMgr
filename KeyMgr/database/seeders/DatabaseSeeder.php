@@ -16,9 +16,10 @@ class DatabaseSeeder extends Seeder
   {
     $this->call(UserRoleSeeder::class);
     $this->call(UserGroupSeeder::class);
-    $this->call(CountrySeeder::class);
-    $this->call(StateSeeder::class);
-    $this->call(CitySeeder::class); 
+    // $this->call(CountrySeeder::class);
+    // $this->call(StateSeeder::class);
+    // $this->call(CitySeeder::class); 
+    $this->call(AddressSeeder::class);
     \App\Models\User::factory(10)->create();
   }
 }

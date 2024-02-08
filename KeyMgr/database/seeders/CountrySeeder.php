@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @author Zachary Abela-Gale <abel1325@pacificu.edu>
+ */
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -13,15 +15,6 @@ class CountrySeeder extends Seeder
    */
   public function run(): void
   {
-    //
-
-    $countries = [
-      ['ISOCode3' => 'USA', 'name' => 'United States of America'],
-    ];
-
-    Country::factory()->createMany($countries);
-
-    Country::factory()->createMany(3);
-    
+    Country::factory()->createMany(3); 
   }
 }

@@ -14,12 +14,6 @@ class StateSeeder extends Seeder
    */
   public function run(): void
   {
-    $states = [
-      ['name' => 'Oregon', 'abbreviation' => 'OR', 'country_id' => 1],
-      ['name' => 'Hawaii', 'abbreviation' => 'HI', 'country_id' => 1],
-    ];
-
-    State::factory()->createMany ($states);
-    // State::factory()->createMany (2);
+    State::factory()->createMany (3);
   }
 }

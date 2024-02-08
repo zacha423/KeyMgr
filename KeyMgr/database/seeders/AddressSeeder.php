@@ -6,23 +6,17 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Faker\Provider\en_US\Address as FakeAddress;
 use App\Models\Address;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
 use App\Models\PostalCode;
-use SebastianBergmann\Type\VoidType;
 
 class AddressSeeder extends Seeder
 {
   /**
    * Run the database seeds.
    */
-  private function bulk(): void
-  {
-    //seed each type and select randomly
-  }
   public function run(): void
   {
     $USA = Country::firstOrCreate([
@@ -54,7 +48,7 @@ class AddressSeeder extends Seeder
       'postal' => 97113
     ]);
 
-    $this->bulk();
+    Address::factory()->createMany (3);
   }
 
   /**

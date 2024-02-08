@@ -6,8 +6,6 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\DB;
-use App\Models\Country;
-use App\Models\State;
 use App\Models\City;
 use App\Models\PostalCode;
 
@@ -30,7 +28,6 @@ class AddressFactory extends Factory
     if (DB::table('postal_codes')->count() <= 0) {
       PostalCode::factory()->createMany(3);
     }
-
     
     return [
       'streetAddress' => fake()->streetAddress(),

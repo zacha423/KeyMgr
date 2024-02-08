@@ -6,7 +6,6 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\State;
-use app\models\Country;
 use Illuminate\Support\Facades\DB;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\City>
@@ -20,9 +19,6 @@ class CityFactory extends Factory
    */
   public function definition(): array
   {
-    if (DB::table('countries')->count() <= 0) {
-      Country::factory()->createMany(3);
-    }
     if (DB::table('states')->count() <= 0) {
       State::factory()->createMany(3);
     }

@@ -40,13 +40,33 @@ class AddressSeeder extends Seeder
       'name' => 'Forest Grove',
       'state_id' => $Oregon->id,
     ]);
-    
-    //create $addresses and foreach the array, or implement buildAddresses
-    $this->buildAddress([
-      'address' => '1370 N Adair St',
-      'city' => 'Cornelius',
-      'postal' => 97113
-    ]);
+
+    $addresses = [
+      [
+        'address' => '1370 N Adair St',
+        'city' => 'Cornelius',
+        'postal' => '97113',
+      ],
+      [
+        'address' => '2043 College Way',
+        'city' => 'Forest Grove',
+        'postal' => '97116',
+      ],
+      [
+        'address' => '2172 Cedar Street',
+        'city' => 'Forest Grove',
+        'postal' => '97116',
+      ],
+      [
+        'address' => '',
+        'city' => 'Hillsboro',
+        'postal' => '97123',
+      ],
+    ];
+
+    foreach ($addresses as $address) {
+      $this->buildAddress($address);
+    }
 
     Address::factory()->createMany (3);
   }

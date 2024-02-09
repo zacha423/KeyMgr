@@ -10,35 +10,35 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body {
-      background-color: #1e1e1e; /* Dark grayish background */
+      background-color: #1e1e1e;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
     }
     .form-container {
-      background-color: #2b2b2b; /* Darker gray background for the form */
+      background-color: #2b2b2b; 
       padding: 40px;
       border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); /* Darker box shadow for depth */
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); 
     }
     input[type="text"],
     input[type="email"],
     input[type="password"] {
-      background-color: #3e3e3e; /* Slightly darker background for text fields */
-      color: #d4d4d4; /* Whitish text color */
+      background-color: #3e3e3e; 
+      color: #d4d4d4; 
     }
     input[type="submit"] {
-      background-color: #3498db; /* Blue submit button */
+      background-color: #3498db; 
       color: white;
       border: none;
       cursor: pointer;
     }
     input[type="submit"]:hover {
-      background-color: #2980b9; /* Darker blue on hover */
+      background-color: #2980b9; 
     }
     ::placeholder {
-      color: #d4d4d4; /* Whitish placeholder text */
+      color: #d4d4d4; 
     }
   </style>
 </head>

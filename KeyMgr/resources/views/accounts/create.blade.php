@@ -1,33 +1,98 @@
-<h1>Accounts/Create Blade</h1>
-<p>This blade is a form to create an account.   
-  It was created using a default resource controller.</p>
-<form method="post" action="/accounts">
-  @csrf
-  <input name="firstName" type="text">firstName</input>
-  <input name="lastName" type="text">lastName</input>
-  <input name="username" type="text">username</input>
-  <input name="email" type="email">email</input>
-  <input name="password" type="password">password</input>
-  <input name="password_confirmation" type="password">confirm password</input>
-  <input type="submit"></input>
-</form>
-<h2>About</h2>
-<p>This blade template represents the form used to create a new User account. To create an account you need to:
-  <ol>
-    <li>Send a post request to /accounts/create<br>Include the following information (exact name - description):
-    <ul>
-      <li>firstName - the first name of the user</li>
-      <li>lastName - the last name of the user</li>
-      <li>username - the username for the account</li>
-      <li>email - the email address for the user account</li>
-      <li>password - the user's password</li>
-      <li>password_confirmation - confirming the user's password</li>
-    </ul>
-    </li>
-    <li>Tell Zach where to set the redirect path to.
-      <br>Currently this only displays the results of the form to the screen after saving it to the DB.
-    </li>
-  </ol>
-</p>
-<h2>Errors</h2>
-{{ $errors }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Tailwind CSS (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #1e1e1e; /* Dark grayish background */
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .form-container {
+      background-color: #2b2b2b; /* Darker gray background for the form */
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); /* Darker box shadow for depth */
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      background-color: #3e3e3e; /* Slightly darker background for text fields */
+      color: #d4d4d4; /* Whitish text color */
+    }
+    input[type="submit"] {
+      background-color: #3498db; /* Blue submit button */
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #2980b9; /* Darker blue on hover */
+    }
+    ::placeholder {
+      color: #d4d4d4; /* Whitish placeholder text */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="form-container">
+          <form method="post" action="/accounts">
+            @csrf
+
+            <!-- First Name -->
+            <div class="form-group mb-4">
+              <input name="firstName" type="text" class="form-control" placeholder="First Name" required>
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group mb-4">
+              <input name="lastName" type="text" class="form-control" placeholder="Last Name" required>
+            </div>
+
+            <!-- Username -->
+            <div class="form-group mb-4">
+              <input name="username" type="text" class="form-control" placeholder="Username" required>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group mb-4">
+              <input name="email" type="email" class="form-control" placeholder="Email" required>
+            </div>
+            
+            <!-- Password -->
+            <div class="form-group mb-4">
+              <input name="password" type="password" class="form-control" placeholder="Password" required>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group mb-6">
+              <input name="password_confirmation" type="password" class="form-control" placeholder="Confirm Password" required>
+            </div>
+
+            <!-- Submit -->
+            <div class="flex justify-between items-center">
+              <a class="text-sm text-gray-400 hover:text-gray-200" href="/">
+                Already registered?
+              </a>
+              <div class="form-group">
+                <input type="submit" value="Register" class="btn btn-primary">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

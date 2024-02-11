@@ -16,7 +16,8 @@
       "ppa": "false"
     },
     //Used to remote SSH into container, if desired... though devcontainers does magic
-    "ghcr.io/devcontainers/features/sshd:1":{} //May not actually be needed
+    "ghcr.io/devcontainers/features/sshd:1":{}, //May not actually be needed
+	  "ghcr.io/devcontainers/features/node:1": {},
   },
   "shutdownAction":"stopCompose",
   "forwardPorts": [

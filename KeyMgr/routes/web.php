@@ -1,6 +1,7 @@
 <?php
-
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +22,7 @@ Route::get('/', function () {
 Route::resources([
     'accounts' => UserController::class,
 ]);
+
+Route::post('/dashboard', function () {
+    return view('/dashboard/main');
+})->name('dashboard');;

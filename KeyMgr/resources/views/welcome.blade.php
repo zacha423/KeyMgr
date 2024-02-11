@@ -56,7 +56,7 @@
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="form-container">
-          <form method="post" action="/dashboard">
+          <form method="post" action="/login">
             @csrf
 
             <!-- Email -->

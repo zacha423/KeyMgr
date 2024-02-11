@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
     $this->call(CampusSeeder::class);
     $this->call(BuildingSeeder::class);
     $this->call(RoomSeeder::class);
+    $this->call(DoorSeeder::class);
     \App\Models\User::factory(10)->create();
   }
 }

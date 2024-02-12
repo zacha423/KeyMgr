@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>Registration Form</title>
   <!-- Bootstrap CSS -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <!-- Tailwind CSS (CDN) -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body {
-      background-color: #1e1e1e; 
+      background-color: #1e1e1e;
       height: 100vh;
       display: flex;
       justify-content: center;
@@ -23,8 +23,8 @@
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); 
     }
     input[type="text"],
-    input[type="password"],
-    input[type="email"] {
+    input[type="email"],
+    input[type="password"] {
       background-color: #3e3e3e; 
       color: #d4d4d4; 
     }
@@ -37,15 +37,6 @@
     input[type="submit"]:hover {
       background-color: #2980b9; 
     }
-    .btn-secondary {
-      background-color: #6c757d;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    .btn-secondary:hover {
-      background-color: #5a6268; 
-    }
     ::placeholder {
       color: #d4d4d4; 
     }
@@ -54,10 +45,25 @@
 <body>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-6">
+      <div class="col-md-8">
         <div class="form-container">
-          <form method="post" action="/login">
+          <form method="post" action="/accounts">
             @csrf
+
+            <!-- First Name -->
+            <div class="form-group mb-4">
+              <input name="firstName" type="text" class="form-control" placeholder="First Name" required>
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group mb-4">
+              <input name="lastName" type="text" class="form-control" placeholder="Last Name" required>
+            </div>
+
+            <!-- Username -->
+            <div class="form-group mb-4">
+              <input name="username" type="text" class="form-control" placeholder="Username" required>
+            </div>
 
             <!-- Email -->
             <div class="form-group mb-4">
@@ -69,10 +75,19 @@
               <input name="password" type="password" class="form-control" placeholder="Password" required>
             </div>
 
+            <!-- Confirm Password -->
+            <div class="form-group mb-6">
+              <input name="password_confirmation" type="password" class="form-control" placeholder="Confirm Password" required>
+            </div>
+
             <!-- Submit -->
-            <div class="form-group">
-              <input type="submit" value="Login" class="btn btn-primary mr-2">
-              <a href="/accounts/create" class="btn btn-secondary">Create Account</a>
+            <div class="flex justify-between items-center">
+              <a class="text-sm text-gray-400 hover:text-gray-200" href="/">
+                Already registered?
+              </a>
+              <div class="form-group">
+                <input type="submit" value="Register" class="btn btn-primary">
+              </div>
             </div>
           </form>
         </div>

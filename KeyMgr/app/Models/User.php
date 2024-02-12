@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @author Zachary Abela-Gale <abel1325@pacificu.edu>
+ * @todo Add relationships for UserGroup and UserRole.
+ */
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -45,7 +48,10 @@ class User extends Authenticatable
     'password' => 'hashed',
   ];
 
-  public function getFullname () 
+  /**
+   * @return string Returns the fullname of the user.
+   */
+  public function getFullname () : string
   {
     return $this->firstName .' '. $this->lastName;
   }

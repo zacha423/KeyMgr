@@ -1,7 +1,6 @@
 <?php
 /**
  * @author Zachary Abela-Gale <abel1325@pacificu.edu>
- * @todo Add FKs for UserGroup and UserRole relationship.
  */
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,15 +12,11 @@ return new class extends Migration {
    */
   public function up(): void
   {
-    Schema::create('users', function (Blueprint $table) {
+    Schema::create('states', function (Blueprint $table) {
       $table->id();
-      $table->string('firstName');
-      $table->string('lastName')->nullable();
-      $table->string('username')->unique();
-      $table->string('email')->unique();
-      $table->timestamp('email_verified_at')->nullable();
-      $table->string('password');
-      $table->rememberToken();
+      $table->string('name');
+      $table->string('abbreviation')->unique();
+      $table->foreignId('country_id')->constrained();
       $table->timestamps();
     });
   }
@@ -31,6 +26,6 @@ return new class extends Migration {
    */
   public function down(): void
   {
-    Schema::dropIfExists('users');
+    Schema::dropIfExists('states');
   }
 };

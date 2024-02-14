@@ -72,7 +72,6 @@
             <!-- Submit -->
             <div class="form-group">
               <input type="submit" value="Login" class="btn btn-primary mr-2">
-              <!-- <a href="/accounts/create" class="btn btn-secondary">Create Account</a> -->
               <a href="/register" class="btn btn-secondary">Create Account</a>
             </div>
           </form>

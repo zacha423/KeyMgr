@@ -20,48 +20,17 @@ class AddressWrapper {
     $country = Country::firstOrCreate ([
       'name' => $addressData['country'],
     ]);
-
     $state = $country->states()->save(State::firstOrNew(['name' => $addressData['state']]));
     $city = $state->cities()->save(City::firstOrNew(['name' => $addressData['city']])); 
     $postalCode = PostalCode::firstOrCreate ([
       'code' => $addressData['postalCode'],
     ]);
-    
-    // $address = $city->addresses()->save(
-    //   $postalCode->addresses()->save(
-    //     Address::firstOrNew(['streetAddress' => $addressData['streetAddress']])
-    //   )
-    // );
 
-    $addy = Address::firstOrNew(['streetAddress'=>$addressData['streetAddress']]);
-    echo 'a';
-    $addy->postal_code_id = $postalCode->id;
-    echo 'b';
-    // $addy->city()->save ($city)->save();
-    $addy->city_id = $city->id;
-    echo 'c';
-    $addy->save();
-    echo 'd';
-    // $state = State::firstOrCreate ([
-    //   'name' => $addressData['state'], 
-    //   'country_id' => $country->id,
-    // ]);
+    $address = Address::firstOrNew(['streetAddress'=>$addressData['streetAddress']]);
+    $address->postal_code_id = $postalCode->id;
+    $address->city_id = $city->id;
+    $address->save();
 
-    // $t = Country::where('name', '=', $addressData['country'])->firstOr(function)
-    // $city = City::firstOrCreate ([
-    //   'name' => $addressData['city'],
-    //   'state_id' => $state->id,
-    // ]);
-    // $postalCode = PostalCode::firstOrCreate ([
-    //   'code' => $addressData['postalCode'],
-    // ]);
-
-    return $addy;
-    // return Address::find(1);
-    // return Address::firstOrCreate ([
-    //   'streetAddress' => $addressData['streetAddress'],
-    //   'postal_code_id' => $postalCode->id,
-    //   'city_id' => $city->id,
-    // ]);
+    return $address;
   }
 }

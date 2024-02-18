@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @author Zachary Abela-Gale <abel1325@pacificu.edu>
+ */
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBuildingRequest;

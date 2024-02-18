@@ -10,6 +10,8 @@ class StoreCampusRequest extends FormRequest
 {
   /**
    * Determine if the user is authorized to make this request.
+   * 
+   * @todo Implement RBAC
    */
   public function authorize(): bool
   {

@@ -13,6 +13,8 @@ class CampusController extends Controller
 {
   /**
    * Display a listing of the campuses.
+   * 
+   * @todo Update with appropriate data for view. A Resource collection may be useful
    */
   public function index()
   {
@@ -24,6 +26,8 @@ class CampusController extends Controller
 
   /**
    * Show the form for creating a new campus.
+   * 
+   * @todo Update with appropriate data for view
    */
   public function create()
   {
@@ -35,6 +39,8 @@ class CampusController extends Controller
 
   /**
    * Store a newly created campus in storage.
+   * 
+   * @todo Update with appropriate view/redirection.
    */
   public function store(StoreCampusRequest $request)
   {
@@ -58,6 +64,8 @@ class CampusController extends Controller
 
   /**
    * Display the specified campus.
+   * 
+   * @todo Update with appropriate data. A Resource file may be useful.
    */
   public function show(Campus $campus)
   {
@@ -69,6 +77,8 @@ class CampusController extends Controller
 
   /**
    * Show the form for editing the specified campus.
+   * 
+   * @todo Update view with appropriate data
    */
   public function edit(Campus $campus)
   {
@@ -80,17 +90,45 @@ class CampusController extends Controller
 
   /**
    * Update the specified campus in storage.
+   * 
+   * @todo test w/ CSRF enabled
+   * @todo Update with appropriate redirect/view
    */
   public function update(UpdateCampusRequest $request, Campus $campus)
   {
     $data = $request->safe();
-
+    $mapped = array();
     if (isset ($data['name'])) 
     {
       $campus->name = $data['name'];
     }
 
+    if (isset ($data['Country']))
+    {
+      $mapped['country'] = $data['Country'];
+    }
 
+    if (isset ($data['State']))
+    {
+      $mapped['state'] = $data['State'];
+    }
+
+    if (isset ($data['City']))
+    {
+      $mapped['city'] = $data['City'];
+    }
+
+    if (isset ($data['Street']))
+    {
+      $mapped['streetAddress'] = $data['Street'];
+    }
+
+    if (isset ($data['Zip']))
+    {
+      $mapped['postalCode'] = $data['Zip'];
+    }
+
+    AddressWrapper::merge ($mapped, $campus->address()->getRelated()->first());
 
     $campus->save();
 

@@ -30,7 +30,7 @@ class BuildingController extends Controller
   {
     return view('building.building', [
       'campus' => (Campus::all()->toArray()),
-      'campusJSON'
+      'campusJSON' => Campus::all()->toJson(),
     ]);
   }
 

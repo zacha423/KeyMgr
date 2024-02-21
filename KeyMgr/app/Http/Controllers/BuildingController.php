@@ -7,6 +7,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBuildingRequest;
 use App\Http\Requests\UpdateBuildingRequest;
 use App\Models\Building;
+use App\Models\Wrappers\AddressWrapper;
+use App\Models\Campus;
 
 class BuildingController extends Controller
 {
@@ -15,7 +17,10 @@ class BuildingController extends Controller
    */
   public function index()
   {
-    return view('building.building', ['buildings' => Building::all()->toJson(), 'building' => '']);
+    return view('building.building', [
+      'buildings' => Building::all()->toArray(),
+      'buildingsJSON' => Building::all()->toJson(),
+    ]);
   }
 
   /**
@@ -23,7 +28,10 @@ class BuildingController extends Controller
    */
   public function create()
   {
-    return view('building.building', ['buildings' => '', 'building' => '']);
+    return view('building.building', [
+      'campus' => (Campus::all()->toArray()),
+      'campusJSON'
+    ]);
   }
 
   /**
@@ -31,7 +39,25 @@ class BuildingController extends Controller
    */
   public function store(StoreBuildingRequest $request)
   {
-    return view('building.building', ['buildings' => '', 'building' => '']);
+    $validated = $request->safe();
+    $address = AddressWrapper::build([
+      'country' => $validated['Country'],
+      'state' => $validated['State'],
+      'city' => $validated['City'],
+      'postalCode' => $validated['Zip'],
+      'streetAddress' => $validated['Street'],
+    ]);
+    $campus = Campus::where(['id' => $validated['campus']])->first();
+    $newBuilding = Building::firstOrNew(['name' => $validated['name']]);
+    $newBuilding->address_id = $address->id;
+    $campus->buildings()->save($newBuilding);
+
+    return view('building.building', [
+      'building' => $newBuilding->toArray(),
+      'buildingJSON' => $newBuilding->toJson(),
+      'campus' => $campus->toArray(),
+      'campusJSON' => $campus->toJson(),
+    ]);
   }
 
   /**
@@ -39,7 +65,10 @@ class BuildingController extends Controller
    */
   public function show(Building $building)
   {
-    return view('building.building', ['buildings' => '', 'building' => $building->toJson()]);
+    return view('building.building', [
+      'building' => $building->toArray(),
+      'buildingJSON' => $building->toJson(),
+    ]);
   }
 
   /**
@@ -47,7 +76,10 @@ class BuildingController extends Controller
    */
   public function edit(Building $building)
   {
-    return view('building.building', ['buildings' => '', 'building' => $building->toJson()]);
+    return view('building.building', [
+      'building' => $building->toArray(),
+      'buildingJSON' => $building->toJson(),
+    ]);
   }
 
   /**
@@ -55,7 +87,51 @@ class BuildingController extends Controller
    */
   public function update(UpdateBuildingRequest $request, Building $building)
   {
-    return view('building.building', ['buildings' => '', 'building' => $building->toJson()]);
+    $validated = $request->safe();
+    $mapped = array();
+
+    if (isset($validated['campus']))
+    {
+      Campus::where (['id'=>$validated['campus']])->first()->buildings()->save($building);
+    }
+
+    if (isset ($validated['name']))
+    {
+      $building->name = $validated['name'];
+    }
+
+    if(isset($validated['Country']))
+    {
+      $mapped['country'] = $validated['Country'];
+    }
+    if (isset($validated['State']))
+    {
+      $mapped['state'] = $validated['State'];
+    }
+    if(isset($validated['City']))
+    {
+      $mapped['city'] = $validated['City'];
+    }
+    if (isset ($data['Street']))
+    {
+      $mapped['streetAddress'] = $validated['Street'];
+    }
+
+    if (isset ($data['Zip']))
+    {
+      $mapped['postalCode'] = $validated['Zip'];
+    }
+
+    $addy = AddressWrapper::merge ($mapped, $building->address()->getRelated()->first());
+    // $building->address()->update(['address_id' => $addy->id]);
+    // $building->address()->save($addy);
+    $building->address_id = $addy->id;
+    $building->save();
+
+    return view('building.building', [
+      'building' => $building->toArray(),
+      'buildingJSON' => $building->toJson(),
+    ]);
   }
 
   /**

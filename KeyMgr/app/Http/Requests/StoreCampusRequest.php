@@ -5,6 +5,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\AddressRules;
 
 class StoreCampusRequest extends FormRequest
 {
@@ -26,14 +27,8 @@ class StoreCampusRequest extends FormRequest
   public function rules(): array
   {
     $stringVal = ['required','string','max:255'];
-
-    return [
-      'Country' => $stringVal,
-      'State' => $stringVal,
-      'City' => $stringVal,
-      'Street' => $stringVal,
-      'Zip' => $stringVal,
-      'name' => $stringVal,
-    ];
+    $campusRules = ['name' => $stringVal,];
+    
+    return array_merge ($campusRules, AddressRules::createRules());
   }
 }

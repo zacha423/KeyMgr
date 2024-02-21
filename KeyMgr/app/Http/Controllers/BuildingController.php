@@ -123,8 +123,6 @@ class BuildingController extends Controller
     }
 
     $addy = AddressWrapper::merge ($mapped, $building->address()->getRelated()->first());
-    // $building->address()->update(['address_id' => $addy->id]);
-    // $building->address()->save($addy);
     $building->address_id = $addy->id;
     $building->save();
 

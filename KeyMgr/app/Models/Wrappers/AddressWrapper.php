@@ -3,6 +3,7 @@
  * @author Zachary Abela-Gale <abel1325@pacificu.edu>
  */
 namespace App\Models\Wrappers;
+use App\Models\Wrappers\Wrapper;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
@@ -11,24 +12,7 @@ use App\Models\PostalCode;
 use App\Models\Building;
 use App\Models\Campus;
 
-class AddressWrapper {
-  /**
-   * Similar to Laravel's env() helper.
-   * 
-   * @param array<string, mixed> $array - the data array to search
-   * @param string $key                 - the key to search for in $array
-   * @param mixed $default              - the fallback value if $key is not 
-   * 
-   * @return mixed - the value in the array if found or the fallback value
-   */
-  protected static function arrayorDefault ($array, $key, $default): mixed
-  {
-    if (array_key_exists ($key, $array))
-    {
-      return $array[$key];
-    }
-    return $default;
-  }
+class AddressWrapper extends Wrapper {
   /**
    * Find or make a country.
    * 
@@ -114,13 +98,13 @@ class AddressWrapper {
    */
   public static function merge ($updatedDate, Address $Address): Address
   {
-    $country = AddressWrapper::country (AddressWrapper::arrayorDefault ($updatedDate, 'country', Country::where ([
+    $country = AddressWrapper::country (AddressWrapper::arrayOrDefault ($updatedDate, 'country', Country::where ([
       'id' => State::where (['id' => $Address->city()->first()->state_id])->first()->country_id])->first()->name));
-    $state = AddressWrapper::state (AddressWrapper::arrayorDefault($updatedDate, 'state', State::where ([
+    $state = AddressWrapper::state (AddressWrapper::arrayOrDefault($updatedDate, 'state', State::where ([
       'id' => $Address->city()->first()->state_id])->first()->name), $country);
-    $city = AddressWrapper::city (AddressWrapper::arrayorDefault(
+    $city = AddressWrapper::city (AddressWrapper::arrayOrDefault(
       $updatedDate, 'city', $Address->city()->first()->name), $state);
-    $postal = AddressWrapper::postal (AddressWrapper::arrayorDefault(
+    $postal = AddressWrapper::postal (AddressWrapper::arrayOrDefault(
       $updatedDate, 'postalCode', $Address->zipcode()->getRelated()->first()->code));
     
     $mergedAddress = $Address;
@@ -135,7 +119,7 @@ class AddressWrapper {
     $mergedAddress->city_id = $city->id;
     $mergedAddress->postal_code_id = $postal->id;
     $mergedAddress->streetAddress = 
-      AddressWrapper::arrayorDefault ($updatedDate, 'streetAddress', $mergedAddress->streetAddress);
+      AddressWrapper::arrayOrDefault ($updatedDate, 'streetAddress', $mergedAddress->streetAddress);
     $mergedAddress->save();
     
     return $mergedAddress;

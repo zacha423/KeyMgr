@@ -17,11 +17,7 @@ use App\Http\Controllers\CampusController;
 |
 */
 
-Route::resources([
-    'accounts' => UserController::class,
-    'campus' => CampusController::class,
-    'building' => BuildingController::class,
-]);
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -43,6 +39,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resources([
+      'accounts' => UserController::class,
+      'campus' => CampusController::class,
+      'building' => BuildingController::class,
+  ]);
 });
 
 require __DIR__.'/auth.php';

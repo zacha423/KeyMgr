@@ -1,7 +1,7 @@
 <h1>Context</h1>
 <pre>
   It may be useful to run 'php artisan migrate:fresh --seed'.
-  This page has a basic form describing the set of attributes expected by the backend.\
+  This page has a basic form describing the set of attributes expected by the backend.
   The Building controller utilizes a wrapper to build submodel rather than implementing several controllers.
   Available resource routes for campus that are managed by app/Http/Controllers/CampusController:
     (you can also check this using the command `php artisan route:list`)
@@ -23,7 +23,7 @@
     @foreach($campus as $c)
       <option value="{{$c['id']}}">{{$c['name']}}</option>
     @endforeach
-    @endisset
+    @endif
   </select>
   </div>
   <div>
@@ -46,12 +46,12 @@
 @if(isset($buildingsJSON))
 <h2>buildings/buildingsJSON</h2>
 {{$buildingsJSON}}
-@endisset
+@endif
 @if(isset($buildingJSON))
 <h2>building/buildingJSON</h2>
 {{ $buildingJSON }}
-@endisset
+@endif
 @if(isset($campusJSON))
 <h2>campus/campusJSON</h2>
 {{$campusJSON}}
-@endisset
+@endif

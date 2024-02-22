@@ -21,7 +21,7 @@ class CampusController extends Controller
   {
     return view('campus.campusList', [
       'campuses' => CampusResource::collection(Campus::all()),
-      'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
+      // 'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
     ]);
   }
 
@@ -67,6 +67,7 @@ class CampusController extends Controller
    */
   public function show(Campus $campus)
   {
+    $campus->load('address');
     return view('campus.campusSingle', [
       'campus' => $campus->toArray(),
       // 'campusJSON' => $campus->toJson(),

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -55,4 +56,16 @@ class User extends Authenticatable
   {
     return $this->firstName .' '. $this->lastName;
   }
+
+  public function roles() : BelongsToMany
+  {
+    return $this->belongsToMany(UserRole::class);
+  }
+
+  public function groups(): BelongsToMany
+  {
+    return $this->belongsToMany(UserGroup::class);
+  }
+
+
 }

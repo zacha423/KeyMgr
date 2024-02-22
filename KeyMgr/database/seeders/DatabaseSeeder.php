@@ -6,6 +6,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use App\Models\UserGroup;
+use App\Models\UserRole;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,6 +24,11 @@ class DatabaseSeeder extends Seeder
     $this->call(BuildingSeeder::class);
     $this->call(RoomSeeder::class);
     $this->call(DoorSeeder::class);
-    \App\Models\User::factory(10)->create();
+    User::factory(10)->create();
+
+    foreach (User::all() as $user) { 
+      $user->groups()->attach(UserGroup::all()->random(1));
+      $user->roles()->attach(UserRole::all()->random(1)); 
+    }
   }
 }

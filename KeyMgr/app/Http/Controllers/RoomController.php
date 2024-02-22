@@ -122,7 +122,7 @@ class RoomController extends Controller
     $door->save();
 
     return view('room.room', [
-      'room' => $room->toArray(),
+      'room' => $room->load('doors')->toArray(),
       'roomJSON' => $room->toJson(),
       'door'=>$door->toArray(),
       'doorJSON'=>$door->toJson(),

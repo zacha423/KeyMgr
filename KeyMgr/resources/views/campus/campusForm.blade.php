@@ -1,4 +1,4 @@
-<h1>Context</h1>
+<!-- <h1>Context</h1>
 <pre>
   It may be useful to run `php artisan migrate:fresh --seed`.
   This page has a basic form describing the set of attributes expected by the backend.
@@ -40,44 +40,31 @@ Pages #2, #6, and #7 send the web requests the page, and tell Zach what view nee
 <h2>campus</h2>
 {{ $campusJSON }}
 @endif
+ -->
 
 
-
-<!-- <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">All Campuses</div>
-
-                <div class="card-body">
-                    @if(!empty($campuses))
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Address ID</th>
-                                    <th>Created At</th>
-                                    <th>Updated At</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($campuses as $campus)
-                                    <tr>
-                                        <td>{{ $campus['id'] }}</td>
-                                        <td>{{ $campus['name'] }}</td>
-                                        <td>{{ $campus['address_id'] }}</td>
-                                        <td>{{ $campus['created_at'] }}</td>
-                                        <td>{{ $campus['updated_at'] }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    @else
-                        <p>No campuses found.</p>
-                    @endif
-                </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Campus</title>
+    @vite(['resources/css/moretest.css'])
+</head>
+<body>
+    <div class="container">
+        <h1>Add Campus</h1>
+        <form method="post" action="/campus">
+            @csrf
+            @include('campus.addressForm')
+            <div class="form-group">
+                <label for="name">Campus Name</label>
+                <input type="text" id="name" name="name" class="form-control">
             </div>
-        </div>
+            <div class="form-group">
+                <input type="submit" class="button" value="Submit">
+            </div>
+        </form>
     </div>
-</div> -->
+</body>
+</html>

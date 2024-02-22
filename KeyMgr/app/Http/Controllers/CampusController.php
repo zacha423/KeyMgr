@@ -67,16 +67,9 @@ class CampusController extends Controller
    */
   public function show(Campus $campus)
   {
-<<<<<<< HEAD
-    $campus->load('address');
     return view('campus.campusSingle', [
-      'campus' => $campus->toArray(),
-      // 'campusJSON' => $campus->toJson(),
-=======
-    return view('campus.campusForm', [
       'campus' => $campus->load('address', 'buildings')->toArray(),
       'campusJSON' => $campus->load('address', 'buildings')->toJson(),
->>>>>>> c96f0ce205b68e8d7a2dcae0b0e15a8ac41e7f75
     ]);
   }
 

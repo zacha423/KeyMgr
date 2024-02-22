@@ -8,7 +8,10 @@
 <body>
     <h1>Campus Information</h1>
     <p><strong>Name:</strong> {{ $campus['name'] }}</p>
-    <p><strong>Address:</strong> {{ $campus['address']['streetAddress'] }}, {{ $campus['address']['city'] }}, {{ $campus['address']['state'] }}, {{ $campus['address']['country'] }}, {{ $campus['address']['postalCode'] }}</p>
+    <p><strong>Country:</strong> {{ $campus['address']['country'] }}</p>
+    <p><strong>State:</strong> {{ $campus['address']['state'] }}</p>
+    <p><strong>City:</strong> {{ $campus['address']['city'] }}</p>
+    <p><strong>Street Address:</strong> {{ $campus['address']['streetAddress'] }}</p>
+    <p><strong>Postal Code:</strong> {{ $campus['address']['postalCode'] }}</p>
 </body>
 </html>
-

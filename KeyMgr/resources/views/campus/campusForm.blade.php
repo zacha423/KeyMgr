@@ -32,7 +32,11 @@ Pages #2, #6, and #7 send the web requests the page, and tell Zach what view nee
 </form>
 <h1>Data fields</h1>
 <p>Some fields may not show data, because of which controller method was called.</p>
+@if(isset($campusesJSON))
 <h2>campuses</h2>
-{{ $campuses }}
+{{ $campusesJSON }}
+@endif
+@if(isset($campusJSON))
 <h2>campus</h2>
-{{ $campus }}
+{{ $campusJSON }}
+@endif

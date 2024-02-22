@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCampusRequest;
 use App\Http\Requests\UpdateCampusRequest;
+use App\Http\Resources\CampusResource;
 use App\Models\Campus;
 use App\Models\Wrappers\AddressWrapper;
 
@@ -19,8 +20,8 @@ class CampusController extends Controller
   public function index()
   {
     return view('campus.campusForm', [
-      'campuses' => Campus::all()->toJson(),
-      'campus' => '',
+      'campuses' => CampusResource::collection(Campus::all()),
+      'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
     ]);
   }
 
@@ -31,10 +32,7 @@ class CampusController extends Controller
    */
   public function create()
   {
-    return view('campus.campusForm', [
-      'campuses' => '',
-      'campus' => '',
-    ]);
+    return view('campus.campusForm');
   }
 
   /**
@@ -44,21 +42,21 @@ class CampusController extends Controller
    */
   public function store(StoreCampusRequest $request)
   {
-    $val = $request->safe();
+    $validated = $request->safe();
     $address = AddressWrapper::build ([
-      'country' => $val['Country'],
-      'state' => $val['State'],
-      'city' => $val['City'],
-      'postalCode' => $val['Zip'],
-      'streetAddress' => $val['Street'],
+      'country' => $validated['Country'],
+      'state' => $validated['State'],
+      'city' => $validated['City'],
+      'postalCode' => $validated['Zip'],
+      'streetAddress' => $validated['Street'],
     ]);
-    $camp = Campus::firstOrNew(['name' => $val['name']]);
-    $camp->address_id = $address->id;
-    $camp->save();
+    $campus = Campus::firstOrNew(['name' => $validated['name']]);
+    $campus->address_id = $address->id;
+    $campus->save();
 
     return view('campus.campusForm', [
-      'campuses' => '',
-      'campus' => $camp->toJson(),
+      'campus' => $campus->toArray(),
+      'campusJSON' => $campus->toJson(),
     ]);
   }
 
@@ -70,8 +68,8 @@ class CampusController extends Controller
   public function show(Campus $campus)
   {
     return view('campus.campusForm', [
-      'campuses' => '',
-      'campus' => $campus->toJson(),
+      'campus' => $campus->toArray(),
+      'campusJSON' => $campus->toJson(),
     ]);
   }
 
@@ -83,8 +81,8 @@ class CampusController extends Controller
   public function edit(Campus $campus)
   {
     return view('campus.campusForm', [
-      'campuses' => '',
-      'campus' => $campus->toJson(),
+      'campus' => $campus->toArray(),
+      'campusJSON' => $campus->toJson(),
     ]);
   }
 
@@ -133,8 +131,8 @@ class CampusController extends Controller
     $campus->save();
 
     return view('campus.campusForm', [
-      'campuses' => '',
-      'campus' => $campus->toJson(),
+      'campus' => $campus->toArray(),
+      'campusJSON' => $campus->toJson(),
     ]);
   }
 

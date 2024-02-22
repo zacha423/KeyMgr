@@ -139,6 +139,6 @@ class BuildingController extends Controller
   {
     $building->delete();
     
-    return view('building.building', ['buildings' => '', 'building' => $building->toJson()]);
+    return view('building.building');
   }
 }

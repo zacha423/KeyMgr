@@ -19,7 +19,7 @@ class CampusController extends Controller
    */
   public function index()
   {
-    return view('campus.campusForm', [
+    return view('campus.campusList', [
       'campuses' => CampusResource::collection(Campus::all()),
       'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
     ]);
@@ -67,9 +67,9 @@ class CampusController extends Controller
    */
   public function show(Campus $campus)
   {
-    return view('campus.campusForm', [
+    return view('campus.campusSingle', [
       'campus' => $campus->toArray(),
-      'campusJSON' => $campus->toJson(),
+      // 'campusJSON' => $campus->toJson(),
     ]);
   }
 

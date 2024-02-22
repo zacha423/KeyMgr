@@ -40,3 +40,44 @@ Pages #2, #6, and #7 send the web requests the page, and tell Zach what view nee
 <h2>campus</h2>
 {{ $campusJSON }}
 @endif
+
+
+
+<!-- <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">All Campuses</div>
+
+                <div class="card-body">
+                    @if(!empty($campuses))
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Address ID</th>
+                                    <th>Created At</th>
+                                    <th>Updated At</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($campuses as $campus)
+                                    <tr>
+                                        <td>{{ $campus['id'] }}</td>
+                                        <td>{{ $campus['name'] }}</td>
+                                        <td>{{ $campus['address_id'] }}</td>
+                                        <td>{{ $campus['created_at'] }}</td>
+                                        <td>{{ $campus['updated_at'] }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @else
+                        <p>No campuses found.</p>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

@@ -55,8 +55,8 @@ class CampusController extends Controller
     $campus->save();
 
     return view('campus.campusForm', [
-      'campus' => $campus->toArray(),
-      'campusJSON' => $campus->toJson(),
+      'campus' => $campus->load('address', 'buildings')->toArray(),
+      'campusJSON' => $campus->load('address', 'buildings')->toJson(),
     ]);
   }
 
@@ -68,8 +68,8 @@ class CampusController extends Controller
   public function show(Campus $campus)
   {
     return view('campus.campusForm', [
-      'campus' => $campus->toArray(),
-      'campusJSON' => $campus->toJson(),
+      'campus' => $campus->load('address', 'buildings')->toArray(),
+      'campusJSON' => $campus->load('address', 'buildings')->toJson(),
     ]);
   }
 
@@ -81,8 +81,8 @@ class CampusController extends Controller
   public function edit(Campus $campus)
   {
     return view('campus.campusForm', [
-      'campus' => $campus->toArray(),
-      'campusJSON' => $campus->toJson(),
+      'campus' => $campus->load('address', 'buildings')->toArray(),
+      'campusJSON' => $campus->load('address', 'buildings')->toJson(),
     ]);
   }
 
@@ -131,8 +131,8 @@ class CampusController extends Controller
     $campus->save();
 
     return view('campus.campusForm', [
-      'campus' => $campus->toArray(),
-      'campusJSON' => $campus->toJson(),
+      'campus' => $campus->load('address', 'buildings')->toArray(),
+      'campusJSON' => $campus->load('address', 'buildings')->toJson(),
     ]);
   }
 

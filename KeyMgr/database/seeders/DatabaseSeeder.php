@@ -23,6 +23,9 @@ class DatabaseSeeder extends Seeder
     $this->call(BuildingSeeder::class);
     $this->call(RoomSeeder::class);
     $this->call(DoorSeeder::class);
+    $this->call(TestAccountsSeeder::class);
+
+
     User::factory(10)->create();
 
     foreach (User::all() as $user) { 

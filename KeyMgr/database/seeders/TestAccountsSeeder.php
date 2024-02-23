@@ -19,11 +19,11 @@ class TestAccountsSeeder extends Seeder
     // fN, lN, uN, email, password
     $accounts = [
       [
-        'firstName' => 'Key', 
-        'lastName' => 'Holder', 
-        'username' => 'keyholder', 
-        'email' => 'holder' . $domain, 
-        'password' => $password, 
+        'firstName' => 'Key',
+        'lastName' => 'Holder',
+        'username' => 'keyholder',
+        'email' => 'holder' . $domain,
+        'password' => $password,
         'role' => 'Key Holder'
       ],
       [
@@ -68,10 +68,15 @@ class TestAccountsSeeder extends Seeder
       ]
     ];
 
-    foreach ($accounts as $account)
-    {
-      $user = User::createOrFirst($account);
-      $user->roles()->attach(UserRole::where(['name' => $account['role']]));
+    foreach ($accounts as $account) {
+      $user = User::createOrFirst([
+        'firstName' => $account['firstName'],
+        'lastName' => $account['lastName'],
+        'username' => $account['username'],
+        'email' => $account['email'],
+        'password' => $account['password']
+      ]);
+      $user->roles()->attach(UserRole::where(['name' => $account['role']])->first());
     }
   }
 }

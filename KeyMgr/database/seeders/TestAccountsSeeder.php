@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use App\Models\UserRole;
 
-class TestAccounts extends Seeder
+class TestAccountsSeeder extends Seeder
 {
   /**
    * Run the database seeds.
@@ -65,5 +67,11 @@ class TestAccounts extends Seeder
         'role' => 'Admin',
       ]
     ];
+
+    foreach ($accounts as $account)
+    {
+      $user = User::createOrFirst($account);
+      $user->roles()->attach(UserRole::where(['name' => $account['role']]));
+    }
   }
 }

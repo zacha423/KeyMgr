@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Models\UserGroup;
+use App\Models\UserRole;
 
 class RegisteredUserController extends Controller
 {
@@ -45,6 +47,10 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        $user->roles()->save(UserRole::where(['name' => config('constants.roles.default')])->first());
+        $user->groups()->save(UserGroup::where(['name' => config('constants.groups.default')])->first());
+        $user->save();
 
         event(new Registered($user));
 

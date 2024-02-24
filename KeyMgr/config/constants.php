@@ -5,7 +5,7 @@
  * This contains constants and strings used across many segments of KeyMgr.
  */
 
- return [
+return [
   'roles' => [
     'default' => 'Key Holder',
     'holder' => 'Key Holder',
@@ -16,6 +16,6 @@
     'admin' => 'Admin',
   ],
   'groups' => [
-    'default' => config('constants.groups.default'),
+    'default' => 'Unassigned',
   ]
-  ];
+];

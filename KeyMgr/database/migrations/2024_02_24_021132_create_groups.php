@@ -11,6 +11,6 @@ return new class extends Migration {
    */
   public function up(): void
   {
-    UserGroup::create(['name' => config('groups.default')]);
+    UserGroup::create(['name' => config('constants.groups.default')]);
   }
 };

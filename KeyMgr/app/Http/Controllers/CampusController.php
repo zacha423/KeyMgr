@@ -10,6 +10,8 @@ use App\Http\Resources\CampusResource;
 use App\Models\Campus;
 use App\Models\Wrappers\AddressWrapper;
 
+use Illuminate\Http\Request;
+
 class CampusController extends Controller
 {
   /**
@@ -68,8 +70,10 @@ class CampusController extends Controller
   public function show(Campus $campus)
   {
     return view('campus.campusSingle', [
-      'campus' => $campus->load('address', 'buildings')->toArray(),
-      'campusJSON' => $campus->load('address', 'buildings')->toJson(),
+      'campus' => (
+        new CampusResource($campus->load(AddressWrapper::loadRelationships(), 'buildings'))
+      )->toArray(new Request()), //Hacky. This works, but is shitty, and an alternative solution should be found.
+      'campusJSON' => $campus->load(AddressWrapper::loadRelationships(), 'buildings')->toJson(),
     ]);
   }
 

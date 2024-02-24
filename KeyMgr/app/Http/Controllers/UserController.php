@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * @author Zachary Abela-Gale <abel1325@pacificu.edu>
+ * 
+ * Purpose: This controller can be used for managing user management. 
+ * Basic login/authentication should be done through Breeze's controllers.
+ */
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
@@ -12,21 +17,15 @@ use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\UserAPIController as UserAPI;
 class UserController extends Controller
 {
-  public function __construct() //temporary for testing
-  {
-    // If you need to remove the authentication prereq for testing, uncomment this line.
-    // Also add '*' to app/Http/Middleware/VerifyCSRFToken.php
-    // $this->middleware("auth")->except(["index", "store", "create", "update", "show", "edit","destroy"]);
-  }
-
   /**
    * Display a listing of the resource.
    */
   public function index()
   {
-    $users = User::all();
+    // $users = User::all();
     
     return view('accounts/index');
+    //
   }
 
   /**
@@ -38,6 +37,7 @@ class UserController extends Controller
   }
 
   /**
+   * @todo Once we are ready to implement user management reevaluate data validation
    * Store a newly created resource in storage.
    * 
    * Expected form data:
@@ -50,8 +50,9 @@ class UserController extends Controller
    */
   public function store(StoreUserRequest $request)
   {
-    $validated = $request->safe();
-    User::factory()->create($validated->toArray());
+    // $validated = $request->safe();
+    // User::factory()->create($validated->toArray());
+    
     
     return redirect('/accounts');
   }

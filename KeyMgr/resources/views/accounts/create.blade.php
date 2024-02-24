@@ -47,7 +47,7 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="form-container">
-          <form method="post" action="/accounts">
+          <form method="post" action="/register">
             @csrf
 
             <!-- First Name -->

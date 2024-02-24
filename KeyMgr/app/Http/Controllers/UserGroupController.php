@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @author Zachary Abela-Gale <abel1325@pacificu.edu>
+ */
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserGroupRequest;
@@ -97,6 +99,8 @@ class UserGroupController extends Controller
 
   /**
    * Remove the specified resource from storage.
+   * 
+   * @todo Decide behavior for deleting a parent group
    */
   public function destroy(UserGroup $group)
   {

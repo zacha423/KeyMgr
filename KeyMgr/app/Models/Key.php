@@ -14,6 +14,9 @@ class Key extends Model
     'keySystem',
   ];
   
+  /**
+   * Generates a serial number for the key based on the key level and key system
+   */
   protected function getSerial(): string
   {
     return $this->keyLevel .  ' ' . $this->keySystem;
@@ -21,6 +24,10 @@ class Key extends Model
   public function type(): BelongsTo
   {
     return $this->belongsTo(KeyType::class);
+  }
+  public function status(): BelongsTo
+  {
+    return $this->belongsTo(KeyStatus::class);
   }
 }
 

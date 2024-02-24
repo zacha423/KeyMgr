@@ -1,27 +1,33 @@
 <?php
-
+/**
+ * @author Zachary Abela-Gale <abel1325@pacificu.edu>
+ */
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\KeyStorage;
 
-return new class extends Migration
-{
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
-        Schema::create('key_storages', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+return new class extends Migration {
+  /**
+   * Run the migrations.
+   */
+  public function up(): void
+  {
+    Schema::create('key_storages', function (Blueprint $table) {
+      $table->id();
+      $table->string('name')->unique();
+      $table->unsignedSmallInteger('numRows')->default(1);
+      $table->unsignedSmallInteger('numCols')->default(1);
+      $table->foreignId('room_id')->constrained();
+      $table->timestamps();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('key_storages');
-    }
+  /**
+   * Reverse the migrations.
+   */
+  public function down(): void
+  {
+    Schema::dropIfExists('key_storages');
+  }
 };

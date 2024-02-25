@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class MessageTemplate extends Model
 {
-    use HasFactory;
+  use HasFactory;
+  protected $fillable = [
+    'name',
+    'message',
+  ];
 }

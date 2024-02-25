@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @author Zachary Abela-Gale <abel1325@pacificu.edu>
+ */
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,6 +14,12 @@ class Key extends Model
   protected $fillable = [
     'keyLevel',
     'keySystem',
+    'copyNumber',
+    'bitting',
+    'blindCode',
+    'mainAngles',
+    'doubleAngles',
+    'replacementCost',
   ];
   
   /**

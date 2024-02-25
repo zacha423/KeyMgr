@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('lock_models', function (Blueprint $table) {
             $table->id();
+            $table->unsignedTinyInteger('MACS');
+            $table->string('name')->unique();
+            $table->foreignId ('manufacturer_id')->constrained();
             $table->timestamps();
         });
     }

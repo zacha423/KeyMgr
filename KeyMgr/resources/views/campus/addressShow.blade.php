@@ -1,3 +1,4 @@
+<p><strong>Name:</strong> {{ $campus['name'] }}</p>
 <p><strong>Country:</strong> {{ $campus['country'] }}</p>
 <p><strong>State:</strong> {{ $campus['state'] }}</p>
 <p><strong>City:</strong> {{ $campus['city'] }}</p>

@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campus Information</title>
+    @vite(['resources/css/moretest.css'])
 </head>
 <body>
-    <h1>Campus Information</h1>
-    <p><strong>Name:</strong> {{ $campus['name'] }}</p>
-    <p><strong>Country:</strong> {{ $campus['country'] }}</p>
-    <p><strong>State:</strong> {{ $campus['state'] }}</p>
-    <p><strong>City:</strong> {{ $campus['city'] }}</p>
-    <p><strong>Street Address:</strong> {{ $campus['streetAddress'] }}</p>
-    <p><strong>Postal Code:</strong> {{ $campus['postalCode'] }}</p>
+    <div class="container">
+        <h1>Campus Information</h1>
+        @include('campus.addressShow')
+        <a href="{{ route('campus.edit', ['campus' => $campus['id']]) }}">{{ "Edit" }}</a>
+    </div>
 </body>
 </html>

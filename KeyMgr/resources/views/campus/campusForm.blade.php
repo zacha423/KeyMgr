@@ -58,8 +58,8 @@ Pages #2, #6, and #7 send the web requests the page, and tell Zach what view nee
             @csrf
             @include('campus.addressForm')
             <div class="form-group">
-                <label for="name">Campus Name</label>
-                <input type="text" id="name" name="name" class="form-control">
+                
+                <input type="text" id="name" name="name" class="form-control">Campus Name</input>
             </div>
             <div class="form-group">
                 <input type="submit" class="button" value="Submit">

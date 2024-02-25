@@ -23,7 +23,7 @@ class CampusController extends Controller
   {
     return view('campus.campusList', [
       'campuses' => CampusResource::collection(Campus::all()),
-      // 'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
+      'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
     ]);
   }
 
@@ -34,7 +34,7 @@ class CampusController extends Controller
    */
   public function create()
   {
-    return view('campus.campusForm');
+    return view('campus.campusList');
   }
 
   /**
@@ -84,8 +84,10 @@ class CampusController extends Controller
    */
   public function edit(Campus $campus)
   {
-    return view('campus.campusForm', [
-      'campus' => $campus->load('address', 'buildings')->toArray(),
+    return view('campus.campusEdit', [
+      'campus' => (
+        new CampusResource($campus->load(AddressWrapper::loadRelationships(), 'buildings'))
+      )->toArray(new Request()), //Hacky. This works, but is shitty, and an alternative solution should be found.
       'campusJSON' => $campus->load('address', 'buildings')->toJson(),
     ]);
   }

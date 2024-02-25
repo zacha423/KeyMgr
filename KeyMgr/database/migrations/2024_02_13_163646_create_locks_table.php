@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('locks', function (Blueprint $table) {
             $table->id();
+            $table->tinyInteger('numPins');
+            $table->string('upperPinLengths');
+            $table->string('masterPinLengths');
+            $table->string('lowerPinLengths');
+            $table->dateTimeTz('installDate');
+            $table->foreignId('keyway_id')->constrained();
+            $table->foreignId('master_key_system_id')->nullable()->constrained();
+            $table->foreignId('lock_model_id')->constrained();
             $table->timestamps();
         });
     }

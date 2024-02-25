@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class MasterKeySysstem extends Model
+class MasterKeySystem extends Model
 {
   protected $fillable = [
     'name',
@@ -16,11 +16,11 @@ class MasterKeySysstem extends Model
 
   public function parent(): BelongsTo
   {
-    return $this->belongsTo(MasterKeySysstem::class);
+    return $this->belongsTo(MasterKeySystem::class);
   }
 
   public function children(): HasMany
   {
-    return $this->hasMany(MasterKeySysstem::class);
+    return $this->hasMany(MasterKeySystem::class);
   }
 }

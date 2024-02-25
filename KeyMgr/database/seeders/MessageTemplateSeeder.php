@@ -4,11 +4,11 @@
  */
 namespace Database\Seeders;
 
+use App\Models\MessageTemplate;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Building;
 
-class BuildingSeeder extends Seeder
+class MessageTemplateSeeder extends Seeder
 {
   use WithoutModelEvents;
   /**
@@ -16,6 +16,6 @@ class BuildingSeeder extends Seeder
    */
   public function run(): void
   {
-    Building::factory()->createMany(5)->unique();
+    MessageTemplate::factory()->createMany(5)->unique();
   }
 }

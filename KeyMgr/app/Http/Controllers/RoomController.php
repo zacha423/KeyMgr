@@ -17,7 +17,7 @@ class RoomController extends Controller
    */
   public function index()
   {
-    return view('room.room', [
+    return view('room.rooms', [
       'rooms' => Room::all()->toArray(),
       'roomsJSON' => Room::all()->toJson(),
     ]);
@@ -28,7 +28,7 @@ class RoomController extends Controller
    */
   public function create()
   {
-    return view('room.room', [
+    return view('room.rooms', [
       'campuses' => CampusResource::collection(Campus::all()),
       'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
       'buildings' => BuildingResource::collection(Building::all()),
@@ -57,7 +57,7 @@ class RoomController extends Controller
     $door->room_id = $room->id;
     $door->save();
 
-    return view('room.room', [
+    return view('room.rooms', [
       'room' => $room->toArray(),
       'roomJSON' => $room->toJson(),
       'building' => new BuildingResource(Building::where(['id' => $validated['building']])->first()),
@@ -70,7 +70,7 @@ class RoomController extends Controller
    */
   public function show(Room $room)
   {
-    return view('room.room', [
+    return view('room.rooms', [
       'room' => $room->load('doors')->toArray(),
       'roomJSON' => $room->load('doors')->toJson(),
     ]);
@@ -81,7 +81,7 @@ class RoomController extends Controller
    */
   public function edit(Room $room)
   {
-    return view('room.room', [
+    return view('room.rooms', [
       'room' => $room->load('doors')->toArray(),
       'roomJSON' => $room->load('doors')->toJson(),
     ]);
@@ -121,7 +121,7 @@ class RoomController extends Controller
 
     $door->save();
 
-    return view('room.room', [
+    return view('room.rooms', [
       'room' => $room->load('doors')->toArray(),
       'roomJSON' => $room->toJson(),
       'door'=>$door->toArray(),
@@ -136,6 +136,6 @@ class RoomController extends Controller
   {
     $room->delete();
 
-    return view('room.room');
+    return view('room.rooms');
   }
 }

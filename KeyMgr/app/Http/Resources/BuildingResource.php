@@ -19,6 +19,11 @@
     return [
       'id' => $this->id,
       'name'=> $this->name,
+      'country' => $this->address->city->state->country->name,
+      'state' => $this->address->city->state->name,
+      'city' => $this->address->city->name,
+      'postalCode' => $this->address->zipcode->code,
+      'streetAddress' =>$this->address->streetAddress,
     ];
   }
  }

@@ -19,7 +19,7 @@ class Address extends Model
 
   public function zipcode(): BelongsTo
   {
-    return $this->belongsTo(PostalCode::class);
+    return $this->belongsTo(PostalCode::class, 'postal_code_id', 'id');
   }
   public function city(): BelongsTo
   {

@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateBuildingRequest;
 use App\Models\Building;
 use App\Models\Wrappers\AddressWrapper;
 use App\Models\Campus;
+use App\Http\Resources\BuildingResource;
 
 class BuildingController extends Controller
 {
@@ -66,8 +67,8 @@ class BuildingController extends Controller
   public function show(Building $building)
   {
     return view('building.building', [
-      'building' => $building->load(AddressWrapper::loadRelationships(), 'buildings')->toArray(),
-      'buildingJSON' => $building->load(AddressWrapper::loadRelationships(), 'buildings')->toJson(),
+      'building' => new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings')->toArray()),
+      'buildingJSON' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings')))->toJson(),
     ]);
   }
 
@@ -77,8 +78,8 @@ class BuildingController extends Controller
   public function edit(Building $building)
   {
     return view('building.building', [
-      'building' => $building->load(AddressWrapper::loadRelationships(), 'buildings')->toArray(),
-      'buildingJSON' => $building->load(AddressWrapper::loadRelationships(), 'buildings')->toJson(),
+      'building' => new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings')->toArray()),
+      'buildingJSON' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings')))->toJson(),
     ]);
   }
 

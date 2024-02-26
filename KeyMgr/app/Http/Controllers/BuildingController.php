@@ -66,8 +66,8 @@ class BuildingController extends Controller
   public function show(Building $building)
   {
     return view('building.building', [
-      'building' => $building->toArray(),
-      'buildingJSON' => $building->toJson(),
+      'building' => $building->load(AddressWrapper::loadRelationships(), 'buildings')->toArray(),
+      'buildingJSON' => $building->load(AddressWrapper::loadRelationships(), 'buildings')->toJson(),
     ]);
   }
 
@@ -77,8 +77,8 @@ class BuildingController extends Controller
   public function edit(Building $building)
   {
     return view('building.building', [
-      'building' => $building->toArray(),
-      'buildingJSON' => $building->toJson(),
+      'building' => $building->load(AddressWrapper::loadRelationships(), 'buildings')->toArray(),
+      'buildingJSON' => $building->load(AddressWrapper::loadRelationships(), 'buildings')->toJson(),
     ]);
   }
 

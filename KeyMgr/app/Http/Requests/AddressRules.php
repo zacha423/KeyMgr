@@ -12,11 +12,11 @@ class AddressRules {
     $stringVal = ['required','string','max:255'];
 
     return [
-      'Country' => $stringVal,
-      'State' => $stringVal,
-      'City' => $stringVal,
-      'Street' => $stringVal,
-      'Zip' => $stringVal,
+      'country' => $stringVal,
+      'state' => $stringVal,
+      'sity' => $stringVal,
+      'streetAddress' => $stringVal,
+      'postalCode' => $stringVal,
     ];
   }
   /**
@@ -27,11 +27,11 @@ class AddressRules {
     $stringVal = ['string', 'max:255'];
 
     return [
-      'Country' => $stringVal,
-      'State' => $stringVal,
-      'City' => $stringVal,
-      'Street' => $stringVal,
-      'Zip' => $stringVal,
+      'country' => $stringVal,
+      'state' => $stringVal,
+      'city' => $stringVal,
+      'streetAddress' => $stringVal,
+      'postalCode' => $stringVal,
     ];
   }
 }

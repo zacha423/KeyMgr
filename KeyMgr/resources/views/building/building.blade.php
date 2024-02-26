@@ -1,12 +1,48 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Buildings') }}
-        </h2>
-    </x-slot>
+  <x-slot name="header">
+      <div class="p-2 flex justify-between items-center">
+          <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+              {{ __('Buildings') }}
+          </h2>
+          <button type="button" onclick="toggleNewBuildingForm()" class="text-black">Add New Building</button>
+      </div>
+      <!-- New building form modal -->
+      <div id="newBuildingFormModal" class="hidden fixed inset-0 z-10 overflow-y-auto">
+          <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+              <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                  <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+              </div>
+
+              <!-- Modal content -->
+              <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+              <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full sm:max-w-md">
+                  <div class="bg-white dark:bg-gray-800 p-6">
+                      <form method="post" action="{{ route('building.store') }}">
+                          @csrf
+                          <!-- Add your form fields here, e.g., name, country, etc. -->
+                          <div class="mb-4">
+                              <label for="name" class="block text-sm font-medium text-gray-700">Building Name</label>
+                              <input type="text" id="name" name="name" class="mt-1 p-2 border rounded-md w-full" required>
+                          </div>
+                          <button type="submit" class="bg-green-500 text-black px-4 py-2 rounded-md">Save Building</button>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </x-slot>
+
+<script>
+    function toggleNewBuildingForm() {
+        var modal = document.getElementById('newBuildingFormModal');
+        modal.classList.toggle('hidden');
+    }
+</script>
+
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
            
         @foreach($buildings as $building)
           <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-4">
@@ -26,10 +62,6 @@
               </div>
               <div id="dropdown-{{ $building['id'] }}" class="hidden p-6">
 
-                <p><strong>Address:</strong> {{ optional($building->address)->streetAddress }}, {{ optional($building->address)->city }}</p>
-                <p><strong>Location (Campus):</strong> {{ optional($building->campus)->name }}</p>
-                <p><strong>Number of Rooms:</strong> {{ $building->rooms->count() }}</p>
-                <a href="{{ route('rooms.index', ['building' => $building['id']]) }}" class="text-blue-500 hover:underline">View all rooms</a>
     
               </div>
           </div>

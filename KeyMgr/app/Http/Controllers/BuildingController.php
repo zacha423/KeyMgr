@@ -10,6 +10,7 @@ use App\Models\Building;
 use App\Models\Wrappers\AddressWrapper;
 use App\Models\Campus;
 use App\Http\Resources\BuildingResource;
+use Illuminate\Support\Facades\Redirect;
 
 class BuildingController extends Controller
 {
@@ -77,9 +78,10 @@ class BuildingController extends Controller
    */
   public function edit(Building $building)
   {
-    return view('building.building', [
+    return view('building.buildingEdit', [
       'building' => new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings')->toArray()),
       'buildingJSON' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings')))->toJson(),
+      'buildingId' => $building->id,
     ]);
   }
 
@@ -127,10 +129,11 @@ class BuildingController extends Controller
     $building->save();
     $address->building()->save($building);
 
-    return view('building.building', [
+    return view('building.buildingEdit', [
       'building' => $building->toArray(),
       'buildingJSON' => $building->toJson(),
-    ]);
+    ])->with('status', 'building-updated');
+
   }
 
   /**

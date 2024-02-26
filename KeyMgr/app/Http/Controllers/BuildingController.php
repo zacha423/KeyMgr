@@ -77,7 +77,7 @@ class BuildingController extends Controller
    */
   public function edit(Building $building)
   {
-    return view('building.buildingEdit', [
+    return view('building.building', [
       'building' => new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->toArray()),
       'buildingJSON' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')))->toJson(),
       'buildingId' => $building->id,

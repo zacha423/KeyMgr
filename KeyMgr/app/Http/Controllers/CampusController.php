@@ -136,19 +136,7 @@ class CampusController extends Controller
     $address = AddressWrapper::merge ($mapped, $campus->address()->getRelated()->first());
     $address->campus()->save($campus);
 
-<<<<<<< HEAD
-    return view('campus.campusList');
-
-    // return view('campus.campusForm', [
-    //   'campus' => $campus->load('address', 'buildings')->toArray(),
-    //   'campusJSON' => $campus->load('address', 'buildings')->toJson(),
-    // ]);
-=======
-    return view('campus.campusForm', [
-      'campus' => new CampusResource($campus->load('address', 'buildings')->toArray()),
-      'campusJSON' => $campus->load('address', 'buildings')->toJson(),
-    ]);
->>>>>>> db31ad0a181247fb706078e6a66a6457d1f81696
+    return redirect()->route('campus.show', ['campus' => $campus->id]);
   }
 
   /**

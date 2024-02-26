@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <h1>Edit Campus</h1>
-        <form method="PATCH" action="{{ route('campus.update', ['campus' =>$campus['id']]) }}">
+        <form method="POST" action="{{ route('campus.update', ['campus' =>$campus['id']]) }}">
             @csrf
             @method('PATCH')
             

@@ -29,6 +29,18 @@
                     </x-nav-link>
                 </div>
 
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('campus.index')" :active="request()->routeIs('campus')">
+                        {{ __('Campuses') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('building.index')" :active="request()->routeIs('building')">
+                        {{ __('Buildings') }}
+                    </x-nav-link>
+                </div>
+
 
 
             </div>

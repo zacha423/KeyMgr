@@ -13,6 +13,8 @@
    * @Transform the Building into an array
    * 
    * @return array<string, mixed>
+   * 
+   * @todo Add resource and resource collection for door @ZAG
    */
   public function toArray(Request $request): array
   {
@@ -24,6 +26,9 @@
       'city' => $this->address->city->name,
       'postalCode' => $this->address->zipcode->code,
       'streetAddress' =>$this->address->streetAddress,
+      'campus' => $this->campus->name,
+      // 'rooms' => $this->rooms,/** @see the @todo  */
+      'rooms' => RoomResource::collection($this->rooms),
     ];
   }
  }

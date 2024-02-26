@@ -68,8 +68,8 @@ class BuildingController extends Controller
   public function show(Building $building)
   {
     return view('building.building', [
-      'building' => new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings')->toArray()),
-      'buildingJSON' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings')))->toJson(),
+      'building' => new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'rooms', 'campus')->toArray()),
+      'buildingJSON' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'rooms', 'campus')))->toJson(),
     ]);
   }
 
@@ -78,10 +78,16 @@ class BuildingController extends Controller
    */
   public function edit(Building $building)
   {
+<<<<<<< HEAD
     return view('building.buildingEdit', [
       'building' => new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings')->toArray()),
       'buildingJSON' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings')))->toJson(),
       'buildingId' => $building->id,
+=======
+    return view('building.building', [
+      'building' => new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'rooms', 'campus')->toArray()),
+      'buildingJSON' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'rooms', 'campus')))->toJson(),
+>>>>>>> b8ee9ca65080be78740f46703022ba81c6907a6d
     ]);
   }
 

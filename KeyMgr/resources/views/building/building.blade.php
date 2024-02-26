@@ -28,3 +28,16 @@
         </div>
     </div>
 </x-app-layout>
+
+@if(isset($buildingsJSON))
+<h2>buildings/buildingsJSON</h2>
+{{$buildingsJSON}}
+@endif
+@if(isset($buildingJSON))
+<h2>building/buildingJSON</h2>
+{{ $buildingJSON }}
+@endif
+@if(isset($campusJSON))
+<h2>campus/campusJSON</h2>
+{{$campusJSON}}
+@endif

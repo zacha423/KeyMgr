@@ -9,7 +9,7 @@
             @csrf
         </form>
 
-        <form method="post" action="{{  route('building.update', ['building' =>$building['id']]) }}" class="mt-6 space-y-6">
+        <form method="post" action="{{  route('building.update', ['building' => $building['id']]) }}" class="mt-6 space-y-6">
             @csrf
             @method('patch')
 
@@ -21,7 +21,7 @@
 
             <div>
                 <x-input-label for="country" :value="__('Country')" />
-                <x-text-input id="country" name="country" type="text" class="mt-1 block w-full" :value="old('country', $building['country'])" required autofocus autocomplete="country" />
+                <x-text-input id="country" name="country" type="text" class="mt-1 block w-full" :value="old('country',  optional($building->address)->country)" />
                 <x-input-error class="mt-2" :messages="$errors->get('country')" />
             </div>
 
@@ -48,10 +48,6 @@
                 <x-text-input id="postalCode" name="state" type="text" class="mt-1 block w-full" :value="old('postalCode', $building['postalCode'])" required autofocus autocomplete="postalCode" />
                 <x-input-error class="mt-2" :messages="$errors->get('postalCode')" />
             </div>
-
-
-
-
 
             <div class="flex items-center gap-4">
                 <x-primary-button>{{ __('Save') }}</x-primary-button>

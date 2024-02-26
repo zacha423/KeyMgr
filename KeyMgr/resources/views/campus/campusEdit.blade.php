@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Campus</title>
+    
     @vite(['resources/css/moretest.css'])
 </head>
+<title>Edit Campus</title>
 <body>
     <div class="container">
         <h1>Edit Campus</h1>
-        <form method="PATCH" action="{{ route('campus.update', ['campus' =>$campus['id']]) }}">
+        <form method="PUT" action="{{ route('campus.update', ['campus' =>$campus['id']]) }}">
             @csrf
-            <input type="hidden" name="id" value="{{ $campus['id'] }}">
+            
             <div class="form-group">
                 <label for="name">Campus Name</label>
                 <input type="text" id="name" name="name" class="form-control" value="{{ $campus['name'] }}">

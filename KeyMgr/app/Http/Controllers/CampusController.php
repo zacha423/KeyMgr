@@ -136,10 +136,12 @@ class CampusController extends Controller
 
     $campus->save();
 
-    return view('campus.campusForm', [
-      'campus' => $campus->load('address', 'buildings')->toArray(),
-      'campusJSON' => $campus->load('address', 'buildings')->toJson(),
-    ]);
+    return view('campus.campusList');
+
+    // return view('campus.campusForm', [
+    //   'campus' => $campus->load('address', 'buildings')->toArray(),
+    //   'campusJSON' => $campus->load('address', 'buildings')->toJson(),
+    // ]);
   }
 
   /**

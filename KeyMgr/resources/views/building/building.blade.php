@@ -26,23 +26,17 @@
               </div>
               <div id="dropdown-{{ $building['id'] }}" class="hidden p-6">
 
-                <p><strong>Address:</strong> {{ optional($building->address)->streetAddress }}, {{ optional($building->address)->city }}</p>
-                <p><strong>Location (Campus):</strong> {{ optional($building->campus)->name }}</p>
-                <p><strong>Number of Rooms:</strong> {{ $building->rooms->count() }}</p>
-                <a href="{{ route('rooms.index', ['building' => $building['id']]) }}" class="text-blue-500 hover:underline">View all rooms</a>
-    
+
               </div>
           </div>
       @endforeach
 
       <script>
           function toggleDropdown(buildingId) {
-              // Hide all dropdowns
               document.querySelectorAll('[id^="dropdown-"]').forEach(function (dropdown) {
                   dropdown.classList.add('hidden');
               });
-
-              // Toggle the clicked dropdown
+              
               var dropdown = document.getElementById('dropdown-' + buildingId);
               dropdown.classList.toggle('hidden');
           }

@@ -122,9 +122,9 @@ class BuildingController extends Controller
       $mapped['postalCode'] = $validated['Zip'];
     }
 
-    $addy = AddressWrapper::merge ($mapped, $building->address()->getRelated()->first());
-    $building->address_id = $addy->id;
+    $address = AddressWrapper::merge ($mapped, $building->address()->getRelated()->first());
     $building->save();
+    $address->building()->save($building);
 
     return view('building.building', [
       'building' => $building->toArray(),

@@ -22,6 +22,7 @@ Route::resources([
   'room' => RoomController::class,
 ]);
 
+
 Route::get('/', function () {
   return view('welcome');
 });

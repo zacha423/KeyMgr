@@ -34,7 +34,10 @@ class CampusController extends Controller
    */
   public function create()
   {
-    return view('campus.campusList');
+    return view('campus.campusList', [
+      'campuses' => CampusResource::collection(Campus::all()),
+      // 'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
+    ]);
   }
 
   /**
@@ -56,9 +59,9 @@ class CampusController extends Controller
     $campus->address_id = $address->id;
     $campus->save();
 
-    return view('campus.campusForm', [
-      'campus' => $campus->load('address', 'buildings')->toArray(),
-      'campusJSON' => $campus->load('address', 'buildings')->toJson(),
+    return view('campus.campusList', [
+      'campuses' => CampusResource::collection(Campus::all()),
+      // 'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
     ]);
   }
 

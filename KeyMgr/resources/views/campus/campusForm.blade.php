@@ -54,7 +54,7 @@ Pages #2, #6, and #7 send the web requests the page, and tell Zach what view nee
 <body>
     <div class="container">
         <h1>Add Campus</h1>
-        <form method="post" action="/campus">
+        <form method="post" action="{{ route('campus.store') }}">
             @csrf
             @include('campus.addressForm')
             <div class="form-group">

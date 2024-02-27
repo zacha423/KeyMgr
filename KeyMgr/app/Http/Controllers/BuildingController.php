@@ -34,6 +34,7 @@ class BuildingController extends Controller
     return view('building.building', [
       'campuses' => (Campus::all()->toArray()),
       'campusJSON' => Campus::all()->toJson(),
+      
     ]);
   }
 
@@ -48,17 +49,17 @@ class BuildingController extends Controller
       'state' => $validated['state'],
       'city' => $validated['city'],
       'postalCode' => $validated['postalCode'],
-      'streetAddress' => $validated['street'],
+      'streetAddress' => $validated['streetAddress'],
     ]);
     $campus = Campus::where(['id' => $validated['campus']])->first();
     $newBuilding = Building::firstOrNew(['name' => $validated['name']]);
     $newBuilding->address_id = $address->id;
-    $newBuilding->save();
-    
     $campus->buildings()->save($newBuilding);
-
+    
+    $newBuilding->save();
     return view('building.building', [
       'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
+      'campuses' => (Campus::all()->toArray()),
     ]);
   }
 

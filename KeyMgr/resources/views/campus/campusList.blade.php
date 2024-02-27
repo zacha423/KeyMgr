@@ -84,8 +84,13 @@
                     </div>
                 </div>
                 <div id="dropdown-{{ $campus['id'] }}" class="hidden p-6">
-
-      
+                    <div class="text-gray-900 dark:text-gray-100">
+                        <p><strong>Country:</strong> {{ $campus['country'] }}</p>
+                        <p><strong>State:</strong> {{ $campus['state'] }}</p>
+                        <p><strong>Zip Code:</strong> {{ $campus['city'] }}</p>
+                        <p><strong>Street Address:</strong> {{ $campus['streetAddress'] }}</p>
+                        <p><strong>Postal Code:</strong> {{ $campus['postalCode'] }}</p>
+                    </div>
                 </div>
             </div>
           @endforeach

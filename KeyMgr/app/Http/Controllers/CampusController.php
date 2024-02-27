@@ -22,7 +22,7 @@ class CampusController extends Controller
   public function index()
   {
     return view('campus.campusList', [
-      'campuses' => CampusResource::collection(Campus::all()),
+      'campuses' => CampusResource::collection(Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get())->toArray(new Request()),
       // 'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
     ]);
   }
@@ -35,7 +35,7 @@ class CampusController extends Controller
   public function create()
   {
     return view('campus.campusList', [
-      'campuses' => CampusResource::collection(Campus::all()),
+      'campuses' => CampusResource::collection(Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get())->toArray(new Request()),
       // 'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
     ]);
   }
@@ -60,7 +60,7 @@ class CampusController extends Controller
     $campus->save();
 
     return view('campus.campusList', [
-      'campuses' => CampusResource::collection(Campus::all()),
+      'campuses' => CampusResource::collection(Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get())->toArray(new Request()),
       // 'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
     ]);
   }
@@ -140,7 +140,7 @@ class CampusController extends Controller
     $address->campus()->save($campus);
 
     return view('campus.campusList', [
-      'campuses' => CampusResource::collection(Campus::all()),
+      'campuses' => CampusResource::collection(Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get())->toArray(new Request()),
     ]);
   }
 

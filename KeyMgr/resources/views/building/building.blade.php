@@ -6,19 +6,18 @@
           </h2>
           <button type="button" onclick="toggleNewBuildingForm()" class="text-black">Add New Building</button>
       </div>
-      <!-- New building form modal -->
+
       <div id="newBuildingFormModal" class="hidden fixed inset-0 z-10 overflow-y-auto">
         <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div class="fixed inset-0 transition-opacity" aria-hidden="true">
                 <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
-
-            <!-- Modal content -->
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
             <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full sm:max-w-md">
                 <div class="bg-white dark:bg-gray-800 p-6">
                     <form method="post" action="{{ route('building.store') }}">
                         @csrf
+                        
                         <div class="mb-4">
                             <label for="name" class="block text-sm font-medium text-gray-700">Building Name</label>
                             <input type="text" id="name" name="name" class="mt-1 p-2 border rounded-md w-full" required>
@@ -69,13 +68,12 @@
         </div>
       </div>
 
-        <script>
-          function toggleNewBuildingForm() {
-            var modal = document.getElementById('newBuildingFormModal');
-            modal.classList.toggle('hidden', !modal.classList.contains('hidden'));
-          }
-        </script>
-
+      <script>
+        function toggleNewBuildingForm() {
+          var modal = document.getElementById('newBuildingFormModal');
+          modal.classList.toggle('hidden', !modal.classList.contains('hidden'));
+        }
+      </script>
   </x-slot>
 
     <div class="py-12">
@@ -139,12 +137,15 @@
 
           <script>
               function toggleDropdown(buildingId) {
-                  document.querySelectorAll('[id^="dropdown-"]').forEach(function (dropdown) {
-                      dropdown.classList.add('hidden');
+                  var dropdown = document.getElementById('dropdown-' + buildingId);
+                  
+                  var isHidden = dropdown.classList.contains('hidden');
+
+                  document.querySelectorAll('[id^="dropdown-"]').forEach(function (otherDropdown) {
+                      otherDropdown.classList.add('hidden');
                   });
 
-                  var dropdown = document.getElementById('dropdown-' + buildingId);
-                  dropdown.classList.toggle('hidden');
+                  dropdown.classList.toggle('hidden', !isHidden);
               }
           </script>
 

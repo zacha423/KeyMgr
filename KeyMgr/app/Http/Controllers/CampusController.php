@@ -23,7 +23,6 @@ class CampusController extends Controller
   {
     return view('campus.campusList', [
       'campuses' => CampusResource::collection(Campus::all()),
-      // 'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
     ]);
   }
 
@@ -36,14 +35,11 @@ class CampusController extends Controller
   {
     return view('campus.campusList', [
       'campuses' => CampusResource::collection(Campus::all()),
-      // 'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
     ]);
   }
 
   /**
    * Store a newly created campus in storage.
-   * 
-   * @todo Update with appropriate view/redirection.
    */
   public function store(StoreCampusRequest $request)
   {
@@ -61,14 +57,12 @@ class CampusController extends Controller
 
     return view('campus.campusList', [
       'campuses' => CampusResource::collection(Campus::all()),
-      // 'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
     ]);
   }
 
   /**
    * Display the specified campus.
    * 
-   * @todo Update with appropriate data. A Resource file may be useful.
    */
   public function show(Campus $campus)
   {

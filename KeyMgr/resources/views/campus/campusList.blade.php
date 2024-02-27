@@ -21,27 +21,27 @@
                         @csrf
 
                         <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-700">Campus Name</label>
+                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">Campus Name</label>
                             <input type="text" id="name" name="name" class="mt-1 p-2 border rounded-md w-full" required>
                         </div>
                         <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-700">Country</label>
+                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">Country</label>
                             <input type="text" id="country" name="country" class="mt-1 p-2 border rounded-md w-full" required>
                         </div>
                         <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-700">State</label>
+                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">State</label>
                             <input type="text" id="state" name="state" class="mt-1 p-2 border rounded-md w-full" required>
                         </div>
                         <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-700">City</label>
+                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">City</label>
                             <input type="text" id="City" name="city" class="mt-1 p-2 border rounded-md w-full" required>
                         </div>
                         <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-700">Street</label>
+                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">Street</label>
                             <input type="text" id="Street" name="streetAddress" class="mt-1 p-2 border rounded-md w-full" required>
                         </div>
                         <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-700">Zip Code</label>
+                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">Zip Code</label>
                             <input type="text" id="Zip" name="postalCode" class="mt-1 p-2 border rounded-md w-full" required>
                         </div>
                         <div class="flex justify-end">

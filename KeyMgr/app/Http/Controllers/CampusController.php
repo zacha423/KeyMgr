@@ -22,8 +22,10 @@ class CampusController extends Controller
   public function index()
   {
     return view('campus.campusList', [
+
       'campuses' => CampusResource::collection(Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get())->toArray(new Request()),
       // 'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
+
     ]);
   }
 
@@ -35,15 +37,15 @@ class CampusController extends Controller
   public function create()
   {
     return view('campus.campusList', [
+
       'campuses' => CampusResource::collection(Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get())->toArray(new Request()),
       // 'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
+
     ]);
   }
 
   /**
    * Store a newly created campus in storage.
-   * 
-   * @todo Update with appropriate view/redirection.
    */
   public function store(StoreCampusRequest $request)
   {
@@ -60,15 +62,15 @@ class CampusController extends Controller
     $campus->save();
 
     return view('campus.campusList', [
+
       'campuses' => CampusResource::collection(Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get())->toArray(new Request()),
-      // 'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
+
     ]);
   }
 
   /**
    * Display the specified campus.
    * 
-   * @todo Update with appropriate data. A Resource file may be useful.
    */
   public function show(Campus $campus)
   {

@@ -19,12 +19,46 @@
                 <div class="bg-white dark:bg-gray-800 p-6">
                     <form method="post" action="{{ route('building.store') }}">
                         @csrf
-
-                        <!-- Add your form fields here, e.g., name, country, etc. -->
                         <div class="mb-4">
                             <label for="name" class="block text-sm font-medium text-gray-700">Building Name</label>
                             <input type="text" id="name" name="name" class="mt-1 p-2 border rounded-md w-full" required>
                         </div>
+
+                        <div class="mb-4">
+                            <label for="streetAddress" class="block text-sm font-medium text-gray-700">Street Address</label>
+                            <input type="text" id="streetAddress" name="streetAddress" class="mt-1 p-2 border rounded-md w-full" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+                            <input type="text" id="city" name="city" class="mt-1 p-2 border rounded-md w-full" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="state" class="block text-sm font-medium text-gray-700">State</label>
+                            <input type="text" id="state" name="state" class="mt-1 p-2 border rounded-md w-full" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
+                            <input type="text" id="country" name="country" class="mt-1 p-2 border rounded-md w-full" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="postalCode" class="block text-sm font-medium text-gray-700">Postal Code</label>
+                            <input type="text" id="postalCode" name="postalCode" class="mt-1 p-2 border rounded-md w-full" required>
+                        </div>
+
+                        <div class="mb-4">
+                          <label for="campus" class="block text-sm font-medium text-gray-700">Campus</label>
+                          <select id="campus" name="campus" class="mt-1 p-2 border rounded-md w-full" required>
+                              <option value="" disabled selected>Select a Campus</option>
+                              @foreach($campuses as $campus)
+                                  <option value="{{ $campus['id'] }}">{{ $campus['name'] }}</option>
+                              @endforeach
+                          </select>
+                      </div>
+
                         <div class="flex justify-end">
                             <button type="button" onclick="toggleNewBuildingForm()" class="text-gray-600 hover:text-gray-800 mr-2">Cancel</button>
                             <button type="submit" class="bg-green-500 text-black px-4 py-2 rounded-md">Save Building</button>
@@ -35,12 +69,12 @@
         </div>
       </div>
 
-  <script>
-      function toggleNewBuildingForm() {
-          var modal = document.getElementById('newBuildingFormModal');
-          modal.classList.toggle('hidden');
-      };
-  </script>
+        <script>
+          function toggleNewBuildingForm() {
+            var modal = document.getElementById('newCampusFormModal');
+            modal.classList.toggle('hidden');
+          };
+        </script>
 
   </x-slot>
 

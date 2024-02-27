@@ -71,9 +71,9 @@
 
         <script>
           function toggleNewBuildingForm() {
-            var modal = document.getElementById('newCampusFormModal');
-            modal.classList.toggle('hidden');
-          };
+            var modal = document.getElementById('newBuildingFormModal');
+            modal.classList.toggle('hidden', !modal.classList.contains('hidden'));
+          }
         </script>
 
   </x-slot>

@@ -141,7 +141,6 @@ class CampusController extends Controller
 
     return view('campus.campusList', [
       'campuses' => CampusResource::collection(Campus::all()),
-      // 'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
     ]);
   }
 

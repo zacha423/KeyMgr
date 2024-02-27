@@ -53,7 +53,7 @@ class UserController extends Controller
     $validated = $request->safe();
     User::factory()->create($validated->toArray());
     
-    return redirect('/accounts');
+    return redirect('/');
   }
 
   /**

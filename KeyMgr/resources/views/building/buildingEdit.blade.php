@@ -49,6 +49,17 @@
                 <x-input-error class="mt-2" :messages="$errors->get('postalCode')" />
             </div>
 
+            <div class="mb-4">
+                <label for="campus" class="block text-sm font-medium text-gray-700">Campus</label>
+                <select id="campus" name="campus" class="mt-1 p-2 border rounded-md w-full" required>
+                    <option value="" disabled selected>Select a Campus</option>
+                    @foreach($campuses as $campus)
+                        <option value="{{ $campus['id'] }}">{{ $campus['name'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+
             <div class="flex items-center gap-4">
                 <x-primary-button>{{ __('Save') }}</x-primary-button>
 

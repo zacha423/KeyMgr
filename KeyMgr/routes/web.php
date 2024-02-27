@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\CampusController;
 
 
@@ -19,7 +18,6 @@ use App\Http\Controllers\CampusController;
 
 
 Route::resources([
-    'accounts' => UserController::class,
     'campus' => CampusController::class,
 ]);
 

@@ -1,14 +1,10 @@
-
-
-
-
 <x-app-layout>
   <x-slot name="header">
       <div class="p-2 flex justify-between items-center">
           <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
               {{ __('Campuses') }}
           </h2>
-          <button type="button" onclick="toggleNewCampusForm()" class="text-black">Add New Campus</button>
+          <button type="button" onclick="toggleNewCampusForm()" class="p-6 text-gray-900 dark:text-gray-100">Add New Campus</button>
       </div>
       <!-- New campus form modal -->
       <div id="newCampusFormModal" class="hidden fixed inset-0 z-10 overflow-y-auto">
@@ -73,7 +69,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
           @foreach($campuses as $campus)
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-4">
-                <div class="p-6 flex justify-between items-center">
+                <div class="p-6 text-gray-900 dark:text-gray-100 flex justify-between items-center">
                     <div class="flex items-center">
                         <button type="button" onclick="toggleDropdown('{{ $campus['id'] }}')">
                             {{ $campus['name'] }}

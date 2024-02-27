@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
     $this->call(BuildingSeeder::class);
     $this->call(RoomSeeder::class);
     $this->call(DoorSeeder::class);
+    $this->call(MessageTemplateSeeder::class);
     \App\Models\User::factory(10)->create();
   }
 }

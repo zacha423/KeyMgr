@@ -16,6 +16,6 @@ class BuildingSeeder extends Seeder
    */
   public function run(): void
   {
-    Building::factory()->createMany(5);
+    Building::factory()->createMany(5)->unique();
   }
 }

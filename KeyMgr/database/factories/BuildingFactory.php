@@ -23,7 +23,7 @@ class BuildingFactory extends Factory
       Campus::factory()->createMany(3);
     }
     return [
-      'name' => fake()->lastName(),
+      'name' => fake()->unique()->lastName(),
       'campus_id' => Campus::all()->random(1)->first()->id,
       'address_id' => Address::all()->random(1)->first()->id,
     ];

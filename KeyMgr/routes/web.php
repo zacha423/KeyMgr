@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CampusController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,6 +16,7 @@ use App\Http\Controllers\CampusController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 
 Route::resources([
     'accounts' => UserController::class,

@@ -21,7 +21,7 @@
 
             <div>
                 <x-input-label for="country" :value="__('Country')" />
-                <x-text-input id="country" name="country" type="text" class="mt-1 block w-full" :value="old('country',  optional($building->address)->country)" />
+                <x-text-input id="country" name="country" type="text" class="mt-1 block w-full" :value="old('country', $building['country'])" />
                 <x-input-error class="mt-2" :messages="$errors->get('country')" />
             </div>
 

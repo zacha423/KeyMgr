@@ -19,6 +19,7 @@
                 <div class="bg-white dark:bg-gray-800 p-6">
                     <form method="post" action="{{ route('building.store') }}">
                         @csrf
+
                         <!-- Add your form fields here, e.g., name, country, etc. -->
                         <div class="mb-4">
                             <label for="name" class="block text-sm font-medium text-gray-700">Building Name</label>
@@ -43,8 +44,6 @@
 
   </x-slot>
 
-
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
           @foreach($buildings as $building)
@@ -64,8 +63,7 @@
                     </div>
                 </div>
                 <div id="dropdown-{{ $building['id'] }}" class="hidden p-6">
-
-      
+                
                 </div>
             </div>
           @endforeach

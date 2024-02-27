@@ -14,7 +14,7 @@ class AddressRules {
     return [
       'country' => $stringVal,
       'state' => $stringVal,
-      'sity' => $stringVal,
+      'city' => $stringVal,
       'streetAddress' => $stringVal,
       'postalCode' => $stringVal,
     ];

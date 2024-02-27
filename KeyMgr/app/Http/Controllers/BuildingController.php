@@ -10,7 +10,6 @@ use App\Models\Building;
 use App\Models\Wrappers\AddressWrapper;
 use App\Models\Campus;
 use App\Http\Resources\BuildingResource;
-
 use Illuminate\Http\Request;
 
 
@@ -21,10 +20,9 @@ class BuildingController extends Controller
    */
   public function index()
   {
-    return view('building.building', [
-      'buildings' => Building::all()->toArray(),
-      'buildingsJSON' => Building::all()->toJson(),
-    ]);
+      return view('building.building', [
+        'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
+      ]);
   }
 
   /**
@@ -70,9 +68,8 @@ class BuildingController extends Controller
   public function show(Building $building)
   {
     return view('building.building', [
-      'building' => (
-        new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')))->toArray(new Request()),
-      'buildingJSON' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(),'rooms', 'campus')))->toJson(),
+      'building' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')))->toArray(new Request()),     
+      'buildingJSON' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')))->toJson(),
     ]);
   }
 
@@ -83,7 +80,7 @@ class BuildingController extends Controller
   {
     return view('building.buildingEdit', [
       'building' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')))->toArray(new Request()),
-      'buildingJSON' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(),'rooms', 'campus')))->toJson(),
+      'buildingJSON' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings', 'rooms', 'campus')))->toJson(),
       'buildingId' => $building->id,
     ]);
   }
@@ -106,37 +103,37 @@ class BuildingController extends Controller
       $building->name = $validated['name'];
     }
 
-    if(isset($validated['Country']))
+    if(isset($validated['country']))
     {
-      $mapped['country'] = $validated['Country'];
+      $mapped['country'] = $validated['country'];
     }
-    if (isset($validated['State']))
+    if (isset($validated['state']))
     {
-      $mapped['state'] = $validated['State'];
+      $mapped['state'] = $validated['state'];
     }
-    if(isset($validated['City']))
+    if(isset($validated['city']))
     {
-      $mapped['city'] = $validated['City'];
+      $mapped['city'] = $validated['city'];
     }
-    if (isset ($data['Street']))
+    if (isset ($data['street']))
     {
-      $mapped['streetAddress'] = $validated['Street'];
+      $mapped['streetAddress'] = $validated['street'];
     }
 
-    if (isset ($data['Zip']))
+    if (isset ($data['postalCode']))
     {
-      $mapped['postalCode'] = $validated['Zip'];
+      $mapped['postalCode'] = $validated['postalCode'];
     }
 
     $address = AddressWrapper::merge ($mapped, $building->address()->getRelated()->first());
     $building->save();
     $address->building()->save($building);
 
+
     return view('building.building', [
       'building' => $building->toArray(),
       'buildingJSON' => $building->toJson(),
     ])->with('status', 'building-updated');
-
   }
 
   /**

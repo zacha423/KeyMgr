@@ -51,7 +51,7 @@
                 <div class="p-6 flex justify-between items-center">
                     <div class="flex items-center">
                         <button type="button" onclick="toggleDropdown('{{ $building['id'] }}')">
-                            {{ $building['name'] }}
+                            {{  $building['name'] }}
                         </button>
                     </div>
                     <div class="flex items-center">
@@ -62,8 +62,43 @@
                         </a>
                     </div>
                 </div>
+
                 <div id="dropdown-{{ $building['id'] }}" class="hidden p-6">
-                
+                    @if(isset($building['streetAddress']))
+                        <p>Street Address: {{ $building['streetAddress'] }}</p>
+                    @else
+                        <p>Street Address information not available</p>
+                    @endif
+
+                    @if(isset($building['country']))
+                        <p>Country: {{ $building['country'] }}</p>
+                    @else
+                        <p>Country information not available</p>
+                    @endif
+
+                    @if(isset($building['state']))
+                        <p>State: {{ $building['state'] }}</p>
+                    @else
+                        <p>State information not available</p>
+                    @endif
+
+                    @if(isset($building['city']))
+                        <p>City: {{ $building['city'] }}</p>
+                    @else
+                        <p>City information not available</p>
+                    @endif
+
+                    @if(isset($building['postalCode']))
+                        <p>Postal Code: {{ $building['postalCode'] }}</p>
+                    @else
+                        <p>Postal Code information not available</p>
+                    @endif
+
+                    @if(isset($building['campus']))
+                        <p>Campus Location: {{ $building['campus'] }}</p>
+                    @else
+                        <p>Campus information not available</p>
+                    @endif
                 </div>
             </div>
           @endforeach

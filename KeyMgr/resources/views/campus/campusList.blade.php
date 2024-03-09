@@ -1,14 +1,10 @@
-
-
-
-
 <x-app-layout>
   <x-slot name="header">
       <div class="p-2 flex justify-between items-center">
           <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
               {{ __('Campuses') }}
           </h2>
-          <button type="button" onclick="toggleNewCampusForm()" class="text-black">Add New Campus</button>
+          <button type="button" onclick="toggleNewCampusForm()" class="p-6 text-gray-900 dark:text-gray-100">Add New Campus</button>
       </div>
       <!-- New campus form modal -->
       <div id="newCampusFormModal" class="hidden fixed inset-0 z-10 overflow-y-auto">
@@ -25,27 +21,27 @@
                         @csrf
 
                         <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-700">Campus Name</label>
+                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">Campus Name</label>
                             <input type="text" id="name" name="name" class="mt-1 p-2 border rounded-md w-full" required>
                         </div>
                         <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-700">Country</label>
+                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">Country</label>
                             <input type="text" id="country" name="country" class="mt-1 p-2 border rounded-md w-full" required>
                         </div>
                         <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-700">State</label>
+                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">State</label>
                             <input type="text" id="state" name="state" class="mt-1 p-2 border rounded-md w-full" required>
                         </div>
                         <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-700">City</label>
+                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">City</label>
                             <input type="text" id="City" name="city" class="mt-1 p-2 border rounded-md w-full" required>
                         </div>
                         <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-700">Street</label>
+                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">Street</label>
                             <input type="text" id="Street" name="streetAddress" class="mt-1 p-2 border rounded-md w-full" required>
                         </div>
                         <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-700">Zip Code</label>
+                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">Zip Code</label>
                             <input type="text" id="Zip" name="postalCode" class="mt-1 p-2 border rounded-md w-full" required>
                         </div>
                         <div class="flex justify-end">
@@ -66,16 +62,11 @@
   </script>
 
   </x-slot>
-
-
-    
-
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
           @foreach($campuses as $campus)
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-4">
-                <div class="p-6 flex justify-between items-center">
+                <div class="p-6 text-gray-900 dark:text-gray-100 flex justify-between items-center">
                     <div class="flex items-center">
                         <button type="button" onclick="toggleDropdown('{{ $campus['id'] }}')">
                             {{ $campus['name'] }}
@@ -90,8 +81,13 @@
                     </div>
                 </div>
                 <div id="dropdown-{{ $campus['id'] }}" class="hidden p-6">
-                    {{ $campus['country'] }}
-      
+                    <div class="text-gray-900 dark:text-gray-100">
+                        <p><strong>Country:</strong> {{ $campus['country'] }}</p>
+                        <p><strong>State:</strong> {{ $campus['state'] }}</p>
+                        <p><strong>City:</strong> {{ $campus['city'] }}</p>
+                        <p><strong>Street Address:</strong> {{ $campus['streetAddress'] }}</p>
+                        <p><strong>Postal Code:</strong> {{ $campus['postalCode'] }}</p>
+                    </div>
                 </div>
             </div>
           @endforeach

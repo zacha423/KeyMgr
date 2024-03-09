@@ -32,5 +32,6 @@ class DatabaseSeeder extends Seeder
       $user->groups()->attach(UserGroup::all()->random(1));
       $user->roles()->attach(UserRole::all()->random(1)); 
     }
+    $this->call(MessageTemplateSeeder::class);
   }
 }

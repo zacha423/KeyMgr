@@ -1,83 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Tailwind CSS (CDN) -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    body {
-      background-color: #1e1e1e; 
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .form-container {
-      background-color: #2b2b2b; 
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); 
-    }
-    input[type="text"],
-    input[type="password"],
-    input[type="email"] {
-      background-color: #3e3e3e; 
-      color: #d4d4d4; 
-    }
-    input[type="submit"] {
-      background-color: #3498db; 
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    input[type="submit"]:hover {
-      background-color: #2980b9; 
-    }
-    .btn-secondary {
-      background-color: #6c757d;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    .btn-secondary:hover {
-      background-color: #5a6268; 
-    }
-    ::placeholder {
-      color: #d4d4d4; 
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="form-container">
-          <form method="post" action="/login">
-            @csrf
+<x-guest-layout>
+    <!-- Session Status -->
+    <x-auth-session-status class="mb-4" :status="session('status')" />
 
-            <!-- Email -->
-            <div class="form-group mb-4">
-              <input name="email" type="email" class="form-control" placeholder="Email" required>
-            </div>
-            
-            <!-- Password -->
-            <div class="form-group mb-4">
-              <input name="password" type="password" class="form-control" placeholder="Password" required>
-            </div>
+    <form method="POST" action="{{ route('login') }}">
+        @csrf
 
-            <!-- Submit -->
-            <div class="form-group">
-              <input type="submit" value="Login" class="btn btn-primary mr-2">
-              <a href="/register" class="btn btn-secondary">Create Account</a>
-            </div>
-          </form>
+
+        <!-- Email Address -->
+        <div>
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+
         </div>
-      </div>
-    </div>
-  </div>
-</body>
-</html>
+
+        <!-- Password -->
+        <div class="mt-4">
+            <x-input-label for="password" :value="__('Password')" />
+
+            <x-text-input id="password" class="block mt-1 w-full"
+                            type="password"
+                            name="password"
+                            required autocomplete="current-password" />
+
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
+
+        <!-- Remember Me -->
+        <div class="block mt-4">
+            <label for="remember_me" class="inline-flex items-center">
+                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
+                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
+            </label>
+        </div>
+
+        <div class="flex items-center justify-between mt-4">
+            <!-- Register -->
+            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('register') }}">
+                {{ __('Register') }}
+            </a>
+
+            <!-- Forgot Password Link -->
+            @if (Route::has('password.request'))
+                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
+                    {{ __('Forgot your password?') }}
+                </a>
+            @endif
+
+            <!-- Login Button -->
+            <x-primary-button class="ms-3">
+                {{ __('Log in') }}
+            </x-primary-button>
+        </div>
+    </form>
+</x-guest-layout>

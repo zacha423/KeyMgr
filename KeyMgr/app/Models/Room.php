@@ -37,4 +37,9 @@ class Room extends Model
   {
     return $this->hasMany (Door::class);
   }
+
+  public function keyStorages(): HasMany
+  {
+    return $this->hasMany (KeyStorage::class);
+  }
 }

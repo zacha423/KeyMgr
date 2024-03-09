@@ -30,4 +30,9 @@ class Address extends Model
   {
     return $this->hasOne(City::class);
   }
+
+  public function campus(): HasOne
+  {
+    return $this->hasOne(Campus::class);
+  }
 }

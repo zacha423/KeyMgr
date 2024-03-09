@@ -6,8 +6,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCampusRequest;
 use App\Http\Requests\UpdateCampusRequest;
+use App\Http\Resources\CampusResource;
 use App\Models\Campus;
 use App\Models\Wrappers\AddressWrapper;
+use Illuminate\Http\Request;
 
 class CampusController extends Controller
 {
@@ -18,9 +20,8 @@ class CampusController extends Controller
    */
   public function index()
   {
-    return view('campus.campusForm', [
-      'campuses' => Campus::all()->toJson(),
-      'campus' => '',
+    return view('campus.campusList', [
+      'campuses' => CampusResource::collection(Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get())->toArray(new Request()),
     ]);
   }
 
@@ -31,47 +32,44 @@ class CampusController extends Controller
    */
   public function create()
   {
-    return view('campus.campusForm', [
-      'campuses' => '',
-      'campus' => '',
+    return view('campus.campusList', [
+      'campuses' => CampusResource::collection(Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get())->toArray(new Request()),
     ]);
   }
 
   /**
    * Store a newly created campus in storage.
-   * 
-   * @todo Update with appropriate view/redirection.
    */
   public function store(StoreCampusRequest $request)
   {
-    $val = $request->safe();
+    $validated = $request->safe();
     $address = AddressWrapper::build ([
-      'country' => $val['Country'],
-      'state' => $val['State'],
-      'city' => $val['City'],
-      'postalCode' => $val['Zip'],
-      'streetAddress' => $val['Street'],
+      'country' => $validated['country'],
+      'state' => $validated['state'],
+      'city' => $validated['city'],
+      'postalCode' => $validated['postalCode'],
+      'streetAddress' => $validated['streetAddress'],
     ]);
-    $camp = Campus::firstOrNew(['name' => $val['name']]);
-    $camp->address_id = $address->id;
-    $camp->save();
+    $campus = Campus::firstOrNew(['name' => $validated['name']]);
+    $campus->address_id = $address->id;
+    $campus->save();
 
-    return view('campus.campusForm', [
-      'campuses' => '',
-      'campus' => $camp->toJson(),
+    return view('campus.campusList', [
+      'campuses' => CampusResource::collection(Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get())->toArray(new Request()),
     ]);
   }
 
   /**
    * Display the specified campus.
    * 
-   * @todo Update with appropriate data. A Resource file may be useful.
    */
   public function show(Campus $campus)
   {
-    return view('campus.campusForm', [
-      'campuses' => '',
-      'campus' => $campus->toJson(),
+    return view('campus.campusSingle', [
+      'campus' => (
+        new CampusResource($campus->load(AddressWrapper::loadRelationships(), 'buildings'))
+      )->toArray(new Request()), //Hacky. This works, but is shitty, and an alternative solution should be found.
+      'campusJSON' => $campus->load(AddressWrapper::loadRelationships(), 'buildings')->toJson(),
     ]);
   }
 
@@ -82,9 +80,11 @@ class CampusController extends Controller
    */
   public function edit(Campus $campus)
   {
-    return view('campus.campusForm', [
-      'campuses' => '',
-      'campus' => $campus->toJson(),
+    return view('campus.campusEdit', [
+      'campus' => (
+        new CampusResource($campus->load(AddressWrapper::loadRelationships(), 'buildings'))
+      )->toArray(new Request()), //Hacky. This works, but is shitty, and an alternative solution should be found.
+      'campusJSON' => $campus->load('address', 'buildings')->toJson(),
     ]);
   }
 
@@ -103,38 +103,37 @@ class CampusController extends Controller
       $campus->name = $data['name'];
     }
 
-    if (isset ($data['Country']))
+    if (isset ($data['country']))
     {
-      $mapped['country'] = $data['Country'];
+      $mapped['country'] = $data['country'];
     }
 
-    if (isset ($data['State']))
+    if (isset ($data['state']))
     {
-      $mapped['state'] = $data['State'];
+      $mapped['state'] = $data['state'];
     }
 
-    if (isset ($data['City']))
+    if (isset ($data['city']))
     {
-      $mapped['city'] = $data['City'];
+      $mapped['city'] = $data['city'];
     }
 
-    if (isset ($data['Street']))
+    if (isset ($data['streetAddress']))
     {
-      $mapped['streetAddress'] = $data['Street'];
+      $mapped['streetAddress'] = $data['streetAddress'];
     }
 
-    if (isset ($data['Zip']))
+    if (isset ($data['postalCode']))
     {
-      $mapped['postalCode'] = $data['Zip'];
+      $mapped['postalCode'] = $data['postalCode'];
     }
-
-    AddressWrapper::merge ($mapped, $campus->address()->getRelated()->first());
-
+    
     $campus->save();
+    $address = AddressWrapper::merge ($mapped, $campus->address()->getRelated()->first());
+    $address->campus()->save($campus);
 
-    return view('campus.campusForm', [
-      'campuses' => '',
-      'campus' => $campus->toJson(),
+    return view('campus.campusList', [
+      'campuses' => CampusResource::collection(Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get())->toArray(new Request()),
     ]);
   }
 

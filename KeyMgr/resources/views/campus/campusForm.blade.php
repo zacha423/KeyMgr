@@ -1,4 +1,4 @@
-<h1>Context</h1>
+<!-- <h1>Context</h1>
 <pre>
   It may be useful to run `php artisan migrate:fresh --seed`.
   This page has a basic form describing the set of attributes expected by the backend.
@@ -32,7 +32,39 @@ Pages #2, #6, and #7 send the web requests the page, and tell Zach what view nee
 </form>
 <h1>Data fields</h1>
 <p>Some fields may not show data, because of which controller method was called.</p>
+@if(isset($campusesJSON))
 <h2>campuses</h2>
-{{ $campuses }}
+{{ $campusesJSON }}
+@endif
+@if(isset($campusJSON))
 <h2>campus</h2>
-{{ $campus }}
+{{ $campusJSON }}
+@endif
+ -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Campus</title>
+    @vite(['resources/css/moretest.css'])
+</head>
+<body>
+    <div class="container">
+        <h1>Add Campus</h1>
+        <form method="post" action="{{ route('campus.store') }}">
+            @csrf
+            @include('campus.addressForm')
+            <div class="form-group">
+                
+                <input type="text" id="name" name="name" class="form-control">Campus Name</input>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="button" value="Submit">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

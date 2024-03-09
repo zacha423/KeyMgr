@@ -36,13 +36,13 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('campus.index')" :active="request()->routeIs('building')">
+                    <x-nav-link :href="route('building.index')" :active="request()->routeIs('building')">
                         {{ __('Buildings') }}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('campus.index')" :active="request()->routeIs('room')">
+                    <x-nav-link :href="route('room.index')" :active="request()->routeIs('room')">
                         {{ __('Rooms') }}
                     </x-nav-link>
                 </div>

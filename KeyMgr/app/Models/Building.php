@@ -6,7 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Campus;
 
@@ -18,14 +18,14 @@ class Building extends Model
     'name',
   ];
   
-  public function address (): HasOne
+  public function address (): BelongsTo
   {
-    return $this->hasOne(Address::class);
+    return $this->belongsTo(Address::class);
   }
 
-  public function campus(): HasOne
+  public function campus(): BelongsTo
   {
-    return $this->hasOne(Campus::class);
+    return $this->belongsTo(Campus::class);
   }
   public function rooms(): HasMany
   {

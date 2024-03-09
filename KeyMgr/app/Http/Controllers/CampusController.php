@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateCampusRequest;
 use App\Http\Resources\CampusResource;
 use App\Models\Campus;
 use App\Models\Wrappers\AddressWrapper;
-
 use Illuminate\Http\Request;
 
 class CampusController extends Controller
@@ -22,10 +21,7 @@ class CampusController extends Controller
   public function index()
   {
     return view('campus.campusList', [
-
       'campuses' => CampusResource::collection(Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get())->toArray(new Request()),
-      // 'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
-
     ]);
   }
 
@@ -37,10 +33,7 @@ class CampusController extends Controller
   public function create()
   {
     return view('campus.campusList', [
-
       'campuses' => CampusResource::collection(Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get())->toArray(new Request()),
-      // 'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
-
     ]);
   }
 
@@ -62,9 +55,7 @@ class CampusController extends Controller
     $campus->save();
 
     return view('campus.campusList', [
-
       'campuses' => CampusResource::collection(Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get())->toArray(new Request()),
-
     ]);
   }
 

@@ -1,18 +1,15 @@
 <?php
-/**
- * @author Zachary Abela-Gale <abel1325@pacificu.edu
- */
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Http\Requests\AddressRules;
 
-class UpdateCampusRequest extends FormRequest
+class RoomRequest extends FormRequest
 {
   /**
    * Determine if the user is authorized to make this request.
    * 
-   * @todo Implement RBAC
+   * @todo RBAC
    */
   public function authorize(): bool
   {
@@ -26,12 +23,13 @@ class UpdateCampusRequest extends FormRequest
    */
   public function rules(): array
   {
-    $stringVal = ['string', 'max:255'];
-
-    $campusRules = [
-      'name' => $stringVal,
+    return [
+      'number' => ['required', 'string', 'max:255'],
+      'roomDesc' => ['string', 'max:255'],
+      'building' => ['exists:App\Models\Building,id'],
+      
+      'doorDesc' => ['string','max:255'],
+      'doorHWDesc' => ['string', 'max:255'],
     ];
-
-    return array_merge ($campusRules, AddressRules::updateRules());
   }
 }

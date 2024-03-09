@@ -17,12 +17,6 @@ use App\Http\Controllers\CampusController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::resources([
-  'room' => RoomController::class,
-]);
-
-
 Route::get('/', function () {
   return view('welcome');
 });
@@ -47,6 +41,7 @@ Route::middleware('auth')->group(function () {
     'accounts' => UserController::class,
     'campus' => CampusController::class,
     'building' => BuildingController::class,
+    'room' => RoomController::class,
   ]);
 });
 

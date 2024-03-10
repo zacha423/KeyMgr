@@ -7,30 +7,48 @@
  */
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use App\Models\UserGroup;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
-use App\Http\Controllers\UserAPIController as UserAPI;
 class UserController extends Controller
 {
   /**
-   * Display a listing of the resource.
+   * Add a group membership to a set of users.
+   * 
+   * @param array<User> $users
+   * @param UserGroup $group
+   * 
+   * @todo Determine appropriate return type
    */
-  public function assignUsersToGroups() //UserGroupAssignment
+  public function assignUsersToGroup($users, UserGroup $group): RedirectResponse
   {
-    $assignments = [];
+    foreach ($users as $user) {
+      if (!$user->groups->contains($group)) {
+        $user->groups()->attach($group);
+      }
+    }
 
-    
-    /**
-     * To do:
-     * Create form validation on main request
-     * pre validate into individual pairs
-     * validate each pair, log fail in special array
-     * make insertions
-    */
+    return redirect('/');
+  }
+  /**
+   * Remove a group membership from a set of users
+   * 
+   * @param array<User> $users
+   * @param UserGroup $group
+   * 
+   * @todo Determine appropriate return type
+   */
+  public function unassignUsersFromGroup($users, UserGroup $group): RedirectResponse
+  {
+    foreach ($users as $user) {
+      if ($user->groups->contains($group)) {
+        $user->groups()->detach($group);
+      }
+    }
+
+    return redirect('/')
   }
 }

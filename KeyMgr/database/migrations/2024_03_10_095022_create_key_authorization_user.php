@@ -12,10 +12,10 @@ return new class extends Migration {
    */
   public function up(): void
   {
-    Schema::create('key_authorization_person', function (Blueprint $table) {
+    Schema::create('key_authorization_user', function (Blueprint $table) {
       $table->id();
       $table->foreignId('key_authorization_id');
-      $table->foreignId('person_id');
+      $table->foreignId('user_id');
       $table->timestamps();
     });
   }

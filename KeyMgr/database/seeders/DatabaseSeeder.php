@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
     $this->call(DoorSeeder::class);
     $this->call(MessageTemplateSeeder::class);
     \App\Models\User::factory(10)->create();
+    $this->call(KeyAuthSeeder::class);
   }
 }

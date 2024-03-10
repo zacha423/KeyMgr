@@ -11,30 +11,30 @@ use App\Models\UserGroup;
 class RBACWrapper extends Wrapper
 {
   /**
-   * Aassign 1 or more users to 1 or more groups
+   * Aassign 1 or more users to a group
    * 
-   * @param array<User> $users       - all users to modify
-   * @param array<UserGroup> $groups - the groups to add each user into
+   * @param array<User> $users - all users to modify
+   * @param UserGroup   $group - the group to add each user into
    */
-  protected static function assignUsersToGroups($Users, $Groups): void
+  protected static function assignUsersToGroup($users, $group): void
   {
-    foreach ($Users as $user) {
-      foreach ($Groups as $group) {
+    foreach ($users as $user) {
+      if (!$user->groups->contains($group)) {
         $user->assignToGroup($group);
       }
     }
   }
   /**
-   * Take 1 or more users and unassign them from 1 or more groups.
+   * Take 1 or more users and unassign them from a group.
    * 
-   * @param array<User> $Users       - all users to modify
-   * @param array<UserGroup> $Groups - the groups to remove from each user
+   * @param array<User> $users - all users to modify
+   * @param UserGroup   $group - the group to remove from each user
    */
-  protected static function unassignUsersToGroups($Users, $Groups): void
+  protected static function unassignUsersFromGroup($users, $group): void
   {
-    foreach ($Users as $user) {
-      foreach ($Groups as $group) {
-        $user->unassignFromGroup ($group);
+    foreach ($users as $user) {
+      if ($user->groups->contains($group)) {
+        $user->unassignFromGroup($group);
       }
     }
 

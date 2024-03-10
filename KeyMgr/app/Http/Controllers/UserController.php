@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\UserGroup;
+use App\Models\Wrappers\RBACWrapper;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -18,36 +19,22 @@ class UserController extends Controller
   /**
    * Add a group membership to a set of users.
    * 
-   * @param array<User> $users
-   * @param UserGroup $group
-   * 
    * @todo Determine appropriate return type
    */
-  public function assignUsersToGroup($users, UserGroup $group): RedirectResponse
+  public function assignUsersToGroup(Request $request): RedirectResponse
   {
-    foreach ($users as $user) {
-      if (!$user->groups->contains($group)) {
-        $user->groups()->attach($group);
-      }
-    }
+    // RBACWrapper::assignUsersToGroup();
 
     return redirect('/');
   }
   /**
    * Remove a group membership from a set of users
    * 
-   * @param array<User> $users
-   * @param UserGroup $group
-   * 
    * @todo Determine appropriate return type
    */
-  public function unassignUsersFromGroup($users, UserGroup $group): RedirectResponse
+  public function unassignUsersFromGroup(Request $request): RedirectResponse
   {
-    foreach ($users as $user) {
-      if ($user->groups->contains($group)) {
-        $user->groups()->detach($group);
-      }
-    }
+    // RBACWrapper::unassignUsersFromGroup();
 
     return redirect('/');
   }

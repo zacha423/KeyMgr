@@ -15,8 +15,8 @@ return new class extends Migration {
     Schema::create('key_authorizations', function (Blueprint $table) {
       $table->id();
       $table->string('agreement');
-      $table->foreignId('key_holder_person_id')->constrained();
-      $table->foreignId('requestor_person_id')->constrained();
+      $table->foreignId('key_holder_user_id')->on('users');
+      $table->foreignId('requestor_user_id')->on('users');
       $table->foreignId('key_auth_status_id')->constrained();
       $table->timestamps();
     });

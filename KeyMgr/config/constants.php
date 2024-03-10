@@ -30,4 +30,21 @@ return [
     ],
   ],
   'locks' => [],
+  'keyauthreq' => [
+    'statuses' => [
+      // Add additional Key Authorization Request statuses here
+      'new' => [
+        'name' => 'New',
+        'description' => 'A new request.',
+      ],
+      'active' => [
+        'name' => 'Active',
+        'description' => 'A valid agreement that is actively used.',
+      ],
+      'noncomply' => [
+        'name' => 'Non-Compliant',
+        'description' => 'An agreement with issues.',
+      ],
+    ],
+  ],
 ];

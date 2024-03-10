@@ -52,12 +52,12 @@ class User extends Authenticatable
   /**
    * @return string Returns the fullname of the user.
    */
-  public function getFullname () : string
+  public function getFullname(): string
   {
-    return $this->firstName .' '. $this->lastName;
+    return $this->firstName . ' ' . $this->lastName;
   }
 
-  public function roles() : BelongsToMany
+  public function roles(): BelongsToMany
   {
     return $this->belongsToMany(UserRole::class);
   }
@@ -67,5 +67,14 @@ class User extends Authenticatable
     return $this->belongsToMany(UserGroup::class);
   }
 
+  public function assignToGroup(UserGroup $userGroup)
+  {
+    $this->groups()->attach($userGroup);
+  }
+
+  public function unassignFromGroup(UserGroup $userGroup)
+  {
+    $this->groups()->detach(($userGroup));
+  }
 
 }

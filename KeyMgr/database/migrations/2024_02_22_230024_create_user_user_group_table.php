@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('user_group_id');
+            $table->unique(['user_id','user_group_id']);
         });
     }
 

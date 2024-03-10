@@ -50,6 +50,9 @@ Route::middleware('auth')->group(function () {
     'building' => BuildingController::class,
     'room' => RoomController::class,
   ]);
+
+  Route::post('/accounts/groups/assign', [UserController::class, 'assignUsersToGroup'])->name('user.group.assign');
+  Route::post('/accounts/groups/unassign', [UserController::class, 'unassignUsersFromGroup'])->name('user.group.unassign');
 });
 
 require __DIR__ . '/auth.php';

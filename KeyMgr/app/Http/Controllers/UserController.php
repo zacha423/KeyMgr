@@ -22,6 +22,9 @@ class UserController extends Controller
    */
   public function assignUsersToGroups() //UserGroupAssignment
   {
+    $assignments = [];
+
+    
     /**
      * To do:
      * Create form validation on main request

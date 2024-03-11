@@ -18,4 +18,9 @@ class MessageTemplate extends Model
   {
     return $this->belongsToMany(Lock::class);
   }
+
+  public function issuedKeys(): BelongsToMany
+  {
+    return $this->belongsToMany(IssuedKey::class, 'issued_key_messages', 'message_template_id', 'issued_key_id');
+  }
 }

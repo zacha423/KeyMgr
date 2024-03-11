@@ -34,4 +34,9 @@ class KeyAuthorization extends Model
   {
     return $this->belongsToMany (Room::class);
   }
+
+  public function issuedKeys(): BelongsToMany
+  {
+    return $this->belongsToMany(Key::class);//, 'key_key_authorization', 'key_authorization_id', 'key_id');
+  }
 }

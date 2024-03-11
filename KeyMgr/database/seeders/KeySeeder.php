@@ -25,5 +25,6 @@ class KeySeeder extends Seeder
     $key->key_type_id = KeyType::all()->random(1)->first()->id;
     $key->keyway_id = Keyway::all()->random(1)->first()->id;
     $key->storage_hook_id = StorageHook::all()->random(1)->first()->id;
+    $key->save();
   }
 }

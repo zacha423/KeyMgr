@@ -9,6 +9,7 @@ use App\Models\KeyAuthStatus;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Key;
 
 class KeyAuthSeeder extends Seeder
 {
@@ -24,5 +25,8 @@ class KeyAuthSeeder extends Seeder
     $keyauth->key_auth_status_id = KeyAuthStatus::all()->random(1)->first()->id;
     $keyauth->save();
     $keyauth->keyHolderContacts()->attach($users->random(1)->unique());
+
+
+    $keyauth->issuedKeys()->attach(Key::find(1)->id);
   }
 }

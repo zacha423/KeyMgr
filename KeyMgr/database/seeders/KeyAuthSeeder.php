@@ -18,24 +18,18 @@ class KeyAuthSeeder extends Seeder
   use WithoutModelEvents;
   public function run(): void
   {
-    // Because the default users aren't yet added to this branch.
-    User::factory()->createMany(5)->unique();
     $users = User::all();
-    $keyauth = new KeyAuthorization(['agreement' => fake()->text()]);
-    $keyauth->key_holder_user_id = $users->random(1)->unique()->first()->id;
-    $keyauth->requestor_user_id = $users->random(1)->unique()->first()->id;
-    $keyauth->key_auth_status_id = KeyAuthStatus::all()->random(1)->first()->id;
-    $keyauth->save();
-    $keyauth->keyHolderContacts()->attach($users->random(1)->unique());
+    $agreements = KeyAuthorization::factory()->createMany(5);
 
-
-    /**
-     * @todo this should probably be moved into a seperate seeder, and expanded upon
-     */
-    $keyauth->issuedKeys()->attach(Key::find(1)->id);
-    $issuedKey = IssuedKey::all()->random(1)->first();
-    $issuedKey->messages()->attach(MessageTemplate::all()->random(1)->first()->id);
-
-    
+    foreach ($agreements as $agreement) {
+      $agreement->save();
+      $agreement->keyHolderContacts()->attach($users->random(1)->unique());
+      $agreement->issuedKeys()->attach(Key::all()->random(1)->first()->id);
+      IssuedKey::where([
+        'key_authorization_id' => $agreement->id
+      ])->get()->first()->messages()->attach(
+        MessageTemplate::all()->random(1)->first()->id
+      );
+    }
   }
 }

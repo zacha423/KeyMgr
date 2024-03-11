@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @author Zachary Abela-Gale <abel1325@pacificu.edu>
+ */
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,6 +39,6 @@ class KeyAuthorization extends Model
 
   public function issuedKeys(): BelongsToMany
   {
-    return $this->belongsToMany(Key::class);//, 'key_key_authorization', 'key_authorization_id', 'key_id');
+    return $this->belongsToMany(Key::class);
   }
 }

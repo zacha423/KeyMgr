@@ -57,7 +57,7 @@ class Key extends Model
 
   public function keyAuthorizationAgreements(): BelongsToMany
   {
-    return $this->belongsToMany(KeyAuthorization::class, 'key_key_authorization', 'key_id', 'key_authorization_id');
+    return $this->belongsToMany(KeyAuthorization::class);
   }
 }
 

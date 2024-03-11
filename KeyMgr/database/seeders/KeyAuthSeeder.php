@@ -4,8 +4,10 @@
  */
 namespace Database\Seeders;
 
+use App\Models\IssuedKey;
 use App\Models\KeyAuthorization;
 use App\Models\KeyAuthStatus;
+use App\Models\MessageTemplate;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
@@ -27,6 +29,13 @@ class KeyAuthSeeder extends Seeder
     $keyauth->keyHolderContacts()->attach($users->random(1)->unique());
 
 
+    /**
+     * @todo this should probably be moved into a seperate seeder, and expanded upon
+     */
     $keyauth->issuedKeys()->attach(Key::find(1)->id);
+    $issuedKey = IssuedKey::all()->random(1)->first();
+    $issuedKey->messages()->attach(MessageTemplate::all()->random(1)->first()->id);
+
+    
   }
 }

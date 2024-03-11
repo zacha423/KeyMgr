@@ -4,13 +4,9 @@
  */
 namespace Database\Seeders;
 
-use App\Models\KeyStatus;
-use App\Models\KeyType;
-use App\Models\Keyway;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Key;
-use App\Models\StorageHook;
 
 class KeySeeder extends Seeder
 {
@@ -20,11 +16,8 @@ class KeySeeder extends Seeder
    */
   public function run(): void
   {
-    $key = new Key(['keyLevel'=>'ACE', 'keySystem'=>'20']);
-    $key->key_status_id = KeyStatus::all()->random(1)->first()->id;
-    $key->key_type_id = KeyType::all()->random(1)->first()->id;
-    $key->keyway_id = Keyway::all()->random(1)->first()->id;
-    $key->storage_hook_id = StorageHook::all()->random(1)->first()->id;
-    $key->save();
+    foreach (Key::factory()->createMany(15) as $key) {
+      $key->save();
+    }
   }
 }

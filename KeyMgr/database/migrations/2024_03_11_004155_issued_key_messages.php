@@ -12,11 +12,10 @@ return new class extends Migration {
    */
   public function up(): void
   {
-    Schema::create('rooms', function (Blueprint $table) {
+    Schema::create('issued_key_messages', function (BluePrint $table) {
       $table->id();
-      $table->string('number');
-      $table->string('description')->nullable();
-      $table->foreignId('building_id')->constrained();
+      $table->foreignId('issued_key_id')->on('key_key_authorization');
+      $table->foreignId('message_template_id');
       $table->timestamps();
     });
   }
@@ -26,6 +25,6 @@ return new class extends Migration {
    */
   public function down(): void
   {
-    Schema::dropIfExists('rooms');
+    Schema::dropIfExists('issued_key_messages');
   }
 };

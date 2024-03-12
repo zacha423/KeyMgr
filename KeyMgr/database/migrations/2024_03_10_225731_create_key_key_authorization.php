@@ -12,11 +12,12 @@ return new class extends Migration {
    */
   public function up(): void
   {
-    Schema::create('rooms', function (Blueprint $table) {
+    Schema::create('key_key_authorization', function (Blueprint $table) {
       $table->id();
-      $table->string('number');
-      $table->string('description')->nullable();
-      $table->foreignId('building_id')->constrained();
+      $table->foreignId('key_authorization_id');
+      $table->foreignId('key_id');
+      $table->date('due_date')->nullable();
+      $table->unsignedDouble('replacement_cost', 10, 4)->default(0.0);
       $table->timestamps();
     });
   }
@@ -26,6 +27,6 @@ return new class extends Migration {
    */
   public function down(): void
   {
-    Schema::dropIfExists('rooms');
+    Schema::dropIfExists('key_key_authorization');
   }
 };

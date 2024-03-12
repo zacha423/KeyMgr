@@ -12,11 +12,12 @@ return new class extends Migration {
    */
   public function up(): void
   {
-    Schema::create('rooms', function (Blueprint $table) {
+    Schema::create('key_authorizations', function (Blueprint $table) {
       $table->id();
-      $table->string('number');
-      $table->string('description')->nullable();
-      $table->foreignId('building_id')->constrained();
+      $table->string('agreement');
+      $table->foreignId('key_holder_user_id')->on('users');
+      $table->foreignId('requestor_user_id')->on('users');
+      $table->foreignId('key_auth_status_id')->constrained();
       $table->timestamps();
     });
   }
@@ -26,6 +27,6 @@ return new class extends Migration {
    */
   public function down(): void
   {
-    Schema::dropIfExists('rooms');
+    Schema::dropIfExists('key_authorizations');
   }
 };

@@ -21,7 +21,7 @@ return new class extends Migration {
       $table->string('blindCode')->nullable();
       $table->string('mainAngles')->nullable();
       $table->string('doubleAngles')->nullable();
-      $table->decimal('replacementCost', 9, 2);
+      $table->decimal('replacementCost', 9, 2)->default(0.0);
       $table->foreignId('key_status_id')->constrained();
       $table->foreignId('key_type_id')->constrained();
       $table->foreignId('master_key_system_id')->nullable()->constrained();

@@ -12,11 +12,10 @@ return new class extends Migration {
    */
   public function up(): void
   {
-    Schema::create('rooms', function (Blueprint $table) {
+    Schema::create('key_authorization_user', function (Blueprint $table) {
       $table->id();
-      $table->string('number');
-      $table->string('description')->nullable();
-      $table->foreignId('building_id')->constrained();
+      $table->foreignId('key_authorization_id');
+      $table->foreignId('user_id');
       $table->timestamps();
     });
   }
@@ -26,6 +25,6 @@ return new class extends Migration {
    */
   public function down(): void
   {
-    Schema::dropIfExists('rooms');
+    Schema::dropIfExists('key_authorization_person');
   }
 };

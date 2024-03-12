@@ -4,6 +4,7 @@
  */
 namespace App\Models\Wrappers;
 
+use App\Models\Wrappers\Wrapper;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
@@ -12,24 +13,8 @@ use App\Models\PostalCode;
 use App\Models\Building;
 use App\Models\Campus;
 
-class AddressWrapper
+class AddressWrapper extends Wrapper
 {
-  /**
-   * Similar to Laravel's env() helper.
-   * 
-   * @param array<string, mixed> $array - the data array to search
-   * @param string $key                 - the key to search for in $array
-   * @param mixed $default              - the fallback value if $key is not 
-   * 
-   * @return mixed - the value in the array if found or the fallback value
-   */
-  protected static function arrayorDefault($array, $key, $default): mixed
-  {
-    if (array_key_exists($key, $array)) {
-      return $array[$key];
-    }
-    return $default;
-  }
   /**
    * Find or make a country.
    * 
@@ -160,7 +145,7 @@ class AddressWrapper
         'city' => [
           'state' => [
             'country'
-          ], 
+          ],
         ],
         'zipcode'
       ],

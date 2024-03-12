@@ -1,11 +1,13 @@
 <?php
-
+/**
+ * @author Zachary Abela-Gale <abel1325@pacificu.edu>
+ */
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class RoomResource extends JsonResource
 {
   /**
    * Transform the resource into an array.
@@ -17,14 +19,10 @@ class UserResource extends JsonResource
    */
   public function toArray(Request $request): array
   {
-    // return parent::toArray($request);
     return [
       'id' => $this->id,
-      'name' => $this->getFullname(),
-      'email' => $this->email,
-      'username' => $this->username,
-      'created' => $this->created_at,
-      'updated' => $this->updated_at,
+      'number' => $this->number,
+      'description' => $this->description,
     ];
   }
 }

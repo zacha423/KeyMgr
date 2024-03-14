@@ -67,7 +67,7 @@
                 method: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    name: roleName
+                    roleName: roleName
                 },
                 success: function(response) {
                     var newRoleHTML = '<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-4">';

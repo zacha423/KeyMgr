@@ -81,7 +81,7 @@ class RoomController extends Controller
    */
   public function edit(Room $room)
   {
-    return view('room.rooms', [
+    return view('room.roomEdit', [
       'room' => $room->load('doors')->toArray(),
       'roomJSON' => $room->load('doors')->toJson(),
     ]);

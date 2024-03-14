@@ -79,10 +79,8 @@
                     newRoleHTML += '<button class="deleteRole btn-red" data-role-id="' + response.id + '">Delete</button>';
                     newRoleHTML += '</div></div></div></div></div>';
 
-                    // Append the new role HTML to the existing container
                     $('.testff').append(newRoleHTML); 
 
-                    // Clear the input field after adding the role
                     $('#newRoleName').val(''); 
                 },
                 error: function(xhr) {
@@ -97,11 +95,12 @@
             var listItem = $(this).closest('.bg-white');
 
             $.ajax({
-                url: '{{ route('roles.destroy', ['role' => $role['id']]) }}',
+                // url: '{{ route('roles.destroy', ['role' => $role['id']]) }}',
+                url: '/roles/' + roleId,
                 method: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    id: roleId
+                    _method: 'DELETE'
                 },
                 success: function(response) {
                     listItem.remove();

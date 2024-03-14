@@ -31,7 +31,7 @@
     <div class="py-12">
         <div class="testff max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="flex justify-between items-center">
-                <input type="text" id="newRoleName" placeholder="Enter role name" class="text-gray-900 dark:text-gray-100 flex-grow mr-4">
+                <input type="text" id="newRoleName" placeholder="Enter role name" class="text-black flex-grow mr-4">
                 <button onclick="addRole()" class="text-gray-900 dark:text-gray-100 flex-grow mr-4">Add Role</button>
             </div>
 

@@ -42,7 +42,7 @@ class UserRoleController extends Controller
     //   'roleJSON' => $role->toJson(),
     // ]);
 
-    return $role->toJson();
+    // return $role->toJson();
   }
 
   /**

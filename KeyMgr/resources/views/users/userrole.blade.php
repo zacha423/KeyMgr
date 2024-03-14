@@ -29,7 +29,12 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="testff max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center">
+                <input type="text" id="newRoleName" placeholder="Enter role name" class="text-gray-900 dark:text-gray-100 flex-grow mr-4">
+                <button onclick="addRole()" class="text-gray-900 dark:text-gray-100 flex-grow mr-4">Add Role</button>
+            </div>
+
             @foreach ($roles as $role)
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-4">
                 <div class="p-6 text-gray-900 dark:text-gray-100 flex justify-between items-center">
@@ -46,10 +51,6 @@
                 </div>
             </div>
             @endforeach
-            <div class="flex justify-between items-center">
-                <input type="text" id="newRoleName" placeholder="Enter role name" class="text-gray-900 dark:text-gray-100 flex-grow mr-4">
-                <button onclick="addRole()" class="text-gray-900 dark:text-gray-100 flex-grow mr-4">Add Role</button>
-            </div>
         </div>
     </div>
 
@@ -77,8 +78,11 @@
                     newRoleHTML += '<div class="flex items-center"><div class="ml-auto flex items-center p-2">';
                     newRoleHTML += '<button class="deleteRole btn-red" data-role-id="' + response.id + '">Delete</button>';
                     newRoleHTML += '</div></div></div></div></div>';
-                    
-                    $('.max-w-7xl').append(newRoleHTML); 
+
+                    // Append the new role HTML to the existing container
+                    $('.testff').append(newRoleHTML); 
+
+                    // Clear the input field after adding the role
                     $('#newRoleName').val(''); 
                 },
                 error: function(xhr) {

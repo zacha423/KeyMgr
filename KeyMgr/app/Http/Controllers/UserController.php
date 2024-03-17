@@ -19,8 +19,23 @@ class UserController extends Controller
 
   public function index()
   {
+    $data = [];
+
+    $btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+                <i class="fa fa-lg fa-fw fa-pen"></i>
+            </button>';
+    $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow" title="Delete">
+                  <i class="fa fa-lg fa-fw fa-trash"></i>
+              </button>';
+    $btnDetails = '<button class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+                   <i class="fa fa-lg fa-fw fa-eye"></i>
+               </button>';
+
+    foreach (User::all() as $user) {
+      array_push($data, [$user->id, $user->firstName, $user->lastName, '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>']);
+    }
     return view('users.userlist', [
-      'users' => User::all()->toArray(),
+      'users' => $data,
       'usersJSON' => User::all()->toJson(),
     ]);
   }

@@ -17,10 +17,10 @@
     <form action="{{ $register_url }}" method="post">
         @csrf
 
-        {{-- Name field --}}
+        {{-- First Name field --}}
         <div class="input-group mb-3">
-            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                   value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.full_name') }}" autofocus>
+            <input type="text" name="firstName" class="form-control @error('firstName') is-invalid @enderror"
+                   value="{{ old('firstName') }}" placeholder="{{ __('adminlte::adminlte.first_name') }}" autofocus>
 
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -28,12 +28,48 @@
                 </div>
             </div>
 
-            @error('name')
+            @error('firstName')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
         </div>
+
+        {{-- Last Name field --}}
+        <div class="input-group mb-3">
+            <input type="text" name="lastName" class="form-control @error('lastName') is-invalid @enderror"
+                   value="{{ old('lastName') }}" placeholder="{{ __('adminlte::adminlte.last_name') }}" autofocus>
+
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                </div>
+            </div>
+
+            @error('lastName')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+
+        {{-- Username field --}}
+        <div class="input-group mb-3">
+          <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" 
+                 value="{{ old('email') }}" placeholder="{{__('adminlte::adminlte.username') }}">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
+            </div>
+          </div>
+
+          @error('username')
+            <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+            </span>
+          @enderror
+        </div>
+
 
         {{-- Email field --}}
         <div class="input-group mb-3">

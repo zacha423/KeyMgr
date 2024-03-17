@@ -89,8 +89,9 @@ class RoomController extends Controller
   {
     return view('room.roomEdit', [
       'room' => $room->load('doors')->toArray(),
-      'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
       'roomJSON' => $room->load('doors')->toJson(),
+      'building' => $room->building()->first(),
+      'campuses' => CampusResource::collection(Campus::all()),
     ]);
   }
 

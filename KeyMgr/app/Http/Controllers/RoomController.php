@@ -117,6 +117,11 @@ class RoomController extends Controller
       $room->description = $validated['roomDesc'];
     }
 
+    if (isset($validated['building']))
+    {
+      $room->building_id=$validated['building'];
+    }
+
     $room->save();
     
     // This is bad, and probably should be wrapped.

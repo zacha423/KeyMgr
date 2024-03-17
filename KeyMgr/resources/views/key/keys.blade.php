@@ -1,3 +1,4 @@
+{{var_dump($keys)}}
 <x-app-layout>
   <x-slot name="header">
       <div class="p-2 flex justify-between items-center">

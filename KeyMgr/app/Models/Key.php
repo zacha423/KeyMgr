@@ -32,15 +32,15 @@ class Key extends Model
   }
   public function type(): BelongsTo
   {
-    return $this->belongsTo(KeyType::class);
+    return $this->belongsTo(KeyType::class, 'key_type_id', 'id');
   }
   public function status(): BelongsTo
   {
-    return $this->belongsTo(KeyStatus::class);
+    return $this->belongsTo(KeyStatus::class, 'key_status_id', 'id');
   }
   public function storage(): BelongsTo
   {
-    return $this->belongsTo(StorageHook::class);
+    return $this->belongsTo(StorageHook::class, 'storage_hook_id', 'id');
   }
   public function keyway(): BelongsTo
   {
@@ -48,7 +48,7 @@ class Key extends Model
   }
   public function masterKeySystem(): BelongsTo
   {
-    return $this->belongsTo(MasterKeySystem::class);
+    return $this->belongsTo(MasterKeySystem::class, 'master_key_system_id', 'id');
   }
   public function openableLocks(): BelongsToMany
   {

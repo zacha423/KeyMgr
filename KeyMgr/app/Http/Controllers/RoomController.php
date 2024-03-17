@@ -63,7 +63,7 @@ class RoomController extends Controller
     $door->save();
 
     return view('room.rooms', [
-      'room' => $room->toArray(),
+      'room' => (new RoomResource($room->load('doors', 'building'))),
       'rooms' => RoomResource::collection(Room::with('doors', 'building')->get())->toArray(new Request()),
       'roomJSON' => $room->toJson(),
       'building' => new BuildingResource(Building::where(['id' => $validated['building']])->first()),
@@ -77,14 +77,19 @@ class RoomController extends Controller
    */
   public function show(Room $room)
   {
-    return view('room.singleRoom', [
-      'rooms' => RoomResource::collection(Room::with('doors', 'building')->get())->toArray(new Request()),
-      'room' => (new RoomResource($room->load('doors', 'building'))),
-      'building' => $room->building()->first(),
-      'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
-      'roomJSON' => $room->load('doors')->toJson(),
-    ]);
+      $room->load('doors', 'building');
+  
+      $door = $room->doors()->first();
+  
+      return view('room.singleRoom', [
+          'room' => (new RoomResource($room)),
+          'building' => $room->building,
+          'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
+          'roomJSON' => $room->toJson(),
+          'door' => $door,
+      ]);
   }
+  
 
   /**
    * Show the form for editing the specified resource.
@@ -94,7 +99,7 @@ class RoomController extends Controller
     return view('room.roomEdit', [
       'rooms' => RoomResource::collection(Room::with('doors', 'building')->get())->toArray(new Request()),
       'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
-      'room' => $room->load('doors')->toArray(),
+      'room' => (new RoomResource($room->load('doors', 'building'))),
       'roomJSON' => $room->load('doors')->toJson(),
       'building' => $room->building()->first(),
       'campuses' => CampusResource::collection(Campus::all()),

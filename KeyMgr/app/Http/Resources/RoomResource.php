@@ -25,8 +25,8 @@ class RoomResource extends JsonResource
       'description' => $this->description,
       'buildingID' => $this->building->id,
       'buildingName' => $this->building->name,
-      'doorDesc' => $this->door->description,
-      'doorHWDesc' => $this->door->hardwareDescription,
+      'doorDesc' => $this->doorDescription,
+      'doorHWDesc' => $this->hardwareDescription,
     ];
   }
 }

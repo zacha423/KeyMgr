@@ -116,12 +116,12 @@ class BuildingController extends Controller
     {
       $mapped['city'] = $validated['city'];
     }
-    if (isset ($data['street']))
+    if (isset ($validated['streetAddress']))
     {
-      $mapped['streetAddress'] = $validated['street'];
+      $mapped['streetAddress'] = $validated['streetAddress'];
     }
 
-    if (isset ($data['postalCode']))
+    if (isset ($validated['postalCode']))
     {
       $mapped['postalCode'] = $validated['postalCode'];
     }

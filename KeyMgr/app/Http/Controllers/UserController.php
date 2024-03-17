@@ -32,7 +32,7 @@ class UserController extends Controller
                </button>';
 
     foreach (User::all() as $user) {
-      array_push($data, [$user->id, $user->firstName, $user->lastName, '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>']);
+      array_push($data, [$user->id, $user->firstName, $user->lastName, $user->email, '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>']);
     }
     return view('users.userlist', [
       'users' => $data,

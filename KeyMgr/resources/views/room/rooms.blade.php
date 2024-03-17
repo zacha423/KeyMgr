@@ -76,20 +76,23 @@
                         </div>
                     </div>
 
+                    {{var_dump($room)}}
 
                     <div id="dropdown-{{ $room['id'] }}" class="hidden p-6">
                         @if(isset($room['description']))
                             <p>Description: {{ $room['description'] }}</p>
                         @else
                             <p>Description not available</p>
-                        @if(isset($room->building_id))
-                            <p>Building: {{ $building['id'] }}">{{ $building['name'] }}</p>
+                        @endif
+                        @if(isset($room['buildingID']))
+                            <p>Building: {{ $room['buildingName'] }}</p>
                         @else
                             <p>Building not available</p>
                         @endif
                     </div>
                 </div>
             @endforeach
+            
             <script>
                 function toggleDropdown(roomId) {
                     var dropdown = document.getElementById('dropdown-' + roomId);

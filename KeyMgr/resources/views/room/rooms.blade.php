@@ -73,18 +73,7 @@
               <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-4">
                 <div class="p-6 flex items-center">
                   <div class="flex items-center">
-                      <a href="{{ route('room.show', ['room' => $room['id']]) }}" class="block text-xl font-medium text-blue-600 mb-2">{{ $room['number'] }}</a>                      <div class="text-center">
-                          @if(isset ($room['description']))
-                              <p class="mb-2">Description: {{ $room['description'] }}</p>
-                          @else
-                              <p class="mb-2">Description not available</p>
-                          @endif
-                          @if(isset ($room['buildingID']))
-                              <p class="mb-2">Building: {{ $room['buildingName'] }}</p>
-                          @else
-                              <p class="mb-2">Building not available</p>
-                          @endif
-                      </div>
+                      <a href="{{ route('room.show', ['room' => $room['id']]) }}" class="block text-xl font-medium text-blue-600 mb-2">{{ $room['number'] }}</a>
                   </div>
                 </div>
               </div>

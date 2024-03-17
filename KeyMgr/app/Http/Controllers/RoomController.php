@@ -56,7 +56,7 @@ class RoomController extends Controller
     $room->save();
 
     $door = Door::firstOrNew([
-      'description' => $validated['doorDesc'],
+      'doorDescription' => $validated['doorDesc'],
       'hardwareDescription' => $validated['doorHWDesc'],
     ]);
     $door->room_id = $room->id;

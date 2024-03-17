@@ -39,6 +39,16 @@
                           </select>
                       </div>
 
+                      <div class="mb-4">
+                          <label for="doorDesc" class="block text-sm font-medium text-gray-700">Door Description</label>
+                          <input type="text" id="doorDesc" name="doorDesc" class="mt-1 p-2 border rounded-md w-full" required>
+                      </div>
+
+                      <div class="mb-4">
+                          <label for="doorHWDesc" class="block text-sm font-medium text-gray-700">Door Hardware Description</label>
+                          <input type="text" id="doorHWDesc" name="doorHWDesc" class="mt-1 p-2 border rounded-md w-full" required>
+                      </div>
+
                       <div class="flex justify-end">
                           <button type="button" onclick="toggleNewRoomForm()" class="text-gray-600 hover:text-gray-800 mr-2">Cancel</button>
                           <button type="submit" class="bg-green-500 text-black px-4 py-2 rounded-md">Save Room</button>
@@ -61,9 +71,9 @@
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
           @foreach($rooms as $room)
               <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-4">
-                  <div class="p-6 flex justify-between items-center">
-                      <div class="flex items-center">
-                          <a href="{{ route('room.show', ['room' => $room['id']]) }}" class="block text-xl font-medium text-blue-600 mb-2">{{ $room['number'] }}</a>
+                <div class="p-6 flex items-center">
+                  <div class="flex items-center">
+                      <a href="{{ route('room.show', ['room' => $room['id']]) }}" class="block text-xl font-medium text-blue-600 mb-2">{{ $room['number'] }}</a>                      <div class="text-center">
                           @if(isset ($room['description']))
                               <p class="mb-2">Description: {{ $room['description'] }}</p>
                           @else
@@ -76,6 +86,7 @@
                           @endif
                       </div>
                   </div>
+                </div>
               </div>
           @endforeach
       </div>

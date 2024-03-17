@@ -51,7 +51,7 @@ class RoomController extends Controller
       'number' => $validated['number'],
       'description' => $validated['roomDesc']
     ]);
-    $room->building_id = $validated['building_id'];
+    $room->building_id = $validated['building'];
     
     $room->save();
 
@@ -64,6 +64,7 @@ class RoomController extends Controller
 
     return view('room.rooms', [
       'room' => $room->toArray(),
+      'rooms' => RoomResource::collection(Room::with('doors', 'building')->get())->toArray(new Request()),
       'roomJSON' => $room->toJson(),
       'building' => new BuildingResource(Building::where(['id' => $validated['building']])->first()),
       'buildingJSON' => (new BuildingResource(Building::where(['id' => $validated['building']])->first()))->toJson(),

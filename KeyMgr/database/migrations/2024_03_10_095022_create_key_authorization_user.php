@@ -12,11 +12,11 @@ return new class extends Migration {
    */
   public function up(): void
   {
-    Schema::create('lock_message_template', function (Blueprint $table) {
+    Schema::create('key_authorization_user', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('lock_id');
-      $table->foreignId('message_template_id');
-      $table->date('maintenanceDate');
+      $table->foreignId('key_authorization_id');
+      $table->foreignId('user_id');
+      $table->timestamps();
     });
   }
 
@@ -25,6 +25,6 @@ return new class extends Migration {
    */
   public function down(): void
   {
-    Schema::dropIfExists('lock_message_template');
+    Schema::dropIfExists('key_authorization_person');
   }
 };

@@ -54,6 +54,11 @@ class Key extends Model
   {
     return $this->belongsToMany(Lock::class);
   }
+
+  public function keyAuthorizationAgreements(): BelongsToMany
+  {
+    return $this->belongsToMany(KeyAuthorization::class);
+  }
 }
 
 

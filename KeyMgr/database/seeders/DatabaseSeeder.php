@@ -33,5 +33,10 @@ class DatabaseSeeder extends Seeder
       $user->roles()->attach(UserRole::all()->random(1)); 
     }
     $this->call(MessageTemplateSeeder::class);
+    \App\Models\User::factory(10)->create();
+    $this->call(KeywaySeeder::class);
+    $this->call(StorageSeeder::class);
+    $this->call(KeySeeder::class);
+    $this->call(KeyAuthSeeder::class);
   }
 }

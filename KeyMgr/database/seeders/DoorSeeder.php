@@ -4,6 +4,7 @@
  */
 namespace Database\Seeders;
 
+use App\Models\Room;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Door;
@@ -16,6 +17,8 @@ class DoorSeeder extends Seeder
    */
   public function run(): void
   {
-    Door::factory()->createMany (3);
+    foreach (Room::all() as $room) {
+      $room->doors()->saveMany(Door::factory()->createMany(2));
+    }
   }
 }

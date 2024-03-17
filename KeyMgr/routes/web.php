@@ -40,9 +40,9 @@ Route::middleware('auth')->group(function () {
   Route::resources([
     'accounts' => UserController::class,
     'campus' => CampusController::class,
-    'building' => BuildingController::class,
   ]);
-  Route::resource('room', RoomController::class)->except(['create']);
+  Route::resource('room', RoomController::class,)->except(['create']);
+  Route::resource('building', BuildingController::class)->except(['create']);
 });
 
 require __DIR__ . '/auth.php';

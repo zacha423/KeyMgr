@@ -26,7 +26,7 @@ Route::resources ([
 ]);
 
 Route::get('/', function () {
-  return view('welcome');
+  return redirect('/login');
 });
 
 Route::get('/dashboard', function () {

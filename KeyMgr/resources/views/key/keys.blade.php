@@ -30,7 +30,7 @@
 
                         <div class="mb-4">
                             <label for="copyNumber" class="block text-sm font-medium text-gray-700">Copy Number</label>
-                            <input type="text" id="copyNumber" name="copyNumber" class="mt-1 p-2 border rounded-md w-full" required>
+                            <input type="number" id="copyNumber" name="copyNumber" class="mt-1 p-2 border rounded-md w-full" required>
                         </div>
 
                         <div class="mb-4">
@@ -55,7 +55,7 @@
 
                         <div class="mb-4">
                             <label for="replacementCost" class="block text-sm font-medium text-gray-700">Key Replacement Cost </label>
-                            <input type="text" id="replacementCost" name="replacementCost" class="mt-1 p-2 border rounded-md w-full" required>
+                            <input type="number" id="replacementCost" name="replacementCost" class="mt-1 p-2 border rounded-md w-full" required>
                         </div>
 
                         <div class="flex justify-end">

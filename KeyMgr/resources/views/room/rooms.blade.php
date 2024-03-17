@@ -63,7 +63,7 @@
               <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-4">
                   <div class="p-6 flex justify-between items-center">
                       <div class="flex items-center">
-                          <a href="{{ route('singleRoom', ['id' => $room['id']]) }}" class="block text-xl font-medium text-blue-600 mb-2">{{ $room['number'] }}</a>
+                          <a href="{{ route('room.show', ['room' => $room['id']]) }}" class="block text-xl font-medium text-blue-600 mb-2">{{ $room['number'] }}</a>
                           @if(isset ($room['description']))
                               <p class="mb-2">Description: {{ $room['description'] }}</p>
                           @else

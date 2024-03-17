@@ -76,9 +76,9 @@ class RoomController extends Controller
    */
   public function show(Room $room)
   {
-    return view('room.rooms', [
+    return view('room.singleRoom', [
       'rooms' => RoomResource::collection(Room::with('doors', 'building')->get())->toArray(new Request()),
-      'room' => $room->load('doors')->toArray(),
+      'room' => (new RoomResource($room->load('doors', 'building'))),
       'building' => $room->building()->first(),
       'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
       'roomJSON' => $room->load('doors')->toJson(),
@@ -134,8 +134,9 @@ class RoomController extends Controller
 
     $door->save();
 
-    return view('room.rooms', [
-      'room' => $room->load('doors')->toArray(),
+    return view('room.singleRoom', [
+      'room' => (new RoomResource($room->load('doors', 'building'))),
+      'building' => $room->building()->first(),
       'rooms' => RoomResource::collection(Room::with('doors', 'building')->get())->toArray(new Request()),
       'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
       'roomJSON' => $room->toJson(),

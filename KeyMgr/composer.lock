@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f7963b1b1e2430bf142f0f393b22bfe4",
+    "content-hash": "561f4f871c540405353a08002be14803",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -1434,16 +1434,16 @@
         },
         {
             "name": "jeroennoten/laravel-adminlte",
-            "version": "v3.9.4",
+            "version": "v3.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jeroennoten/Laravel-AdminLTE.git",
-                "reference": "479197945506d691d9b73c56dc365d3f5e7a9a9b"
+                "reference": "21b94f6d7716ebde46849fcd77ec33c1565794ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jeroennoten/Laravel-AdminLTE/zipball/479197945506d691d9b73c56dc365d3f5e7a9a9b",
-                "reference": "479197945506d691d9b73c56dc365d3f5e7a9a9b",
+                "url": "https://api.github.com/repos/jeroennoten/Laravel-AdminLTE/zipball/21b94f6d7716ebde46849fcd77ec33c1565794ec",
+                "reference": "21b94f6d7716ebde46849fcd77ec33c1565794ec",
                 "shasum": ""
             },
             "require": {
@@ -1488,9 +1488,9 @@
             ],
             "support": {
                 "issues": "https://github.com/jeroennoten/Laravel-AdminLTE/issues",
-                "source": "https://github.com/jeroennoten/Laravel-AdminLTE/tree/v3.9.4"
+                "source": "https://github.com/jeroennoten/Laravel-AdminLTE/tree/v3.10.0"
             },
-            "time": "2024-01-19T14:51:27+00:00"
+            "time": "2024-03-08T13:43:37+00:00"
         },
         {
             "name": "laravel/framework",

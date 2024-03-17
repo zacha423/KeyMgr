@@ -13,7 +13,7 @@ class Door extends Model
   use HasFactory;
 
   protected $fillable = [
-    'doorDescription',
+    'description',
     'hardwareDescription',
   ];
 

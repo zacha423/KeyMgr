@@ -50,7 +50,7 @@ class RoomController extends Controller
     $room->save();
 
     $door = Door::firstOrNew([
-      'doorDescription' => $validated['doorDesc'],
+      'description' => $validated['doorDesc'],
       'hardwareDescription' => $validated['doorHWDesc'],
     ]);
     $door->room_id = $room->id;
@@ -80,6 +80,9 @@ class RoomController extends Controller
    */
   public function edit(Room $room)
   {
+    /**
+     * @todo See if possible to preselect existing Building and include possible list
+     */
     return view('room.roomEdit', [
       'buildings' => BuildingResource::collection(
         Building::with(
@@ -118,7 +121,7 @@ class RoomController extends Controller
     $door = $room->doors()->getRelated()->first();
 
     if (isset ($validated['doorDesc'])) {
-      $door->doorDescription = $validated['doorDesc'];
+      $door->description = $validated['doorDesc'];
     }
 
     if (isset ($validated['doorHWDesc'])) {

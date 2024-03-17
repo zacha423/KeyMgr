@@ -37,7 +37,8 @@
                     </div>
                     <div class="mb-4">
                         @if(isset($room['id']))
-                          <p class="mb-2">Door: {{ optional($door)->doorDescription ?: 'Not available' }}</p>
+                          
+                          <p class="mb-2">Door: {{ optional($door)->description ?: 'Not available' }}</p>
                           <p class="mb-2">Door Hardware: {{ optional($door)->hardwareDescription ?: 'Not available' }}</p>
                         @else
                             <p class="mb-2">Door information not available</p>

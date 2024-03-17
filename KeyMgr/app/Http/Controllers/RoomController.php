@@ -1,15 +1,16 @@
 <?php
-
+/**
+ * @author Zachary Abela-Gale <abel1325@pacificu.edu>
+ * @author Maximus Hudson <huds4450@pacificu.edu>
+ */
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RoomRequest;
 use App\Http\Resources\BuildingResource;
-use App\Http\Resources\CampusResource;
 use App\Http\Resources\RoomResource;
 use App\Models\Wrappers\AddressWrapper;
 use App\Models\Room;
 use App\Models\Building;
-use App\Models\Campus;
 use App\Models\Door;
 use Illuminate\Http\Request;
 
@@ -22,18 +23,14 @@ class RoomController extends Controller
   {
     return view('room.rooms', [
       'rooms' => RoomResource::collection(Room::with('doors', 'building')->get())->toArray(new Request()),
-      'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
-    ]);
-  }
-
-  /**
-   * Show the form for creating a new resource.
-   */
-  public function create()
-  {
-    return view('room.rooms', [
-      'campuses' => CampusResource::collection(Campus::all()),
-      'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
+      'buildings' => BuildingResource::collection(
+        Building::with(
+          AddressWrapper::loadRelationships(),
+          'buildings',
+          'rooms',
+          'campus'
+        )->get()
+      )->toArray(new Request()),
     ]);
   }
 
@@ -49,7 +46,7 @@ class RoomController extends Controller
       'description' => $validated['roomDesc']
     ]);
     $room->building_id = $validated['building'];
-    
+
     $room->save();
 
     $door = Door::firstOrNew([
@@ -59,12 +56,7 @@ class RoomController extends Controller
     $door->room_id = $room->id;
     $door->save();
 
-    return view('room.rooms', [
-      'room' => (new RoomResource($room->load('doors', 'building'))),
-      'rooms' => RoomResource::collection(Room::with('doors', 'building')->get())->toArray(new Request()),
-      'building' => new BuildingResource(Building::where(['id' => $validated['building']])->first()),
-      'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
-    ]);
+    return redirect('/room');
   }
 
   /**
@@ -77,13 +69,11 @@ class RoomController extends Controller
     $door = $room->doors()->first();
 
     return view('room.singleRoom', [
-        'room' => (new RoomResource($room)),
-        'building' => $room->building,
-        'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
-        'door' => $door,
+      'room' => (new RoomResource($room)),
+      'door' => $door,
     ]);
-}
-  
+  }
+
 
   /**
    * Show the form for editing the specified resource.
@@ -91,11 +81,15 @@ class RoomController extends Controller
   public function edit(Room $room)
   {
     return view('room.roomEdit', [
-      'rooms' => RoomResource::collection(Room::with('doors', 'building')->get())->toArray(new Request()),
-      'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
+      'buildings' => BuildingResource::collection(
+        Building::with(
+          AddressWrapper::loadRelationships(),
+          'buildings',
+          'rooms',
+          'campus'
+        )->get()
+      )->toArray(new Request()),
       'room' => (new RoomResource($room->load('doors', 'building'))),
-      'building' => $room->building()->first(),
-      'campuses' => CampusResource::collection(Campus::all()),
     ]);
   }
 
@@ -106,45 +100,34 @@ class RoomController extends Controller
   {
     $validated = $request->safe();
 
-    if (isset($validated['number']))
-    {
-      $room->number=$validated['number'];
+    if (isset ($validated['number'])) {
+      $room->number = $validated['number'];
     }
-    
-    if(isset($validated['roomDesc']))
-    {
+
+    if (isset ($validated['roomDesc'])) {
       $room->description = $validated['roomDesc'];
     }
 
-    if (isset($validated['building']))
-    {
-      $room->building_id=$validated['building'];
+    if (isset ($validated['building'])) {
+      $room->building_id = $validated['building'];
     }
 
     $room->save();
-    
+
     // This is bad, and probably should be wrapped.
-    $door = $room->doors()->getRelated()->first(); 
-    
-    if (isset($validated['doorDesc']))
-    {
-      $door->description = $validated['doorDesc'];
+    $door = $room->doors()->getRelated()->first();
+
+    if (isset ($validated['doorDesc'])) {
+      $door->doorDescription = $validated['doorDesc'];
     }
 
-    if (isset($validated['doorHWDesc']))
-    {
+    if (isset ($validated['doorHWDesc'])) {
       $door->hardwareDescription = $validated['doorHWDesc'];
     }
 
     $door->save();
 
-    return view('room.singleRoom', [
-      'room' => (new RoomResource($room->load('doors', 'building'))),
-      'building' => $room->building()->first(),
-      'rooms' => RoomResource::collection(Room::with('doors', 'building')->get())->toArray(new Request()),
-      'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
-      'door'=>$door->toArray(),
-    ]);
+    return redirect('/room/' . $room->id);
   }
 
   /**
@@ -154,6 +137,6 @@ class RoomController extends Controller
   {
     $room->delete();
 
-    return view('room.rooms');
+    return redirect('/room');
   }
 }

@@ -42,7 +42,7 @@ class KeyController extends Controller
    */
   public function create()
   {
-    //
+    return view ('key.keyCreate');
   }
 
   /**
@@ -50,7 +50,26 @@ class KeyController extends Controller
    */
   public function store(StoreKeyRequest $request)
   {
-    //
+    $validated = $request->safe();
+
+    $key = Key::firstOrNew ([
+      'keyLevel' => $validated['keyLevel'],
+      'keySystem' => $validated['keySystem'],
+      'copyNumber' => $validated['copyNumber'],
+      'bitting'  => $validated['bitting'],
+      'blindCode' => $validated['blindCode'],
+      'mainAngles' => $validated['mainAngles'],
+      'doubleAngles' => $validated['doubleAngles'],
+      'replacementCost' => $validated['replacementCost'],
+    ]);
+    $key->key_status_id = $validated['key_status_id'];
+    $key->keyway_id = $validated['keyway_id'];
+    $key->key_type_id = $validated['key_type_id'];
+    $key->storage_hook_id = $validated['storage_hook_id'];
+
+    $key->save();
+
+    return redirect()->route('key.index')->with(['status'=>'Successfully saved key.']);
   }
 
   /**
@@ -58,7 +77,9 @@ class KeyController extends Controller
    */
   public function show(Key $key)
   {
-    //
+    return view('key.singleKey', [
+      'key' => (new KeyResource($key))->toArray(new Request()),
+    ]);
   }
 
   /**
@@ -66,7 +87,7 @@ class KeyController extends Controller
    */
   public function edit(Key $key)
   {
-    //
+    return view('key.editKey');
   }
 
   /**

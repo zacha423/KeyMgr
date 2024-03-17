@@ -37,14 +37,15 @@
 
             <div>
                 <x-input-label for="doorDesc" :value="__('Door Description')" />
-                <x-text-input id="doorDesc" name="doorDesc" type="text" class="mt-1 block w-full" :value="old('doorDesc', $room['doorDesc'])" />
+                <x-text-input id="doorDesc" name="doorDesc" type="text" class="mt-1 block w-full" 
+                              :value="old('doorDesc', $room->doors->first()->description)" />
                 <x-input-error class="mt-2" :messages="$errors->get('doorDesc')" />
             </div>
 
-
             <div>
                 <x-input-label for="doorHWDesc" :value="__('Door Hardware Description')" />
-                <x-text-input id="doorHWDesc" name="doorHWDesc" type="text" class="mt-1 block w-full" :value="old('doorHWDesc', $room['doorHWDesc'])" />
+                <x-text-input id="doorHWDesc" name="doorHWDesc" type="text" class="mt-1 block w-full" 
+                              :value="old('doorHWDesc', $room->doors->first()->hardwareDescription)" />
                 <x-input-error class="mt-2" :messages="$errors->get('doorHWDesc')" />
             </div>
 

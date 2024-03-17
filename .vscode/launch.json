@@ -5,10 +5,17 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Listen for Xdebug",
+      "name": "(NGINX) Listen for Xdebug",
       "type": "php",
       "request": "launch",
       "port": 9003,
+      "pathMappings": {"/var/www/html": "${workspaceFolder}/KeyMgr"}
+    },
+    {
+      "name": "(ARTISAN) Listen for Xdebug",
+      "type": "php",
+      "request": "launch",
+      "port": 9000,
       "pathMappings": {"/var/www/html": "${workspaceFolder}/KeyMgr"}
     },
     {

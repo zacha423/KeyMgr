@@ -24,6 +24,11 @@ services:
       # SSH-Agent would be a better way to transfer host SSH keys, 
       # but this doesn't require admin rights if not an agent is not already installed.
       - ~/.ssh:/home/vscode/.ssh
+      - node:/workspaces/KeyMgr/KeyMgr/node_modules
+      - vendor:/workspaces/KeyMgr/KeyMgr/vendor
+    # Reset the log file on container restarts.
+    tmpfs:
+      - /workspaces/KeyMgr/KeyMgr/storage/logs/
     networks:
       - KeyMgr
 
@@ -35,6 +40,8 @@ services:
     restart: unless-stopped
     volumes:
       - ../KeyMgr:/var/www/html
+      - node:/var/www/html/node_modules
+      - vendor:/var/www/html/vendor
     depends_on:
       - php-fpm
       - postgres
@@ -67,6 +74,8 @@ services:
     restart: unless-stopped
     volumes:
       - ../KeyMgr:/var/www/html
+      - node:/var/www/html/node_modules
+      - vendor:/var/www/html/vendor
     command: >
       | sh && chown -R www-data.www-data /var/www/html
     networks:
@@ -74,6 +83,7 @@ services:
     environment:
       XDEBUG_MODE: "debug,develop"
       XDEBUG_CONFIG: client_host=keymgr_developer client_port=9003
+
   pgadmin:
     build:
       context: .
@@ -98,6 +108,8 @@ services:
 volumes:
   pgadmin-data:
   postgres-data:
+  node:
+  vendor:
 
 networks:
   KeyMgr:

@@ -30,16 +30,11 @@ class StoreKeyRequest extends FormRequest
       'blindCode' => ['alpha-num','nullable',],
       'mainAngles' => ['alpha-num','nullable',],
       'doubleAngles' => ['alpha-num','nullable',],
-      'replacementCost' => ['min:0','nullable','decimal:2,4',],
+      'replacementCost' => ['min:0','nullable','decimal:0,4',],
       'key_status_id' => ['required','exists:keyways,id'],
       'keyway_id' => ['required','exists:key_statuses,id'],
       'key_type_id' => ['required','exists:key_types,id'],
       'storage_hook_id' => ['required','exists:storage_hooks,id']
     ];
-  }
-
-  protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
-  {
-    throw new HttpResponseException(response()->json(['errors'=>$validator->errors(),],403));
   }
 }

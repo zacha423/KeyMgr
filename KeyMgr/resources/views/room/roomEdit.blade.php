@@ -25,6 +25,16 @@
                 <x-input-error class="mt-2" :messages="$errors->get('description')" />
             </div>
 
+            <div>
+                <label for="building" class="block text-sm font-medium text-gray-700">Select Building</label>
+                <select id="building" name="building" class="mt-1 p-2 border rounded-md w-full" required>
+                    <option value="" disabled selected>Select a building</option>
+                    @foreach($buildings as $building)
+                        <option value="{{ $building['id'] }}">{{ $building['name'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+
             <div class="flex items-center gap-4">
                 <x-primary-button>{{ __('Save') }}</x-primary-button>
 

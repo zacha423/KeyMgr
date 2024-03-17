@@ -1,3 +1,4 @@
+@extends ("adminlte::page")
 {{-- Setup data for datatables --}}
 @php
 $heads = [
@@ -29,6 +30,8 @@ $config = [
 @endphp
 
 {{-- Minimal example / fill data using the component slot --}}
+
+@section ("content")
 <x-adminlte-datatable id="table1" :heads="$heads">
     @foreach($config['data'] as $row)
         <tr>
@@ -38,4 +41,5 @@ $config = [
         </tr>
     @endforeach
 </x-adminlte-datatable>
+@stop
 

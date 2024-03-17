@@ -13,7 +13,8 @@ This project utilizes VSCode's Dev Containers. Development can be done locally i
 4. `composer install`
 5. `npm install`
 6. `php artisan migrate:fresh --seed`
-7. Start programming!
+7. `npm run dev`
+8. Start programming!
 
 ## Containers and Connections
 ### Web Server 
@@ -24,3 +25,11 @@ Local Port: 5432
 Local Port: 8081  
 Username: admin@keymgr.com  
 Password: keymgr  
+
+## PHP Debugging
+### Nginx
+XDebug Port: `9003`  
+Debug Config: `(NGINX) Listen for XDebug`
+### DevContainer / Artisan Console
+XDebug Port: `9000`  
+Debug Config: `(ARTISAN) Listen for XDebug`

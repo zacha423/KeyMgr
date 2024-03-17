@@ -27,7 +27,7 @@
     9003  // Xdebug
   ],
   "postCreateCommand": "sudo chown -R vscode ~/.ssh/* /workspaces",
-  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}; touch /workspaces/KeyMgr/KeyMgr/storage/logs/laravel.log",
   "remoteUser": "vscode",
   "customizations": {
     "vscode": {

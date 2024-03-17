@@ -50,9 +50,9 @@
             </div>
 
             <div class="mb-4">
-                <label for="campus" class="block text-sm font-medium text-gray-700">Campus</label>
-                <select id="campus" name="campus" class="mt-1 p-2 border rounded-md w-full" required>
-                    <option value="" disabled selected>Select a Campus</option>
+                <label for="campus" class="block text-sm font-medium text-gray-700">Select Campus</label>
+                <select id="campus" name="campus" class="mt-1 p-2 border rounded-md w-full">
+                    <option value="{{$building['id']}}" disabled selected>{{$building['campus']}}</option>
                     @foreach($campuses as $campus)
                         <option value="{{ $campus['id'] }}">{{ $campus['name'] }}</option>
                     @endforeach

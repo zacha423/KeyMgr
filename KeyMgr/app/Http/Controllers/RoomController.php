@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RoomRequest;
 use App\Http\Resources\BuildingResource;
 use App\Http\Resources\CampusResource;
+use App\Http\Resources\RoomResource;
+use App\Models\Wrappers\AddressWrapper;
 use App\Models\Room;
 use App\Models\Building;
 use App\Models\Campus;
 use App\Models\Door;
+use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
@@ -18,8 +21,9 @@ class RoomController extends Controller
   public function index()
   {
     return view('room.rooms', [
-      'rooms' => Room::all()->toArray(),
+      'rooms' => RoomResource::collection(Room::with('doors')->get())->toArray(new Request()),
       'roomsJSON' => Room::all()->toJson(),
+      'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
     ]);
   }
 
@@ -31,7 +35,7 @@ class RoomController extends Controller
     return view('room.rooms', [
       'campuses' => CampusResource::collection(Campus::all()),
       'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
-      'buildings' => BuildingResource::collection(Building::all()),
+      'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
       'buildingsJSON' => BuildingResource::collection(Building::all())->toJson(),
     ]);
   }
@@ -47,7 +51,8 @@ class RoomController extends Controller
       'number' => $validated['number'],
       'description' => $validated['roomDesc']
     ]);
-    $room->building_id = $validated['building'];
+    $room->building_id = $validated['building_id'];
+    
     $room->save();
 
     $door = Door::firstOrNew([
@@ -60,8 +65,8 @@ class RoomController extends Controller
     return view('room.rooms', [
       'room' => $room->toArray(),
       'roomJSON' => $room->toJson(),
-      'building' => new BuildingResource(Building::where(['id' => $validated['building']])->first()),
-      'buildingJSON' => (new BuildingResource(Building::where(['id' => $validated['building']])->first()))->toJson(),
+      'building' => new BuildingResource(Building::find($validated['building_id'])),
+      'buildingJSON' => (new BuildingResource(Building::find($validated['building_id'])))->toJson(),
     ]);
   }
 
@@ -72,6 +77,7 @@ class RoomController extends Controller
   {
     return view('room.rooms', [
       'room' => $room->load('doors')->toArray(),
+      'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
       'roomJSON' => $room->load('doors')->toJson(),
     ]);
   }
@@ -83,6 +89,7 @@ class RoomController extends Controller
   {
     return view('room.roomEdit', [
       'room' => $room->load('doors')->toArray(),
+      'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
       'roomJSON' => $room->load('doors')->toJson(),
     ]);
   }
@@ -123,6 +130,7 @@ class RoomController extends Controller
 
     return view('room.rooms', [
       'room' => $room->load('doors')->toArray(),
+      'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
       'roomJSON' => $room->toJson(),
       'door'=>$door->toArray(),
       'doorJSON'=>$door->toJson(),

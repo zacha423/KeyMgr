@@ -5,7 +5,7 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('All Rooms') }}
             </h2>
-            <button type="button" onclick="toggleNewRoomForm()" class="bg-sky-500 text-black rounded-md"> Add New Room </button>
+            <button type="button" onclick="toggleNewRoomForm()" class="bg-sky-500 text-black rounded-md py-1 px-1"> Add New Room </button>
         </div>
 
         <div id="newRoomFormModal" class="hidden fixed inset-0 z-10 overflow-y-auto">
@@ -29,6 +29,15 @@
                             <input type="text" id="description" name="description" class="mt-1 p-2 border rounded-md w-full" required>
                         </div>
 
+                        <div class="mb-4">
+                            <label for="building" class="block text-sm font-medium text-gray-700">Select Building</label>
+                            <select id="building" name="building" class="mt-1 p-2 border rounded-md w-full" required>
+                                <option value="" disabled selected>Select a building</option>
+                                @foreach($buildings as $building)
+                                    <option value="{{ $building['id'] }}">{{ $building['name'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
                         <div class="flex justify-end">
                             <button type="button" onclick="toggleNewRoomForm()" class="text-gray-600 hover:text-gray-800 mr-2">Cancel</button>
@@ -67,11 +76,16 @@
                         </div>
                     </div>
 
+
                     <div id="dropdown-{{ $room['id'] }}" class="hidden p-6">
                         @if(isset($room['description']))
                             <p>Description: {{ $room['description'] }}</p>
                         @else
                             <p>Description not available</p>
+                        @if(isset($room->building_id))
+                            <p>Building: {{ $building['id'] }}">{{ $building['name'] }}</p>
+                        @else
+                            <p>Building not available</p>
                         @endif
                     </div>
                 </div>

@@ -33,19 +33,19 @@
 
             <div>
                 <x-input-label for="city" :value="__('City')" />
-                <x-text-input id="city" name="state" type="text" class="mt-1 block w-full" :value="old('city', $building['city'])" required autofocus autocomplete="city" />
+                <x-text-input id="city" name="city" type="text" class="mt-1 block w-full" :value="old('city', $building['city'])" required autofocus autocomplete="city" />
                 <x-input-error class="mt-2" :messages="$errors->get('city')" />
             </div>
 
             <div>
                 <x-input-label for="streetAddress" :value="__('Street')" />
-                <x-text-input id="streetAddress" name="state" type="text" class="mt-1 block w-full" :value="old('streetAddress', $building['streetAddress'])" required autofocus autocomplete="streetAddress" />
+                <x-text-input id="streetAddress" name="streetAddress" type="text" class="mt-1 block w-full" :value="old('streetAddress', $building['streetAddress'])" required autofocus autocomplete="streetAddress" />
                 <x-input-error class="mt-2" :messages="$errors->get('streetAddress')" />
             </div>
 
             <div>
                 <x-input-label for="postalCode" :value="__('Zip')" />
-                <x-text-input id="postalCode" name="state" type="text" class="mt-1 block w-full" :value="old('postalCode', $building['postalCode'])" required autofocus autocomplete="postalCode" />
+                <x-text-input id="postalCode" name="postalCode" type="text" class="mt-1 block w-full" :value="old('postalCode', $building['postalCode'])" required autofocus autocomplete="postalCode" />
                 <x-input-error class="mt-2" :messages="$errors->get('postalCode')" />
             </div>
 

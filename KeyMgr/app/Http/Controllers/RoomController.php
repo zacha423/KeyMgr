@@ -22,7 +22,6 @@ class RoomController extends Controller
   {
     return view('room.rooms', [
       'rooms' => RoomResource::collection(Room::with('doors', 'building')->get())->toArray(new Request()),
-      'roomsJSON' => Room::all()->toJson(),
       'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
     ]);
   }
@@ -34,9 +33,7 @@ class RoomController extends Controller
   {
     return view('room.rooms', [
       'campuses' => CampusResource::collection(Campus::all()),
-      'campusesJSON' => CampusResource::collection(Campus::all())->toJson(),
       'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
-      'buildingsJSON' => BuildingResource::collection(Building::all())->toJson(),
     ]);
   }
 
@@ -65,9 +62,7 @@ class RoomController extends Controller
     return view('room.rooms', [
       'room' => (new RoomResource($room->load('doors', 'building'))),
       'rooms' => RoomResource::collection(Room::with('doors', 'building')->get())->toArray(new Request()),
-      'roomJSON' => $room->toJson(),
       'building' => new BuildingResource(Building::where(['id' => $validated['building']])->first()),
-      'buildingJSON' => (new BuildingResource(Building::where(['id' => $validated['building']])->first()))->toJson(),
       'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
     ]);
   }
@@ -85,7 +80,6 @@ class RoomController extends Controller
         'room' => (new RoomResource($room)),
         'building' => $room->building,
         'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
-        'roomJSON' => $room->toJson(),
         'door' => $door,
     ]);
 }
@@ -100,7 +94,6 @@ class RoomController extends Controller
       'rooms' => RoomResource::collection(Room::with('doors', 'building')->get())->toArray(new Request()),
       'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
       'room' => (new RoomResource($room->load('doors', 'building'))),
-      'roomJSON' => $room->load('doors')->toJson(),
       'building' => $room->building()->first(),
       'campuses' => CampusResource::collection(Campus::all()),
     ]);
@@ -150,9 +143,7 @@ class RoomController extends Controller
       'building' => $room->building()->first(),
       'rooms' => RoomResource::collection(Room::with('doors', 'building')->get())->toArray(new Request()),
       'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
-      'roomJSON' => $room->toJson(),
       'door'=>$door->toArray(),
-      'doorJSON'=>$door->toJson(),
     ]);
   }
 

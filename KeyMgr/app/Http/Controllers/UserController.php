@@ -21,17 +21,18 @@ class UserController extends Controller
   {
     $data = [];
 
-    $btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
-                <i class="fa fa-lg fa-fw fa-pen"></i>
-            </button>';
-    $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow" title="Delete">
-                  <i class="fa fa-lg fa-fw fa-trash"></i>
-              </button>';
-    $btnDetails = '<button class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
-                   <i class="fa fa-lg fa-fw fa-eye"></i>
-               </button>';
-
     foreach (User::all() as $user) {
+      $btnEdit = '<a href="' . route('users.edit', $user->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+        <i class="fa fa-lg fa-fw fa-pen"></i>
+        </button>';
+      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-user-id="' . $user->id . '">
+        <i class="fa fa-lg fa-fw fa-trash"></i>
+        </button>';
+      $btnDetails = '<a href="' . route('users.show', $user->id) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+              <i class="fa fa-lg fa-fw fa-eye"></i>
+          </button>';
+
+
       array_push($data, [$user->id, $user->firstName, $user->lastName, $user->email, '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>']);
     }
     return view('users.userlist', [
@@ -62,4 +63,22 @@ class UserController extends Controller
 
     return redirect('/');
   }
+
+  public function edit(User $user)
+  {
+    return redirect('/users'); 
+  }
+
+  public function show(User $user)
+  {
+    return redirect('/users'); 
+  }
+
+  public function destroy(User $user)
+  {
+    $user->delete();
+
+    return redirect('/users'); 
+  }
+
 }

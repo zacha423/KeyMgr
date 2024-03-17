@@ -29,3 +29,29 @@ $config = [
     @endforeach
 </x-adminlte-datatable>
 @stop
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.btn-delete').click(function(e) {
+            e.preventDefault();
+            var userId = $(this).data('user-id');
+            if (confirm('Are you sure you want to delete this user?')) {
+                $.ajax({
+                    url: '/users/' + userId,
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        _method: 'DELETE'
+                    },
+                    success: function(response) {
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+        });
+    });
+</script>

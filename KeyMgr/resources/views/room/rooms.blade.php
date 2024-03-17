@@ -26,7 +26,7 @@
 
                         <div class="mb-4">
                             <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                            <input type="text" id="description" name="description" class="mt-1 p-2 border rounded-md w-full" required>
+                            <input type="text" id="description" name="roomDesc" class="mt-1 p-2 border rounded-md w-full" required>
                         </div>
 
                         <div class="mb-4">
@@ -75,8 +75,6 @@
                             </a>
                         </div>
                     </div>
-
-                    {{var_dump($room)}}
 
                     <div id="dropdown-{{ $room['id'] }}" class="hidden p-6">
                         @if(isset($room['description']))

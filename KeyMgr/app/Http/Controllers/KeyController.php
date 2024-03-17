@@ -21,7 +21,7 @@ class KeyController extends Controller
      */
     public function index()
     {
-        return view('keys.keys', [
+        return view('key.keys', [
             'keys' => Key::all(),
             'keyStatuses' => KeyStatus::all(),
             'keyStorages' => KeyStorage::all(),

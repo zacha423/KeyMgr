@@ -35,6 +35,19 @@
                 </select>
             </div>
 
+            <div>
+                <x-input-label for="doorDesc" :value="__('Door Description')" />
+                <x-text-input id="doorDesc" name="doorDesc" type="text" class="mt-1 block w-full" :value="old('doorDesc', $room['doorDesc'])" />
+                <x-input-error class="mt-2" :messages="$errors->get('doorDesc')" />
+            </div>
+
+
+            <div>
+                <x-input-label for="doorHWDesc" :value="__('Door Hardware Description')" />
+                <x-text-input id="doorHWDesc" name="doorHWDesc" type="text" class="mt-1 block w-full" :value="old('doorHWDesc', $room['doorHWDesc'])" />
+                <x-input-error class="mt-2" :messages="$errors->get('doorHWDesc')" />
+            </div>
+
             <div class="flex items-center gap-4">
                 <x-primary-button>{{ __('Save') }}</x-primary-button>
 

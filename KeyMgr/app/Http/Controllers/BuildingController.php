@@ -69,7 +69,7 @@ class BuildingController extends Controller
    */
   public function show(Building $building)
   {
-    return view('building.building', [
+    return view('building.singleBuilding', [
       'building' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')))->toArray(new Request()),     
       'buildingJSON' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')))->toJson(),
     ]);

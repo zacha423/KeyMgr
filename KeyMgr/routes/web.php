@@ -23,6 +23,7 @@ use App\Http\Controllers\CampusController;
 Route::resources ([
   'groups' => UserGroupController::class,
   'roles' => UserRoleController::class,
+  'users' => UserController::class,
 ]);
 
 Route::get('/', function () {
@@ -54,5 +55,7 @@ Route::middleware('auth')->group(function () {
   Route::post('/accounts/groups/assign', [UserController::class, 'assignUsersToGroup'])->name('user.group.assign');
   Route::post('/accounts/groups/unassign', [UserController::class, 'unassignUsersFromGroup'])->name('user.group.unassign');
 });
+
+
 
 require __DIR__ . '/auth.php';

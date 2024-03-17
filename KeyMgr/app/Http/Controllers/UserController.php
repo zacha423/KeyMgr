@@ -16,6 +16,15 @@ use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
 {
+
+  public function index()
+  {
+    return view('users.userlist', [
+      'users' => User::all()->toArray(),
+      'usersJSON' => User::all()->toJson(),
+    ]);
+  }
+
   /**
    * Add a group membership to a set of users.
    * 

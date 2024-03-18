@@ -44,7 +44,7 @@ Route::middleware('auth')->group(function () {
   ]);
   Route::resource('room', RoomController::class,)->except(['create']);
   Route::resource('building', BuildingController::class)->except(['create']);
-  
+  Route::resource('key', KeyController::class)->except(['create']);  
 });
-Route::resource('key', KeyController::class)->except(['create']);
+
 require __DIR__ . '/auth.php';

@@ -21,13 +21,40 @@ class BuildingController extends Controller
    */
   public function index()
   {
-    return view('building.building', [
-      'campuses' => (Campus::all()->toArray()),
-      'buildings' => BuildingResource::collection(
-        Building::all()
-      )->toArray(new Request()),
-    ]);
+      $data = [];
+  
+      foreach (Building::all() as $building2) {
+          $building = (new BuildingResource($building2));
+          $user4 = $building->toArray(new Request ());
+          $btnEdit = '<a href="' . route('building.edit', $building->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+              <i class="fa fa-lg fa-fw fa-pen"></i>
+          </a>';
+          $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-key-id="' . $building->id . '">
+              <i class="fa fa-lg fa-fw fa-trash"></i>
+          </button>';
+          $btnDetails = '<a href="' . route('building.show', $building->id) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+              <i class="fa fa-lg fa-fw fa-eye"></i>
+          </a>';
+  
+          array_push($data, [
+              'id' => $building->id,
+              'name' => $building->name,
+              'country' => $building->address->city->state->country->name,
+              'state' => $building->address->city->state->name,
+              'city' => $building->address->city->name,
+              'postalCode' => $building->address->zipcode->code,
+              'streetAddress' => $building->address->streetAddress,
+              'campus' => $building->campus->name,
+              'actions' => '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
+          ]);
+      }
+  
+      return view('building.building', [
+          'buildings' => $data,
+          'buildingJSON' => Building::all()->toJson(),
+      ]);
   }
+  
 
   /**
    * Store a newly created resource in storage.

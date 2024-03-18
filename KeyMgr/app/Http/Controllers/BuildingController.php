@@ -23,9 +23,7 @@ class BuildingController extends Controller
   {
       $data = [];
   
-      foreach (Building::all() as $building2) {
-          $building = (new BuildingResource($building2));
-          $user4 = $building->toArray(new Request ());
+      foreach (Building::all() as $building) {
           $btnEdit = '<a href="' . route('building.edit', $building->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
               <i class="fa fa-lg fa-fw fa-pen"></i>
           </a>';

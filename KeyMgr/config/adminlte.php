@@ -331,7 +331,7 @@ return [
         ],
         [
             'text'=> 'Users',
-            'route'=> 'users.index',
+            'url'=> '#',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
@@ -388,7 +388,27 @@ return [
             'icon_color' => 'cyan',
             'url'        => '#',
         ],
+        ['header' => 'SETTINGS'],
+        [
+            'text'    => 'User Settings',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'User List',
+                    'route'  => 'users.index',
+                ],
+                [
+                    'text'=> 'User Roles',
+                    'route' => 'roles.index',
+                ],
+                [
+                    'text'=> 'User Groups',
+                    'route'=> 'groups.index',
+                ]
+            ]
+        ]
     ],
+        
 
     /*
     |--------------------------------------------------------------------------

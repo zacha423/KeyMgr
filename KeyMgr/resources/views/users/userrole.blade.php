@@ -1,32 +1,12 @@
-<!-- <h1>User Role Data</h1>
-<form action="/roles" method="POST">
-  @csrf
-  <div>
-    <input type="text" name="roleName">Role Name</input>
-</div>
-<div>
-  <input type="submit"></input>
-</div>
-</form>
-<h1>Blade Data</h1>
-@if(isset($roleJSON))
-<h2>role/roleJSON</h2>
-{{ $roleJSON}}
-@endif
-@if(isset($rolesJSON))
-<h2>roles/rolesJSON</h2>
-{{ $rolesJSON }}
-@endif -->
 
+@extends ("adminlte::page")
+@section ("content")
 
-<x-app-layout>
-    <x-slot name="header">
-        <div class="p-2 flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('User Roles') }}
-            </h2>
-        </div>
-    </x-slot>
+    <div class="p-2 flex justify-between items-center">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('User Roles') }}
+        </h2>
+    </div>
 
     <div class="py-12">
         <div class="testff max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -123,4 +103,5 @@
             cursor: pointer;
         }
     </style>
-</x-app-layout>
+
+@stop

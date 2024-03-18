@@ -37,7 +37,7 @@ class UserController extends Controller
             <i class="fa fa-lg fa-fw fa-eye"></i>
             </button>';
 
-      array_push($data, [$user->id, $user->firstName, $user->lastName, $user->email, $user->role, '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>']);
+      array_push($data, [$user->id, $user->firstName, $user->lastName, $user->email, $user->username, $user->group, $user->role, '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>']);
     }
     return view('users.userlist', [
       'users' => $data,

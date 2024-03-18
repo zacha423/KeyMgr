@@ -18,10 +18,29 @@ class CampusController extends Controller
    * 
    * @todo Update with appropriate data for view. A Resource collection may be useful
    */
-  public function index()
+  public function index(Request $request)
   {
+    $campus = Campus::with(AddressWrapper::loadRelationships(), 'buildings');
+    $data = [];
+
+    $campuses = CampusResource::collection($campus->latest());
+
+    foreach ($campuses as $campus) {
+
+      $btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+            <i class="fa fa-lg fa-fw fa-pen"></i>
+            </button>';
+      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-user-id="' . $campus->id . '">
+          <i class="fa fa-lg fa-fw fa-trash"></i>
+          </button>';
+      $btnDetails = '<a href="' . route('campus.show', $campus->id) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+            <i class="fa fa-lg fa-fw fa-eye"></i>
+            </button>';
+
+      array_push($data, [$campus->id, $campus->name, $campus->country, $campus->state, $campus->city, $campus->postalCode, $campus->streetAddress, '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>']);
+    }
     return view('campus.campusList', [
-      'campuses' => CampusResource::collection(Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get())->toArray(new Request()),
+      'campuses' => $data,
     ]);
   }
 

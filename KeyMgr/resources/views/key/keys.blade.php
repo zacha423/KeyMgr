@@ -1,93 +1,74 @@
-{{var_dump($keys)}}
-<x-app-layout>
-  <x-slot name="header">
-      <div class="p-2 flex justify-between items-center">
-          <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-              {{ __('Keys') }}
-          </h2>
-          <button type="button" onclick="toggleNewKeyForm()" class="text-black">Add New Key</button>
-      </div>
+@extends("adminlte::page")
 
-      <div id="newKeyFormModal" class="hidden fixed inset-0 z-10 overflow-y-auto">
-        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-            </div>
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full sm:max-w-md">
-                <div class="bg-white dark:bg-gray-800 p-6">
-                    <form method="post" action="{{ route('key.store') }}">
-                        @csrf
-                        
-                        <div class="mb-4">
-                            <label for="keyLevel" class="block text-sm font-medium text-gray-700">Key Level</label>
-                            <input type="text" id="keyLevel" name="keyLevel" class="mt-1 p-2 border rounded-md w-full" required>
-                        </div>
+{{-- Setup data for datatables --}}
+@php
+    $heads = [
+        'ID',
+        'Key Level',
+        'Key System',
+        'Copy Number',
+        'Bitting',
+        'Blind Code',
+        'Main Angles',
+        'Double Angles',
+        'Replacement Cost',
+        ['label' => 'Actions', 'no-export' => false, 'width' => 5],
+    ];
 
-                        <div class="mb-4">
-                            <label for="keySystem" class="block text-sm font-medium text-gray-700">Key System</label>
-                            <input type="text" id="keySystem" name="keySystem" class="mt-1 p-2 border rounded-md w-full" required>
-                        </div>
+    $config = [
+        'data' => $keys,
+        'order' => [[1, 'asc']],
+        'columns' => [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            ['orderable' => false]
+        ],    
+    ];
+@endphp
 
-                        <div class="mb-4">
-                            <label for="copyNumber" class="block text-sm font-medium text-gray-700">Copy Number</label>
-                            <input type="text" id="copyNumber" name="copyNumber" class="mt-1 p-2 border rounded-md w-full" required>
-                        </div>
+@section('plugins.Datatables', true)
+@section("content")
+    <x-adminlte-datatable id="key-table" :heads="$heads" bordered compressed hoverable>
+        @foreach($config['data'] as $row)
+            <tr>
+                @foreach($row as $cell)
+                    <td>{!! $cell !!}</td>
+                @endforeach
+            </tr>
+        @endforeach
+    </x-adminlte-datatable>
+@stop
 
-                        <div class="mb-4">
-                            <label for="bitting" class="block text-sm font-medium text-gray-700">Key Bitting</label>
-                            <input type="text" id="bitting" name="bitting" class="mt-1 p-2 border rounded-md w-full" required>
-                        </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.btn-delete').click(function(e) {
+            e.preventDefault();
+            var keyId = $(this).data('key-id');
+            if (confirm('Are you sure you want to delete this key?')) {
+                $.ajax({
+                    url: '/keys/' + keyId,
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        _method: 'DELETE'
+                    },
+                    success: function(response) {
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+        });
+    });
+</script>
 
-                        <div class="mb-4">
-                            <label for="blindCode" class="block text-sm font-medium text-gray-700">Key Blind Code</label>
-                            <input type="text" id="blindCode" name="blindCode" class="mt-1 p-2 border rounded-md w-full" required>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="mainAngles" class="block text-sm font-medium text-gray-700">Key Main Angles </label>
-                            <input type="text" id="mainAngles" name="mainAngles" class="mt-1 p-2 border rounded-md w-full" required>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <label for="doubleAngles" class="block text-sm font-medium text-gray-700">Key Double Angles </label>
-                            <input type="text" id="doubleAngles" name="doubleAngles" class="mt-1 p-2 border rounded-md w-full" required>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="replacementCost" class="block text-sm font-medium text-gray-700">Key Replacement Cost </label>
-                            <input type="text" id="replacementCost" name="replacementCost" class="mt-1 p-2 border rounded-md w-full" required>
-                        </div>
-
-                        <div class="flex justify-end">
-                            <button type="button" onclick="toggleNewBuildingForm()" class="text-gray-600 hover:text-gray-800 mr-2">Cancel</button>
-                            <button type="submit" class="bg-green-500 text-black px-4 py-2 rounded-md">Save Key</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-      </div>
-
-      <script>
-        function toggleNewKeyForm() {
-          var modal = document.getElementById('newKeyFormModal');
-          modal.classList.toggle('hidden', !modal.classList.contains('hidden'));
-        }
-      </script>
-  </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-          @foreach($keys as $key)
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-4">
-                <div class="p-6 flex justify-between items-center">
-                    <div class="flex items-center">
-                        <a href="{{ route('key.show', ['key' => $key['id']]) }}" class="block text-xl font-medium text-blue-600 mb-2">{{ $key['id'] }}</a>
-                    </div>
-                </div>
-            </div>
-          @endforeach
-        </div>
-    </div>
-</x-app-layout>

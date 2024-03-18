@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
+
 
 class StoreKeyRequest extends FormRequest
 {
@@ -30,7 +30,7 @@ class StoreKeyRequest extends FormRequest
       'blindCode' => ['alpha-num','nullable',],
       'mainAngles' => ['alpha-num','nullable',],
       'doubleAngles' => ['alpha-num','nullable',],
-      'replacementCost' => ['min:0','nullable','decimal:0,4',],
+      'replacementCost' => ['min:0','nullable','decimal:2,4',],
       'key_status_id' => ['required','exists:keyways,id'],
       'keyway_id' => ['required','exists:key_statuses,id'],
       'key_type_id' => ['required','exists:key_types,id'],

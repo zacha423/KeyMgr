@@ -6,6 +6,7 @@ $heads = [
     'First Name',
     'Last Name',
     'Email',
+    'Role',
     ['label' => 'Actions', 'no-export' => false, 'width' => 5],
 ];
 

@@ -26,14 +26,14 @@ class DatabaseSeeder extends Seeder
     $this->call(TestAccountsSeeder::class);
 
 
-    User::factory(10)->create();
+    User::factory(50)->create();
 
     foreach (User::all() as $user) { 
       $user->groups()->attach(UserGroup::all()->random(1));
       $user->roles()->attach(UserRole::all()->random(1)); 
     }
     $this->call(MessageTemplateSeeder::class);
-    \App\Models\User::factory(10)->create();
+    \App\Models\User::factory(50)->create();
     $this->call(KeywaySeeder::class);
     $this->call(StorageSeeder::class);
     $this->call(KeySeeder::class);

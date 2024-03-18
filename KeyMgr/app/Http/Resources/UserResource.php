@@ -17,14 +17,26 @@ class UserResource extends JsonResource
    */
   public function toArray(Request $request): array
   {
-    // return parent::toArray($request);
+    $roles = [];
+    $groups = [];
+    foreach ($this->roles()->get() as $role) {
+      array_push($roles, (new RoleResource($role))->name);
+    }
+    foreach ($this->groups()->get() as $group) {
+      array_push ($groups, (new GroupResource($group))->name);
+    }
+    
     return [
       'id' => $this->id,
       'name' => $this->getFullname(),
+      'firstName' => $this->firstName,
+      'lastName' => $this->lastName,
       'email' => $this->email,
       'username' => $this->username,
       'created' => $this->created_at,
       'updated' => $this->updated_at,
+      'roles2' => $roles,
+      'groups2' => $groups,
     ];
   }
 }

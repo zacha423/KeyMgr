@@ -1,6 +1,7 @@
 <?php
 /**
  * @author Zachary Abela-Gale <abel1325@pacificu.edu>
+ * @deprecated TBD - may not be needed, but not deleting until confirmed
  */
 
 namespace App\Models\Wrappers;

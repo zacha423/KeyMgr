@@ -59,4 +59,28 @@ class UserGroup extends Model
   {
     return $this->belongsToMany(User::class);
   }
+
+  /**
+   * Get roles given to the group.
+   */
+  public function roles(): BelongsToMany
+  {
+    return $this->belongsToMany(UserRole::class);
+  }
+
+  /**
+   * Helper function to add a role to a group.
+   */
+  public function assignRole(UserRole $userRole): void
+  {
+    $this->roles()->attach($userRole);
+  }
+
+  /**
+   * Helper function to remove a role from a user.
+   */
+  public function unassignRole(UserRole $userRole): void
+  {
+    $this->roles()->attach($userRole);
+  }
 }

@@ -1,7 +1,6 @@
 <?php
 /**
  * @author Zachary Abela-Gale <abel1325@pacificu.edu>
- * @todo Add relationships for UserGroup and UserRole.
  */
 namespace App\Models;
 
@@ -67,14 +66,35 @@ class User extends Authenticatable
     return $this->belongsToMany(UserGroup::class);
   }
 
-  public function assignToGroup(UserGroup $userGroup)
+  /**
+   * Helper function to add a user to a group.
+   */
+  public function addToGroup(UserGroup $userGroup): void
   {
     $this->groups()->attach($userGroup);
   }
 
-  public function unassignFromGroup(UserGroup $userGroup)
+  /**
+   * Helper function to remove a user from a group.
+   */
+  public function removeFromGroup(UserGroup $userGroup): void
   {
     $this->groups()->detach(($userGroup));
   }
+  
+  /**
+   * Helper function to add a role to a user.
+   */
+  public function assignRole(UserRole $userRole): void
+  {
+    $this->roles()->attach($userRole);
+  }
 
+  /**
+   * Helper function to remove a role from a user.
+   */
+  public function unassignRole(UserRole $userRole): void
+  {
+    $this->roles()->detach($userRole);
+  }
 }

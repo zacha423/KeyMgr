@@ -8,8 +8,12 @@
  */
 namespace App\Http\Controllers;
 
+use App\Http\Resources\GroupResource;
+use App\Http\Resources\RoleResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Models\UserGroup;
+use App\Models\UserRole;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -17,16 +21,13 @@ use Illuminate\View\View;
 class UserController extends Controller
 {
 
-  public function index()
+  public function index(Request $request)
   {
     $data = [];
 
-    // $users = User::with('roles')->get();
-
-    // foreach ($users as $user) {
     foreach (User::all() as $user3) {
       $user = (new UserResource($user3));
-      $user4 = $user->toArray(new Request ());
+      $user4 = $user->toArray($request);
       $btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
             <i class="fa fa-lg fa-fw fa-pen"></i>
             </button>';
@@ -52,7 +53,8 @@ class UserController extends Controller
     }
     return view('users.userlist', [
       'users' => $data,
-      'usersJSON' => User::all()->toJson(),
+      'groups' => GroupResource::collection(UserGroup::all())->toArray($request),
+      'roles' => RoleResource::collection(UserRole::all())->toArray($request),
     ]);
   }
 

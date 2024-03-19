@@ -2,26 +2,79 @@
 {{-- Setup data for datatables --}}
 @php
 $heads = [
-    'ID',
-    'First Name',
-    'Last Name',
-    'Email',
-    'Username',
-    'Group',
-    'Role',
-    ['label' => 'Actions', 'no-export' => false, 'width' => 5],
+  'ID',
+  'First Name',
+  'Last Name',
+  'Email',
+  'Username',
+  'Group',
+  'Role',
+  ['label' => 'Actions', 'no-export' => false, 'width' => 5],
 ];
 
 $config = [
-    'data' => $users,
-    'order' => [[1, 'asc']],
-    'columns' => [null, null, null, ['orderable' => false]],
+  'data' => $users,
+  'order' => [[1, 'asc']],
+  'columns' => [null, null, null, ['orderable' => false]],
 ];
 @endphp
 {{-- Minimal example / fill data using the component slot --}}
+@section ("content")
+
+<!-- Drop Down for UserRoles and UserGroups -->
+<div class="flex-container">
+  <div class="row">
+
+    {{-- UserGroup Selector --}}
+    <div class="col">
+      
+      {{-- Example with multiple selections (for SelectBs) --}}
+      @php
+      $config2 = [
+        "title" => "Select multiple options...",
+        "liveSearch" => true,
+        "liveSearchPlaceholder" => "Search...",
+        "showTick" => true,
+        "actionsBox" => true,
+      ];
+      @endphp
+<x-adminlte-select-bs id="optionsCategory" name="optionsCategory[]" label="Categories"
+    label-class="text-info" :config="$config2" multiple>
+    <x-slot name="prependSlot">
+        <div class="input-group-text bg-gradient-lightblue">
+            <i class="fas fa-tag"></i>
+        </div>
+    </x-slot>
+    <x-adminlte-options :options="['News', 'Sports', 'Science', 'Games']"/>
+</x-adminlte-select-bs>
+  </div>
+
+
+  <div class="col">
+    {{-- Example with multiple selections (for SelectBs) --}}
+@php
+$config2 = [
+  "title" => "Select multiple options...",
+  "liveSearch" => true,
+  "liveSearchPlaceholder" => "Search...",
+  "showTick" => true,
+  "actionsBox" => true,
+];
+@endphp
+<x-adminlte-select-bs id="optionsCategory" name="optionsCategory[]" label="Categories"
+    label-class="text-info" :config="$config2" multiple>
+    <x-slot name="prependSlot">
+        <div class="input-group-text bg-gradient-lightblue">
+            <i class="fas fa-tag"></i>
+        </div>
+    </x-slot>
+    <x-adminlte-options :options="['999'=>'Ne22ws', 'Sports', 'Science', 'Games']"/>
+</x-adminlte-select-bs>
+</div>
+</div>
+</div>
 
 @section('plugins.Datatables', true)
-@section ("content")
 
 <!-- Button trigger modal -->
 <div class="container">
@@ -54,8 +107,6 @@ $config = [
     </div>
   </div>
 </div>
-
-
 
 <x-adminlte-datatable id="table5" :heads="$heads" bordered compressed hoverable>
     @foreach($config['data'] as $row)

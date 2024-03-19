@@ -1,14 +1,14 @@
 <?php
-//**************************************************************************************************
-// Filename: UserRole.php
-// Author:   Zachary Abela-Gale
-// Date:     2024/01/24
-// Purpose:  Implements a database table to create software roles
-//**************************************************************************************************
+/**
+ * @author Zachary Abela-Gale <abel1325@pacificu.edu>
+ * 
+ * Purpose: Represent the roles we can assign to users.
+ */
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class UserRole extends Model
 {
@@ -23,4 +23,12 @@ class UserRole extends Model
   protected $fillable = [
     'name'
   ];
+
+  /**
+   * Get all Users with the role.
+   */
+  public function users(): BelongsToMany
+  {
+    return $this->belongsToMany(User::class);
+  }
 }

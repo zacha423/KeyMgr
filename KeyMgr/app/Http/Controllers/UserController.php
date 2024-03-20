@@ -25,45 +25,66 @@ class UserController extends Controller
   {
     $data = [];
 
-    foreach (User::all() as $user3) {
+    $query = User::with('groups', 'roles');
+
+    if ($request->ajax()) {
+      $groupIDs = $request->query('group');
+      $roleIDs = $request->query('role');
+
+      if ($groupIDs) {
+        $query->whereHas('groups', function ($query) use ($groupIDs) {
+          $query->whereIn('user_group_id', $groupIDs); 
+        });
+      }
+
+      if ($roleIDs) {
+        $query->whereHas('roles', function ($query) use ($roleIDs) {
+          $query->whereIn('user_role_id', $roleIDs); 
+        });
+      }
+    }
+
+    foreach ($query->get() as $user3) {
       $user = (new UserResource($user3));
       $user4 = $user->toArray($request);
       $btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
             <i class="fa fa-lg fa-fw fa-pen"></i>
             </button>';
-      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-user-id="' 
-                    . $user->id . '">
+      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-user-id="'
+        . $user->id . '">
           <i class="fa fa-lg fa-fw fa-trash"></i>
           </button>';
-      $btnDetails = '<a href="' . route('users.show', $user['id']) 
-            . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+      $btnDetails = '<a href="' . route('users.show', $user['id'])
+        . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
             <i class="fa fa-lg fa-fw fa-eye"></i>
             </button>';
 
       array_push($data, [
-        $user->id, 
+        $user->id,
         $user->firstName,
-        $user->lastName, 
-        $user->email, 
-        $user->username, 
-        implode("\n", $user4['groups2']), 
-        implode("\n",$user4['roles2']), 
+        $user->lastName,
+        $user->email,
+        $user->username,
+        implode("\n", $user4['groups2']),
+        implode("\n", $user4['roles2']),
         '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
       ]);
     }
 
-    $groups = [];
+    if ($request->ajax()) {
+      return response()->json(['html' => view('users.partials.usertable', ['users' => $data])->render()]);
+    }
 
-    foreach (GroupResource::collection(UserGroup::all())->toArray($request) as $group)
-    {
+    $groups = [];
+    foreach (GroupResource::collection(UserGroup::all())->toArray($request) as $group) {
       $groups[$group['id']] = $group['name'];
     }
 
     $roles = [];
-    foreach (RoleResource::collection(UserRole::all())->toArray($request) as $role)
-    {
+    foreach (RoleResource::collection(UserRole::all())->toArray($request) as $role) {
       $roles[$role['id']] = $role['name'];
     }
+
     return view('users.userlist', [
       'users' => $data,
       'groupOptions' => $groups,
@@ -96,7 +117,7 @@ class UserController extends Controller
 
   public function edit(User $user)
   {
-    return redirect('/users'); 
+    return redirect('/users');
   }
 
   /**
@@ -106,7 +127,7 @@ class UserController extends Controller
   {
     return view('users.usershow', [
       'user' => $request->user(),
-     ]);
+    ]);
     // return redirect('/users'); 
   }
 
@@ -114,6 +135,6 @@ class UserController extends Controller
   {
     $user->delete();
 
-    return redirect('/users'); 
+    return redirect('/users');
   }
 }

@@ -1,23 +1,7 @@
 @extends ("adminlte::page")
-{{-- Setup data for datatables --}}
-@php
-$heads = [
-  'ID',
-  'First Name',
-  'Last Name',
-  'Email',
-  'Username',
-  'Group',
-  'Role',
-  ['label' => 'Actions', 'no-export' => false, 'width' => 5],
-];
 
-$config = [
-  'data' => $users,
-  'order' => [[1, 'asc']],
-  'columns' => [null, null, null, ['orderable' => false]],
-];
-@endphp
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 {{-- Minimal example / fill data using the component slot --}}
 @section ("content")
 
@@ -29,7 +13,7 @@ $config = [
   <div class="row">
 
     {{-- UserGroup Selector --}}
-    <div class="col">
+    <div class="col" id="groupSelector">
       
       {{-- Example with multiple selections (for SelectBs) --}}
       @php
@@ -41,44 +25,69 @@ $config = [
         "actionsBox" => true,
       ];
       @endphp
-<x-adminlte-select-bs id="optionsUserGroup" name="optionsUserGroup[]" label="User Groups"
-    label-class="text-info" :config="$config2" multiple>
-    <x-slot name="prependSlot">
-        <div class="input-group-text bg-gradient-lightblue">
+      <x-adminlte-select-bs id="optionsUserGroup" name="optionsUserGroup[]" label="Groups"
+                            label-class="text-info" :config="$config2" multiple>
+        <x-slot name="prependSlot">
+          <div class="input-group-text bg-gradient-lightblue">
             <i class="fas fa-tag"></i>
-        </div>
-    </x-slot>
-    {{-- <x-adminlte-options :options="['News', 'Sports', 'Science', 'Games']"/> --}}
-    <x-adminlte-options :options="$groupOptions"/>
-</x-adminlte-select-bs>
+          </div>
+        </x-slot>
+        <x-adminlte-options :options="$groupOptions"/>
+      </x-adminlte-select-bs>
+    </div>
+
+    {{-- UserRole Selector --}}
+    <div class="col" id="roleSelector">
+
+      {{-- Example with multiple selections (for SelectBs) --}}
+      @php
+      $config2 = [
+        "title" => "Select multiple options...",
+        "liveSearch" => true,
+        "liveSearchPlaceholder" => "Search...",
+        "showTick" => true,
+        "actionsBox" => true,
+      ];
+      @endphp
+      <x-adminlte-select-bs id="optionsUserRole" name="optionsUserRole[]" label="Roles"
+        label-class="text-info" :config="$config2" multiple>
+        <x-slot name="prependSlot">
+          <div class="input-group-text bg-gradient-lightblue">
+            <i class="fas fa-tag"></i>
+          </div>
+        </x-slot>
+        <x-adminlte-options :options="$roleOptions"/>
+      </x-adminlte-select-bs>
+    </div>
   </div>
 
-
-  <div class="col">
-    {{-- Example with multiple selections (for SelectBs) --}}
-@php
-$config2 = [
-  "title" => "Select multiple options...",
-  "liveSearch" => true,
-  "liveSearchPlaceholder" => "Search...",
-  "showTick" => true,
-  "actionsBox" => true,
-];
-@endphp
-<x-adminlte-select-bs id="optionsCategory" name="optionsCategory[]" label="Categories"
-    label-class="text-info" :config="$config2" multiple>
-    <x-slot name="prependSlot">
-        <div class="input-group-text bg-gradient-lightblue">
-            <i class="fas fa-tag"></i>
-        </div>
-    </x-slot>
-    <x-adminlte-options :options="$roleOptions"/>
-</x-adminlte-select-bs>
+  {{-- Button to refresh page / limit search --}}
+  <div class="row">
+    <button type="button" class="btn btn-primary refineSearch" id="refineSearch">Refine Search</button>
+    <script>
+      $(document).ready(function () {
+        $('.refineSearch').click(function(e) {
+          $.ajax({
+            url: '/users',
+            method: 'GET',
+            data: {
+              _tokens: '{{ csrf_token() }}',
+              _method: 'GET',
+              role: $('#optionsUserRole').val(),
+              group: $('#optionsUserGroup').val()
+            },
+            success: function(response) {
+              $('#table').html (response.html); 
+            },
+            error: function(xhr, status, error) {
+              console.error(xhr.responseText);
+            }
+          });
+        });
+      });
+    </script>
+  </div>
 </div>
-</div>
-</div>
-
-@section('plugins.Datatables', true)
 
 <!-- Button trigger modal -->
 <div class="container">
@@ -90,45 +99,17 @@ $config2 = [
     </div>
   </div>
 </div>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
+@section('plugins.Datatables', true)
+  <div id="table">
+    @include('users.partials.usertable')
   </div>
-</div>
-
-<x-adminlte-datatable id="table5" :heads="$heads" bordered compressed hoverable>
-    @foreach($config['data'] as $row)
-        <tr>
-            @foreach($row as $cell)
-                <td>{!! $cell !!}</td>
-            @endforeach
-        </tr>
-    @endforeach
-</x-adminlte-datatable>
 @stop
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
         $('.btn-delete').click(function(e) {
             e.preventDefault();
-            var userId = $(this).data('user-id');
+            const userId = $(this).data('user-id');
             if (confirm('Are you sure you want to delete this user?')) {
                 $.ajax({
                     url: '/users/' + userId,
@@ -149,7 +130,7 @@ $config2 = [
     });
 </script>
 
-<script src="../../plugins/jquery/jquery.min.js"></script>
+{{-- <script src="../../plugins/jquery/jquery.min.js"></script> --}}
 
 
 

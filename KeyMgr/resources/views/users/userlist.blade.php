@@ -24,6 +24,9 @@ $config = [
 <!-- Drop Down for UserRoles and UserGroups -->
 <div class="flex-container">
   <div class="row">
+    <h3>Limit results by:</h3>
+  </div>
+  <div class="row">
 
     {{-- UserGroup Selector --}}
     <div class="col">
@@ -38,14 +41,15 @@ $config = [
         "actionsBox" => true,
       ];
       @endphp
-<x-adminlte-select-bs id="optionsCategory" name="optionsCategory[]" label="Categories"
+<x-adminlte-select-bs id="optionsUserGroup" name="optionsUserGroup[]" label="User Groups"
     label-class="text-info" :config="$config2" multiple>
     <x-slot name="prependSlot">
         <div class="input-group-text bg-gradient-lightblue">
             <i class="fas fa-tag"></i>
         </div>
     </x-slot>
-    <x-adminlte-options :options="['News', 'Sports', 'Science', 'Games']"/>
+    {{-- <x-adminlte-options :options="['News', 'Sports', 'Science', 'Games']"/> --}}
+    <x-adminlte-options :options="$groupOptions"/>
 </x-adminlte-select-bs>
   </div>
 
@@ -68,7 +72,7 @@ $config2 = [
             <i class="fas fa-tag"></i>
         </div>
     </x-slot>
-    <x-adminlte-options :options="['999'=>'Ne22ws', 'Sports', 'Science', 'Games']"/>
+    <x-adminlte-options :options="$roleOptions"/>
 </x-adminlte-select-bs>
 </div>
 </div>

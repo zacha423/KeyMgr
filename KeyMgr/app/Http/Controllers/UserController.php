@@ -51,10 +51,23 @@ class UserController extends Controller
         '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
       ]);
     }
+
+    $groups = [];
+
+    foreach (GroupResource::collection(UserGroup::all())->toArray($request) as $group)
+    {
+      $groups[$group['id']] = $group['name'];
+    }
+
+    $roles = [];
+    foreach (RoleResource::collection(UserRole::all())->toArray($request) as $role)
+    {
+      $roles[$role['id']] = $role['name'];
+    }
     return view('users.userlist', [
       'users' => $data,
-      'groups' => GroupResource::collection(UserGroup::all())->toArray($request),
-      'roles' => RoleResource::collection(UserRole::all())->toArray($request),
+      'groupOptions' => $groups,
+      'roleOptions' => $roles,
     ]);
   }
 

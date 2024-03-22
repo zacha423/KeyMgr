@@ -27,21 +27,20 @@ class UserController extends Controller
 
     $query = User::with('groups', 'roles');
 
-    if ($request->ajax()) {
-      $groupIDs = $request->query('group');
-      $roleIDs = $request->query('role');
+    
+    $groupIDs = $request->query('groups');
+    $roleIDs = $request->query('roles');
 
-      if ($groupIDs) {
-        $query->whereHas('groups', function ($query) use ($groupIDs) {
-          $query->whereIn('user_group_id', $groupIDs); 
-        });
-      }
+    if ($groupIDs) {
+      $query->whereHas('groups', function ($query) use ($groupIDs) {
+        $query->whereIn('user_group_id', $groupIDs); 
+    });
+    }
 
-      if ($roleIDs) {
-        $query->whereHas('roles', function ($query) use ($roleIDs) {
-          $query->whereIn('user_role_id', $roleIDs); 
-        });
-      }
+    if ($roleIDs) {
+      $query->whereHas('roles', function ($query) use ($roleIDs) {
+        $query->whereIn('user_role_id', $roleIDs); 
+      });
     }
 
     foreach ($query->get() as $user3) {
@@ -65,14 +64,10 @@ class UserController extends Controller
         $user->lastName,
         $user->email,
         $user->username,
-        implode("\n", $user4['groups2']),
-        implode("\n", $user4['roles2']),
+        implode("<br>", $user4['groups2']),
+        implode("<br>", $user4['roles2']),
         '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
       ]);
-    }
-
-    if ($request->ajax()) {
-      return response()->json(['html' => view('users.partials.usertable', ['users' => $data])->render()]);
     }
 
     $groups = [];
@@ -89,6 +84,8 @@ class UserController extends Controller
       'users' => $data,
       'groupOptions' => $groups,
       'roleOptions' => $roles,
+      'selectedGroups' => $groupIDs,
+      'selectedRoles' => $roleIDs,
     ]);
   }
 

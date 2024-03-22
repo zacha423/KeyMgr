@@ -4,7 +4,7 @@
 
 {{-- Minimal example / fill data using the component slot --}}
 @section ("content")
-
+<form action="/users" method="GET">
 <!-- Drop Down for UserRoles and UserGroups -->
 <div class="flex-container">
   <div class="row">
@@ -23,16 +23,17 @@
         "liveSearchPlaceholder" => "Search...",
         "showTick" => true,
         "actionsBox" => true,
+        "enable-old-support" => true,
       ];
       @endphp
-      <x-adminlte-select-bs id="optionsUserGroup" name="optionsUserGroup[]" label="Groups"
-                            label-class="text-info" :config="$config2" multiple>
+      <x-adminlte-select-bs id="groups" name="groups[]" label="Groups"
+        label-class="text-info" :config="$config2" multiple enable-old-support>
         <x-slot name="prependSlot">
           <div class="input-group-text bg-gradient-lightblue">
             <i class="fas fa-tag"></i>
           </div>
         </x-slot>
-        <x-adminlte-options :options="$groupOptions"/>
+        <x-adminlte-options :options="$groupOptions" :selected="$selectedGroups"/>
       </x-adminlte-select-bs>
     </div>
 
@@ -47,47 +48,27 @@
         "liveSearchPlaceholder" => "Search...",
         "showTick" => true,
         "actionsBox" => true,
+        "enable-old-support" => true,
       ];
       @endphp
-      <x-adminlte-select-bs id="optionsUserRole" name="optionsUserRole[]" label="Roles"
-        label-class="text-info" :config="$config2" multiple>
+      <x-adminlte-select-bs id="roles" name="roles[]" label="Roles"
+        label-class="text-info" :config="$config2" multiple enable-old-support>
         <x-slot name="prependSlot">
           <div class="input-group-text bg-gradient-lightblue">
             <i class="fas fa-tag"></i>
           </div>
         </x-slot>
-        <x-adminlte-options :options="$roleOptions"/>
+        <x-adminlte-options :options="$roleOptions" :selected="$selectedRoles"/>
       </x-adminlte-select-bs>
     </div>
   </div>
 
   {{-- Button to refresh page / limit search --}}
   <div class="row">
-    <button type="button" class="btn btn-primary refineSearch" id="refineSearch">Refine Search</button>
-    <script>
-      $(document).ready(function () {
-        $('.refineSearch').click(function(e) {
-          $.ajax({
-            url: '/users',
-            method: 'GET',
-            data: {
-              _tokens: '{{ csrf_token() }}',
-              _method: 'GET',
-              role: $('#optionsUserRole').val(),
-              group: $('#optionsUserGroup').val()
-            },
-            success: function(response) {
-              $('#table').html (response.html); 
-            },
-            error: function(xhr, status, error) {
-              console.error(xhr.responseText);
-            }
-          });
-        });
-      });
-    </script>
+    <button type="submit" class="btn btn-primary refineSearch" id="refineSearch">Refine Search</button>
   </div>
 </div>
+</form>
 
 <!-- Button trigger modal -->
 <div class="container">
@@ -129,11 +110,3 @@
         });
     });
 </script>
-
-{{-- <script src="../../plugins/jquery/jquery.min.js"></script> --}}
-
-
-
-
-
-

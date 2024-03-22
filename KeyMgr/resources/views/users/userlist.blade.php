@@ -2,72 +2,69 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-{{-- Minimal example / fill data using the component slot --}}
 @section ("content")
 <form action="/users" method="GET">
-<!-- Drop Down for UserRoles and UserGroups -->
-<div class="flex-container">
-  <div class="row">
-    <h3>Limit results by:</h3>
-  </div>
-  <div class="row">
+  <!-- Drop Down for UserRoles and UserGroups -->
+  <div class="flex-container">
+    <div class="row">
+      <h3>Limit results by:</h3>
+    </div>
+    <div class="row">
 
-    {{-- UserGroup Selector --}}
-    <div class="col" id="groupSelector">
-      
-      {{-- Example with multiple selections (for SelectBs) --}}
-      @php
-      $config2 = [
-        "title" => "Select multiple options...",
-        "liveSearch" => true,
-        "liveSearchPlaceholder" => "Search...",
-        "showTick" => true,
-        "actionsBox" => true,
-        "enable-old-support" => true,
-      ];
-      @endphp
-      <x-adminlte-select-bs id="groups" name="groups[]" label="Groups"
-        label-class="text-info" :config="$config2" multiple enable-old-support>
-        <x-slot name="prependSlot">
-          <div class="input-group-text bg-gradient-lightblue">
-            <i class="fas fa-tag"></i>
-          </div>
-        </x-slot>
-        <x-adminlte-options :options="$groupOptions" :selected="$selectedGroups"/>
-      </x-adminlte-select-bs>
+      {{-- UserGroup Selector --}}
+      <div class="col" id="groupSelector">
+        
+        {{-- Example with multiple selections (for SelectBs) --}}
+        @php
+        $config2 = [
+          "title" => "Select multiple options...",
+          "liveSearch" => true,
+          "liveSearchPlaceholder" => "Search...",
+          "showTick" => true,
+          "actionsBox" => true,
+        ];
+        @endphp
+        <x-adminlte-select-bs id="groups" name="groups[]" label="Groups"
+          label-class="text-info" :config="$config2" multiple enable-old-support>
+          <x-slot name="prependSlot">
+            <div class="input-group-text bg-gradient-lightblue">
+              <i class="fas fa-tag"></i>
+            </div>
+          </x-slot>
+          <x-adminlte-options :options="$groupOptions" :selected="$selectedGroups"/>
+        </x-adminlte-select-bs>
+      </div>
+
+      {{-- UserRole Selector --}}
+      <div class="col" id="roleSelector">
+
+        {{-- Example with multiple selections (for SelectBs) --}}
+        @php
+        $config2 = [
+          "title" => "Select multiple options...",
+          "liveSearch" => true,
+          "liveSearchPlaceholder" => "Search...",
+          "showTick" => true,
+          "actionsBox" => true,
+        ];
+        @endphp
+        <x-adminlte-select-bs id="roles" name="roles[]" label="Roles"
+          label-class="text-info" :config="$config2" multiple enable-old-support>
+          <x-slot name="prependSlot">
+            <div class="input-group-text bg-gradient-lightblue">
+              <i class="fas fa-tag"></i>
+            </div>
+          </x-slot>
+          <x-adminlte-options :options="$roleOptions" :selected="$selectedRoles"/>
+        </x-adminlte-select-bs>
+      </div>
     </div>
 
-    {{-- UserRole Selector --}}
-    <div class="col" id="roleSelector">
-
-      {{-- Example with multiple selections (for SelectBs) --}}
-      @php
-      $config2 = [
-        "title" => "Select multiple options...",
-        "liveSearch" => true,
-        "liveSearchPlaceholder" => "Search...",
-        "showTick" => true,
-        "actionsBox" => true,
-        "enable-old-support" => true,
-      ];
-      @endphp
-      <x-adminlte-select-bs id="roles" name="roles[]" label="Roles"
-        label-class="text-info" :config="$config2" multiple enable-old-support>
-        <x-slot name="prependSlot">
-          <div class="input-group-text bg-gradient-lightblue">
-            <i class="fas fa-tag"></i>
-          </div>
-        </x-slot>
-        <x-adminlte-options :options="$roleOptions" :selected="$selectedRoles"/>
-      </x-adminlte-select-bs>
+    {{-- Button to refresh page / limit search --}}
+    <div class="row">
+      <button type="submit" class="btn btn-primary refineSearch" id="refineSearch">Refine Search</button>
     </div>
   </div>
-
-  {{-- Button to refresh page / limit search --}}
-  <div class="row">
-    <button type="submit" class="btn btn-primary refineSearch" id="refineSearch">Refine Search</button>
-  </div>
-</div>
 </form>
 
 <!-- Button trigger modal -->
@@ -81,9 +78,7 @@
   </div>
 </div>
 @section('plugins.Datatables', true)
-  <div id="table">
-    @include('users.partials.usertable')
-  </div>
+  @include('users.partials.usertable')
 @stop
 
 <script>

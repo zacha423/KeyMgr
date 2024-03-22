@@ -4,7 +4,7 @@
  * @author Liam Henry <henr5288@pacificu.edu>
  * 
  * Purpose: This controller can be used for managing user management. 
- * Basic login/authentication should be done through Breeze's controllers.
+ * Basic login/authentication should be done through Laravel Breeze's controllers.
  */
 namespace App\Http\Controllers;
 
@@ -24,22 +24,19 @@ class UserController extends Controller
   public function index(Request $request)
   {
     $data = [];
-
     $query = User::with('groups', 'roles');
-
-    
     $groupIDs = $request->query('groups');
     $roleIDs = $request->query('roles');
 
     if ($groupIDs) {
       $query->whereHas('groups', function ($query) use ($groupIDs) {
-        $query->whereIn('user_group_id', $groupIDs); 
-    });
+        $query->whereIn('user_group_id', $groupIDs);
+      });
     }
 
     if ($roleIDs) {
       $query->whereHas('roles', function ($query) use ($roleIDs) {
-        $query->whereIn('user_role_id', $roleIDs); 
+        $query->whereIn('user_role_id', $roleIDs);
       });
     }
 

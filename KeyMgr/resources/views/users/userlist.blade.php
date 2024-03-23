@@ -82,7 +82,7 @@
 <x-adminlte-modal id="userForm" title="User Creation Form" theme="lightblue" size="sm1" icon="fas fa-user" 
                   v-centered static-backdrop scrollable>
   <div>
-    <form action="/users" method="POST">
+    <form id="newUser" action="/users" method="POST">
       @csrf
 
       {{-- First Name field --}}
@@ -184,7 +184,7 @@
     
         {{-- If the button is in the footer, it's not part of the form for some reason." --}}
       <x-slot name="footerSlot">
-        <x-adminlte-button type="submit" class="block mr-auto" theme="success" label="Add User"/>
+        <x-adminlte-button type="submit" class="block mr-auto" theme="success" label="Add User" form="newUser"/>
         <x-adminlte-button type="button" class="block ml-auto" theme="danger" label="Cancel" data-dismiss="modal"/>
       </x-slot>  
     </form>

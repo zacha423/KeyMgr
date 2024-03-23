@@ -59,24 +59,25 @@
         </x-adminlte-select-bs>
       </div>
     </div>
-
-    {{-- Button to refresh page / limit search --}}
+    
     <div class="row">
-      <button type="submit" class="btn btn-primary refineSearch" id="refineSearch">Refine Search</button>
+      {{-- Button to refresh page / limit search --}}
+      <div class="col">
+        <button type="submit" class="btn btn-primary refineSearch" id="refineSearch">
+          Refine Search
+        </button>
+      </div>
+
+      <!-- Button trigger modal -->
+      <div class="col text-right">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Add User
+      </button>
+      </div>  
     </div>
   </div>
 </form>
 
-<!-- Button trigger modal -->
-<div class="flex-container">
-  <div class="row">
-    <div class="col-md-12 text-right">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        Add User
-      </button>
-    </div>
-  </div>
-</div>
 @section('plugins.Datatables', true)
 <div class="flex-container">
   @include('users.partials.usertable')

@@ -68,7 +68,7 @@
 </form>
 
 <!-- Button trigger modal -->
-<div class="container">
+<div class="flex-container">
   <div class="row">
     <div class="col-md-12 text-right">
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
@@ -78,7 +78,9 @@
   </div>
 </div>
 @section('plugins.Datatables', true)
+<div class="flex-container">
   @include('users.partials.usertable')
+</div>
 @stop
 
 <script>

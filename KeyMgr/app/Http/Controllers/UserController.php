@@ -148,12 +148,11 @@ class UserController extends Controller
   /**
    * @todo Is this an admin show or a end user show? See app/Http/Controllers/ProfileController
    */
-  public function show(Request $request): View
+  public function show(Request $request, User $user): View
   {
     return view('users.usershow', [
-      'user' => $request->user(),
+      'user' => $user,
     ]);
-    // return redirect('/users'); 
   }
 
   public function destroy(User $user)

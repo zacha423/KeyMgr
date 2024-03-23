@@ -109,6 +109,35 @@ class UserController extends Controller
     return redirect('/');
   }
 
+  public function store(Request $request)
+  {
+    $request->validate([
+      'firstName' => ['required', 'string', 'max:255',],
+      'lastName' => ['required', 'string', 'max:255',],
+      'username' => ['required', 'unique:App\Models\User,username',],
+      'email' => ['required', 'string', 'lowercase', 'email', 'max:255'], //email:rfc,dns,spoof
+      'password' => ['required', 'confirmed', Rules\Password::defaults()], //, Password::min(self::PW_MIN_LEN)->letters()->mixedCase()->numbers()->symbols()->uncompromised()],
+    ]);
+
+    $user = User::create([
+      'firstName' => $request->firstName,
+      'lastName' => $request->lastName,
+      'username' => $request->username,
+      'email' => $request->email,
+      'password' => Hash::make($request->password),
+    ]);
+
+    $user->roles()->save(UserRole::where(['name' => config('constants.roles.default')])->first());
+    $user->groups()->save(UserGroup::where(['name' => config('constants.groups.default')])->first());
+    $user->save();
+
+    event(new Registered($user));
+
+
+
+    return redirect('/users');
+  }
+
   public function edit(User $user)
   {
     return redirect('/users');

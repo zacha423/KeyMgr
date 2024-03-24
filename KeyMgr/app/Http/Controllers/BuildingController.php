@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateBuildingRequest;
 use App\Models\Building;
 use App\Models\Wrappers\AddressWrapper;
 use App\Models\Campus;
+use App\Models\Room;
 use App\Http\Resources\BuildingResource;
 use App\Models\Wrappers\BuildingWrapper;
 use Illuminate\Http\Request;
@@ -86,6 +87,7 @@ class BuildingController extends Controller
       'building' => (new BuildingResource($building->load(
         BuildingWrapper::loadRelationships()
       )))->toArray(new Request()),
+      'numberOfRooms' => $building->rooms->count(),
     ]);
   }
 
@@ -100,6 +102,18 @@ class BuildingController extends Controller
         BuildingWrapper::loadRelationships()
       )))->toArray(new Request()),
     ]);
+  }
+
+    /**
+     * Shows the rooms associated with a building.
+     */
+  public function showRooms(Building $building)
+  {
+      $building->load('rooms');
+  
+      return view('building.buildingRooms', [
+          'building' => $building
+      ]);
   }
 
   /**

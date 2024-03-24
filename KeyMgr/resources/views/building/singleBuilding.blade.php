@@ -20,10 +20,16 @@
     <div class="mb-4">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-4">
-                <div class="bg-gray-200 p-4 rounded-md">
-                    <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">Number of Rooms</h2>
-                    
-                    <a href="{{ route('building.buildingRooms',['building' => $building['id']]) }}" class="btn btn-primary">View All Rooms</a>
+                <div class="bg-gray-200 p-4 rounded-md flex justify-between items-center">
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">Number of Rooms</h2>
+                        <p>{{ $numberOfRooms }}</p>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="ml-auto">
+                            <a href="{{ route('building.buildingRooms',['building' => $building['id']]) }}" class="btn btn-primary">View All Rooms</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

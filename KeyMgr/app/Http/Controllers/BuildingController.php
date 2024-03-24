@@ -84,7 +84,7 @@ class BuildingController extends Controller
   public function show(Building $building)
   {
     return view('building.singleBuilding', [
-      
+      'numberOfRooms' => $building->rooms->count(),
       'building' => (new BuildingResource($building->load(
         BuildingWrapper::loadRelationships()
       )))->toArray(new Request()),
@@ -113,7 +113,7 @@ class BuildingController extends Controller
   
       return view('building.buildingRooms', [
         'building' => (new BuildingResource($building->load(
-          BuildingWrapper::loadRelationships()
+          BuildingWrapper::loadRelationships(),
         )))->toArray(new Request()),
       ]);
   }
@@ -163,11 +163,10 @@ class BuildingController extends Controller
    */
   public function destroy(Building $building)
   {
-    /**
-     * @todo test this
-     */
     $building->delete();
 
-    return view('building.building');
+    // Redirect to a different route after deletion
+    return redirect()->route('building.index')->with('success', 'Building deleted successfully');
   }
+
 }

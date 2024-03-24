@@ -44,23 +44,25 @@ $config = [
     $(document).ready(function() {
         $('.btn-delete').click(function(e) {
             e.preventDefault();
-            var keyId = $(this).data('building-id');
-            if (confirm('Are you sure you want to delete this key?')) {
+            const buildingId = $(this).data('key-id');
+            console.log('Building ID:', buildingId);
+            if (confirm('Are you sure you want to delete this building?')) {
                 $.ajax({
-                    url: '/building/' + buildingID,
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        _method: 'DELETE'
+                    url: '/building/' + buildingId,
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
                     success: function(response) {
                         location.reload();
                     },
                     error: function(xhr, status, error) {
                         console.error(xhr.responseText);
+                        alert('An error occurred while deleting the building.');
                     }
                 });
             }
         });
     });
 </script>
+

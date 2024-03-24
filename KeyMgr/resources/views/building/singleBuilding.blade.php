@@ -15,62 +15,104 @@
         </div>
     </div>
 @stop
+
 @section('content')
-    <div class="py-12">
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-2">
+    <div class="mb-4">
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-4">
-                <div class="mb-1 bg-gray-100 dark:bg-gray-700 p-4 rounded-md">
-                    <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">Street Address</h2>
-                    @if(isset($building['streetAddress']))
-                        <p>{{ $building['streetAddress'] }}</p>
+                <div class="bg-gray-200 p-4 rounded-md">
+                    <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">Number of Rooms</h2>
+                    @if($building[$rooms->count()] > 0)
+                        <p>{{ $building[$rooms->count()] }}</p>
                     @else
-                        <p>Street Address information not available</p>
+                        <p>No rooms available</p>
                     @endif
                 </div>
-
-                <div class="mb-1 bg-gray-100 dark:bg-gray-700 p-4 rounded-md">
-                    <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">Country</h2>
-                    @if(isset($building['country']))
-                        <p>{{ $building['country'] }}</p>
-                    @else
-                        <p>Country information not available</p>
-                    @endif
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <div class="mb-4">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-4">
+                    <div class="bg-gray-100 p-4 rounded-md">
+                        <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">Street Address</h2>
+                        @if(isset($building['streetAddress']))
+                            <p>{{ $building['streetAddress'] }}</p>
+                        @else
+                            <p>Street Address information not available</p>
+                        @endif
+                    </div>
                 </div>
-
-                <div class="mb-1 bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
-                    <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">State</h2>
-                    @if(isset($building['state']))
-                        <p>{{ $building['state'] }}</p>
-                    @else
-                        <p>State information not available</p>
-                    @endif
+            </div>
+        </div>
+        <div class="mb-4">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-4">
+                    <div class="bg-gray-200 p-4 rounded-md">
+                        <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">Country</h2>
+                        @if(isset($building['country']))
+                            <p>{{ $building['country'] }}</p>
+                        @else
+                            <p>Country information not available</p>
+                        @endif
+                    </div>
                 </div>
-
-                <div class="mb-1 bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
-                    <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">City</h2>
-                    @if(isset($building['city']))
-                        <p>{{ $building['city'] }}</p>
-                    @else
-                        <p>City information not available</p>
-                    @endif
+            </div>
+        </div>
+        <div class="mb-4">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-4">
+                    <div class="bg-gray-300 p-4 rounded-md">
+                        <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">State</h2>
+                        @if(isset($building['state']))
+                            <p>{{ $building['state'] }}</p>
+                        @else
+                            <p>State information not available</p>
+                        @endif
+                    </div>
                 </div>
-
-                <div class="mb-1 bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
-                    <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">Postal Code</h2>
-                    @if(isset($building['postalCode']))
-                        <p>{{ $building['postalCode'] }}</p>
-                    @else
-                        <p>Postal Code information not available</p>
-                    @endif
+            </div>
+        </div>
+        <div class="mb-4">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-4">
+                    <div class="bg-gray-400 p-4 rounded-md">
+                        <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">City</h2>
+                        @if(isset($building['city']))
+                            <p>{{ $building['city'] }}</p>
+                        @else
+                            <p>City information not available</p>
+                        @endif
+                    </div>
                 </div>
-
-                <div class="mb-1 bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
-                    <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">Campus Location</h2>
-                    @if(isset($building['campus']))
-                        <p>{{ $building['campus'] }}</p>
-                    @else
-                        <p>Campus information not available</p>
-                    @endif
+            </div>
+        </div>
+        <div class="mb-4">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-4">
+                    <div class="bg-gray-500 p-4 rounded-md">
+                        <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">Postal Code</h2>
+                        @if(isset($building['postalCode']))
+                            <p>{{ $building['postalCode'] }}</p>
+                        @else
+                            <p>Postal Code information not available</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mb-4">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-4">
+                    <div class="bg-gray-600 p-4 rounded-md">
+                        <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">Campus Location</h2>
+                        @if(isset($building['campus']))
+                            <p>{{ $building['campus'] }}</p>
+                        @else
+                            <p>Campus information not available</p>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

@@ -22,8 +22,8 @@
             <div class="p-4">
                 <div class="bg-gray-200 p-4 rounded-md">
                     <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">Number of Rooms</h2>
-                    <p>{{ $numberOfRooms }}</p>
-                    <a href="{{ route('building.buildingRooms', $building) }}" class="btn btn-primary">View All Rooms</a>
+                    
+                    <a href="{{ route('building.buildingRooms',['building' => $building['id']]) }}" class="btn btn-primary">View All Rooms</a>
                 </div>
             </div>
         </div>

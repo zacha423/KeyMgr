@@ -44,5 +44,6 @@ Route::middleware('auth')->group(function () {
   Route::resource('room', RoomController::class,)->except(['create']);
   Route::resource('building', BuildingController::class)->except(['create']);
 });
+Route::get('building/{building}/rooms', 'BuildingController@showRooms')->name('building.buildingRooms');
 
 require __DIR__ . '/auth.php';

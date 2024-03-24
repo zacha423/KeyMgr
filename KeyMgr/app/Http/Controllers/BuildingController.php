@@ -84,10 +84,10 @@ class BuildingController extends Controller
   public function show(Building $building)
   {
     return view('building.singleBuilding', [
+      
       'building' => (new BuildingResource($building->load(
         BuildingWrapper::loadRelationships()
       )))->toArray(new Request()),
-      'numberOfRooms' => $building->rooms->count(),
     ]);
   }
 
@@ -112,7 +112,9 @@ class BuildingController extends Controller
       $building->load('rooms');
   
       return view('building.buildingRooms', [
-          'building' => $building
+        'building' => (new BuildingResource($building->load(
+          BuildingWrapper::loadRelationships()
+        )))->toArray(new Request()),
       ]);
   }
 

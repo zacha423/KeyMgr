@@ -8,6 +8,8 @@
  */
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\GroupResource;
 use App\Http\Resources\RoleResource;
 use App\Http\Resources\UserResource;
@@ -145,9 +147,21 @@ class UserController extends Controller
     return redirect('/users');
   }
 
-  /**
-   * @todo Is this an admin show or a end user show? See app/Http/Controllers/ProfileController
-   */
+  public function update(UpdateUserRequest $request)
+  {
+    // $request->user()->fill($request->validated());
+    $luser = User::find(['id' => $request->route('user')])->first();
+    $luser->fill($request->validated());
+
+    if ($luser->isDirty('email')) {
+        $luser->email_verified_at = null;
+    }
+
+    $luser->save();
+
+    return redirect()->route('users.show', ['user' => $luser->id])->with("Successfully updated.");
+  }
+  
   public function show(Request $request, User $user): View
   {
     return view('users.usershow', [

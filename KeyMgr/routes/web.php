@@ -46,6 +46,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('building/{building}/rooms', [BuildingController::class, 'showRooms'])->name('building.buildingRooms');
-Route::delete('/building/{building}', [BuildingController::class, 'destroy'])->name('building.destroy');
+// Route::delete('/building/{building}', [BuildingController::class, 'destroy'])->name('building.destroy');
 
 require __DIR__ . '/auth.php';

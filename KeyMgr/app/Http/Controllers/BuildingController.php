@@ -170,7 +170,9 @@ class BuildingController extends Controller
     $building->delete();
 
     // Redirect to a different route after deletion
-    return redirect()->route('building.index')->with('success', 'Building deleted successfully');
+    // return redirect()->route('building.index')->with('success', 'Building deleted successfully');
+    // return redirect()->action([BuildingController::class, 'index'])->with('success', 'Building deleted successfully');
+    return redirect()->route('building.index')->with('success', 'Building deleted successfully')->send();
   }
 
 }

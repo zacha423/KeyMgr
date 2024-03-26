@@ -1,4 +1,3 @@
-{{-- Setup data for datatables --}}
 @php
 $heads = [
   'ID',

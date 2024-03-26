@@ -13,6 +13,7 @@ use App\Models\Campus;
 use App\Models\Room;
 use App\Http\Resources\BuildingResource;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 
 class BuildingController extends Controller
@@ -164,15 +165,12 @@ class BuildingController extends Controller
 
   /**
    * Remove the specified resource from storage.
+   * 
+   * @todo @ZAG Add some extra form of authorization, maybe a BuildingDelete request?
    */
-  public function destroy(Building $building)
+  public function destroy(Building $building): void
   {
     $building->delete();
-
-    // Redirect to a different route after deletion
-    // return redirect()->route('building.index')->with('success', 'Building deleted successfully');
-    // return redirect()->action([BuildingController::class, 'index'])->with('success', 'Building deleted successfully');
-    return redirect()->route('building.index')->with('success', 'Building deleted successfully')->send();
   }
 
 }

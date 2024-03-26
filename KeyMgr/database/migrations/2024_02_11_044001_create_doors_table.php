@@ -16,7 +16,7 @@ return new class extends Migration {
       $table->id();
       $table->string('description')->nullable();
       $table->string('hardwareDescription')->nullable();
-      $table->foreignId('room_id')->constrained();
+      $table->foreignId('room_id')->constrained()->onDelete('cascade');
       $table->timestamps();
     });
   }

@@ -18,7 +18,7 @@ return new class extends Migration {
       $table->string('name')->unique();
       $table->unsignedSmallInteger('numRows')->default(1);
       $table->unsignedSmallInteger('numCols')->default(1);
-      $table->foreignId('room_id')->constrained();
+      $table->foreignId('room_id')->constrained()->onDelete('cascade');
       $table->timestamps();
     });
   }

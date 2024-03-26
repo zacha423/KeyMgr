@@ -26,13 +26,13 @@ class RoomController extends Controller
     foreach (Room::all()->load('doors', 'building') as $room) {
       $roomRes = (new RoomResource($room))->toArray($request);
 
-      $btnEdit = '<a href="' . route('building.edit', $room->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+      $btnEdit = '<a href="' . route('room.edit', $room->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
       <i class="fa fa-lg fa-fw fa-pen"></i>
       </a>';
       $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-key-id="' . $room->id . '">
             <i class="fa fa-lg fa-fw fa-trash"></i>
         </button>';
-      $btnDetails = '<a href="' . route('building.show', $room->id) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+      $btnDetails = '<a href="' . route('room.show', $room->id) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
             <i class="fa fa-lg fa-fw fa-eye"></i>
       </a>';
 

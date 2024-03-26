@@ -6,17 +6,54 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserGroupRequest;
 use App\Models\UserGroup;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+use Illuminate\Auth\Events\Registered;
+use App\Http\Resources\GroupResource;
+
+
 
 class UserGroupController extends Controller
 {
   /**
    * Display a listing of the resource.
    */
-  public function index()
+  public function index(Request $request)
   {
+
+    // $groups = [];
+    // $allGroups = UserGroup::all();
+
+    // foreach ($allGroups as $group) {
+    //     $groupData = [
+    //         'id' => $group->id,
+    //         'name' => $group->name
+    //     ];
+
+    //     array_push($groups, $groupData);
+    // }
+
+    // $groupsArray = $allGroups->toArray();
+
+    // $data = [
+    //     'groups' => $groups,
+    //     'groupsArray' => $groupsArray
+    // ];    
+    
+    // return view ('users.usergroup', $data);
+
+    $groupIDs = $request->query('groups');
+
+    $groups = [];
+    foreach (GroupResource::collection(UserGroup::all())->toArray($request) as $group) {
+      $groups[$group['id']] = $group['name'];
+    }
+
     return view ('users.usergroup', [
       'groups' => UserGroup::all()->toArray(),
-      'groupsJSON'=> UserGroup::all()->toJson(),
     ]);   
   }
 
@@ -41,10 +78,11 @@ class UserGroupController extends Controller
       new UserGroup(['name' => $validated['groupName']])
     );
 
-    return view ('users.usergroup', [
-      'group' => $group->toArray(),
-      'groupJSON' => $group->toJson(),
-    ]);
+    // return view ('users.usergroup', [
+    //   'group' => $group->toArray(),
+    //   'groupJSON' => $group->toJson(),
+    // ]);
+    return redirect('/groups');
   }
 
   /**

@@ -20,30 +20,43 @@ class CampusController extends Controller
    */
   public function index(Request $request)
   {
-    $campus = Campus::with(AddressWrapper::loadRelationships(), 'buildings');
-    $data = [];
-
-    $campuses = CampusResource::collection($campus->latest());
-
-    foreach ($campuses as $campus) {
-
-      $btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
-            <i class="fa fa-lg fa-fw fa-pen"></i>
-            </button>';
-      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-user-id="' . $campus->id . '">
-          <i class="fa fa-lg fa-fw fa-trash"></i>
-          </button>';
-      $btnDetails = '<a href="' . route('campus.show', $campus->id) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
-            <i class="fa fa-lg fa-fw fa-eye"></i>
-            </button>';
-
-      array_push($data, [$campus->id, $campus->name, $campus->country, $campus->state, $campus->city, $campus->postalCode, $campus->streetAddress, '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>']);
-    }
-    return view('campus.campusList', [
-      'campuses' => $data,
-    ]);
+      // Fetch all campuses with related data
+      $campuses = Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get();
+  
+      // Prepare data for datatable
+      $data = [];
+  
+      foreach ($campuses as $campus) {
+          // Buttons for edit, delete, and details
+          $btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+              <i class="fa fa-lg fa-fw fa-pen"></i>
+              </button>';
+          $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-user-id="' . $campus->id . '">
+              <i class="fa fa-lg fa-fw fa-trash"></i>
+              </button>';
+          $btnDetails = '<a href="' . route('campus.show', $campus->id) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+              <i class="fa fa-lg fa-fw fa-eye"></i>
+              </button>';
+  
+          // Push campus data into $data array
+          $data[] = [
+              $campus->id,
+              $campus->name,
+              $campus->country,
+              $campus->state,
+              $campus->city,
+              $campus->postalCode,
+              $campus->streetAddress,
+              '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
+          ];
+      }
+  
+      // Pass the formatted data to the view
+      return view('campus.campusList', [
+          'campuses' => $data,
+      ]);
   }
-
+  
   /**
    * Show the form for creating a new campus.
    * 

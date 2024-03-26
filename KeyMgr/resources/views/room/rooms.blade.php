@@ -8,7 +8,6 @@ $heads = [
     'Room Number',
     'Description',
     'Building',
-    'Building Name',
     'Door Description',
     'Door Hardware Description',
     ['label' => 'Actions', 'no-export' => true, 'width' => 5],

@@ -29,8 +29,8 @@ class DatabaseSeeder extends Seeder
     User::factory(50)->create();
 
     foreach (User::all() as $user) { 
-      $user->groups()->attach(UserGroup::all()->random(1));
-      $user->roles()->attach(UserRole::all()->random(1)); 
+      $user->groups()->syncWithoutDetaching(UserGroup::all()->random(1));
+      $user->roles()->syncWithoutDetaching(UserRole::all()->random(1)); 
     }
     $this->call(MessageTemplateSeeder::class);
     \App\Models\User::factory(50)->create();

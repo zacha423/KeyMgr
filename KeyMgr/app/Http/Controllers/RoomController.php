@@ -41,8 +41,8 @@ class RoomController extends Controller
         'number' => $room->number,
         'description' => $room->description,
         'buildingName' => $roomRes['buildingName'],
-        'doorDesc' => $room->doorDesc,
-        'doorHWDesc' => $room->doorHWDesc,
+        'doorDesc' => $roomRes['doorDesc'],
+        'doorHWDesc' => $roomRes['doorHWDesc'],
         'actions' => '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>',
       ]);
     }

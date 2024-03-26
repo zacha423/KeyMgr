@@ -43,9 +43,9 @@ Route::middleware('auth')->group(function () {
   ]);
   Route::resource('room', RoomController::class,)->except(['create']);
   Route::resource('building', BuildingController::class)->except(['create']);
+  Route::get('building/{building}/rooms', [BuildingController::class, 'showRooms'])->name('building.buildingRooms');
 });
 
-Route::get('building/{building}/rooms', [BuildingController::class, 'showRooms'])->name('building.buildingRooms');
-Route::delete('/building/{building}', [BuildingController::class, 'destroy'])->name('building.destroy');
+
 
 require __DIR__ . '/auth.php';

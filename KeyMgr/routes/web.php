@@ -48,12 +48,13 @@ Route::middleware('auth')->group(function () {
   Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
   Route::resources([
     'campus' => CampusController::class,
-    'building' => BuildingController::class,
-    'room' => RoomController::class,
   ]);
 
   Route::post('/accounts/groups/assign', [UserController::class, 'assignUsersToGroup'])->name('user.group.assign');
   Route::post('/accounts/groups/unassign', [UserController::class, 'unassignUsersFromGroup'])->name('user.group.unassign');
+  Route::resource('room', RoomController::class,)->except(['create']);
+  Route::resource('building', BuildingController::class)->except(['create']);
+  Route::get('building/{building}/rooms', [BuildingController::class, 'showRooms'])->name('building.buildingRooms');
 });
 
 

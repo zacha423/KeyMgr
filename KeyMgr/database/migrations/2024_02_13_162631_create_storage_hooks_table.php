@@ -16,7 +16,7 @@ return new class extends Migration {
       $table->id();
       $table->unsignedSmallInteger('rowNum');
       $table->unsignedSmallInteger('colNum');
-      $table->foreignId('key_storage_id')->constrained();
+      $table->foreignId('key_storage_id')->constrained()->onDelete('cascade');
       $table->unique(['rowNum', 'colNum', 'key_storage_id']);
       $table->timestamps();
     });

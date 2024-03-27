@@ -47,7 +47,6 @@ class RoomController extends Controller
       ]);
     }
     return view('room.rooms', [
-      // 'rooms' => RoomResource::collection(Room::with('doors', 'building')->get())->toArray(new Request()),
       'rooms' => $data,
       'buildings' => BuildingResource::collection(
         Building::with(
@@ -56,7 +55,7 @@ class RoomController extends Controller
           'rooms',
           'campus'
         )->get()
-      )->toArray(new Request()),
+      )->toArray($request),
     ]);
   }
 

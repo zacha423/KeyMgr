@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('masterPinLengths');
             $table->string('lowerPinLengths');
             $table->dateTimeTz('installDate');
-            $table->foreignId('keyway_id')->constrained();
-            $table->foreignId('master_key_system_id')->nullable()->constrained();
-            $table->foreignId('lock_model_id')->constrained();
+            $table->foreignId('keyway_id')->constrained()->noActionOnDelete();
+            $table->foreignId('master_key_system_id')->nullable()->constrained()->noActionOnDelete();
+            $table->foreignId('lock_model_id')->constrained()->noActionOnDelete();
             $table->timestamps();
         });
     }

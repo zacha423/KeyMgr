@@ -16,7 +16,7 @@ return new class extends Migration {
       $table->id();
       $table->string('number');
       $table->string('description')->nullable();
-      $table->foreignId('building_id')->constrained();
+      $table->foreignId('building_id')->constrained()->onDelete('cascade');
       $table->unique(['building_id', 'number']);
       $table->timestamps();
     });

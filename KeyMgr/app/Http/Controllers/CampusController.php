@@ -27,6 +27,7 @@ class CampusController extends Controller
       $data = [];
   
       foreach ($campuses as $campus) {
+        $campusRes = (new CampusResource($campus))->toArray($request);
           // Buttons for edit, delete, and details
           $btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
               <i class="fa fa-lg fa-fw fa-pen"></i>
@@ -42,11 +43,11 @@ class CampusController extends Controller
           $data[] = [
               $campus->id,
               $campus->name,
-              $campus->country,
-              $campus->state,
-              $campus->city,
-              $campus->postalCode,
-              $campus->streetAddress,
+              $campusRes['country'],
+              $campusRes['state'],
+              $campusRes['city'],
+              $campusRes['postalCode'],
+              $campusRes['streetAddress'],
               '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
           ];
       }

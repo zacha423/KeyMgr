@@ -31,7 +31,7 @@ class UpdateUserRequest extends FormRequest
       'lastName' => ['string','nullable'],
       'username' => ['required', Rule::unique(User::class)->ignore(User::find(['id' => $this->route('user')])->first())],
       // Email not yet validated beyond required to facilitate easier test account creation. :)
-      'email' => ['string','nullable',],
+      'email' => ['email','nullable',],
       // 'email' => ['string', 'nullable', 'email:rfc,dns,spoof'], //When ready to filter replace above line.
       // 'password' => ['confirmed'],//, Password::min(self::PW_MIN_LEN)->letters()->mixedCase()->numbers()->symbols()->uncompromised()],
     ];

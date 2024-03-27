@@ -47,9 +47,6 @@ class UserController extends Controller
     foreach ($query->get() as $user3) {
       $user = (new UserResource($user3));
       $user4 = $user->toArray($request);
-      $btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
-            <i class="fa fa-lg fa-fw fa-pen"></i>
-            </button>';
       $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-user-id="'
         . $user->id . '">
           <i class="fa fa-lg fa-fw fa-trash"></i>
@@ -67,7 +64,7 @@ class UserController extends Controller
         $user->username,
         implode("<br>", $user4['groups2']),
         implode("<br>", $user4['roles2']),
-        '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
+        '<nobr>' . $btnDelete . $btnDetails . '</nobr>'
       ]);
     }
 

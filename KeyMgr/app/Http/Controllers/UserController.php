@@ -16,12 +16,14 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Models\UserGroup;
 use App\Models\UserRole;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Auth\Events\Registered;
+
 class UserController extends Controller
 {
 
@@ -144,25 +146,38 @@ class UserController extends Controller
     return redirect('/users');
   }
 
+  /**
+   * Important: $request->user() gives you the person making the request, not the user account being modified.
+   */
   public function update(UpdateUserRequest $request)
   {
-    // $request->user()->fill($request->validated());
-    $luser = User::find(['id' => $request->route('user')])->first();
-    $luser->fill($request->validated());
+    $manipulatedUser = User::find(['id' => $request->route('user')])->first();
+    $manipulatedUser->fill($request->validated());
 
-    if ($luser->isDirty('email')) {
-        $luser->email_verified_at = null;
+    if ($manipulatedUser->isDirty('email')) {
+      $manipulatedUser->email_verified_at = null;
     }
 
-    $luser->save();
+    $manipulatedUser->save();
 
-    return redirect()->route('users.show', ['user' => $luser->id])->with("Successfully updated.");
+    return redirect()->route('users.show', ['user' => $manipulatedUser->id])->with("Successfully updated.");
   }
-  
+
   public function show(Request $request, User $user): View
   {
+    $formatForAdminLTE = function ($rawEloquentCollection) {
+      $data = [];
+      foreach ($rawEloquentCollection as $item) {
+        $data[$item['id']] = $item['name'];
+      }
+
+      return $data;
+    };
+
     return view('users.usershow', [
       'user' => $user,
+      'memberRoles' => $formatForAdminLTE((RoleResource::collection($user->roles()->get()))->toArray($request)),
+      'memberGroups' => $formatForAdminLTE((GroupResource::collection($user->groups()->get()))->toArray($request)),
     ]);
   }
 

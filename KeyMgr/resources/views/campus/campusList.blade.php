@@ -16,103 +16,103 @@
     <form id="newCampus" action="/campus" method="POST">
       @csrf
 
-      {{-- First Name field --}}
-      <!-- <div class="input-group mb-3">
-        <input type="text" name="firstName" class="form-control @error('firstName') is-invalid @enderror"
-              value="{{ old('firstName') }}" placeholder="{{ __('adminlte::adminlte.first_name') }}" autofocus>
+      {{-- Name field --}}
+      <div class="input-group mb-3">
+        <input type="text" name="campusName" class="form-control @error('campusName') is-invalid @enderror"
+              value="{{ old('campusName') }}" placeholder="{{ __('adminlte::adminlte.campus_name') }}" autofocus>
         <div class="input-group-append">
           <div class="input-group-text">
               <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
           </div>
         </div>
-        @error('firstName')
+        @error('campusName')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
           </span>
         @enderror
       </div>
 
-      {{-- Last Name field --}}
+      {{-- Country field --}}
       <div class="input-group mb-3">
-        <input type="text" name="lastName" class="form-control @error('lastName') is-invalid @enderror"
-              value="{{ old('lastName') }}" placeholder="{{ __('adminlte::adminlte.last_name') }}" autofocus>
+        <input type="text" name="country" class="form-control @error('country') is-invalid @enderror"
+              value="{{ old('country') }}" placeholder="{{ __('adminlte::adminlte.country') }}" autofocus>
         <div class="input-group-append">
           <div class="input-group-text">
-            <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+              <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
           </div>
         </div>
-        @error('lastName')
+        @error('country')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
           </span>
         @enderror
       </div>
 
-        {{-- Username field --}}
-        <div class="input-group mb-3">
-          <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" 
-                value="{{ old('email') }}" placeholder="{{__('adminlte::adminlte.username') }}">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
-            </div>
+      {{-- State field --}}
+      <div class="input-group mb-3">
+        <input type="text" name="state" class="form-control @error('state') is-invalid @enderror"
+              value="{{ old('state') }}" placeholder="{{ __('adminlte::adminlte.state') }}" autofocus>
+        <div class="input-group-append">
+          <div class="input-group-text">
+              <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
           </div>
-          @error('username')
-            <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-            </span>
-          @enderror
         </div>
+        @error('state')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+        @enderror
+      </div>
 
-        {{-- Email field --}}
-        <div class="input-group mb-3">
-          <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
-            </div>
+      {{-- City field --}}
+      <div class="input-group mb-3">
+        <input type="text" name="city" class="form-control @error('city') is-invalid @enderror"
+              value="{{ old('city') }}" placeholder="{{ __('adminlte::adminlte.city') }}" autofocus>
+        <div class="input-group-append">
+          <div class="input-group-text">
+              <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
           </div>
-          @error('email')
-            <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-            </span>
-          @enderror
         </div>
+        @error('city')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+        @enderror
+      </div>
 
-        {{-- Password field --}}
-        <div class="input-group mb-3">
-          <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                placeholder="{{ __('adminlte::adminlte.password') }}">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
-            </div>
+      {{-- Street field --}}
+      <div class="input-group mb-3">
+        <input type="text" name="streetAddress" class="form-control @error('streetAddress') is-invalid @enderror"
+              value="{{ old('streetAddress') }}" placeholder="{{ __('adminlte::adminlte.streetAddress') }}" autofocus>
+        <div class="input-group-append">
+          <div class="input-group-text">
+              <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
           </div>
-          @error('password')
-            <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-            </span>
-          @enderror
         </div>
+        @error('streetAddress')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+        @enderror
+      </div>
 
-        {{-- Confirm password field --}}
-        <div class="input-group mb-3">
-          <input type="password" name="password_confirmation"
-                class="form-control @error('password_confirmation') is-invalid @enderror"
-                placeholder="{{ __('adminlte::adminlte.retype_password') }}">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
-            </div>
+      {{-- Zip field --}}
+      <div class="input-group mb-3">
+        <input type="text" name="postalCode" class="form-control @error('postalCode') is-invalid @enderror"
+              value="{{ old('postalCode') }}" placeholder="{{ __('adminlte::adminlte.postalCode') }}" autofocus>
+        <div class="input-group-append">
+          <div class="input-group-text">
+              <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
           </div>
-          @error('password_confirmation')
-            <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-            </span>
-          @enderror
-        </div> -->
+        </div>
+        @error('postalCode')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+        @enderror
+      </div>
 
+<!-- 
         <div class="input-group mb-3">
             <label for="name">Campus Name</label>
             <input type="text" id="name" name="name" required>
@@ -136,7 +136,7 @@
         <div class="input-group mb-3">
             <label for="name">Zip Code</label>
             <input type="text" id="Zip" name="postalCode" required>
-        </div>
+        </div> -->
                         
       <x-slot name="footerSlot">
         <x-adminlte-button type="submit" class="block mr-auto" theme="success" label="Add Campus" form="newCampus"/>

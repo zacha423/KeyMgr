@@ -180,3 +180,4 @@ class CampusController extends Controller
     return redirect ('/campus');
   }
 }
+

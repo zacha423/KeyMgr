@@ -87,9 +87,7 @@ class CampusController extends Controller
     $campus->address_id = $address->id;
     $campus->save();
 
-    return view('campus.campusList', [
-      'campuses' => CampusResource::collection(Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get())->toArray(new Request()),
-    ]);
+    return redirect('/campus');
   }
 
   /**

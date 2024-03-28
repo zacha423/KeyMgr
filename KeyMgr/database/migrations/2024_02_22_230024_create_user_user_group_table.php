@@ -12,13 +12,11 @@ return new class extends Migration {
    */
   public function up(): void
   {
-    Schema::create('buildings', function (Blueprint $table) {
+    Schema::create('user_user_group', function (Blueprint $table) {
       $table->id();
-      $table->string('name');
-      $table->foreignId('campus_id')->constrained();
-      $table->foreignId('address_id')->constrained();
-      $table->timestamps();
-      $table->unique (['name', 'campus_id']);
+      $table->foreignId('user_id');
+      $table->foreignId('user_group_id');
+      $table->unique(['user_id', 'user_group_id']);
     });
   }
 
@@ -27,6 +25,6 @@ return new class extends Migration {
    */
   public function down(): void
   {
-    Schema::dropIfExists('buildings');
+    Schema::dropIfExists('user_user_group');
   }
 };

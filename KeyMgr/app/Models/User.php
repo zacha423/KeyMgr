@@ -1,7 +1,6 @@
 <?php
 /**
  * @author Zachary Abela-Gale <abel1325@pacificu.edu>
- * @todo Add relationships for UserGroup and UserRole.
  */
 namespace App\Models;
 
@@ -10,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -51,8 +51,50 @@ class User extends Authenticatable
   /**
    * @return string Returns the fullname of the user.
    */
-  public function getFullname () : string
+  public function getFullname(): string
   {
-    return $this->firstName .' '. $this->lastName;
+    return $this->firstName . ' ' . $this->lastName;
+  }
+
+  public function roles(): BelongsToMany
+  {
+    return $this->belongsToMany(UserRole::class);
+  }
+
+  public function groups(): BelongsToMany
+  {
+    return $this->belongsToMany(UserGroup::class);
+  }
+
+  /**
+   * Helper function to add a user to a group.
+   */
+  public function addToGroup(UserGroup $userGroup): void
+  {
+    $this->groups()->attach($userGroup);
+  }
+
+  /**
+   * Helper function to remove a user from a group.
+   */
+  public function removeFromGroup(UserGroup $userGroup): void
+  {
+    $this->groups()->detach(($userGroup));
+  }
+  
+  /**
+   * Helper function to add a role to a user.
+   */
+  public function assignRole(UserRole $userRole): void
+  {
+    $this->roles()->attach($userRole);
+  }
+
+  /**
+   * Helper function to remove a role from a user.
+   */
+  public function unassignRole(UserRole $userRole): void
+  {
+    $this->roles()->detach($userRole);
   }
 }

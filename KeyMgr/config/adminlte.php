@@ -339,6 +339,11 @@ return [
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
+            'text'=> 'Users',
+            'url'=> '#',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
             'text'    => 'multilevel',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
@@ -392,7 +397,27 @@ return [
             'icon_color' => 'cyan',
             'url'        => '#',
         ],
+        ['header' => 'SETTINGS'],
+        [
+            'text'    => 'User Settings',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'User List',
+                    'route'  => 'users.index',
+                ],
+                [
+                    'text'=> 'User Roles',
+                    'route' => 'roles.index',
+                ],
+                [
+                    'text'=> 'User Groups',
+                    'route'=> 'groups.index',
+                ]
+            ]
+        ]
     ],
+        
 
     /*
     |--------------------------------------------------------------------------

@@ -1,117 +1,190 @@
 <?php
 /**
  * @author Zachary Abela-Gale <abel1325@pacificu.edu>
+ * @author Liam Henry <henr5288@pacificu.edu>
  * 
  * Purpose: This controller can be used for managing user management. 
- * Basic login/authentication should be done through Breeze's controllers.
+ * Basic login/authentication should be done through Laravel Breeze's controllers.
  */
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\GroupResource;
+use App\Http\Resources\RoleResource;
+use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Models\UserGroup;
+use App\Models\UserRole;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use Illuminate\View\View;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+use Illuminate\Auth\Events\Registered;
 
-use App\Http\Controllers\UserAPIController as UserAPI;
 class UserController extends Controller
 {
-  /**
-   * Display a listing of the resource.
-   */
-  public function index()
+
+  public function index(Request $request)
   {
-    // $users = User::all();
-    
-    return view('accounts/index');
-    //
+    $data = [];
+    $query = User::with('groups', 'roles');
+    $groupIDs = $request->query('groups');
+    $roleIDs = $request->query('roles');
+
+    if ($groupIDs) {
+      $query->whereHas('groups', function ($query) use ($groupIDs) {
+        $query->whereIn('user_group_id', $groupIDs);
+      });
+    }
+
+    if ($roleIDs) {
+      $query->whereHas('roles', function ($query) use ($roleIDs) {
+        $query->whereIn('user_role_id', $roleIDs);
+      });
+    }
+
+    foreach ($query->get() as $user3) {
+      $user = (new UserResource($user3));
+      $user4 = $user->toArray($request);
+      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-user-id="'
+        . $user->id . '">
+          <i class="fa fa-lg fa-fw fa-trash"></i>
+          </button>';
+      $btnDetails = '<a href="' . route('users.show', $user['id'])
+        . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+            <i class="fa fa-lg fa-fw fa-eye"></i>
+            </button>';
+
+      array_push($data, [
+        $user->id,
+        $user->firstName,
+        $user->lastName,
+        $user->email,
+        $user->username,
+        implode("<br>", $user4['groups2']),
+        implode("<br>", $user4['roles2']),
+        '<nobr>' . $btnDelete . $btnDetails . '</nobr>'
+      ]);
+    }
+
+    $groups = [];
+    foreach (GroupResource::collection(UserGroup::all())->toArray($request) as $group) {
+      $groups[$group['id']] = $group['name'];
+    }
+
+    $roles = [];
+    foreach (RoleResource::collection(UserRole::all())->toArray($request) as $role) {
+      $roles[$role['id']] = $role['name'];
+    }
+
+    return view('users.userlist', [
+      'users' => $data,
+      'groupOptions' => $groups,
+      'roleOptions' => $roles,
+      'selectedGroups' => $groupIDs,
+      'selectedRoles' => $roleIDs,
+    ]);
   }
 
   /**
-   * Show the form for creating a new resource.
-   */
-  public function create()
-  {
-    return view('accounts/create');
-  }
-
-  /**
-   * @todo Once we are ready to implement user management reevaluate data validation
-   * Store a newly created resource in storage.
+   * Add a group membership to a set of users.
    * 
-   * Expected form data:
-   * firstName             - the first name of the user
-   * lastName              - the last name of the user
-   * username              - the username for the account
-   * email                 - the user's email address
-   * password              - the user's password
-   * password_confirmation - confirming the user's password
+   * @todo Determine appropriate return type
    */
-  public function store(StoreUserRequest $request)
+  public function assignUsersToGroup(Request $request): RedirectResponse
   {
-    // $validated = $request->safe();
-    // User::factory()->create($validated->toArray());
-    
-    
+    // RBACWrapper::assignUsersToGroup();
+
+    return redirect('/');
+  }
+  /**
+   * Remove a group membership from a set of users
+   * 
+   * @todo Determine appropriate return type
+   */
+  public function unassignUsersFromGroup(Request $request): RedirectResponse
+  {
+    // RBACWrapper::unassignUsersFromGroup();
+
     return redirect('/');
   }
 
-  /**
-   * Display the specified resource.
-   */
-  public function show(User $account)
+  public function store(Request $request)
   {
-    return view('accounts/show', ['account'=>$account->toJson(),]);
+    $request->validate([
+      'firstName' => ['required', 'string', 'max:255',],
+      'lastName' => ['required', 'string', 'max:255',],
+      'username' => ['required', 'unique:App\Models\User,username',],
+      'email' => ['required', 'string', 'lowercase', 'email', 'max:255'], //email:rfc,dns,spoof
+      'password' => ['required', 'confirmed', Rules\Password::defaults()], //, Password::min(self::PW_MIN_LEN)->letters()->mixedCase()->numbers()->symbols()->uncompromised()],
+    ]);
+
+    $user = User::create([
+      'firstName' => $request->firstName,
+      'lastName' => $request->lastName,
+      'username' => $request->username,
+      'email' => $request->email,
+      'password' => Hash::make($request->password),
+    ]);
+
+    $user->roles()->save(UserRole::where(['name' => config('constants.roles.default')])->first());
+    $user->groups()->save(UserGroup::where(['name' => config('constants.groups.default')])->first());
+    $user->save();
+
+    event(new Registered($user));
+
+
+
+    return redirect('/users');
+  }
+
+  public function edit(User $user)
+  {
+    return redirect('/users');
   }
 
   /**
-   * Show the form for editing the specified resource.
+   * Important: $request->user() gives you the person making the request, not the user account being modified.
    */
-  public function edit(User $account)
+  public function update(UpdateUserRequest $request)
   {
-    return view('accounts/edit', ['user' => $account->toJson()]);
+    $manipulatedUser = User::find(['id' => $request->route('user')])->first();
+    $manipulatedUser->fill($request->validated());
+
+    if ($manipulatedUser->isDirty('email')) {
+      $manipulatedUser->email_verified_at = null;
+    }
+
+    $manipulatedUser->save();
+
+    return redirect()->route('users.show', ['user' => $manipulatedUser->id])->with("Successfully updated.");
   }
 
-  /**
-   * Update the specified resource in storage.
-   */
-  public function update(UpdateUserRequest $request, User $account)
+  public function show(Request $request, User $user): View
   {
-    $data = $request->safe();
+    $formatForAdminLTE = function ($rawEloquentCollection) {
+      $data = [];
+      foreach ($rawEloquentCollection as $item) {
+        $data[$item['id']] = $item['name'];
+      }
 
-    if (isset ($data['firstName'])) {
-      $account->firstName = $data['firstName'];
-    }
+      return $data;
+    };
 
-    if (isset ($data['lastName'])) {
-      $account->lastName = $data['lastName'];
-    }
-
-    if (isset ($data['username'])) {
-      $account->username = $data['username'];
-    }
-
-    if (isset ($data['email'])) {
-      $account->email = $data['email'];
-    }
-
-    if (isset ($data['password'])) {
-      $account->password = $data['password'];
-    }
-
-    $account->save ();
-
-    return redirect("/accounts/$account->id");
+    return view('users.usershow', [
+      'user' => $user,
+      'memberRoles' => $formatForAdminLTE((RoleResource::collection($user->roles()->get()))->toArray($request)),
+      'memberGroups' => $formatForAdminLTE((GroupResource::collection($user->groups()->get()))->toArray($request)),
+    ]);
   }
 
-  /**
-   * Remove the specified resource from storage.
-   */
-  public function destroy(User $account): RedirectResponse
+  public function destroy(User $user)
   {
-    $account->delete();
+    $user->delete();
 
-    return redirect('/accounts');
+    return redirect('/users');
   }
 }

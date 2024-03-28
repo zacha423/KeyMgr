@@ -31,7 +31,7 @@ class StoreUserRequest extends FormRequest
       'lastName' => 'required',
       'username' => ['required', 'unique:App\Models\User,username'],
       // Email not yet validated beyond required to facilitate easier test account creation. :)
-      'email' => ['required'/*, 'email:rfc,dns,spoof'*/],
+      'email' => ['required', 'email',/*, 'email:rfc,dns,spoof'*/],
       'password' => ['required', 'confirmed'],//, Password::min(self::PW_MIN_LEN)->letters()->mixedCase()->numbers()->symbols()->uncompromised()],
     ];
   }

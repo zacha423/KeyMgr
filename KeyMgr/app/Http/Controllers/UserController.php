@@ -50,8 +50,8 @@ class UserController extends Controller
    */
   public function store(StoreUserRequest $request)
   {
-    // $validated = $request->safe();
-    // User::factory()->create($validated->toArray());
+    $validated = $request->safe();
+    User::factory()->create($validated->toArray());
     
     
     return redirect('/');

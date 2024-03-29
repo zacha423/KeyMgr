@@ -1,6 +1,7 @@
 
 @extends ("adminlte::page")
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@section('title', __('Campuses'))
 
 @section ("content")
 
@@ -22,7 +23,7 @@
               value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.campus_name') }}" autofocus>
         <div class="input-group-append">
           <div class="input-group-text">
-              <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+              
           </div>
         </div>
         @error('name')
@@ -38,7 +39,7 @@
               value="{{ old('country') }}" placeholder="{{ __('adminlte::adminlte.country') }}" autofocus>
         <div class="input-group-append">
           <div class="input-group-text">
-              <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+              
           </div>
         </div>
         @error('country')
@@ -54,7 +55,7 @@
               value="{{ old('state') }}" placeholder="{{ __('adminlte::adminlte.state') }}" autofocus>
         <div class="input-group-append">
           <div class="input-group-text">
-              <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+              
           </div>
         </div>
         @error('state')
@@ -70,7 +71,7 @@
               value="{{ old('city') }}" placeholder="{{ __('adminlte::adminlte.city') }}" autofocus>
         <div class="input-group-append">
           <div class="input-group-text">
-              <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+              
           </div>
         </div>
         @error('city')
@@ -86,7 +87,7 @@
               value="{{ old('streetAddress') }}" placeholder="{{ __('adminlte::adminlte.streetAddress') }}" autofocus>
         <div class="input-group-append">
           <div class="input-group-text">
-              <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+              
           </div>
         </div>
         @error('streetAddress')
@@ -102,7 +103,7 @@
               value="{{ old('postalCode') }}" placeholder="{{ __('adminlte::adminlte.postalCode') }}" autofocus>
         <div class="input-group-append">
           <div class="input-group-text">
-              <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+              
           </div>
         </div>
         @error('postalCode')

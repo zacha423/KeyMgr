@@ -14,9 +14,9 @@ return new class extends Migration {
   {
     Schema::create('doors', function (Blueprint $table) {
       $table->id();
-      $table->string('description');
-      $table->string('hardwareDescription');
-      $table->foreignId('room_id')->constrained();
+      $table->string('description')->nullable();
+      $table->string('hardwareDescription')->nullable();
+      $table->foreignId('room_id')->constrained()->onDelete('cascade');
       $table->timestamps();
     });
   }

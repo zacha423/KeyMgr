@@ -8,9 +8,12 @@ use App\Http\Requests\StoreBuildingRequest;
 use App\Http\Requests\UpdateBuildingRequest;
 use App\Models\Building;
 use App\Models\Wrappers\AddressWrapper;
+use App\Models\Wrappers\BuildingWrapper;
 use App\Models\Campus;
+use App\Models\Room;
 use App\Http\Resources\BuildingResource;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 
 class BuildingController extends Controller
@@ -18,25 +21,41 @@ class BuildingController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index()
+  public function index(Request $request)
   {
-      return view('building.building', [
-        'campuses' => (Campus::all()->toArray()),
-        'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
-      ]);
-  }
+    $data = [];
 
-  /**
-   * Show the form for creating a new resource.
-   */
-  public function create()
-  {
+    foreach (Building::all()->load(BuildingWrapper::loadRelationships()) as $building) {
+      $buildingRes = (new BuildingResource($building))->toArray($request);
+
+      $btnEdit = '<a href="' . route('building.edit', $building->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+              <i class="fa fa-lg fa-fw fa-pen"></i>
+          </a>';
+      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-key-id="' . $building->id . '">
+              <i class="fa fa-lg fa-fw fa-trash"></i>
+          </button>';
+      $btnDetails = '<a href="' . route('building.show', $building->id) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+              <i class="fa fa-lg fa-fw fa-eye"></i>
+          </a>';
+
+      array_push($data, [
+        'id' => $building->id,
+        'name' => $building->name,
+        'country' => $buildingRes['country'],
+        'state' => $buildingRes['state'],
+        'city' => $buildingRes['city'],
+        'postalCode' => $buildingRes['postalCode'],
+        'streetAddress' => $buildingRes['streetAddress'],
+        'campus' => $buildingRes['campus'],
+        'actions' => '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
+      ]);
+    }
+
     return view('building.building', [
-      'campuses' => (Campus::all()->toArray()),
-      'campusJSON' => Campus::all()->toJson(),
-      
+      'buildings' => $data,
     ]);
   }
+
 
   /**
    * Store a newly created resource in storage.
@@ -56,12 +75,9 @@ class BuildingController extends Controller
     $newBuilding = Building::firstOrNew(['name' => $validated['name']]);
     $newBuilding->address_id = $address->id;
     $campus->buildings()->save($newBuilding);
-    
+
     $newBuilding->save();
-    return view('building.building', [
-      'buildings' => BuildingResource::collection(Building::with(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')->get())->toArray(new Request()),
-      'campuses' => (Campus::all()->toArray()),
-    ]);
+    return redirect('/building');
   }
 
   /**
@@ -69,9 +85,12 @@ class BuildingController extends Controller
    */
   public function show(Building $building)
   {
-    return view('building.building', [
-      'building' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')))->toArray(new Request()),     
-      'buildingJSON' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')))->toJson(),
+    return view('building.singleBuilding', [
+      'numberOfRooms' => $building->rooms->count(),
+      'building' => (new BuildingResource($building->load(
+        BuildingWrapper::loadRelationships()
+      )
+      ))->toArray(new Request()),
     ]);
   }
 
@@ -82,8 +101,26 @@ class BuildingController extends Controller
   {
     return view('building.buildingEdit', [
       'campuses' => (Campus::all()->toArray()),
-      'building' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings','rooms', 'campus')))->toArray(new Request()),
-      'buildingJSON' => (new BuildingResource($building->load(AddressWrapper::loadRelationships(), 'buildings', 'rooms', 'campus')))->toJson(),    ]);
+      'building' => (new BuildingResource($building->load(
+        BuildingWrapper::loadRelationships()
+      )
+      ))->toArray(new Request()),
+    ]);
+  }
+
+  /**
+   * Shows the rooms associated with a building.
+   */
+  public function showRooms(Request $request, Building $building)
+  {
+    $building->load('rooms');
+
+    return view('building.buildingRooms', [
+      'building' => (new BuildingResource($building->load(
+        BuildingWrapper::loadRelationships(),
+      )
+      ))->toArray($request),
+    ]);
   }
 
   /**
@@ -94,39 +131,32 @@ class BuildingController extends Controller
     $validated = $request->safe();
     $mapped = array();
 
-    if (isset($validated['campus']))
-    {
-      Campus::where (['id'=>$validated['campus']])->first()->buildings()->save($building);
+    if (isset ($validated['campus'])) {
+      Campus::where(['id' => $validated['campus']])->first()->buildings()->save($building);
     }
 
-    if (isset ($validated['name']))
-    {
+    if (isset ($validated['name'])) {
       $building->name = $validated['name'];
     }
 
-    if(isset($validated['country']))
-    {
+    if (isset ($validated['country'])) {
       $mapped['country'] = $validated['country'];
     }
-    if (isset($validated['state']))
-    {
+    if (isset ($validated['state'])) {
       $mapped['state'] = $validated['state'];
     }
-    if(isset($validated['city']))
-    {
+    if (isset ($validated['city'])) {
       $mapped['city'] = $validated['city'];
     }
-    if (isset ($data['street']))
-    {
-      $mapped['streetAddress'] = $validated['street'];
+    if (isset ($validated['streetAddress'])) {
+      $mapped['streetAddress'] = $validated['streetAddress'];
     }
 
-    if (isset ($data['postalCode']))
-    {
+    if (isset ($validated['postalCode'])) {
       $mapped['postalCode'] = $validated['postalCode'];
     }
 
-    $address = AddressWrapper::merge ($mapped, $building->address()->getRelated()->first());
+    $address = AddressWrapper::merge($mapped, $building->address()->getRelated()->first());
     $building->save();
     $address->building()->save($building);
 
@@ -135,11 +165,12 @@ class BuildingController extends Controller
 
   /**
    * Remove the specified resource from storage.
+   * 
+   * @todo @ZAG Add some extra form of authorization, maybe a BuildingDelete request?
    */
-  public function destroy(Building $building)
+  public function destroy(Building $building): void
   {
     $building->delete();
-    
-    return view('building.building');
   }
+
 }

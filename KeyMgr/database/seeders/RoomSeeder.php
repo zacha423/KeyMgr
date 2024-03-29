@@ -10,11 +10,12 @@ use App\Models\Room;
 
 class RoomSeeder extends Seeder
 {
+  use WithoutModelEvents;
   /**
    * Run the database seeds.
    */
   public function run(): void
   {
-    Room::factory()->createMany(3);
+    Room::factory()->createMany(20);
   }
 }

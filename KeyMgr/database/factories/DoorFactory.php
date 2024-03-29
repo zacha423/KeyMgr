@@ -23,8 +23,8 @@ class DoorFactory extends Factory
     }
 
     return [
-      'description' => '',
-      'hardwareDescription' => '',
+      'description' => fake()->text(20),
+      'hardwareDescription' => fake()->text(20),
       'room_id' => Room::all()->random(1)->first()->id,
     ];
   }

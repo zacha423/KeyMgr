@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'KeyMgr',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>KeyMgr</b>',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -306,17 +306,26 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
+        ['header' => 'RESOURCES'],
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+          'text' => 'Buildings',
+          'url'  => 'building',
+          'icon' => 'fas fa-fw fa-building',
         ],
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
+          'text' => 'Campuses',
+          'url'  => 'campus',
+          'icon' => 'fas fa-fw fa-school',
+        ],
+        [
+          'text' => 'Rooms',
+          'url'  => 'room',
+          'icon' => 'fas fa-fw fa-door-open',
+        ],
+        [
+          'text' => 'Keys',
+          'url'  => 'keys',
+          'icon' => 'fas fa-fw fa-key',
         ],
         ['header' => 'account_settings'],
         [
@@ -328,6 +337,11 @@ return [
             'text' => 'change_password',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
+        ],
+        [
+            'text'=> 'Users',
+            'url'=> '#',
+            'icon' => 'fas fa-fw fa-user',
         ],
         [
             'text'    => 'multilevel',
@@ -383,7 +397,27 @@ return [
             'icon_color' => 'cyan',
             'url'        => '#',
         ],
+        ['header' => 'SETTINGS'],
+        [
+            'text'    => 'User Settings',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'User List',
+                    'route'  => 'users.index',
+                ],
+                [
+                    'text'=> 'User Roles',
+                    'route' => 'roles.index',
+                ],
+                [
+                    'text'=> 'User Groups',
+                    'route'=> 'groups.index',
+                ]
+            ]
+        ]
     ],
+        
 
     /*
     |--------------------------------------------------------------------------

@@ -1,54 +1,86 @@
 <?php
-//**************************************************************************************************
-// Filename: UserGroup.php
-// Author:   Zachary Abela-Gale
-// Date:     2024/01/20
-// Purpose:  A UserGroup is used to representing real life divisions of organizations. 
-//           These divisions could be departments, or even types of employees. (CAS vs CoB, Student vs. Staff, etc.)
-//**************************************************************************************************
+/**
+ * @author Zachary Abela-Gale <abel1325@pacificu.edu>
+ * 
+ * Purpose: Represent real life divisions of organizations. 
+ *          (e.g. Department, Employee/Student)
+ */
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class UserGroup extends Model
 {
-    use HasFactory;
-    public $timestamps = false;
+  use HasFactory;
+  public $timestamps = false;
 
-    /**
-     * Mass assignable attributes
-     * 
-     * @var array<int, string>
-     */
-    protected $fillable = [
-      'name'
-    ];
+  /**
+   * Mass assignable attributes
+   * 
+   * @var array<int, string>
+   */
+  protected $fillable = [
+    'name'
+  ];
 
-    /**
-     * Not mass assignable attributes
-     * 
-     * @var array<int, mixed>
-     */
-    protected $guarded = [
-      'parent_id_fk',
-    ];
+  /**
+   * Not mass assignable attributes
+   * 
+   * @var array<int, mixed>
+   */
+  protected $guarded = [
+    'parent_id_fk',
+  ];
 
-    /**
-     * Get any groups that have the current group as a parent.
-     */
-    public function children ()
-    {
-      return $this->hasMany(UserGroup::class,'parent_id_fk','id');
-    }
+  /**
+   * Get any groups that have the current group as a parent.
+   */
+  public function children(): HasMany
+  {
+    return $this->hasMany(UserGroup::class, 'parent_id_fk', 'id');
+  }
 
-    /**
-     * Get the parent group of the current group.
-     */
-    public function parent ()
-    {
-      return $this->belongsTo(UserGroup::class, 'parent_id_fk');
-    }
+  /**
+   * Get the parent group of the current group.
+   */
+  public function parent(): BelongsTo
+  {
+    return $this->belongsTo(UserGroup::class, 'parent_id_fk');
+  }
+
+  /**
+   * Get all users in the group.
+   */
+  public function users(): BelongsToMany
+  {
+    return $this->belongsToMany(User::class);
+  }
+
+  /**
+   * Get roles given to the group.
+   */
+  public function roles(): BelongsToMany
+  {
+    return $this->belongsToMany(UserRole::class);
+  }
+
+  /**
+   * Helper function to add a role to a group.
+   */
+  public function assignRole(UserRole $userRole): void
+  {
+    $this->roles()->attach($userRole);
+  }
+
+  /**
+   * Helper function to remove a role from a user.
+   */
+  public function unassignRole(UserRole $userRole): void
+  {
+    $this->roles()->attach($userRole);
+  }
 }

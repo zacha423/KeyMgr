@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('user_groups', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->unsignedBigInteger('parent_id_fk')->nullable();
             // $table->timestamps();
             $table->foreign('parent_id_fk')->references('id')->on('user_groups');

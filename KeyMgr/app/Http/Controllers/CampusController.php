@@ -163,9 +163,7 @@ class CampusController extends Controller
     $address = AddressWrapper::merge ($mapped, $campus->address()->getRelated()->first());
     $address->campus()->save($campus);
 
-    return view('campus.campusList', [
-      'campuses' => CampusResource::collection(Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get())->toArray(new Request()),
-    ]);
+    return redirect('/campus');
   }
 
   /**

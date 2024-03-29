@@ -54,7 +54,7 @@ class KeyController extends Controller
             }
 
     return view('key.keys', [
-      'keys' => KeyResource::collection(Key::all())->toArray(new Request()),
+      'keys' => $data,
       'keyStatuses' => KeyStatus::all(),
       'keyStorages' => KeyStorage::all(),
       'keyTypes' => KeyType::all(),

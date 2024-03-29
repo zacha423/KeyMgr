@@ -18,14 +18,14 @@
 
       {{-- Name field --}}
       <div class="input-group mb-3">
-        <input type="text" name="campusName" class="form-control @error('campusName') is-invalid @enderror"
-              value="{{ old('campusName') }}" placeholder="{{ __('adminlte::adminlte.campus_name') }}" autofocus>
+        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+              value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.campus_name') }}" autofocus>
         <div class="input-group-append">
           <div class="input-group-text">
               <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
           </div>
         </div>
-        @error('campusName')
+        @error('name')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
           </span>
@@ -111,32 +111,6 @@
           </span>
         @enderror
       </div>
-
-<!-- 
-        <div class="input-group mb-3">
-            <label for="name">Campus Name</label>
-            <input type="text" id="name" name="name" required>
-        </div>
-        <div class="input-group mb-3">
-            <label for="name">Country</label>
-            <input type="text" id="country" name="country" required>
-        </div>
-        <div class="input-group mb-3">
-            <label for="name">State</label>
-            <input type="text" id="state" name="state" required>
-        </div>
-        <div class="input-group mb-3">
-            <label for="name">City</label>
-            <input type="text" id="City" name="city" required>
-        </div>
-        <div class="input-group mb-3">
-            <label for="name">Street</label>
-            <input type="text" id="Street" name="streetAddress" required>
-        </div>
-        <div class="input-group mb-3">
-            <label for="name">Zip Code</label>
-            <input type="text" id="Zip" name="postalCode" required>
-        </div> -->
                         
       <x-slot name="footerSlot">
         <x-adminlte-button type="submit" class="block mr-auto" theme="success" label="Add Campus" form="newCampus"/>

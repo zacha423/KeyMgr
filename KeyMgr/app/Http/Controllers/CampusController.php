@@ -29,15 +29,16 @@ class CampusController extends Controller
       foreach ($campuses as $campus) {
         $campusRes = (new CampusResource($campus))->toArray($request);
           // Buttons for edit, delete, and details
-          $btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+
+          $btnEdit = '<a href="' . route('campus.edit', $campus->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
               <i class="fa fa-lg fa-fw fa-pen"></i>
-              </button>';
-          $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-user-id="' . $campus->id . '">
+              </a>';
+          $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-key-id="' . $campus->id . '">
               <i class="fa fa-lg fa-fw fa-trash"></i>
               </button>';
           $btnDetails = '<a href="' . route('campus.show', $campus->id) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
-              <i class="fa fa-lg fa-fw fa-eye"></i>
-              </button>';
+                  <i class="fa fa-lg fa-fw fa-eye"></i>
+                  </a>';
   
           // Push campus data into $data array
           $data[] = [

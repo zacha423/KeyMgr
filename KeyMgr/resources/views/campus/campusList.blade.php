@@ -4,12 +4,14 @@
 @section('title', __('Campuses'))
 
 @section ("content")
-
-<div class="col text-right">
+@section('content_header')
+    <h1>List of Campuses</h1>
+    <div class="col text-right">
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#campusForm">
         New Campus
       </button>
       </div>  
+@stop
 
 <x-adminlte-modal id="campusForm" title="Campus Creation Form" theme="lightblue" size="sm1" 
                   v-centered static-backdrop scrollable>
@@ -112,7 +114,7 @@
           </span>
         @enderror
       </div>
-                        
+
       <x-slot name="footerSlot">
         <x-adminlte-button type="submit" class="block mr-auto" theme="success" label="Add Campus" form="newCampus"/>
         <x-adminlte-button type="button" class="block ml-auto" theme="danger" label="Cancel" data-dismiss="modal"/>
@@ -123,7 +125,7 @@
 
 @section('plugins.Datatables', true)
 <div class="flex-container">
-  @include('campus.partials.campustable')
+  @include('campus.partials.campus-table')
 </div>
 @stop
 

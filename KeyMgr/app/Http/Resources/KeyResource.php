@@ -20,17 +20,18 @@ class KeyResource extends JsonResource
       'keySystem' => $this->keySystem,
       'copyNumber' => $this->copyNumber,
       'bitting' => $this->bitting,
-      'blindCode' => $this->blindCode,
-      'mainAngles' => $this->mainAngles,
-      'doubleAngles' => $this->doubleAngles,
-      'repalcementCost' => $this->replacementCost,
+      // 'blindCode' => $this->blindCode,
+      // 'mainAngles' => $this->mainAngles,
+      // 'doubleAngles' => $this->doubleAngles,
+      'replacementCost' => $this->replacementCost,
       'status' => $this->status->name,
       'keyway' => $this->keyway->name,
       'type' => $this->type->name,
-      'storageCabinet' => '',
-      'storageHook' => '',
-      'storageCabinetID' => $this->storage->key_storage_id,
-      'storageHookID' => $this->storage->id,
+      // 'storageCabinet' => '',
+      // 'storageHook' => '',
+      // 'storageCabinetID' => $this->storage->key_storage_id,
+      // 'storageHookID' => $this->storage->id,
+
     ];
   }
 }

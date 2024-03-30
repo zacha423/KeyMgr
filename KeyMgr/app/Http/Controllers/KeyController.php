@@ -23,32 +23,31 @@ class KeyController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index()
+  public function index(Request $request)
   {
     $data = [];
 
-    foreach (Key::all() as $key) {
-      $btnEdit = '<a href="' . route('key.edit', $key->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+    foreach (KeyResource::collection(Key::all()->load('keyway','type'))->toArray($request) as $key) {
+      $btnEdit = '<a href="' . route('key.edit', $key['id']) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
         <i class="fa fa-lg fa-fw fa-pen"></i>
         </button>';
-      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-key-id="' . $key->id . '">
+      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-key-id="' . $key['id'] . '">
         <i class="fa fa-lg fa-fw fa-trash"></i>
         </button>';
-      $btnDetails = '<a href="' . route('key.show', $key->id) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+      $btnDetails = '<a href="' . route('key.show', $key['id']) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
               <i class="fa fa-lg fa-fw fa-eye"></i>
           </button>';
 
 
           array_push($data, [
-            'id' => (int)$key->id,
-            'keyLevel' => (string)$key->keyLevel,
-            'keySystem' => (string)$key->keySystem,
-            'copyNumber' => (int)$key->copyNumber,
-            'bitting' => (string)$key->bitting,
-            'blindCode' => (string)$key->blindCode,
-            'mainAngles' => (string)$key->mainAngles,
-            'doubleAngles' => (string)$key->doubleAngles,
-            'replacementCost' => (float)$key->replacementCost,
+            'id' => (int)$key['id'],
+            'keyLevel' => (string)$key['keyLevel'],
+            'keySystem' => (string)$key['keySystem'],
+            'copyNumber' => (int)$key['copyNumber'],
+            'bitting' => (string)$key['bitting'],
+            'replacementCost' => (float)$key['replacementCost'],
+            'keyway' => $key['keyway'],
+            'type' => $key['type'],
             'actions' => '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
         ]);
             }

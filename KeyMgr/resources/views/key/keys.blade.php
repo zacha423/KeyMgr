@@ -8,10 +8,9 @@
         'Key System',
         'Copy Number',
         'Bitting',
-        'Blind Code',
-        'Main Angles',
-        'Double Angles',
         'Replacement Cost',
+        'Keyway',
+        'Type',
         ['label' => 'Actions', 'no-export' => false, 'width' => 5],
     ];
 
@@ -19,6 +18,8 @@
         'data' => $keys,
         'order' => [[1, 'asc']],
         'columns' => [
+            null,
+            null,
             null,
             null,
             null,

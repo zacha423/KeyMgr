@@ -1,4 +1,3 @@
-
 @extends ("adminlte::page")
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @section('title', __('Campuses'))
@@ -133,7 +132,7 @@
     $(document).ready(function() {
         $('.btn-delete').click(function(e) {
             e.preventDefault();
-            const userId = $(this).data('campus-id');
+            const campusId = $(this).data('campus-id');
             if (confirm('Are you sure you want to delete this campus?')) {
                 $.ajax({
                     url: '/campuses/' + campusId,
@@ -153,5 +152,3 @@
         });
     });
 </script>
-
-

@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Campus Details</h1>
+                    <h1 class="m-0 text-dark">Campus Details | {{$campus['name']}}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -26,7 +26,7 @@
                 <div class="col-lg-6">
                     <div class="card card-primary card-outline">
                         <div class="card-header">
-                            <h5 class="m-0">Buildings In Campus</h5>
+                            <h5 class="m-0">Buildings On Campus</h5>
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="{{ route('building.index') }}">View all Buildings</a></li>
                             </ol>

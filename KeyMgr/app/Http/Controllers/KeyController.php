@@ -28,15 +28,15 @@ class KeyController extends Controller
     $data = [];
 
     foreach (KeyResource::collection(Key::all()->load('keyway','type'))->toArray($request) as $key) {
-      $btnEdit = '<a href="' . route('key.edit', $key['id']) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+      $btnEdit = '<a href="' . route('keys.edit', $key['id']) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
         <i class="fa fa-lg fa-fw fa-pen"></i>
-        </button>';
+        </button> </a>';
       $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-key-id="' . $key['id'] . '">
         <i class="fa fa-lg fa-fw fa-trash"></i>
         </button>';
-      $btnDetails = '<a href="' . route('key.show', $key['id']) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+      $btnDetails = '<a href="' . route('keys.show', $key['id']) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
               <i class="fa fa-lg fa-fw fa-eye"></i>
-          </button>';
+          </button> </a>';
 
 
           array_push($data, [
@@ -103,7 +103,7 @@ class KeyController extends Controller
 
     $key->save();
 
-    return redirect()->route('key.index')->with(['status' => 'Successfully saved key.']);
+    return redirect()->route('keys.index')->with(['status' => 'Successfully saved key.']);
   }
 
   /**
@@ -121,7 +121,8 @@ class KeyController extends Controller
    */
   public function edit(Key $key)
   {
-    return view('key.editKey', [
+    return view('key.keyEdit', [
+      'key' => (new KeyResource($key))->toArray(new Request()),
       'key_statuses' => KeyStatus::all()->toArray(),
       'key_types' => KeyType::all()->toArray(),
       'keyways' => Keyway::all()->toArray(),
@@ -176,7 +177,7 @@ class KeyController extends Controller
 
     $key->save();
 
-    return redirect()->route('key.show', $request->route('key'));
+    return redirect()->route('keys.index');
   }
 
   /**

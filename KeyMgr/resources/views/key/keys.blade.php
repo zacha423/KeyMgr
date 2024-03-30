@@ -21,18 +21,14 @@
             null,
             null,
             null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
             ['orderable' => false]
         ],    
     ];
 @endphp
+
+@section('content_header')
+    <h1>List of Keys</h1>
+@stop
 
 @section('plugins.Datatables', true)
 @section("content")

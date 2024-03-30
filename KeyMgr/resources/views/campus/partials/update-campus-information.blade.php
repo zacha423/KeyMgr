@@ -1,13 +1,5 @@
 <section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-            {{ __('Campus Information') }}
-        </h2>
-
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __("Update or view the selected campus information.") }}
-        </p>
-    </header>
+    
 
     <form method="POST" action="{{ route('campus.update', ['campus' =>$campus['id']]) }}" class="mt-6 space-y-6">        @csrf
         @method('patch')

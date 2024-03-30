@@ -26,11 +26,13 @@
                 <div class="col-lg-6">
                     <div class="card card-primary card-outline">
                         <div class="card-header">
-                            <h5 class="m-0">Number of Buildings</h5>
+                            <h5 class="m-0">Buildings In Campus</h5>
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="{{ route('building.index') }}">View all Buildings</a></li>
+                            </ol>
                         </div>
                         <div class="card-body">
-                            <p>{{ $numberOfBuildings }}</p>
-                            <a href="{{ route('campus.show',['campus' => $campus['id']]) }}" class="btn btn-primary">View All Buildings</a>
+                            @include('campus.partials.campusBuildings')
                         </div>
                     </div>
                 </div>

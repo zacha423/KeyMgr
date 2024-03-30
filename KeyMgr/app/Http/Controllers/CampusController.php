@@ -102,7 +102,7 @@ class CampusController extends Controller
         new CampusResource($campus->load(AddressWrapper::loadRelationships(), 'buildings'))
       )->toArray(new Request()), //Hacky. This works, but is shitty, and an alternative solution should be found.
       'campusJSON' => $campus->load(AddressWrapper::loadRelationships(), 'buildings')->toJson(),
-      'numberOfBuildings' => $campus->buildings->count(),
+      'buildings' => $campus->buildings,
     ]);
   }
 

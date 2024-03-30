@@ -12,12 +12,11 @@ return new class extends Migration {
    */
   public function up(): void
   {
-    Schema::create('doors', function (Blueprint $table) {
+    Schema::create('user_user_group', function (Blueprint $table) {
       $table->id();
-      $table->string('description')->nullable();
-      $table->string('hardwareDescription')->nullable();
-      $table->foreignId('room_id')->constrained()->onDelete('cascade');
-      $table->timestamps();
+      $table->foreignId('user_id');
+      $table->foreignId('user_group_id');
+      $table->unique(['user_id', 'user_group_id']);
     });
   }
 
@@ -26,6 +25,6 @@ return new class extends Migration {
    */
   public function down(): void
   {
-    Schema::dropIfExists('doors');
+    Schema::dropIfExists('user_user_group');
   }
 };

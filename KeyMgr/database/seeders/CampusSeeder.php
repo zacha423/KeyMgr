@@ -16,6 +16,6 @@ class CampusSeeder extends Seeder
    */
   public function run(): void
   {
-    Campus::factory()->createMany (8);
+    Campus::factory()->createMany (8)->unique();
   }
 }

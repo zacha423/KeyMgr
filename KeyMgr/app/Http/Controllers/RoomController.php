@@ -19,10 +19,35 @@ class RoomController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index()
+  public function index(Request $request)
   {
+    $data = [];
+
+    foreach (Room::all()->load('doors', 'building') as $room) {
+      $roomRes = (new RoomResource($room))->toArray($request);
+
+      $btnEdit = '<a href="' . route('room.edit', $room->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+      <i class="fa fa-lg fa-fw fa-pen"></i>
+      </a>';
+      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-key-id="' . $room->id . '">
+            <i class="fa fa-lg fa-fw fa-trash"></i>
+        </button>';
+      $btnDetails = '<a href="' . route('room.show', $room->id) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+            <i class="fa fa-lg fa-fw fa-eye"></i>
+      </a>';
+
+      array_push($data, [
+        'id' => $room->id,
+        'number' => $room->number,
+        'description' => $room->description,
+        'buildingName' => $roomRes['buildingName'],
+        'doorDesc' => $roomRes['doorDesc'],
+        'doorHWDesc' => $roomRes['doorHWDesc'],
+        'actions' => '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>',
+      ]);
+    }
     return view('room.rooms', [
-      'rooms' => RoomResource::collection(Room::with('doors', 'building')->get())->toArray(new Request()),
+      'rooms' => $data,
       'buildings' => BuildingResource::collection(
         Building::with(
           AddressWrapper::loadRelationships(),
@@ -30,7 +55,7 @@ class RoomController extends Controller
           'rooms',
           'campus'
         )->get()
-      )->toArray(new Request()),
+      )->toArray($request),
     ]);
   }
 

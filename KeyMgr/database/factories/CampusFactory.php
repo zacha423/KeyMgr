@@ -23,7 +23,7 @@ class CampusFactory extends Factory
     }
 
     return [
-      'name' => fake()->lastName(),
+      'name' => fake()->unique()->lastName(),
       'address_id' => Address::all()->random(1)->first()->id,
     ];
   }

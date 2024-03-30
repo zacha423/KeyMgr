@@ -8,10 +8,12 @@ use App\Http\Requests\StoreBuildingRequest;
 use App\Http\Requests\UpdateBuildingRequest;
 use App\Models\Building;
 use App\Models\Wrappers\AddressWrapper;
-use App\Models\Campus;
-use App\Http\Resources\BuildingResource;
 use App\Models\Wrappers\BuildingWrapper;
+use App\Models\Campus;
+use App\Models\Room;
+use App\Http\Resources\BuildingResource;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 
 class BuildingController extends Controller
@@ -19,15 +21,41 @@ class BuildingController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index()
+  public function index(Request $request)
   {
+    $data = [];
+
+    foreach (Building::all()->load(BuildingWrapper::loadRelationships()) as $building) {
+      $buildingRes = (new BuildingResource($building))->toArray($request);
+
+      $btnEdit = '<a href="' . route('building.edit', $building->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+              <i class="fa fa-lg fa-fw fa-pen"></i>
+          </a>';
+      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-key-id="' . $building->id . '">
+              <i class="fa fa-lg fa-fw fa-trash"></i>
+          </button>';
+      $btnDetails = '<a href="' . route('building.show', $building->id) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+              <i class="fa fa-lg fa-fw fa-eye"></i>
+          </a>';
+
+      array_push($data, [
+        'id' => $building->id,
+        'name' => $building->name,
+        'country' => $buildingRes['country'],
+        'state' => $buildingRes['state'],
+        'city' => $buildingRes['city'],
+        'postalCode' => $buildingRes['postalCode'],
+        'streetAddress' => $buildingRes['streetAddress'],
+        'campus' => $buildingRes['campus'],
+        'actions' => '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
+      ]);
+    }
+
     return view('building.building', [
-      'campuses' => (Campus::all()->toArray()),
-      'buildings' => BuildingResource::collection(
-        Building::all()
-      )->toArray(new Request()),
+      'buildings' => $data,
     ]);
   }
+
 
   /**
    * Store a newly created resource in storage.
@@ -58,9 +86,11 @@ class BuildingController extends Controller
   public function show(Building $building)
   {
     return view('building.singleBuilding', [
+      'numberOfRooms' => $building->rooms->count(),
       'building' => (new BuildingResource($building->load(
         BuildingWrapper::loadRelationships()
-      )))->toArray(new Request()),
+      )
+      ))->toArray(new Request()),
     ]);
   }
 
@@ -73,7 +103,23 @@ class BuildingController extends Controller
       'campuses' => (Campus::all()->toArray()),
       'building' => (new BuildingResource($building->load(
         BuildingWrapper::loadRelationships()
-      )))->toArray(new Request()),
+      )
+      ))->toArray(new Request()),
+    ]);
+  }
+
+  /**
+   * Shows the rooms associated with a building.
+   */
+  public function showRooms(Request $request, Building $building)
+  {
+    $building->load('rooms');
+
+    return view('building.buildingRooms', [
+      'building' => (new BuildingResource($building->load(
+        BuildingWrapper::loadRelationships(),
+      )
+      ))->toArray($request),
     ]);
   }
 
@@ -119,14 +165,12 @@ class BuildingController extends Controller
 
   /**
    * Remove the specified resource from storage.
+   * 
+   * @todo @ZAG Add some extra form of authorization, maybe a BuildingDelete request?
    */
-  public function destroy(Building $building)
+  public function destroy(Building $building): void
   {
-    /**
-     * @todo test this
-     */
     $building->delete();
-
-    return view('building.building');
   }
+
 }

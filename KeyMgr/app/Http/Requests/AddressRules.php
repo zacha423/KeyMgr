@@ -1,6 +1,7 @@
 <?php
 /**
  * @author Zachary Abela-Gale <abel1325@pacificu.edu
+ * @todo Make this a proper rule class to fit in the framework
  */
 namespace App\Http\Requests;
 class AddressRules {

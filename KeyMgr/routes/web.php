@@ -3,6 +3,8 @@
 use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\KeyController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserGroupController;
+use App\Http\Controllers\UserRoleController;
 use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -18,6 +20,13 @@ use App\Http\Controllers\CampusController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::resources ([
+  'groups' => UserGroupController::class,
+  'roles' => UserRoleController::class,
+  'users' => UserController::class,
+]);
+
 Route::get('/', function () {
   return redirect('/login');
 });
@@ -39,12 +48,17 @@ Route::middleware('auth')->group(function () {
   Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
   Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
   Route::resources([
-    'accounts' => UserController::class,
     'campus' => CampusController::class,
   ]);
+
+  Route::post('/accounts/groups/assign', [UserController::class, 'assignUsersToGroup'])->name('user.group.assign');
+  Route::post('/accounts/groups/unassign', [UserController::class, 'unassignUsersFromGroup'])->name('user.group.unassign');
   Route::resource('room', RoomController::class,)->except(['create']);
   Route::resource('building', BuildingController::class)->except(['create']);
   Route::resource('key', KeyController::class);
+  Route::get('building/{building}/rooms', [BuildingController::class, 'showRooms'])->name('building.buildingRooms');
 });
+
+
 
 require __DIR__ . '/auth.php';

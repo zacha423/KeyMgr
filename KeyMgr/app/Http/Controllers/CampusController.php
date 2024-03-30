@@ -10,6 +10,9 @@ use App\Http\Resources\CampusResource;
 use App\Models\Campus;
 use App\Models\Wrappers\AddressWrapper;
 use Illuminate\Http\Request;
+use App\Http\Resources\BuildingResource;
+use App\Models\Building;
+use App\Models\Wrappers\BuildingWrapper;
 
 class CampusController extends Controller
 {
@@ -97,6 +100,30 @@ class CampusController extends Controller
    */
   public function show(Campus $campus)
   {
+
+    // $data = [];
+  
+    // foreach (Building::all()->load(BuildingWrapper::loadRelationships()) as $building) {
+    //   $buildingRes = (new BuildingResource($building))->toArray($request);
+    //       // Buttons for edit, delete, and details
+
+    //       $btnEdit = '<a href="' . route('building.edit', $building->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+    //           <i class="fa fa-lg fa-fw fa-pen"></i>
+    //       </a>';
+    //   $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-key-id="' . $building->id . '">
+    //           <i class="fa fa-lg fa-fw fa-trash"></i>
+    //       </button>';
+    //   $btnDetails = '<a href="' . route('building.show', $building->id) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+    //           <i class="fa fa-lg fa-fw fa-eye"></i>
+    //       </a>';
+  
+    //       // Push campus data into $data array
+    //       $data[] = [
+    //           $building->id,
+    //           $building->name,
+    //           '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
+    //       ];
+    //   }
     return view('campus.campusSingle', [
       'campus' => (
         new CampusResource($campus->load(AddressWrapper::loadRelationships(), 'buildings'))

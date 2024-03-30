@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->tinyInteger('numPins');
             $table->string('upperPinLengths');
-            $table->string('masterPinLengths');
+            $table->string('masterPinLengths')->nullable()->default(null);
             $table->string('lowerPinLengths');
             $table->dateTimeTz('installDate');
             $table->foreignId('keyway_id')->constrained();
-            $table->foreignId('master_key_system_id')->nullable()->constrained();
+            $table->foreignId('master_key_system_id')->nullable()->default(null)->constrained();
             $table->foreignId('lock_model_id')->constrained();
             $table->timestamps();
         });

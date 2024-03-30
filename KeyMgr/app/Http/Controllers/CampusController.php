@@ -98,38 +98,23 @@ class CampusController extends Controller
    * Display the specified campus.
    * 
    */
-  public function show(Campus $campus)
+  public function show(Request $request, Campus $campus)
   {
+    $buildings = $campus->buildings()->get();
+    $buildingTableData = [];
+    foreach ($buildings as $buidling)
+    {
+      $d = new BuildingResource ($buidling);
+      array_push($buildingTableData, [$d['id'], $d['name'], '<a href="' . route('building.show', $d['id']) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+            <i class="fa fa-lg fa-fw fa-eye"></i>
+            </a>']);
+    }
 
-    // $data = [];
-  
-    // foreach (Building::all()->load(BuildingWrapper::loadRelationships()) as $building) {
-    //   $buildingRes = (new BuildingResource($building))->toArray($request);
-    //       // Buttons for edit, delete, and details
-
-    //       $btnEdit = '<a href="' . route('building.edit', $building->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
-    //           <i class="fa fa-lg fa-fw fa-pen"></i>
-    //       </a>';
-    //   $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-key-id="' . $building->id . '">
-    //           <i class="fa fa-lg fa-fw fa-trash"></i>
-    //       </button>';
-    //   $btnDetails = '<a href="' . route('building.show', $building->id) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
-    //           <i class="fa fa-lg fa-fw fa-eye"></i>
-    //       </a>';
-  
-    //       // Push campus data into $data array
-    //       $data[] = [
-    //           $building->id,
-    //           $building->name,
-    //           '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
-    //       ];
-    //   }
     return view('campus.campusSingle', [
       'campus' => (
         new CampusResource($campus->load(AddressWrapper::loadRelationships(), 'buildings'))
-      )->toArray(new Request()), //Hacky. This works, but is shitty, and an alternative solution should be found.
-      'campusJSON' => $campus->load(AddressWrapper::loadRelationships(), 'buildings')->toJson(),
-      'buildings' => $campus->buildings,
+      )->toArray($request),
+      'buildings' => $buildingTableData,
     ]);
   }
 
@@ -144,7 +129,6 @@ class CampusController extends Controller
       'campus' => (
         new CampusResource($campus->load(AddressWrapper::loadRelationships(), 'buildings'))
       )->toArray(new Request()), //Hacky. This works, but is shitty, and an alternative solution should be found.
-      'campusJSON' => $campus->load('address', 'buildings')->toJson(),
     ]);
   }
 

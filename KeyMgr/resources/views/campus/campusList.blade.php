@@ -1,109 +1,154 @@
-<x-app-layout>
-  <x-slot name="header">
-      <div class="p-2 flex justify-between items-center">
-          <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-              {{ __('Campuses') }}
-          </h2>
-          <button type="button" onclick="toggleNewCampusForm()" class="p-6 text-gray-900 dark:text-gray-100">Add New Campus</button>
-      </div>
-      <!-- New campus form modal -->
-      <div id="newCampusFormModal" class="hidden fixed inset-0 z-10 overflow-y-auto">
-        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-            </div>
+@extends ("adminlte::page")
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@section('title', __('Campuses'))
 
-            <!-- Modal content -->
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full sm:max-w-md">
-                <div class="bg-white dark:bg-gray-800 p-6">
-                    <form method="POST" action="{{ route('campus.store') }}">
-                        @csrf
+@section ("content")
+@section('content_header')
+    <h1>List of Campuses</h1>
+    <div class="col text-right">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#campusForm">
+        New Campus
+      </button>
+      </div>  
+@stop
 
-                        <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">Campus Name</label>
-                            <input type="text" id="name" name="name" class="mt-1 p-2 border rounded-md w-full" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">Country</label>
-                            <input type="text" id="country" name="country" class="mt-1 p-2 border rounded-md w-full" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">State</label>
-                            <input type="text" id="state" name="state" class="mt-1 p-2 border rounded-md w-full" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">City</label>
-                            <input type="text" id="City" name="city" class="mt-1 p-2 border rounded-md w-full" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">Street</label>
-                            <input type="text" id="Street" name="streetAddress" class="mt-1 p-2 border rounded-md w-full" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">Zip Code</label>
-                            <input type="text" id="Zip" name="postalCode" class="mt-1 p-2 border rounded-md w-full" required>
-                        </div>
-                        <div class="flex justify-end">
-                            <button type="button" onclick="toggleNewCampusForm()" class="text-gray-600 hover:text-gray-800 mr-2">Cancel</button>
-                            <button type="submit" class="bg-green-500 text-black px-4 py-2 rounded-md">Save Campus</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+<x-adminlte-modal id="campusForm" title="Campus Creation Form" theme="lightblue" size="sm1" 
+                  v-centered static-backdrop scrollable>
+  <div>
+    <form id="newCampus" action="/campus" method="POST">
+      @csrf
+
+      {{-- Name field --}}
+      <div class="input-group mb-3">
+        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+              value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.campus_name') }}" autofocus>
+        <div class="input-group-append">
+          <div class="input-group-text">
+              
+          </div>
         </div>
+        @error('name')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+        @enderror
       </div>
 
-  <script>
-      function toggleNewCampusForm() {
-          var modal = document.getElementById('newCampusFormModal');
-          modal.classList.toggle('hidden');
-      };
-  </script>
-
-  </x-slot>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-          @foreach($campuses as $campus)
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-4">
-                <div class="p-6 text-gray-900 dark:text-gray-100 flex justify-between items-center">
-                    <div class="flex items-center">
-                        <button type="button" onclick="toggleDropdown('{{ $campus['id'] }}')">
-                            {{ $campus['name'] }}
-                        </button>
-                    </div>
-                    <div class="flex items-center">
-                        <a href="{{ route('campus.edit', ['campus' => $campus['id']]) }}" class="ml-auto flex items-center p-2 bg-gray-200 dark:bg-gray-600 rounded-md">
-                            <svg class="feather feather-edit" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                <div id="dropdown-{{ $campus['id'] }}" class="hidden p-6">
-                    <div class="text-gray-900 dark:text-gray-100">
-                        <p><strong>Country:</strong> {{ $campus['country'] }}</p>
-                        <p><strong>State:</strong> {{ $campus['state'] }}</p>
-                        <p><strong>City:</strong> {{ $campus['city'] }}</p>
-                        <p><strong>Street Address:</strong> {{ $campus['streetAddress'] }}</p>
-                        <p><strong>Postal Code:</strong> {{ $campus['postalCode'] }}</p>
-                    </div>
-                </div>
-            </div>
-          @endforeach
-
-          <script>
-              function toggleDropdown(campusId) {
-                  document.querySelectorAll('[id^="dropdown-"]').forEach(function (dropdown) {
-                      dropdown.classList.add('hidden');
-                  });
-
-                  var dropdown = document.getElementById('dropdown-' + campusId);
-                  dropdown.classList.toggle('hidden');
-              }
-          </script>
-
+      {{-- Country field --}}
+      <div class="input-group mb-3">
+        <input type="text" name="country" class="form-control @error('country') is-invalid @enderror"
+              value="{{ old('country') }}" placeholder="{{ __('adminlte::adminlte.country') }}" autofocus>
+        <div class="input-group-append">
+          <div class="input-group-text">
+              
+          </div>
         </div>
-    </div>
-</x-app-layout>
+        @error('country')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+        @enderror
+      </div>
 
+      {{-- State field --}}
+      <div class="input-group mb-3">
+        <input type="text" name="state" class="form-control @error('state') is-invalid @enderror"
+              value="{{ old('state') }}" placeholder="{{ __('adminlte::adminlte.state') }}" autofocus>
+        <div class="input-group-append">
+          <div class="input-group-text">
+              
+          </div>
+        </div>
+        @error('state')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+        @enderror
+      </div>
+
+      {{-- City field --}}
+      <div class="input-group mb-3">
+        <input type="text" name="city" class="form-control @error('city') is-invalid @enderror"
+              value="{{ old('city') }}" placeholder="{{ __('adminlte::adminlte.city') }}" autofocus>
+        <div class="input-group-append">
+          <div class="input-group-text">
+              
+          </div>
+        </div>
+        @error('city')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+        @enderror
+      </div>
+
+      {{-- Street field --}}
+      <div class="input-group mb-3">
+        <input type="text" name="streetAddress" class="form-control @error('streetAddress') is-invalid @enderror"
+              value="{{ old('streetAddress') }}" placeholder="{{ __('adminlte::adminlte.streetAddress') }}" autofocus>
+        <div class="input-group-append">
+          <div class="input-group-text">
+              
+          </div>
+        </div>
+        @error('streetAddress')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+        @enderror
+      </div>
+
+      {{-- Zip field --}}
+      <div class="input-group mb-3">
+        <input type="text" name="postalCode" class="form-control @error('postalCode') is-invalid @enderror"
+              value="{{ old('postalCode') }}" placeholder="{{ __('adminlte::adminlte.postalCode') }}" autofocus>
+        <div class="input-group-append">
+          <div class="input-group-text">
+              
+          </div>
+        </div>
+        @error('postalCode')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+        @enderror
+      </div>
+
+      <x-slot name="footerSlot">
+        <x-adminlte-button type="submit" class="block mr-auto" theme="success" label="Add Campus" form="newCampus"/>
+        <x-adminlte-button type="button" class="block ml-auto" theme="danger" label="Cancel" data-dismiss="modal"/>
+      </x-slot>  
+    </form>
+  </div>
+</x-adminlte-modal>
+
+@section('plugins.Datatables', true)
+<div class="flex-container">
+  @include('campus.partials.campus-table')
+</div>
+@stop
+
+<script>
+    $(document).ready(function() {
+        $('.btn-delete').click(function(e) {
+            e.preventDefault();
+            const campusId = $(this).data('campus-id');
+            if (confirm('Are you sure you want to delete this campus?')) {
+                $.ajax({
+                    url: '/campus/' + campusId,
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        _method: 'DELETE'
+                    },
+                    success: function(response) {
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+        });
+    });
+</script>

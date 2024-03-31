@@ -17,13 +17,18 @@ $config = [
   'columns' => [null, null, null, ['orderable' => false]],
 ];
 @endphp
-
+<script>    
+  // Basic structure is to the get all elements in selected table rows, of a particular column. Then parse that for forms/requests.
+  function getThings () {
+    return $('tr.selected > td.indx_0');
+  }
+</script>
 <x-adminlte-datatable id="table5" :heads="$heads" bordered compressed hoverable>
     @foreach($config['data'] as $row)
         <tr>
-            @foreach($row as /*$key =>*/$cell)
-                {{--<!-- <td class="indx_{{$key}}">{!! $cell !!}</td> -->--}}
-                <td>{!! $cell !!}</td>
+            @foreach($row as $key =>$cell)
+                {{-- Added class to uniquely identify a given <td> each <tr>. --}}
+                <td class="indx_{{$key}}">{!! $cell !!}</td>
             @endforeach
         </tr>
     @endforeach

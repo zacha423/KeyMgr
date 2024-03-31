@@ -1,4 +1,3 @@
-{{--<link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css"/>--}}
 {{-- Table --}}
 <div class="table-responsive">
 
@@ -39,12 +38,13 @@
 
 @push('js')
 <script>
-
     $(() => {
         $('#{{ $id }}').DataTable( @json($config) );
 
-        /*$('#{{--$id--}}').on('click', 'tbody tr', function (e) {
-            e.currentTarget.classList.toggle('selected');*/
+        // Highlight row if selected.
+        $('#{{$id}}').on('click', 'tbody tr', function (e) {
+            e.currentTarget.classList.toggle('selected');
+        });
     })
 
 </script>

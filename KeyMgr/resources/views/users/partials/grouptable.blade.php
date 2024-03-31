@@ -9,7 +9,7 @@ $heads = [
 $config = [
   'data' => $groups,
   'order' => [[1, 'asc']],
-  'columns' => [null, null, null, ['orderable' => false]],
+  'columns' => [null, null, ['orderable' => false]],
 ];
 @endphp
 

@@ -34,16 +34,10 @@ class UserRoleController extends Controller
    */
   public function store(UserRoleRequest $request)
   {
-    \Log::critical('This is a critical message');
     $validated = $request->safe();
     $role = UserRole::create(['name' => $validated['roleName']]);
 
-    // return view('users.userrole', [
-    //   'role' => $role->toArray(),
-    //   'roleJSON' => $role->toJson(),
-    // ]);
-
-    // return $role->toJson();
+    return redirect('/roles');
   }
 
   /**

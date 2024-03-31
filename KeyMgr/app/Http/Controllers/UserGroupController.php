@@ -24,37 +24,55 @@ class UserGroupController extends Controller
   public function index(Request $request)
   {
 
-    // $groups = [];
-    // $allGroups = UserGroup::all();
-
-    // foreach ($allGroups as $group) {
-    //     $groupData = [
-    //         'id' => $group->id,
-    //         'name' => $group->name
-    //     ];
-
-    //     array_push($groups, $groupData);
-    // }
-
-    // $groupsArray = $allGroups->toArray();
-
-    // $data = [
-    //     'groups' => $groups,
-    //     'groupsArray' => $groupsArray
-    // ];    
-    
-    // return view ('users.usergroup', $data);
-
-    $groupIDs = $request->query('groups');
-
     $groups = [];
-    foreach (GroupResource::collection(UserGroup::all())->toArray($request) as $group) {
-      $groups[$group['id']] = $group['name'];
+    $allGroups = UserGroup::all();
+
+    foreach ($allGroups as $group) {
+
+      $btnEdit = '<a href="' . route('groups.edit', $group->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+        <i class="fa fa-lg fa-fw fa-pen"></i>
+        </a>';
+        $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-campus-id="'
+          . $group->id . '">
+          <i class="fa fa-lg fa-fw fa-trash"></i>
+          </button>';
+        $btnDetails = '<a href="' . route('groups.show', $group->id) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+                <i class="fa fa-lg fa-fw fa-eye"></i>
+                </a>';
+
+            
+        $groupData = [
+            'id' => $group->id,
+            'name' => $group->name,
+            // 'parent_name' => $group->parent()->first()->name,
+            'parent_name' => $group->parent,
+            '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
+        ];
+
+        array_push($groups, $groupData);
+
+        
     }
 
-    return view ('users.usergroup', [
-      'groups' => UserGroup::all()->toArray(),
-    ]);   
+    $groupsArray = $allGroups->toArray();
+
+    $data = [
+        'groups' => $groups,
+        'groupsArray' => $groupsArray
+    ];    
+    
+    return view ('users.usergroup', $data);
+
+    // $groupIDs = $request->query('groups');
+
+    // $groups = [];
+    // foreach (GroupResource::collection(UserGroup::all())->toArray($request) as $group) {
+    //   $groups[$group['id']] = $group['name'];
+    // }
+
+    // return view ('users.usergroup', [
+    //   'groups' => UserGroup::all()->toArray(),
+    // ]);   
   }
 
   /**

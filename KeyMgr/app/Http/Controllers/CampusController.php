@@ -36,9 +36,6 @@ class CampusController extends Controller
           $btnEdit = '<a href="' . route('campus.edit', $campus->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
               <i class="fa fa-lg fa-fw fa-pen"></i>
               </a>';
-          // $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-campus-id="' . $campus->id . '">
-          //     <i class="fa fa-lg fa-fw fa-trash"></i>
-          //     </button>';
           $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-campus-id="'
             . $campus->id . '">
             <i class="fa fa-lg fa-fw fa-trash"></i>

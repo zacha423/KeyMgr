@@ -135,7 +135,7 @@
             const campusId = $(this).data('campus-id');
             if (confirm('Are you sure you want to delete this campus?')) {
                 $.ajax({
-                    url: '/campuses/' + campusId,
+                    url: '/campus/' + campusId,
                     method: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',

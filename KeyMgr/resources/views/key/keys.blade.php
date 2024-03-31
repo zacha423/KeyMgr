@@ -73,21 +73,21 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="keyStatuses">Key Status</label>
-                            <select class="form-control" id="keyStatuses" name="keyStatuses">
+                            <label for="key_status_id">Key Status</label>
+                            <select class="form-control" id="key_status_id" name="key_status_id">
                                 <option value="">Select Key Status</option>
                                 @foreach($keyStatuses as $keyStatus)
-                                    <option>{{ $keyStatus->name }}</option>
+                                    <option>{{ $keyStatus['name'] }}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="keyways">Keyway</label>
-                            <select class="form-control" id="keyways" name="keyways">
+                            <label for="keyway_id">Keyway</label>
+                            <select class="form-control" id="keyway_id" name="keyway_id">
                                 <option value="">Select Keyway</option>
                                 @foreach($keyways as $keyway)
-                                    <option>{{ $keyway->name }}</option>
+                                    <option>{{ $keyway['name'] }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -132,22 +132,20 @@
                 const formData = $(this).serialize();
                 
                 $.ajax({
-                    url: '/keys', // This is the endpoint for storing a new key
+                    url: '/keys',
                     method: 'POST',
                     data: formData,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(response) {
-                        console.log(response); // Log the response from the server
+                        console.log(response);
                         location.reload();
                     },
                     error: function(xhr, status, error) {
                         console.error(xhr.responseText);
                     }
                 });
-
-                // Close the modal after submission
                 $('#newKeyModal').modal('hide');
             });
 

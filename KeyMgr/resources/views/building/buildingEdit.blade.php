@@ -53,9 +53,10 @@
             <div class="col-md-6">
                 <label for="campus" class="block text-sm font-medium text-gray-700">Select Campus</label>
                 <select id="campus" name="campus" class="form-control">
-                    <option value="{{$building['id']}}" disabled selected>{{$building['campus']}}</option>
                     @foreach($campuses as $campus)
-                        <option value="{{ $campus['id'] }}">{{ $campus['name'] }}</option>
+                        @if($campus['id'] != $building['id'])
+                            <option value="{{ $campus['id'] }}">{{ $campus['name'] }}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>

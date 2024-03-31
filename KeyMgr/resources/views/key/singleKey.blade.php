@@ -19,7 +19,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h2 class="card-title"><strong>Key ID:</strong> {{ $key['id'] }}</h2>
@@ -35,23 +35,32 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <p><strong>Key Level:</strong></p>
-                                <p><strong>Key System:</strong></p>
-                                <p><strong>Copy Number:</strong> </p>
-                                <p><strong>Bitting:</strong> </p>
-                                <p><strong>Replacement Cost:</strong></p>
-                            </div>
-                            <div class="col-lg-1 divider"></div> <!-- Divider column -->
-                            <div class="col-lg-5">
-                                <p><strong>Key Level:</strong></p>
-                                <p><strong>Key System:</strong></p>
-                                <p><strong>Copy Number:</strong></p>
-                                <p><strong>Bitting:</strong></p>
-                                <p><strong>Replacement Cost:</strong></p>
+                                <p><strong>Key Level: </strong> {{ $key['keyLevel'] }} </p>
+                                <p><strong>Key System: </strong>{{ $key['keySystem'] }}</p>
+                                <p><strong>Copy Number: </strong> {{ $key['copyNumber'] }}</p>
+                                <p><strong>Bitting: </strong>{{ $key['bitting'] }} </p>
+                                <p><strong>Replacement Cost: </strong>{{ $key['replacementCost'] }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card card-info card-outline">
+                    <div class="card-body">
+                        <h5 class="card-title">LOCKS</h5>
+                        <!-- Add content related to locks here -->
+                    </div>
+                </div>
+
+                <div class="card card-info card-outline">
+                    <div class="card-body">
+                        <h5 class="card-title">USER</h5>
+                        <!-- Add content related to users here -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @stop

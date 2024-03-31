@@ -69,10 +69,10 @@ class KeyController extends Controller
   public function create()
   {
     return view('key.keyCreate', [
-      'key_statuses' => KeyStatus::all()->toArray(),
-      'key_types' => KeyType::all()->toArray(),
+      'keyStatuses' => KeyStatus::all()->toArray(),
+      'keyTypes' => KeyType::all()->toArray(),
       'keyways' => Keyway::all()->toArray(),
-      'key_storages' => KeyStorage::all()->toArray(),
+      'keyStorages' => KeyStorage::all()->toArray(),
       'storage_hooks' => StorageHook::all()->toArray(),
     ]);
   }
@@ -121,6 +121,8 @@ class KeyController extends Controller
   {
     return view('key.keyEdit', [
       'key' => (new KeyResource($key))->toArray(new Request()),
+      'keyStatuses' => KeyStatus::all()->toArray(),
+      'keyways' => Keyway::all()->toArray(),
     ]);
   }
 

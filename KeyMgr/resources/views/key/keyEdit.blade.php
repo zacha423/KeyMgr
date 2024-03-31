@@ -38,6 +38,21 @@
                     <label for="replacementCost" class="col-form-label">{{ __('Key Replacement Cost') }}</label>
                     <input id="replacementCost" name="replacementCost" type="number" class="form-control" value="{{ old('replacementCost', $key['replacementCost']) }}">
                 </div>
+                
+                <div class="form-group">
+                    <label for="status">Key Status</label>
+                    <select class="form-control" id="status" name="status">
+                        @foreach($keyStatuses as $keyStatus)
+                            @if($keyStatus['id'] != $key['status'])
+                                <option value="{{ $keyStatus['id'] }}">
+                                    {{ $keyStatus['name'] }}
+                                </option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
+
+
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>

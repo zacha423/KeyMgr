@@ -26,7 +26,7 @@ class KeyResource extends JsonResource
       'replacementCost' => $this->replacementCost,
       'status' => $this->status->name,
       'keyway' => $this->keyway->name,
-      'type' => $this->type->name,
+      // 'type' => $this->type->name,
       // 'storageCabinet' => '',
       // 'storageHook' => '',
       // 'storageCabinetID' => $this->storage->key_storage_id,

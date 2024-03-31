@@ -26,7 +26,7 @@ return new class extends Migration {
       $table->foreignId('key_type_id')->nullable()->default(null)->constrained();
       $table->foreignId('master_key_system_id')->nullable()->default(null)->constrained();
       $table->foreignId('keyway_id')->constrained();
-      $table->foreignId('storage_hook_id')->constrained()->default(null);
+      $table->foreignId('storage_hook_id')->nullable()->default(null)->constrained();
       $table->unique(['keyLevel', 'keySystem', 'copyNumber']);
       $table->timestamps();
     });

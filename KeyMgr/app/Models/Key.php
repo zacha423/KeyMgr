@@ -17,9 +17,6 @@ class Key extends Model
     'keySystem',
     'copyNumber',
     'bitting',
-    'blindCode',
-    'mainAngles',
-    'doubleAngles',
     'replacementCost',
   ];
   

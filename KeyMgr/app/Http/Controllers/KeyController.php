@@ -46,6 +46,8 @@ class KeyController extends Controller
             'copyNumber' => (int)$key['copyNumber'],
             'bitting' => (string)$key['bitting'],
             'replacementCost' => (float)$key['replacementCost'],
+            'status' => (string)$key['status'],
+            'keyway' => (string)$key['keyway'],
             'actions' => '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
         ]);
             }
@@ -72,8 +74,6 @@ class KeyController extends Controller
       'keyStatuses' => KeyStatus::all()->toArray(),
       'keyTypes' => KeyType::all()->toArray(),
       'keyways' => Keyway::all()->toArray(),
-      'keyStorages' => KeyStorage::all()->toArray(),
-      'storage_hooks' => StorageHook::all()->toArray(),
     ]);
   }
 
@@ -89,15 +89,10 @@ class KeyController extends Controller
       'keySystem' => $validated['keySystem'],
       'copyNumber' => $validated['copyNumber'],
       'bitting' => $validated['bitting'],
-      'blindCode' => $validated['blindCode'],
-      'mainAngles' => $validated['mainAngles'],
-      'doubleAngles' => $validated['doubleAngles'],
       'replacementCost' => $validated['replacementCost'],
     ]);
     $key->key_status_id = $validated['key_status_id'];
     $key->keyway_id = $validated['keyway_id'];
-    $key->key_type_id = $validated['key_type_id'];
-    $key->storage_hook_id = $validated['storage_hook_id'];
 
     $key->save();
 
@@ -145,15 +140,7 @@ class KeyController extends Controller
     if (isset ($validated['bitting'])) {
       $key->bitting = $validated['bitting'];
     }
-    if (isset ($validated['blindCode'])) {
-      $key->blindCode = $validated['blindCode'];
-    }
-    if (isset ($validated['mainAngles'])) {
-      $key->mainAngles = $validated['mainAngles'];
-    }
-    if (isset ($validated['doubleAngles'])) {
-      $key->doubleAngles = $validated['doubleAngles'];
-    }
+
     if (isset ($validated['replacementCost'])) {
       $key->replacementCost = $validated['replacementCost'];
     }
@@ -162,12 +149,6 @@ class KeyController extends Controller
     }
     if (isset ($validated['keyway_id'])) {
       $key->keyway_id = $validated['keyway_id'];
-    }
-    if (isset ($validated['key_type_id'])) {
-      $key->key_type_id = $validated['key_type_id'];
-    }
-    if (isset ($validated['storage_hook_id'])) {
-      $key->storage_hook_id = $validated['storage_hook_id'];
     }
 
     $key->save();

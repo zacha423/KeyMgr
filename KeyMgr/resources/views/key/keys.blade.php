@@ -9,6 +9,8 @@
         'Copy Number',
         'Bitting',
         'Replacement Cost',
+        'Key Status',
+        'Keyway',
         ['label' => 'Actions', 'no-export' => false, 'width' => 5],
     ];
 
@@ -63,8 +65,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="replacementCost ">Replacement Cost</label>
-                            <input type="number" class="form-control" id="replacementCost " name="replacementCost ">
+                            <label for="replacementCost">Replacement Cost</label>
+                            <input type="number" class="form-control" id="replacementCost" name="replacementCost" step="0.01" min="0">
                         </div>
 
                         <div class="form-group">
@@ -75,9 +77,9 @@
                         <div class="form-group">
                             <label for="key_status_id">Key Status</label>
                             <select class="form-control" id="key_status_id" name="key_status_id">
-                                <option value="">Select Key Status</option>
+                                <option value=""disabled selected>Select Key Status</option>
                                 @foreach($keyStatuses as $keyStatus)
-                                    <option>{{ $keyStatus['name'] }}</option>
+                                    <option value="{{ $keyStatus['id'] }}">{{ $keyStatus['name'] }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -85,12 +87,13 @@
                         <div class="form-group">
                             <label for="keyway_id">Keyway</label>
                             <select class="form-control" id="keyway_id" name="keyway_id">
-                                <option value="">Select Keyway</option>
+                                <option value=""disabled selected>Select Keyway</option>
                                 @foreach($keyways as $keyway)
-                                    <option>{{ $keyway['name'] }}</option>
+                                    <option value="{{ $keyway['id'] }}">{{ $keyway['name'] }}</option>
                                 @endforeach
                             </select>
                         </div>
+
 
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
@@ -112,7 +115,6 @@
 @stop
 
 @section('js')
-    @parent
     <script>
         $(document).ready(function() {
             if ($.fn.DataTable.isDataTable('#key-table')) {

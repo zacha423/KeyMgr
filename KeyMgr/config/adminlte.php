@@ -403,15 +403,15 @@ return [
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'User List',
+                    'text' => 'List',
                     'route'  => 'users.index',
                 ],
                 [
-                    'text'=> 'User Roles',
+                    'text'=> 'Roles',
                     'route' => 'roles.index',
                 ],
                 [
-                    'text'=> 'User Groups',
+                    'text'=> 'Groups',
                     'route'=> 'groups.index',
                 ]
             ]

@@ -29,9 +29,9 @@ class UserGroupController extends Controller
 
     foreach ($allGroups as $group) {
 
-      $btnEdit = '<a href="' . route('groups.edit', $group->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
-        <i class="fa fa-lg fa-fw fa-pen"></i>
-        </a>';
+        $btnEdit = '<a href="' . route('groups.edit', $group->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+          <i class="fa fa-lg fa-fw fa-pen"></i>
+          </a>';
         $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-campus-id="'
           . $group->id . '">
           <i class="fa fa-lg fa-fw fa-trash"></i>

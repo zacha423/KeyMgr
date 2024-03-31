@@ -11,7 +11,7 @@
       </div>  
 @stop
 
-<x-adminlte-modal id="roleForm" title="Role Creation Form" theme="lightblue" size="sm1" 
+<x-adminlte-modal id="roleForm" title="Add Role" theme="lightblue" size="sm1" 
                   v-centered static-backdrop scrollable>
   <div>
     <form id="newRole" action="/roles" method="POST">
@@ -41,53 +41,52 @@
   </div>
 </x-adminlte-modal>
 
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">All User Roles</h3>
-                <div class="card-tools">
-                    <div class="input-group input-group-sm" style="width: 150px;">
-                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-                        <div class="input-group-append">
-                            <button type="submit" class="btn btn-default">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">All User Roles</h3>
+            <div class="card-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <!-- <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div> -->
                 </div>
             </div>
+        </div>
 
-            <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
-                    <thead>
+        <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($roles as $role)
                         <tr>
-                            <th>ID</th>
-                            <th>Name</th>
+                            <td>{{ $role['id'] }}</td>
+                            <td>{{ $role['name'] }}</td>
+                            <td>
+                                <div class="col-sm-3">
+                                    <button type="button" class="btn btn-block btn-info btn-sm">View All Users</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-sm-6">                                        
+                                    <button type="button" class="deleteRole btn btn-block btn-danger btn-sm" data-role-id="{{ $role['id'] }}">Delete</button>
+                                </div>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($roles as $role)
-                            <tr>
-                                <td>{{ $role['id'] }}</td>
-                                <td>{{ $role['name'] }}</td>
-                                <td>
-                                    <div class="col-sm-3">
-                                        <button type="button" class="btn btn-block btn-info btn-sm">View All Users</button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="col-sm-6">                                        
-                                        <button type="button" class="deleteRole btn btn-block btn-danger btn-sm" data-role-id="{{ $role['id'] }}">Delete</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
-
+</div>
 @stop
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

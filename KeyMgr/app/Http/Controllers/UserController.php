@@ -57,6 +57,9 @@ class UserController extends Controller
         . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
             <i class="fa fa-lg fa-fw fa-eye"></i>
             </button>';
+      $btnEdit = '<a href="' . route('users.edit', $user->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+            <i class="fa fa-lg fa-fw fa-pen"></i>
+            </a>';
 
       array_push($data, [
         $user->id,
@@ -66,7 +69,7 @@ class UserController extends Controller
         $user->username,
         implode("<br>", $user4['groups2']),
         implode("<br>", $user4['roles2']),
-        '<nobr>' . $btnDelete . $btnDetails . '</nobr>'
+        '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
       ]);
     }
 

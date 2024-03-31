@@ -26,14 +26,14 @@ class UpdateKeyRequest extends FormRequest
       'keySystem' => ['required', 'alpha-num',],
       'copyNumber' => ['required', 'max:65535', 'min:0', 'integer'],
       'bitting' => ['alpha-num', 'nullable',],
-      'blindCode' => ['alpha-num', 'nullable',],
-      'mainAngles' => ['alpha-num', 'nullable',],
-      'doubleAngles' => ['alpha-num', 'nullable',],
+      // 'blindCode' => ['alpha-num', 'nullable',],
+      // 'mainAngles' => ['alpha-num', 'nullable',],
+      // 'doubleAngles' => ['alpha-num', 'nullable',],
       'replacementCost' => ['min:0', 'nullable', 'decimal:0,4',],
       'key_status_id' => ['required', 'exists:keyways,id'],
       'keyway_id' => ['required', 'exists:key_statuses,id'],
-      'key_type_id' => ['required', 'exists:key_types,id'],
-      'storage_hook_id' => ['required', 'exists:storage_hooks,id']
+      // 'key_type_id' => ['required', 'exists:key_types,id'],
+      // 'storage_hook_id' => ['required', 'exists:storage_hooks,id']
     ];
   }
 }

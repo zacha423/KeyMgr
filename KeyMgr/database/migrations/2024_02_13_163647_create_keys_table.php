@@ -23,7 +23,7 @@ return new class extends Migration {
       $table->string('doubleAngles')->nullable()->default(null);
       $table->decimal('replacementCost', 9, 2)->default(0.0);
       $table->foreignId('key_status_id')->constrained();
-      $table->foreignId('key_type_id')->constrained();
+      $table->foreignId('key_type_id')->nullable()->default(null)->constrained();
       $table->foreignId('master_key_system_id')->nullable()->default(null)->constrained();
       $table->foreignId('keyway_id')->constrained();
       $table->foreignId('storage_hook_id')->constrained()->default(null);

@@ -46,8 +46,6 @@ class KeyController extends Controller
             'copyNumber' => (int)$key['copyNumber'],
             'bitting' => (string)$key['bitting'],
             'replacementCost' => (float)$key['replacementCost'],
-            'keyway' => $key['keyway'],
-            'type' => $key['type'],
             'actions' => '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
         ]);
             }
@@ -123,11 +121,6 @@ class KeyController extends Controller
   {
     return view('key.keyEdit', [
       'key' => (new KeyResource($key))->toArray(new Request()),
-      'key_statuses' => KeyStatus::all()->toArray(),
-      'key_types' => KeyType::all()->toArray(),
-      'keyways' => Keyway::all()->toArray(),
-      'key_storages' => KeyStorage::all()->toArray(),
-      'storage_hooks' => StorageHook::all()->toArray(),
     ]);
   }
 
@@ -177,7 +170,7 @@ class KeyController extends Controller
 
     $key->save();
 
-    return redirect()->route('keys.index');
+    return redirect()->route('keys.index')->with(['status' => 'Successfully saved key.']);
   }
 
   /**
@@ -186,6 +179,6 @@ class KeyController extends Controller
   public function destroy(Key $key)
   {
     $key->delete();
-    return redirect()->route('key.index');
+    return redirect()->route('keys.index');
   }
 }

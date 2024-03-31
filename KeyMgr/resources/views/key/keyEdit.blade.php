@@ -15,42 +15,28 @@
 
                 <div class="form-group">
                     <label for="keyLevel" class="col-form-label">{{ __('Key Level') }}</label>
-                    <input id="keyLevel" name="keyLevel" type="text" class="form-control" value="{{ old('keyLevel', $key['keyLevel']) }}" required autofocus>
-                    @error('keyLevel')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                    <input id="keyLevel" name="keyLevel" type="text" class="form-control" value="{{ old('keyLevel', $key['keyLevel']) }}">
                 </div>
 
                 <div class="form-group">
                     <label for="keySystem" class="col-form-label">{{ __('Key System') }}</label>
-                    <input id="keySystem" name="keySystem" type="text" class="form-control" value="{{ old('keySystem', $key['keySystem']) }}" required>
-                    @error('keySystem')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                    <input id="keySystem" name="keySystem" type="text" class="form-control" value="{{ old('keySystem', $key['keySystem']) }}">
                 </div>
 
                 <div class="form-group">
                     <label for="copyNumber" class="col-form-label">{{ __('Copy Number') }}</label>
-                    <input id="copyNumber" name="copyNumber" type="number" class="form-control" value="{{ old('copyNumber', $key['copyNumber']) }}" required>
-                    @error('copyNumber')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                    <input id="copyNumber" name="copyNumber" type="number" class="form-control" value="{{ old('copyNumber', $key['copyNumber']) }}">
+
                 </div>
 
                 <div class="form-group">
                     <label for="bitting" class="col-form-label">{{ __('Key Bitting') }}</label>
                     <input id="bitting" name="bitting" type="text" class="form-control" value="{{ old('bitting', $key['bitting']) }}">
-                    @error('bitting')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
                 </div>
 
                 <div class="form-group">
                     <label for="replacementCost" class="col-form-label">{{ __('Key Replacement Cost') }}</label>
-                    <input id="replacementCost" name="replacementCost" type="number" class="form-control" value="{{ old('replacementCost', $key['replacementCost']) }}" required>
-                    @error('replacementCost')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                    <input id="replacementCost" name="replacementCost" type="number" class="form-control" value="{{ old('replacementCost', $key['replacementCost']) }}">
                 </div>
 
                 <div class="form-group">

@@ -1,5 +1,5 @@
+{{--<link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css"/>--}}
 {{-- Table --}}
-
 <div class="table-responsive">
 
 <table id="{{ $id }}" style="width:100%" {{ $attributes->merge(['class' => $makeTableClass()]) }}>
@@ -42,6 +42,9 @@
 
     $(() => {
         $('#{{ $id }}').DataTable( @json($config) );
+
+        /*$('#{{--$id--}}').on('click', 'tbody tr', function (e) {
+            e.currentTarget.classList.toggle('selected');*/
     })
 
 </script>

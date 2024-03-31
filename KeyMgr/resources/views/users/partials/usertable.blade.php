@@ -21,7 +21,8 @@ $config = [
 <x-adminlte-datatable id="table5" :heads="$heads" bordered compressed hoverable>
     @foreach($config['data'] as $row)
         <tr>
-            @foreach($row as $cell)
+            @foreach($row as /*$key =>*/$cell)
+                {{--<!-- <td class="indx_{{$key}}">{!! $cell !!}</td> -->--}}
                 <td>{!! $cell !!}</td>
             @endforeach
         </tr>

@@ -13,53 +13,11 @@
         <h3>Limit results by:</h3>
       </div>--}}
       <div class="row">
-
-        {{-- UserGroup Selector --}}
         <div class="col-6" id="groupSelector">
           <x-group-selector id="gSelector" :options="$groupOptions" :selected="$selectedGroups"></x-group-selector>
-          {{-- Example with multiple selections (for SelectBs) --}}
-          {{--@php
-          $config2 = [
-            "title" => "Select groups...",
-            "liveSearch" => true,
-            "liveSearchPlaceholder" => "Search...",
-            "showTick" => true,
-            "actionsBox" => true,
-          ];
-          @endphp
-          <x-adminlte-select-bs id="groups" name="groups[]" label="Groups"
-            label-class="text-info" :config="$config2" multiple enable-old-support>
-            <x-slot name="prependSlot">
-              <div class="input-group-text bg-gradient-lightblue">
-                <i class="fas fa-tag"></i>
-              </div>
-            </x-slot>
-            <x-adminlte-options :options="$groupOptions" :selected="$selectedGroups"/>
-          </x-adminlte-select-bs>--}}
         </div>
-
-        {{-- UserRole Selector --}}
         <div class="col-6" id="roleSelector">
-
-          {{-- Example with multiple selections (for SelectBs) --}}
-          @php
-          $config2 = [
-            "title" => "Select roles...",
-            "liveSearch" => true,
-            "liveSearchPlaceholder" => "Search...",
-            "showTick" => true,
-            "actionsBox" => true,
-          ];
-          @endphp
-          <x-adminlte-select-bs id="roles" name="roles[]" label="Roles"
-            label-class="text-info" :config="$config2" multiple enable-old-support>
-            <x-slot name="prependSlot">
-              <div class="input-group-text bg-gradient-lightblue">
-                <i class="fas fa-tag"></i>
-              </div>
-            </x-slot>
-            <x-adminlte-options :options="$roleOptions" :selected="$selectedRoles"/>
-          </x-adminlte-select-bs>
+          <x-role-selector id="rSelector" :options="$roleOptions" :selected="$selectedRoles"></x-role-selector>
         </div>
       </div>
       

@@ -29,3 +29,19 @@ $config = [
     @endforeach
 </x-adminlte-datatable>
 </x-adminlt-card>
+<script>
+  function getSelectedIDs ($tableID) {
+    let $IDs = [];
+    
+    if (!$.fn.DataTable.isDataTable('#' + $tableID))
+    {
+      return null;
+    }
+    
+    new DataTable ('#' + $tableID).rows({selected:true}).data().toArray().forEach(($row)=>{
+      $IDs.push($row[0]);
+    });
+
+    return $IDs;
+  }
+</script>

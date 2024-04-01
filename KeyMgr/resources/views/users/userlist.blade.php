@@ -16,9 +16,9 @@
 
         {{-- UserGroup Selector --}}
         <div class="col-6" id="groupSelector">
-          
+          <x-group-selector id="gSelector" :options="$groupOptions" :selected="$selectedGroups"></x-group-selector>
           {{-- Example with multiple selections (for SelectBs) --}}
-          @php
+          {{--@php
           $config2 = [
             "title" => "Select groups...",
             "liveSearch" => true,
@@ -35,7 +35,7 @@
               </div>
             </x-slot>
             <x-adminlte-options :options="$groupOptions" :selected="$selectedGroups"/>
-          </x-adminlte-select-bs>
+          </x-adminlte-select-bs>--}}
         </div>
 
         {{-- UserRole Selector --}}
@@ -78,9 +78,8 @@
 <x-adminlte-card theme="info" theme-mode="outline" title="Tools">
   <x-adminlte-button type="button" theme="primary" id="addRole" name="addRole" label="Manage Roles"></x-adminlte-button>
   <x-adminlte-button type="button" theme="primary" id="addGroup" name="addGroup" label="Manage Groups"></x-adminlte-button>
-  <x-adminlte-button type="button" theme="primary" id="removeGroup" name="removeGroup" label="Remove From Group"></x-adminlte-button>
   <x-adminlte-button type="button" theme="success" data-toggle="modal" data-target="#userForm" label="Register New User"></x-adminlte-button>
-  
+
   <!-- New USer Modal -->
   <x-adminlte-modal id="userForm" title="User Creation Form" theme="lightblue" size="sm1" icon="fas fa-user" 
                     v-centered static-backdrop scrollable>

@@ -1,13 +1,18 @@
 @extends ("adminlte::page")
+@section('title', __('User List'))
+
+@section ("content")
+@section('content_header')
+  <h1>User List</h1>
+@stop
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-@section ("content")
 <form action="/users" method="GET">
   <!-- Drop Down for UserRoles and UserGroups -->
   <div class="flex-container">
     <div class="row">
-      <h3>Limit results by:</h3>
+      <h5>Limit results by:</h5>
     </div>
     <div class="row">
 

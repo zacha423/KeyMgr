@@ -144,9 +144,23 @@ class UserController extends Controller
     return redirect('/users');
   }
 
-  public function edit(User $user)
+  public function edit(Request $request, User $user): View
   {
-    return redirect('/users');
+    $formatForAdminLTE = function ($rawEloquentCollection) {
+      $data = [];
+      foreach ($rawEloquentCollection as $item) {
+        $data[$item['id']] = $item['name'];
+      }
+
+      return $data;
+    };
+
+    return view('users.user-edit', [
+      'user' => $user,
+      'memberRoles' => $formatForAdminLTE((RoleResource::collection($user->roles()->get()))->toArray($request)),
+      'memberGroups' => $formatForAdminLTE((GroupResource::collection($user->groups()->get()))->toArray($request)),
+    ]);
+
   }
 
   /**

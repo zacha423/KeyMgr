@@ -3,81 +3,81 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 @section ("content")
-<form action="/users" method="GET">
-  <!-- Drop Down for UserRoles and UserGroups -->
-  <div class="flex-container">
-    <div class="row">
-      <h3>Limit results by:</h3>
-    </div>
-    <div class="row">
+<x-adminlte-card theme="info" theme-mode="outline" title="Limit results by:">
+  <form action="/users" method="GET">
+    <!-- Drop Down for UserRoles and UserGroups -->
+    <div class="flex-container">
+      {{--<div class="row">
+        <h3>Limit results by:</h3>
+      </div>--}}
+      <div class="row">
 
-      {{-- UserGroup Selector --}}
-      <div class="col" id="groupSelector">
-        
-        {{-- Example with multiple selections (for SelectBs) --}}
-        @php
-        $config2 = [
-          "title" => "Select multiple options...",
-          "liveSearch" => true,
-          "liveSearchPlaceholder" => "Search...",
-          "showTick" => true,
-          "actionsBox" => true,
-        ];
-        @endphp
-        <x-adminlte-select-bs id="groups" name="groups[]" label="Groups"
-          label-class="text-info" :config="$config2" multiple enable-old-support>
-          <x-slot name="prependSlot">
-            <div class="input-group-text bg-gradient-lightblue">
-              <i class="fas fa-tag"></i>
-            </div>
-          </x-slot>
-          <x-adminlte-options :options="$groupOptions" :selected="$selectedGroups"/>
-        </x-adminlte-select-bs>
+        {{-- UserGroup Selector --}}
+        <div class="col" id="groupSelector">
+          
+          {{-- Example with multiple selections (for SelectBs) --}}
+          @php
+          $config2 = [
+            "title" => "Select multiple options...",
+            "liveSearch" => true,
+            "liveSearchPlaceholder" => "Search...",
+            "showTick" => true,
+            "actionsBox" => true,
+          ];
+          @endphp
+          <x-adminlte-select-bs id="groups" name="groups[]" label="Groups"
+            label-class="text-info" :config="$config2" multiple enable-old-support>
+            <x-slot name="prependSlot">
+              <div class="input-group-text bg-gradient-lightblue">
+                <i class="fas fa-tag"></i>
+              </div>
+            </x-slot>
+            <x-adminlte-options :options="$groupOptions" :selected="$selectedGroups"/>
+          </x-adminlte-select-bs>
+        </div>
+
+        {{-- UserRole Selector --}}
+        <div class="col" id="roleSelector">
+
+          {{-- Example with multiple selections (for SelectBs) --}}
+          @php
+          $config2 = [
+            "title" => "Select multiple options...",
+            "liveSearch" => true,
+            "liveSearchPlaceholder" => "Search...",
+            "showTick" => true,
+            "actionsBox" => true,
+          ];
+          @endphp
+          <x-adminlte-select-bs id="roles" name="roles[]" label="Roles"
+            label-class="text-info" :config="$config2" multiple enable-old-support>
+            <x-slot name="prependSlot">
+              <div class="input-group-text bg-gradient-lightblue">
+                <i class="fas fa-tag"></i>
+              </div>
+            </x-slot>
+            <x-adminlte-options :options="$roleOptions" :selected="$selectedRoles"/>
+          </x-adminlte-select-bs>
+        </div>
       </div>
-
-      {{-- UserRole Selector --}}
-      <div class="col" id="roleSelector">
-
-        {{-- Example with multiple selections (for SelectBs) --}}
-        @php
-        $config2 = [
-          "title" => "Select multiple options...",
-          "liveSearch" => true,
-          "liveSearchPlaceholder" => "Search...",
-          "showTick" => true,
-          "actionsBox" => true,
-        ];
-        @endphp
-        <x-adminlte-select-bs id="roles" name="roles[]" label="Roles"
-          label-class="text-info" :config="$config2" multiple enable-old-support>
-          <x-slot name="prependSlot">
-            <div class="input-group-text bg-gradient-lightblue">
-              <i class="fas fa-tag"></i>
-            </div>
-          </x-slot>
-          <x-adminlte-options :options="$roleOptions" :selected="$selectedRoles"/>
-        </x-adminlte-select-bs>
+      
+      <div class="row">
+        {{-- Button to refresh page / limit search --}}
+        <div class="col">
+          <button type="submit" class="btn btn-primary refineSearch" id="refineSearch">
+            Refine Search
+          </button>
+        </div>
       </div>
     </div>
-    
-    <div class="row">
-      {{-- Button to refresh page / limit search --}}
-      <div class="col">
-        <button type="submit" class="btn btn-primary refineSearch" id="refineSearch">
-          Refine Search
-        </button>
-      </div>
-
-      <!-- Button trigger modal -->
-      <div class="col text-right">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#userForm">
-        New User
-      </button>
-      </div>  
-    </div>
-  </div>
-</form>
-
+  </form>
+</x-adminlte-card>
+<x-adminlte-card theme="info" theme-mode="outline" title="Tools">
+  <x-adminlte-button type="button" theme="primary" id="addRole" name="addRole" label="Assign Role"></x-adminlte-button>
+  <x-adminlte-button type="button" theme="primary" id="removeRole" name="removeRole" label="Unassign Role"></x-adminlte-button>
+  <x-adminlte-button type="button" theme="primary" id="addGroup" name="addGroup" label="Add To Group"></x-adminlte-button>
+  <x-adminlte-button type="button" theme="primary" id="removeGroup" name="removeGroup" label="Remove From Group"></x-adminlte-button>
+  <x-adminlte-button type="button" theme="success" data-toggle="modal" data-target="#userForm" label="Register New User"></x-adminlte-button>
 <!-- New USer Modal -->
 <x-adminlte-modal id="userForm" title="User Creation Form" theme="lightblue" size="sm1" icon="fas fa-user" 
                   v-centered static-backdrop scrollable>
@@ -190,6 +190,7 @@
     </form>
   </div>
 </x-adminlte-modal>
+        </x-adminlte-card>
 
 {{-- The actual datatable --}}
 @section('plugins.Datatables', true)

@@ -18,7 +18,7 @@ $config = [
   'select' => true,
 ];
 @endphp
-
+<x-adminlte-card theme="info" theme-mode="outline">
 <x-adminlte-datatable id="table5" :heads="$heads" :config="$config" bordered compressed hoverable>
     @foreach($config['data'] as $row)
         <tr>
@@ -28,3 +28,4 @@ $config = [
         </tr>
     @endforeach
 </x-adminlte-datatable>
+</x-adminlt-card>

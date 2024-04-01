@@ -19,15 +19,15 @@ $config = [
 ];
 @endphp
 <x-adminlte-card theme="info" theme-mode="outline">
-<x-adminlte-datatable id="table5" :heads="$heads" :config="$config" bordered compressed hoverable>
-    @foreach($config['data'] as $row)
-        <tr>
-            @foreach($row as $cell)
-                <td>{!! $cell !!}</td>
-            @endforeach
-        </tr>
-    @endforeach
-</x-adminlte-datatable>
+  <x-adminlte-datatable id="table5" :heads="$heads" :config="$config" bordered compressed hoverable>
+      @foreach($config['data'] as $row)
+          <tr>
+              @foreach($row as $cell)
+                  <td>{!! $cell !!}</td>
+              @endforeach
+          </tr>
+      @endforeach
+  </x-adminlte-datatable>
 </x-adminlt-card>
 <script>
   function getSelectedIDs ($tableID) {

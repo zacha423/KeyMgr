@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @author Zachary Abela-Gale <abel1325@pacificu.edu>
+ */
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
@@ -14,12 +16,13 @@ class LockResource extends JsonResource
    */
   public function toArray(Request $request): array
   {
-    return [
+    return array_merge([
       'numPins' => $this->numPins,
       'upperPinLengths' => $this->upperPinLengths,
       'lowerPinLengths' => $this->lowerPinLengths,
       'installDate' => $this->installDate,
-      'keyway' => $this->keyway()->get()->name,
-    ];
+      'keyway' => $this->keyway->name,
+
+    ], (new LockModelResource($this->lockModel))->toArray($request));
   }
 }

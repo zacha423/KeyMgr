@@ -7,15 +7,20 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreLockRequest;
 use App\Http\Requests\UpdateLockRequest;
 use App\Models\Lock;
+use App\Models\Wrappers\LockWrapper;
+use Illuminate\Http\Request;
+use App\Http\Resources\LockResource;
 
 class LockController extends Controller
 {
   /**
    * Display a listing of the resource.
    */
-  public function index()
+  public function index(Request $request)
   {
-    return view('locks.locklist');
+    return view('locks.locklist', [
+      'locks' => LockResource::collection(Lock::all()->load(LockWrapper::loadRelationships()))->toArray($request),
+    ]);
   }
 
   /**

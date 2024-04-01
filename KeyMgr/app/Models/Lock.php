@@ -25,7 +25,7 @@ class Lock extends Model
   {
     return $this->belongsTo(Keyway::class);
   }
-  public function model(): BelongsTo
+  public function lockModel(): BelongsTo
   {
     return $this->belongsTo (LockModel::class);
   }

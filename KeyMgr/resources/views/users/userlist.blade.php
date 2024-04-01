@@ -5,14 +5,28 @@
 @section ("content")
 @section('plugins.Datatables', true)
 @section('plugins.BootStrapSelect', true)
+@section('plugins.BootStrapSwitch', true)
 <x-adminlte-card theme="info" theme-mode="outline" title="Limit results by:">
   <form action="/users" method="GET">
     <!-- Drop Down for UserRoles and UserGroups -->
     <div class="flex-container">
-      {{--<div class="row">
-        <h3>Limit results by:</h3>
-      </div>--}}
+      @php
+        $config3 = [
+            'onColor' => 'green',
+            'offColor' => 'red',
+            'onText' => 'Add',
+            'offText' => 'Remove',
+            'animate' => true,
+            'state' => true,
+        ];
+      @endphp
+      <div class="row"><x-adminlte-input-switch name="iswSizeLG" label="Operation" :config="$config3">    <x-slot name="prependSlot">
+        <div class="input-group-text bg-lightblue">
+            <i class="fas fa-toggle-on"></i>
+        </div>
+    </x-slot></x-adminlte-input-switch></div>
       <div class="row">
+        
         <div class="col-6" id="groupSelector">
           <x-group-selector id="gSelector" :options="$groupOptions" :selected="$selectedGroups"></x-group-selector>
         </div>

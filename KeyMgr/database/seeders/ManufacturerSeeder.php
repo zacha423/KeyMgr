@@ -4,11 +4,11 @@
  */
 namespace Database\Seeders;
 
+use App\Models\Manufacturer;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Lock;
 
-class LockSeeder extends Seeder
+class ManufacturerSeeder extends Seeder
 {
   use WithoutModelEvents;
   /**
@@ -16,6 +16,13 @@ class LockSeeder extends Seeder
    */
   public function run(): void
   {
-    Lock::factory()->createMany(25)->unique();
+    Manufacturer::factory()->createMany([
+      ['name' => 'Medeco'],
+      ['name' => 'Kwikset'],
+      ['name' => 'Arrow'],
+      ['name' => 'Schalge'],
+    ]);
+
+    Manufacturer::factory()->createMany(5);
   }
 }

@@ -1,11 +1,8 @@
 <?php
 
 use App\Http\Controllers\BuildingController;
-<<<<<<< HEAD
 use App\Http\Controllers\LockController;
-=======
 use App\Http\Controllers\KeyController;
->>>>>>> main
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserGroupController;
 use App\Http\Controllers\UserRoleController;

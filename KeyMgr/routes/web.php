@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BuildingController;
+use App\Http\Controllers\LockController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserGroupController;
 use App\Http\Controllers\UserRoleController;
@@ -24,6 +25,7 @@ Route::resources ([
   'groups' => UserGroupController::class,
   'roles' => UserRoleController::class,
   'users' => UserController::class,
+  'locks' => LockController::class,
 ]);
 
 Route::get('/', function () {

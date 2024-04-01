@@ -6,7 +6,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLockRequest;
 use App\Http\Requests\UpdateLockRequest;
+use App\Http\Resources\BuildingResource;
+use App\Http\Resources\LockModelResource;
+use App\Models\Building;
 use App\Models\Lock;
+use App\Models\LockModel;
+use App\Models\Wrappers\BuildingWrapper;
+use App\Models\Wrappers\LockModelWrapper;
 use App\Models\Wrappers\LockWrapper;
 use Illuminate\Http\Request;
 use App\Http\Resources\LockResource;
@@ -21,6 +27,9 @@ class LockController extends Controller
   {
     return view('locks.locklist', [
       'locks' => LockResource::collection(Lock::all()->load(LockWrapper::loadRelationships()))->toArray($request),
+      'buildings' => BuildingResource::collection(Building::all()->load(BuildingWrapper::loadRelationships()))->toArray($request),
+      'keyways' => Keyway::all()->toArray(),
+      'models' => LockModelResource::collection(LockModel::all()->load(LockModelWrapper::loadRelationships()))->toArray($request),
     ]);
   }
 

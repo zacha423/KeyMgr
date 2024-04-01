@@ -41,5 +41,10 @@ class Lock extends Model
   {
     return $this->belongsToMany(Key::class);
   }
+
+  public function door(): BelongsTo
+  {
+    return $this->belongsTo(Door::class);
+  }
   
 }

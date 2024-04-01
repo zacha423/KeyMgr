@@ -16,6 +16,14 @@ class LockResource extends JsonResource
    */
   public function toArray(Request $request): array
   {
+    $building = $room = null;
+    
+    if ($this->room)
+    {
+      $room = $this->room->number;
+      $building = $this->room->building->name;
+    }
+
     return array_merge([
       'numPins' => $this->numPins,
       'upperPinLengths' => $this->upperPinLengths,
@@ -23,7 +31,8 @@ class LockResource extends JsonResource
       'installDate' => $this->installDate,
       'keyway' => $this->keyway->name,
       'keyway_id' => $this->keyway->id,
-
+      'room' => $room,
+      'building' => $building,
     ], (new LockModelResource($this->lockModel))->toArray($request));
   }
 }

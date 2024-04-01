@@ -22,6 +22,7 @@ class LockResource extends JsonResource
       'lowerPinLengths' => $this->lowerPinLengths,
       'installDate' => $this->installDate,
       'keyway' => $this->keyway->name,
+      'keyway_id' => $this->keyway->id,
 
     ], (new LockModelResource($this->lockModel))->toArray($request));
   }

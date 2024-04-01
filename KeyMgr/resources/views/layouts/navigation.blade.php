@@ -17,41 +17,7 @@
                     </x-nav-link>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('index')" :active="request()->routeIs('index')">
-                        {{ __('Index') }}
-                    </x-nav-link>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('log')" :active="request()->routeIs('log')">
-                        {{ __('Activity Log') }}
-                    </x-nav-link>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('campus.index')" :active="request()->routeIs('campus')">
-                        {{ __('Campuses') }}
-                    </x-nav-link>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('building.index')" :active="request()->routeIs('building')">
-                        {{ __('Buildings') }}
-                    </x-nav-link>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('room.index')" :active="request()->routeIs('room')">
-                        {{ __('Rooms') }}
-                    </x-nav-link>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('roles.index')" :active="request()->routeIs('role')">
-                        {{ __('User Roles') }}
-                    </x-nav-link>
-                </div>
+                <!-- Other navigation links... -->
 
             </div>
 

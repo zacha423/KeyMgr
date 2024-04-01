@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->tinyInteger('numPins');
             $table->string('upperPinLengths');
-            $table->string('masterPinLengths');
+            $table->string('masterPinLengths')->nullable()->default(null);
             $table->string('lowerPinLengths');
             $table->dateTimeTz('installDate');
             $table->foreignId('keyway_id')->constrained()->noActionOnDelete();

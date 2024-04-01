@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BuildingController;
+use App\Http\Controllers\KeyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserGroupController;
 use App\Http\Controllers\UserRoleController;
@@ -54,6 +55,7 @@ Route::middleware('auth')->group(function () {
   Route::post('/accounts/groups/unassign', [UserController::class, 'unassignUsersFromGroup'])->name('user.group.unassign');
   Route::resource('room', RoomController::class,)->except(['create']);
   Route::resource('building', BuildingController::class)->except(['create']);
+  Route::resource('keys', KeyController::class)->except(['create']);
   Route::get('building/{building}/rooms', [BuildingController::class, 'showRooms'])->name('building.buildingRooms');
 });
 

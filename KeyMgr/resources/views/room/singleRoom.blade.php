@@ -20,7 +20,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="card card-primary card-outline"> <!-- Added card classes here -->
+                <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h2 class="card-title"><strong>Room Number:</strong> {{ $room['number'] }}</h2>
                         <div class="card-tools">

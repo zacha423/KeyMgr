@@ -1,5 +1,5 @@
 <form>
-  <div class="flex-container">
+  <div class="col">
     <x-adminlte-modal :title="$title" :id="$id" theme="info" v-centered>
       {{-- The name has to be different on the switch? --}}
       <div class="row">
@@ -22,7 +22,6 @@
           </x-slot>
         </x-adminlte-input-switch>
       </div>
-      <div class="row">
         <x-adminlte-select :name="$selectName" :label="$selectName" multiple theme="info">
           <x-slot name="prependSlot">
             <div class="input-group-text bg-gradient-info">

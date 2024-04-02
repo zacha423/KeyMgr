@@ -29,36 +29,10 @@
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="max-w-xl">
                     @include('users.partials.update-user-information')
-                    
-                    <div class="form-group">
-                        <label>Multiple</label>
-                        <select class="select2" multiple="multiple" data-placeholder="Select a State" style="width: 50%;">
-
-                        </select>
-                    </div>
 
                 </div>
             </div>
         </div>
     </div>
 
-@stop
-
-
-@section('js')
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.select2').select2({
-                data: usergroups
-            });
-        });
-        $(document).ready(function() {
-            $('.js-example-basic-multiple').select2({
-                data: data
-            });
-        });
-    </script>
 @stop

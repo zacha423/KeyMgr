@@ -31,8 +31,6 @@ $config = [
 @section("content")
     <div class="card">
         <div class="card-body">
-
-
             <x-adminlte-datatable id="building-table" :heads="$heads" bordered compressed hoverable>
                 @foreach($config['data'] as $row)
                     <tr>

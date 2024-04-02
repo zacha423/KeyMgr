@@ -16,13 +16,16 @@ $config = [
     'columns' => [null, null, null, ['orderable' => false]],
 ];
 @endphp
-
-<x-adminlte-datatable id="table5" :heads="$heads" bordered compressed hoverable>
-    @foreach($config['data'] as $row)
-        <tr>
-            @foreach($row as $cell)
-                <td>{!! $cell !!}</td>
-            @endforeach
-        </tr>
-    @endforeach
-</x-adminlte-datatable>
+    <div class="card">
+        <div class="card-body">
+            <x-adminlte-datatable id="table5" :heads="$heads" bordered compressed hoverable>
+                @foreach($config['data'] as $row)
+                    <tr>
+                        @foreach($row as $cell)
+                            <td>{!! $cell !!}</td>
+                        @endforeach
+                    </tr>
+                @endforeach
+            </x-adminlte-datatable>
+    </div>
+</div>

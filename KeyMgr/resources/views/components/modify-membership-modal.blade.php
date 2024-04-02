@@ -1,4 +1,4 @@
-<form>
+<form action="{{$submitURL}}" method="post">
   <div class="container-flex">
     <x-adminlte-modal :title="$title" :id="$id" theme="info" v-centered>
       {{-- The name has to be different on the switch? --}}
@@ -37,8 +37,8 @@
         </div>
       </div>
       <x-slot name="footerSlot">
-        <x-adminlte-button class="mr-auto" label="Save" theme="success"/>
-        <x-adminlte-button label="Cancel" theme="danger"/>
+        <x-adminlte-button type="submit" class="mr-auto" label="Save" theme="success"/>
+        <x-adminlte-button label="Cancel" theme="danger" data-dismiss='modal'/>
       </x-slot>
     </x-adminlte-modal>
   </div>
@@ -50,5 +50,4 @@
       $('#' + '<?php echo $id ?>').find('.info-box-number')[0].innerHTML = getSelectedIDs('table5').length;
     });
   })
-
 </script>

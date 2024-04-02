@@ -5,6 +5,7 @@ return [
   'first_name' => 'First Name',
   'last_name' => 'Last Name',
   'campus_name' => 'Campus Name',
+  'role_name' => 'Role Name',
   'country' => 'Country',
   'state' => 'State',
   'city' => 'City',

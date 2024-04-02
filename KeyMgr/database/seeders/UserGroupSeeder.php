@@ -21,8 +21,7 @@ class UserGroupSeeder extends Seeder
     UserGroup::factory()->createMany ([
       ['name'=>'Computer Science'],
       ['name'=>'Mathematics']
-    ])->each (function ($subdepartment) {
-      $NatSci = UserGroup::find(1);
+    ])->each (function ($subdepartment) use ($NatSci) {
       $subdepartment->parent()->associate($NatSci)->save();
     });
 

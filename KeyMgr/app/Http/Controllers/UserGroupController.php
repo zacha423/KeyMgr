@@ -61,17 +61,6 @@ class UserGroupController extends Controller
     ];    
     
     return view ('users.usergroup', $data);
-
-    // $groupIDs = $request->query('groups');
-
-    // $groups = [];
-    // foreach (GroupResource::collection(UserGroup::all())->toArray($request) as $group) {
-    //   $groups[$group['id']] = $group['name'];
-    // }
-
-    // return view ('users.usergroup', [
-    //   'groups' => UserGroup::all()->toArray(),
-    // ]);   
   }
 
   /**
@@ -94,11 +83,7 @@ class UserGroupController extends Controller
     $group = UserGroup::find($validated['parentGroup'])->children()->save(
       new UserGroup(['name' => $validated['groupName']])
     );
-
-    // return view ('users.usergroup', [
-    //   'group' => $group->toArray(),
-    //   'groupJSON' => $group->toJson(),
-    // ]);
+    
     return redirect('/groups');
   }
 

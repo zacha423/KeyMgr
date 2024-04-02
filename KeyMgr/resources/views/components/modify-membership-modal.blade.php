@@ -46,9 +46,9 @@
 
 <script>
   $(()=>{
-    $('#groupModal' ).on('show.bs.modal', ($e)=>{
-    $('.info-box-number')[0].innerHTML = getSelectedIDs('table5').length;
-  });
+    $('#' + '<?php echo $id ?>' ).on('show.bs.modal', ($e)=>{
+      $('#' + '<?php echo $id ?>').find('.info-box-number')[0].innerHTML = getSelectedIDs('table5').length;
+    });
   })
 
 </script>

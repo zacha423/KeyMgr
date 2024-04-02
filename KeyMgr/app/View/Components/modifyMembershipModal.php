@@ -14,10 +14,11 @@ class modifyMembershipModal extends Component
     public function __construct(
       public string $id, 
       public string $title, 
-      public string $selectName
+      public string $selectName,
+      public mixed $options,
     )
     {
-        //
+      //
     }
 
     /**

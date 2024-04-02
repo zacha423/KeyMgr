@@ -25,10 +25,11 @@
       <div class="row">
         <x-adminlte-select :name="$selectName" :label="$selectName" multiple theme="info">
           <x-slot name="prependSlot">
-            <div class="input-group-text">
-              <i class="fas fa-lg fa-user-group"></i>
+            <div class="input-group-text bg-gradient-info">
+              <i class="fas fa-users"></i>
             </div>
           </x-slot>
+          <x-adminlte-options :options="$options"/>
         </x-adminlte-select>
       </div>
     </x-adminlte-modal>

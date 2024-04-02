@@ -37,7 +37,7 @@
   <x-adminlte-button type="button" theme="primary" data-toggle="modal" data-target="#groupModal" id="addGroup" name="addGroup" label="Manage Groups"></x-adminlte-button>
   <x-adminlte-button type="button" theme="success" data-toggle="modal" data-target="#userForm" label="Register New User"></x-adminlte-button>
   @include('users.partials.assignRolesModal')
-  @include('users.partials.assignGroupsModal')
+  @include('users.partials.assignGroupsModal', ['options' => $groupOptions])
   
   <!-- New USer Modal -->
   <x-adminlte-modal id="userForm" title="User Creation Form" theme="lightblue" size="sm1" icon="fas fa-user" 

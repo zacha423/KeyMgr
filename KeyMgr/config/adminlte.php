@@ -327,6 +327,11 @@ return [
             'url' => 'keys',
             'icon' => 'fas fa-fw fa-key',
         ],
+        [
+            'text' => 'Locks',
+            'url' => 'locks',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',

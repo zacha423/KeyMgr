@@ -23,20 +23,27 @@ $config = [
     ],
 ];
 @endphp
+
 @section('content_header')
     <h1>List of Buildings</h1>
 @stop
 @section('plugins.Datatables', true)
 @section("content")
-    <x-adminlte-datatable id="building-table" :heads="$heads" bordered compressed hoverable>
-        @foreach($config['data'] as $row)
-            <tr>
-                @foreach($row as $cell)
-                    <td>{!! $cell !!}</td>
+    <div class="card">
+        <div class="card-body">
+
+
+            <x-adminlte-datatable id="building-table" :heads="$heads" bordered compressed hoverable>
+                @foreach($config['data'] as $row)
+                    <tr>
+                        @foreach($row as $cell)
+                            <td>{!! $cell !!}</td>
+                        @endforeach
+                    </tr>
                 @endforeach
-            </tr>
-        @endforeach
-    </x-adminlte-datatable>
+            </x-adminlte-datatable>
+        </div>
+    </div>
 @stop
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

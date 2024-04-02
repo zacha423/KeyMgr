@@ -1,0 +1,1 @@
+<x-modify-membership-modal id="groupModal" select-name="Available Groups" title="Group Membership Management"></x-modify-membership-modal>

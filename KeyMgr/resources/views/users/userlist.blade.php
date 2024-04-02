@@ -10,21 +10,6 @@
   <form action="/users" method="GET">
     <!-- Drop Down for UserRoles and UserGroups -->
     <div class="flex-container">
-      @php
-        $config3 = [
-            'onColor' => 'green',
-            'offColor' => 'red',
-            'onText' => 'Add',
-            'offText' => 'Remove',
-            'animate' => true,
-            'state' => true,
-        ];
-      @endphp
-      <div class="row"><x-adminlte-input-switch name="iswSizeLG" label="Operation" :config="$config3">    <x-slot name="prependSlot">
-        <div class="input-group-text bg-lightblue">
-            <i class="fas fa-toggle-on"></i>
-        </div>
-    </x-slot></x-adminlte-input-switch></div>
       <div class="row">
         
         <div class="col-6" id="groupSelector">
@@ -48,10 +33,12 @@
 </x-adminlte-card>
 {{-- User Management Tools --}}
 <x-adminlte-card theme="info" theme-mode="outline" title="Tools">
-  <x-adminlte-button type="button" theme="primary" id="addRole" name="addRole" label="Manage Roles"></x-adminlte-button>
-  <x-adminlte-button type="button" theme="primary" id="addGroup" name="addGroup" label="Manage Groups"></x-adminlte-button>
+  <x-adminlte-button type="button" theme="primary" data-toggle="modal" data-target="#roleModal" id="addRole" name="addRole" label="Manage Roles"></x-adminlte-button>
+  <x-adminlte-button type="button" theme="primary" data-toggle="modal" data-target="#groupModal" id="addGroup" name="addGroup" label="Manage Groups"></x-adminlte-button>
   <x-adminlte-button type="button" theme="success" data-toggle="modal" data-target="#userForm" label="Register New User"></x-adminlte-button>
-
+  @include('users.partials.assignRolesModal')
+  @include('users.partials.assignGroupsModal')
+  
   <!-- New USer Modal -->
   <x-adminlte-modal id="userForm" title="User Creation Form" theme="lightblue" size="sm1" icon="fas fa-user" 
                     v-centered static-backdrop scrollable>

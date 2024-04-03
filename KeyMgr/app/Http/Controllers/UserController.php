@@ -97,19 +97,22 @@ class UserController extends Controller
    * 
    * @todo Determine appropriate return type
    */
-  public function assignUsersToGroup(Request $request): RedirectResponse
+  public function groupMembershipManagement (Request $request)
   {
+    $a = $request;
+
     // RBACWrapper::assignUsersToGroup();
 
-    return redirect('/');
+    return dd($request, $request->all());
   }
   /**
    * Remove a group membership from a set of users
    * 
    * @todo Determine appropriate return type
    */
-  public function unassignUsersFromGroup(Request $request): RedirectResponse
+  public function roleMembershipManagement(Request $request): RedirectResponse
   {
+    $a = $request;
     // RBACWrapper::unassignUsersFromGroup();
 
     return redirect('/');

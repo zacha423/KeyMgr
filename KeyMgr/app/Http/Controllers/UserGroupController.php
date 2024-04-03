@@ -109,6 +109,7 @@ class UserGroupController extends Controller
   {
     return view ('users.usergroup', [
       'group' => $group->load('children')->toArray(),
+      'groups' => [],
       'groupJSON' => $group->load('children')->toJson(),
     ]);
   }

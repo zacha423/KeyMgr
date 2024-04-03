@@ -6,7 +6,9 @@
   <h1>User List</h1>
 @stop
 
+@push('js')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@endpush
 
 @section ("content")
 {{-- Load plugin data --}}

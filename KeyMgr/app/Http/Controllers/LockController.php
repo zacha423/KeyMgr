@@ -49,7 +49,7 @@ class LockController extends Controller
         'keyway' => $lockRes['keyway'],
         'keyway_id' => $lockRes['keyway_id'],
         'buildingName' => $lock->building()->name, 
-        'roomName' => $lock->room()->number,
+        'roomName' => $lock->getRoom()->number,
         'actions' => '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>',
       ]);
     }

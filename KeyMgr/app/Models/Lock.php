@@ -52,7 +52,7 @@ class Lock extends Model
     return $this->door()->first()->room()->first()->building()->first();
   }
 
-  public function room(): Room
+  public function getRoom(): Room
   {
     return $this->door()->first()->room()->first();
   }

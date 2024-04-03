@@ -112,15 +112,11 @@ class User extends Authenticatable
 
     foreach ($elevatedRoles as $role)
     {
-      // return 'shit';
       if ($this->roles->contains($role))
       {
         return true;
       }
     }
     return false;
-    // return $this->whereHas('roles', function ($query) use ($elevatedRoles) {
-      // $query->whereIn('name', $elevatedRoles);
-    // })->exists();
   }
 }

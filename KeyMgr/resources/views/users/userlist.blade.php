@@ -9,15 +9,17 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 @section ("content")
+{{-- Load plugin data --}}
 @section('plugins.Datatables', true)
 @section('plugins.BootStrapSelect', true)
 @section('plugins.BootStrapSwitch', true)
-<x-adminlte-card theme="info" theme-mode="outline" title="Limit results by:">
+
+{{-- Tool Card for limiting shown user data.  --}}
+<x-adminlte-card theme="info" theme-mode="outline" title="Limit results by:" collapsible>
   <form action="/users" method="GET">
-    <!-- Drop Down for UserRoles and UserGroups -->
     <div class="flex-container">
+      {{-- Group/Role Selectors --}}
       <div class="row">
-        
         <div class="col-6" id="groupSelector">
           <x-group-selector id="gSelector" :options="$groupOptions" :selected="$selectedGroups"></x-group-selector>
         </div>
@@ -25,9 +27,7 @@
           <x-role-selector id="rSelector" :options="$roleOptions" :selected="$selectedRoles"></x-role-selector>
         </div>
       </div>
-      
       <div class="row">
-        {{-- Button to refresh page / limit search --}}
         <div class="col">
           <button type="submit" class="btn btn-primary refineSearch" id="refineSearch">
             Refine Search
@@ -37,8 +37,9 @@
     </div>
   </form>
 </x-adminlte-card>
+
 {{-- User Management Tools --}}
-<x-adminlte-card theme="info" theme-mode="outline" title="Tools">
+<x-adminlte-card theme="info" theme-mode="outline" title="Tools" collapsible>
   <x-adminlte-button type="button" theme="primary" data-toggle="modal" data-target="#roleModal" id="addRole" name="addRole" label="Manage Roles"></x-adminlte-button>
   <x-adminlte-button type="button" theme="primary" data-toggle="modal" data-target="#groupModal" id="addGroup" name="addGroup" label="Manage Groups"></x-adminlte-button>
   <x-adminlte-button type="button" theme="success" data-toggle="modal" data-target="#userForm" label="Register New User"></x-adminlte-button>
@@ -160,7 +161,6 @@
 </x-adminlte-card>
 
 {{-- The actual datatable --}}
-
 <div class="flex-container">
   @include('users.partials.usertable')
 </div>

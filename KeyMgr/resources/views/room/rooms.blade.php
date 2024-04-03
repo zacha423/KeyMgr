@@ -47,10 +47,10 @@ $config = [
     $(document).ready(function() {
         $('.btn-delete').click(function(e) {
             e.preventDefault();
-            const userId = $(this).data('key-id');
+            const keyID = $(this).data('key-id');
             if (confirm('Are you sure you want to delete this room?')) {
                 $.ajax({
-                    url: '/room/' + userId,
+                    url: '/room/' + keyID,
                     method: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',

@@ -49,13 +49,12 @@ class LockController extends Controller
         'keyway' => $lockRes['keyway'],
         'keyway_id' => $lockRes['keyway_id'],
         'buildingName' => $lock->building()->name, 
-        'roomName' => $lockRes['room'],
+        'roomName' => $lock->room()->number,
         'actions' => '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>',
       ]);
     }
     return view('locks.locklist', [
       'data' => $data,
-      'locks' => LockResource::collection($allLocks)->toArray($request),
       'buildings' => BuildingResource::collection(Building::all()->load(BuildingWrapper::loadRelationships()))->toArray($request),
       'keyways' => Keyway::all()->toArray(),
       'models' => LockModelResource::collection(LockModel::all()->load(LockModelWrapper::loadRelationships()))->toArray($request),

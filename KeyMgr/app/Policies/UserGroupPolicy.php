@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @author Zachary Abela-Gale <abel1325@pacificu.edu>
+ */
 namespace App\Policies;
 
 use App\Models\User;
@@ -30,7 +32,7 @@ class UserGroupPolicy
    */
   public function create(User $user): bool
   {
-    //
+    return $user->isElevated();
   }
 
   /**
@@ -38,7 +40,7 @@ class UserGroupPolicy
    */
   public function update(User $user, UserGroup $userGroup): bool
   {
-    //
+    return $user->isElevated();
   }
 
   /**
@@ -46,7 +48,7 @@ class UserGroupPolicy
    */
   public function delete(User $user, UserGroup $userGroup): bool
   {
-    //
+    return $user->isElevated();
   }
 
   /**
@@ -54,7 +56,7 @@ class UserGroupPolicy
    */
   public function restore(User $user, UserGroup $userGroup): bool
   {
-    //
+    return $user->isElevated();
   }
 
   /**
@@ -62,6 +64,6 @@ class UserGroupPolicy
    */
   public function forceDelete(User $user, UserGroup $userGroup): bool
   {
-    //
+    return $user->isElevated();
   }
 }

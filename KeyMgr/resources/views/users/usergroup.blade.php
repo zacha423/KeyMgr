@@ -1,15 +1,28 @@
 @extends ("adminlte::page")
 @section('title', __('User Groups'))
 
-@section ("content")
 @section('content_header')
     <h1>User Groups</h1>
 @stop
 
+@section('content')
 
-<div class="col-sm-4">
+@section('plugins.Datatables', true)
+
+<x-adminlte-card theme="info" theme-mode="outline" title="Add New Group" collapsible>
+{{--<div class="col-sm-4">--}}
+    <div class="row">
 <form action="/groups" method="POST">
   @csrf
+  <x-adminlte-select name="parentGroup" label="Parent Group" label-class="info">
+    <x-slot name="prependSlot">
+      <div class="input-group-text bg-info">
+        <i class="fas fa-users"></i>
+      </div>
+    </x-slot>
+    <x-adminlte-options :options="$groups"/>
+  </x-adminlte-select>
+
   <label for="parentGroup">Parent Group</label>
   <div class="form-group">
   <select name="parentGroup" class="form-control">
@@ -25,14 +38,18 @@
   <label for="inputGroup">Group Name</label>
   <input type="text" class="form-control" name="groupName" placeholder="Enter group name">
   </div>
+</div>
+<div class="row">
   <div class="col-sm-3">
 
     <button type="submit" class="btn btn-block btn-primary">Submit</button>
   </div>
-</form>
 </div>
+</form>
+{{--</div>--}}
+</x-adminlte-card>
 
-@section('plugins.Datatables', true)
+
 <div class="flex-container">
   @include('users.partials.grouptable')
 </div>

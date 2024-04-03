@@ -1,7 +1,7 @@
 @extends ("adminlte::page")
 @section('title', __('User List'))
 
-@section ("content")
+
 @section('content_header')
   <h1>User List</h1>
 @stop

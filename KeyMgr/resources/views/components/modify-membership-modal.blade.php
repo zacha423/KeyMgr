@@ -33,9 +33,6 @@
               </div>
             </x-slot>
             <x-adminlte-options :options="$options"/>
-            {{--<x-slot name="appendSlot"> 
-              <x-adminlte-button theme="outline-dark" label="Clear" icon="fas fa-lg fa-ban text-danger"/> 
-            </x-slot>--}}
           </x-adminlte-select>
         </div>
       </div>

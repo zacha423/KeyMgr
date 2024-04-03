@@ -87,7 +87,7 @@ class LockController extends Controller
    */
   public function show(Request $request, Lock $lock)
   {
-    $lock = $lock->load(LockWrapper::loadRelationships()); 
+    $lock->load(LockWrapper::loadRelationships()); 
     
     return view('locks.locksingle',[
       'lockRes' => (new LockResource($lock))->toArray($request),

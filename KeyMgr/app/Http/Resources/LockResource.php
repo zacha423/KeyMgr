@@ -18,10 +18,10 @@ class LockResource extends JsonResource
   {
     $building = $room = null;
     
-    if ($this->room)
+    if ($this->door)
     {
-      $room = $this->room->number;
-      $building = $this->room->building->name;
+      $room = $this->door->room->number;
+      $building = $this->door->room->building->name;
     }
 
     return array_merge([

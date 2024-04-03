@@ -25,6 +25,31 @@ class LockController extends Controller
    */
   public function index(Request $request)
   {
+
+    $data = [];
+
+    foreach (Lock::all()->load('keys', 'room', 'building') as $lock) {//updaTe
+      $lockRes = (new LockResource($lock))->toArray($request);
+
+      $btnEdit = '<a href="' . route('locks.edit', $lock->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+      <i class="fa fa-lg fa-fw fa-pen"></i>
+      </a>';
+      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-key-id="' . $lock->id . '">
+            <i class="fa fa-lg fa-fw fa-trash"></i>
+        </button>';
+      $btnDetails = '<a href="' . route('locks.show', $lock->id) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+            <i class="fa fa-lg fa-fw fa-eye"></i>
+      </a>';
+
+      array_push($data, [//updaTe
+        'id' => $lock->id,
+        'number' => $lock->number,
+        'description' => $lock->description,
+        'buildingName' => $lockRes['building'], //updaTe
+        'roomName' => $lockRes['room'],//updaTe
+        'actions' => '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>',
+      ]);
+    }
     return view('locks.locklist', [
       'locks' => LockResource::collection(Lock::all()->load(LockWrapper::loadRelationships()))->toArray($request),
       'buildings' => BuildingResource::collection(Building::all()->load(BuildingWrapper::loadRelationships()))->toArray($request),

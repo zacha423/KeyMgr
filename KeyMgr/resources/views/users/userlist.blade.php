@@ -1,4 +1,10 @@
 @extends ("adminlte::page")
+@section('title', __('User List'))
+
+@section ("content")
+@section('content_header')
+  <h1>User List</h1>
+@stop
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

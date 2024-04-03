@@ -16,9 +16,17 @@ class GroupResource extends JsonResource
    */
   public function toArray(Request $request): array
   {
+    $parent = null;
+
+    if ($this->parent)
+    {
+      $parent = $this->parent->name;
+    }
+
     return [
       'id' => $this->id,
       'name' => $this->name,
+      'parentName' => $parent,
     ];
   }
 }

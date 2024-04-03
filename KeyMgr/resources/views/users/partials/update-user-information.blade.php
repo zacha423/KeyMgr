@@ -37,16 +37,18 @@
         --}}
         <div class="row">
           <div class="col-md-3">
-            <x-adminlte-select label="Group Memberships" id="usergroups" name="usergroups[]" disabled multiple>
+            <x-adminlte-select label="Group Memberships" id="usergroups" name="usergroups[]" multiple>
               <x-adminlte-options :options="$memberGroups"></x-adminlte-options>
             </x-adminlte-select>
           </div>
           <div class="col-md-3">
-            <x-adminlte-select label="Role Memberships" id="userroles" name="userroles[]" disabled multiple>
+            <x-adminlte-select label="Role Memberships" id="userroles" name="userroles[]" multiple>
               <x-adminlte-options :options="$memberRoles"></x-adminlte-options>
             </x-adminlte-select> 
           </div>
         </div>
+
+        
 
         <div class="row">
           <div class="flex items-center gap-4">
@@ -65,3 +67,4 @@
         </div>
     </form>
 </section>
+

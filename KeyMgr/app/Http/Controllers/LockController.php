@@ -49,7 +49,7 @@ class LockController extends Controller
         'installDate' => date('m/d/Y', strtotime($lockRes['installDate'])),
         'keyway' => $lockRes['keyway'],
         'keyway_id' => $lockRes['keyway_id'],
-        'buildingName' => $lock->building()->name, 
+        'buildingName' => $lock->building()->name,
         'roomName' => $lock->getRoom()->number,
         'actions' => '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>',
       ]);
@@ -88,11 +88,11 @@ class LockController extends Controller
    */
   public function show(Request $request, Lock $lock)
   {
-    $lock->load(LockWrapper::loadRelationships()); 
-    
-    return view('locks.locksingle',[
+    $lock->load(LockWrapper::loadRelationships());
+
+    return view('locks.locksingle', [
       'lockRes' => (new LockResource($lock))->toArray($request),
-      'buildingName' => $lock->building()->name, 
+      'buildingName' => $lock->building()->name,
       'roomName' => $lock->getRoom()->number,
       'lock' => (new LockResource($lock))->toArray($request),
     ]);
@@ -142,9 +142,9 @@ class LockController extends Controller
 
   public function getRooms(Request $request)
   {
-      $buildingID = $request->input('building_id');
-      $rooms = Room::where('building_id', $buildingID)->pluck('number', 'id');
-      return response()->json($rooms);
+    $buildingID = $request->input('building_id');
+    $rooms = Room::where('building_id', $buildingID)->pluck('number', 'id');
+    return response()->json($rooms);
   }
 
 }

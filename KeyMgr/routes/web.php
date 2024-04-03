@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
   Route::resource('keys', KeyController::class)->except(['create']);
   Route::resource('locks', LockController::class)->except(['create']);
   Route::get('building/{building}/rooms', [BuildingController::class, 'showRooms'])->name('building.buildingRooms');
+  Route::get("rooms", [LockController::class, 'getRooms'])->name('getRooms');
 });
 
 

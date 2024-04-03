@@ -42,7 +42,7 @@
   <x-adminlte-button type="button" theme="primary" data-toggle="modal" data-target="#roleModal" id="addRole" name="addRole" label="Manage Roles"></x-adminlte-button>
   <x-adminlte-button type="button" theme="primary" data-toggle="modal" data-target="#groupModal" id="addGroup" name="addGroup" label="Manage Groups"></x-adminlte-button>
   <x-adminlte-button type="button" theme="success" data-toggle="modal" data-target="#userForm" label="Register New User"></x-adminlte-button>
-  @include('users.partials.assignRolesModal')
+  @include('users.partials.assignRolesModal', ['options' => $roleOptions])
   @include('users.partials.assignGroupsModal', ['options' => $groupOptions])
   
   <!-- New USer Modal -->

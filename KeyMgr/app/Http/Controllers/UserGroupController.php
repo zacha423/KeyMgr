@@ -14,8 +14,6 @@ use Illuminate\Validation\Rules;
 use Illuminate\Auth\Events\Registered;
 use App\Http\Resources\GroupResource;
 
-
-
 class UserGroupController extends Controller
 {
   /**
@@ -23,55 +21,40 @@ class UserGroupController extends Controller
    */
   public function index(Request $request)
   {
-
     $groups = [];
     $allGroups = UserGroup::all()->load('parent');
 
     foreach (GroupResource::collection($allGroups)->toArray($request) as $group) {
-
-        $btnEdit = '<a href="' . route('groups.edit', $group['id']) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+      $btnEdit = '<a href="' . route('groups.edit', $group['id']) .
+        '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
           <i class="fa fa-lg fa-fw fa-pen"></i>
           </a>';
-        $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-campus-id="'
-          . $group['id'] . '">
+      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-campus-id="'
+        . $group['id'] . '">
           <i class="fa fa-lg fa-fw fa-trash"></i>
           </button>';
-        $btnDetails = '<a href="' . route('groups.show', $group['id']) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+      $btnDetails = '<a href="' . route('groups.show', $group['id']) .
+        '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
                 <i class="fa fa-lg fa-fw fa-eye"></i>
                 </a>';
 
-            
-        $groupData = [
-            'id' => $group['id'],
-            'name' => $group['name'],
-            'parent_name' => $group['parentName'],
-            '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
-        ];
+      $groupData = [
+        'id' => $group['id'],
+        'name' => $group['name'],
+        'parent_name' => $group['parentName'],
+        '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
+      ];
 
-        array_push($groups, $groupData);
-
-        
+      array_push($groups, $groupData);
     }
 
     $groupsArray = $allGroups->toArray();
-
     $data = [
-        'groups' => $groups,
-        'groupsArray' => $groupsArray
-    ];    
-    
-    return view ('users.usergroup', $data);
+      'groups' => $groups,
+      'groupsArray' => $groupsArray
+    ];
 
-    // $groupIDs = $request->query('groups');
-
-    // $groups = [];
-    // foreach (GroupResource::collection(UserGroup::all())->toArray($request) as $group) {
-    //   $groups[$group['id']] = $group['name'];
-    // }
-
-    // return view ('users.usergroup', [
-    //   'groups' => UserGroup::all()->toArray(),
-    // ]);   
+    return view('users.usergroup', $data);
   }
 
   /**
@@ -79,10 +62,9 @@ class UserGroupController extends Controller
    */
   public function create()
   {
-    return view ('users.usergroup', [
+    return view('users.usergroup', [
       'groups' => UserGroup::all()->toArray(),
-      'groupsJSON'=> UserGroup::all()->toJson(),
-    ]);   
+    ]);
   }
 
   /**
@@ -91,14 +73,10 @@ class UserGroupController extends Controller
   public function store(UserGroupRequest $request)
   {
     $validated = $request->safe();
-    $group = UserGroup::find($validated['parentGroup'])->children()->save(
+    UserGroup::find($validated['parentGroup'])->children()->save(
       new UserGroup(['name' => $validated['groupName']])
     );
 
-    // return view ('users.usergroup', [
-    //   'group' => $group->toArray(),
-    //   'groupJSON' => $group->toJson(),
-    // ]);
     return redirect('/groups');
   }
 
@@ -107,10 +85,9 @@ class UserGroupController extends Controller
    */
   public function show(UserGroup $group)
   {
-    return view ('users.usergroup', [
+    return view('users.usergroup', [
       'group' => $group->load('children')->toArray(),
       'groups' => [],
-      'groupJSON' => $group->load('children')->toJson(),
     ]);
   }
 
@@ -119,9 +96,9 @@ class UserGroupController extends Controller
    */
   public function edit(UserGroup $group)
   {
-    return view ('users.usergroup', [
+    return view('users.usergroup', [
       'group' => $group->load('children')->toArray(),
-      'groupJSON' => $group->load('children')->toJson(),
+      'groups' => [],
     ]);
   }
 
@@ -131,25 +108,19 @@ class UserGroupController extends Controller
   public function update(UserGroupRequest $request, UserGroup $group)
   {
     $validated = $request->safe();
-    $mapped = [];
-    if(isset($validated['groupName']))
-    {
+
+    if (isset($validated['groupName'])) {
       $group->name = $validated['groupName'];
-      $mapped['name']= $validated['groupName'];
     }
 
-    if (isset($validated['parentGroup']))
-    {
+    if (isset($validated['parentGroup'])) {
       $group->parent_id_fk = $validated['parentGroup'];
-      $mapped['parent_id_fk']=$validated['parentGroup'];
     }
-    
-    // $group->update($mapped);
+
     $group->save();
 
-    return view ('users.usergroup', [
+    return view('users.usergroup', [
       'group' => $group->load('children')->toArray,
-      'groupJSON' => $group->load('children')->toJson(),
     ]);
   }
 
@@ -162,6 +133,6 @@ class UserGroupController extends Controller
   {
     $group->delete();
 
-    return redirect('/groups'); 
+    return redirect('/groups');
   }
 }

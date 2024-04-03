@@ -101,9 +101,7 @@ class User extends Authenticatable
 
   public function isElevated()
   {
-    $configRoles = config('constants.roles');
-    
-    
+    $configRoles = config('constants.roles');    
     $elevatedRoles = (UserRole::whereIn('name', [
       $configRoles['issuer'], 
       $configRoles['locksmith'], 

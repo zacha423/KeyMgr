@@ -16,9 +16,9 @@
           'onText' => 'Add',
           'offText' => 'Remove',
           'animate' => true,
-          ]">    
+          ]" theme="info">    
           <x-slot name="prependSlot">
-            <div class="input-group-text bg-lightblue">
+            <div class="input-group-text bg-info">
               <i class="fas fa-toggle-on"></i>
             </div>
           </x-slot>
@@ -26,9 +26,9 @@
       </div></div>
       <div class="row">
         <div class="col">
-          <x-adminlte-select id="modalSelector" name="selectedData[]" :label="$selectName" multiple theme="info">
+          <x-adminlte-select id="modalSelector" name="selectedData[]" :label="$selectName" multiple>
             <x-slot name="prependSlot">
-              <div class="input-group-text bg-gradient-info">
+              <div class="input-group-text bg-info">
                 <i class="fas fa-users"></i>
               </div>
             </x-slot>

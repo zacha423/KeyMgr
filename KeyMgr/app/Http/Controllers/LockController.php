@@ -42,10 +42,10 @@ class LockController extends Controller
             <i class="fa fa-lg fa-fw fa-eye"></i>
       </a>';
 
-      array_push($data, [//updaTe
+      array_push($data, [
         'id' => $lock->id,
         'numPins' => $lockRes['numPins'],
-        'installDate' => $lockRes['installDate'], //likely needs some formatting either through PHP or JS.
+        'installDate' => date('m/d/Y', strtotime($lockRes['installDate'])),
         'keyway' => $lockRes['keyway'],
         'keyway_id' => $lockRes['keyway_id'],
         'buildingName' => $lock->building()->name, 
@@ -87,7 +87,13 @@ class LockController extends Controller
    */
   public function show(Request $request, Lock $lock)
   {
+    $lock = $lock->load(LockWrapper::loadRelationships()); 
+    
     return view('locks.locksingle',[
+      'lockRes' => (new LockResource($lock))->toArray($request),
+
+      'buildingName' => $lock->building()->name, 
+      'roomName' => $lock->getRoom()->number,
       'lock' => (new LockResource($lock))->toArray($request),
     ]);
   }

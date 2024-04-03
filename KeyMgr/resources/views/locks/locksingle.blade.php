@@ -33,24 +33,30 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <h1> INSERT LOCK INFORMATION </h1>
-                        <ul>
-                            <li> Number of Pins </li>
-                            <li> Upper Pins </li>
-                            <li> Lower Pins </li>
-                            <li> Building </li>
-                            <li> Room </li>
-                            <li> Keyway </li>
-                            <li> Install Date </li>
-                            <li> Model Information (New Card) </li>
-                        </ul>
-                            
-                        {{--<!-- <p><strong>Description:</strong> @if(isset($lock['description'])){{ $lock['description'] }}@else Description not available @endif</p>
-                        <p><strong>Building:</strong> @if(isset($lock['building_id'])){{ $lock['building']->name }}@else Building not available @endif</p>
-                        <p><strong>Door Description:</strong> @if(isset($lock['id'])){{ optional($door)->description ?: 'Not available' }}@else Door information not available @endif</p>
-                        <p><strong>Door Hardware:</strong> @if(isset($lock['id'])){{ optional($door)->hardwareDescription ?: 'Not available' }}@else Door information not available @endif</p> -->--}}
+
+                        <p><strong>Number of Pins:</strong> @if(isset($lock['numPins'])){{ $lock['numPins'] }}@else Number of Pins not available @endif</p>
+                        <p><strong>Building:</strong> @if(isset($lock['building'])){{ $lock['building'] }}@else Building not available @endif</p>
+                        <p><strong>Room:</strong> @if(isset($lock['room'])){{ $lock['room'] }}@else Room not available @endif</p>
+                        <p><strong>Install Date:</strong> @if(isset($lock['installDate'])){{ date('m/d/Y', strtotime($lockRes['installDate'])) }}@else Install Date not available @endif</p>
+
+
+                        <p><strong>Upper Pins:</strong> @if(isset($lock['upperPinLengths'])){{ $lock['upperPinLengths'] }}@else Upper Pins not available @endif</p>
+                        <p><strong>Lower Pins:</strong> @if(isset($lock['lowerPinLengths'])){{ $lock['lowerPinLengths'] }}@else Lower Pins not available @endif</p>
+                        <p><strong>Keyway:</strong> @if(isset($lock['keyway'])){{ $lock['keyway'] }}@else Keyway not available @endif</p>
                     </div>
                 </div>
+
+
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h2 class="card-title"><strong>Lock Model Information:</strong></h2>
+                    </div>
+
+                    <div class="card-body">
+                        <p><strong>Model Name:</strong> @if(isset($lock['name'])){{ $lock['name'] }}@else Model Name not available @endif</p>
+                        <p><strong>MACS:</strong> @if(isset($lock['MACS'])){{ $lock['MACS'] }}@else MACS not available @endif</p>
+                        <p><strong>Manufacturer:</strong> @if(isset($lock['manufacturer'])){{ $lock['manufacturer'] }}@else Manufacturer not available @endif</p>
+                    </div>
             </div>
         </div>
     </div>

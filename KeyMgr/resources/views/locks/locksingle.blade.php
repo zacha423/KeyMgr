@@ -45,10 +45,10 @@
                             <li> Model Information (New Card) </li>
                         </ul>
                             
-                        <!-- <p><strong>Description:</strong> @if(isset($lock['description'])){{ $lock['description'] }}@else Description not available @endif</p>
+                        {{--<!-- <p><strong>Description:</strong> @if(isset($lock['description'])){{ $lock['description'] }}@else Description not available @endif</p>
                         <p><strong>Building:</strong> @if(isset($lock['building_id'])){{ $lock['building']->name }}@else Building not available @endif</p>
                         <p><strong>Door Description:</strong> @if(isset($lock['id'])){{ optional($door)->description ?: 'Not available' }}@else Door information not available @endif</p>
-                        <p><strong>Door Hardware:</strong> @if(isset($lock['id'])){{ optional($door)->hardwareDescription ?: 'Not available' }}@else Door information not available @endif</p> -->
+                        <p><strong>Door Hardware:</strong> @if(isset($lock['id'])){{ optional($door)->hardwareDescription ?: 'Not available' }}@else Door information not available @endif</p> -->--}}
                     </div>
                 </div>
             </div>

@@ -100,7 +100,9 @@ class LockController extends Controller
   {
     return view('locks.lockEdit', [
       'lock' => (new LockResource($lock))->toArray($request),
+      'buildings' => BuildingResource::collection(Building::all()->load(BuildingWrapper::loadRelationships()))->toArray($request),
       'keyways' => Keyway::all()->toArray(),
+      'models' => LockModelResource::collection(LockModel::all()->load(LockModelWrapper::loadRelationships()))->toArray($request),
     ]);
   }
 

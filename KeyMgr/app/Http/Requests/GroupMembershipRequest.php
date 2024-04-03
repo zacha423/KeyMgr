@@ -1,6 +1,8 @@
 <?php
 /**
  * @author Zachary Abela-Gale <abel1325@pacificu.edu>
+ * 
+ * @todo Advanced validation of the checkbox/switch input.
  */
 namespace App\Http\Requests;
 
@@ -24,7 +26,7 @@ class GroupMembershipRequest extends FormRequest
   public function rules(): array
   {
     return [
-      'additionMode' => ['boolean'],
+      'additionMode' => ['nullable', ], //further testing TBD - would like to evaluate T/F/0/1 too.
       'selectedData.*' => ['required', 'exists:user_groups,id'],
       'selectedUsers.*' => ['required', 'exists:users,id'],
     ];

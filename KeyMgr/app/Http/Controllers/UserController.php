@@ -8,6 +8,7 @@
  */
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GroupMembershipRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\GroupResource;
@@ -97,13 +98,27 @@ class UserController extends Controller
    * 
    * @todo Determine appropriate return type
    */
-  public function groupMembershipManagement (Request $request)
+  public function groupMembershipManagement (GroupMembershipRequest $request)
   {
-    $a = $request;
+    $validated = $request->validated();
+    $users = User::find($validated['selectedUsers']);
+    $groups = UserGroup::find($validated['selectedData']);
 
-    // RBACWrapper::assignUsersToGroup();
+    foreach ($users as $user)
+    {
+      if (isset($validated['additionMode']))
+      {
+        $user->groups()->attach($groups);
+      }
+      else
+      {
+        $user->groups()->detach($groups);
+      }
+      
+    }
 
-    return dd($request, $request->all());
+    // return dd($request, $request->all());
+    return redirect()->route('users.index');
   }
   /**
    * Remove a group membership from a set of users

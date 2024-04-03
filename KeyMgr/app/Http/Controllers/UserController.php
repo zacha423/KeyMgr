@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GroupMembershipRequest;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\RoleMembershipRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\GroupResource;
 use App\Http\Resources\RoleResource;
@@ -117,7 +118,6 @@ class UserController extends Controller
       
     }
 
-    // return dd($request, $request->all());
     return redirect()->route('users.index');
   }
   /**
@@ -125,12 +125,25 @@ class UserController extends Controller
    * 
    * @todo Determine appropriate return type
    */
-  public function roleMembershipManagement(Request $request): RedirectResponse
+  public function roleMembershipManagement(RoleMembershipRequest $request): RedirectResponse
   {
-    $a = $request;
-    // RBACWrapper::unassignUsersFromGroup();
+    $validated = $request->validated();
+    $users = User::find($validated['selectedUsers']);
+    $roles = UserRole::find($validated['selectedData']);
 
-    return redirect('/');
+    foreach ($users as $user)
+    {
+      if(isset($validated['additionMode']))
+      {
+        $user->roles()->attach($roles);
+      }
+      else
+      {
+        $user->roles()->detach($roles);
+      }
+    }
+    
+    return redirect()->route('users.index');
   }
 
   public function store(Request $request)

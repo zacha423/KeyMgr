@@ -10,7 +10,7 @@ return [
     'requestor' => 'Key Requestor',
     'authority' => 'Key Authority',
     'issuer' => 'Key Issuer',
-    'locksmtih' => 'Locksmith',
+    'locksmith' => 'Locksmith',
     'admin' => 'Admin',
   ],
   'groups' => [

@@ -37,7 +37,7 @@ class Lock extends Model
   {
     return $this->belongsToMany(MessageTemplate::class);
   }
-  public function usableKeys(): BelongsToMany
+  public function keys(): BelongsToMany
   {
     return $this->belongsToMany(Key::class);
   }
@@ -45,6 +45,11 @@ class Lock extends Model
   public function door(): BelongsTo
   {
     return $this->belongsTo(Door::class);
+  }
+
+  public function building(): Building
+  {
+    return $this->door()->first()->room()->first()->building()->first();
   }
   
 }

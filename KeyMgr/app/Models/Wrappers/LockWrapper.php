@@ -10,7 +10,8 @@ class LockWrapper extends Wrapper
   {
     return array_merge([
       'keyway',
-      // 'door' => DoorWrapper::loadRelationships(),
+      'keys',
+      'door' => DoorWrapper::loadRelationships(),
       'lockModel' => LockModelWrapper::loadRelationships()
     ]);
   }

@@ -5,6 +5,7 @@
  */
 namespace Database\Factories;
 
+use App\Models\Door;
 use App\Models\Keyway;
 use App\Models\LockModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -30,6 +31,7 @@ class LockFactory extends Factory
       'installDate' => fake()->dateTimeThisDecade(),
       'keyway_id' => Keyway::all()->random(1)->first()->id,
       'lock_model_id' => LockModel::all()->random(1)->first()->id,
+      'door_id' => Door::all()->random(1)->first()->id,
     ];
   }
 

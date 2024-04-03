@@ -8,15 +8,15 @@ use App\Http\Requests\StoreLockRequest;
 use App\Http\Requests\UpdateLockRequest;
 use App\Http\Resources\BuildingResource;
 use App\Http\Resources\LockModelResource;
+use App\Http\Resources\LockResource;
 use App\Models\Building;
+use App\Models\Keyway;
 use App\Models\Lock;
 use App\Models\LockModel;
 use App\Models\Wrappers\BuildingWrapper;
 use App\Models\Wrappers\LockModelWrapper;
 use App\Models\Wrappers\LockWrapper;
 use Illuminate\Http\Request;
-use App\Http\Resources\LockResource;
-use App\Models\Keyway;
 
 class LockController extends Controller
 {
@@ -27,8 +27,9 @@ class LockController extends Controller
   {
 
     $data = [];
+    $allLocks = Lock::all()->load(LockWrapper::loadRelationships());
 
-    foreach (Lock::all()->load('keys', 'room', 'building') as $lock) {//updaTe
+    foreach ($allLocks as $lock) {
       $lockRes = (new LockResource($lock))->toArray($request);
 
       $btnEdit = '<a href="' . route('locks.edit', $lock->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
@@ -43,15 +44,18 @@ class LockController extends Controller
 
       array_push($data, [//updaTe
         'id' => $lock->id,
-        'number' => $lock->number,
-        'description' => $lock->description,
-        'buildingName' => $lockRes['building'], //updaTe
-        'roomName' => $lockRes['room'],//updaTe
+        'numPins' => $lockRes['numPins'],
+        'installDate' => $lockRes['installDate'], //likely needs some formatting either through PHP or JS.
+        'keyway' => $lockRes['keyway'],
+        'keyway_id' => $lockRes['keyway_id'],
+        'buildingName' => $lock->building()->name, 
+        'roomName' => $lockRes['room'],
         'actions' => '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>',
       ]);
     }
     return view('locks.locklist', [
-      'locks' => LockResource::collection(Lock::all()->load(LockWrapper::loadRelationships()))->toArray($request),
+      'data' => $data,
+      'locks' => LockResource::collection($allLocks)->toArray($request),
       'buildings' => BuildingResource::collection(Building::all()->load(BuildingWrapper::loadRelationships()))->toArray($request),
       'keyways' => Keyway::all()->toArray(),
       'models' => LockModelResource::collection(LockModel::all()->load(LockModelWrapper::loadRelationships()))->toArray($request),
@@ -82,9 +86,11 @@ class LockController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(Lock $lock)
+  public function show(Request $request, Lock $lock)
   {
-    return view('locks.locksingle');
+    return view('locks.locksingle',[
+      'lock' => (new LockResource($lock))->toArray($request),
+    ]);
   }
 
   /**

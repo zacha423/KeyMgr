@@ -3,6 +3,7 @@
 @section('content_header')
 @stop
 @section('content')
+<?php dump($data) ?>
 <div class="row">
   <button class="btn btn-primary" data-toggle="collapse" href="#lock">Locks Toggle</button>
   <button class="btn btn-primary" data-toggle="collapse" href="#build">Buildings Toggle</button>

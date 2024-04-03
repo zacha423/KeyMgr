@@ -46,7 +46,6 @@
                     </div>
                 </div>
 
-
                 <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h2 class="card-title"><strong>Lock Model Information:</strong></h2>

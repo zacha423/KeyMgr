@@ -16,6 +16,7 @@ use App\Models\LockModel;
 use App\Models\Wrappers\BuildingWrapper;
 use App\Models\Wrappers\LockModelWrapper;
 use App\Models\Wrappers\LockWrapper;
+use App\Models\Room;
 use Illuminate\Http\Request;
 
 class LockController extends Controller
@@ -91,7 +92,6 @@ class LockController extends Controller
     
     return view('locks.locksingle',[
       'lockRes' => (new LockResource($lock))->toArray($request),
-
       'buildingName' => $lock->building()->name, 
       'roomName' => $lock->getRoom()->number,
       'lock' => (new LockResource($lock))->toArray($request),
@@ -139,4 +139,12 @@ class LockController extends Controller
   {
     $lock->delete();
   }
+
+  public function getRooms(Request $request)
+  {
+      $buildingID = $request->input('building_id');
+      $rooms = Room::where('building_id', $buildingID)->pluck('number', 'id');
+      return response()->json($rooms);
+  }
+
 }

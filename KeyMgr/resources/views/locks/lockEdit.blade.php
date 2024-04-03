@@ -14,46 +14,67 @@
                 @method('patch')
 
                 <div class="form-group">
-                    <label for="number" class="col-form-label">{{ __('lock Number') }}</label>
-                    <input id="number" name="number" type="text" class="form-control" value="{{ old('number', $lock['number']) }}" required autofocus autocomplete="number">
-                    @error('number')
+                    <label for="numPins" class="col-form-label">{{ __('Number of Pins') }}</label>
+                    <input id="numPins" name="numPins" type="text" class="form-control" value="{{ old('numPins', $lock['numPins']) }}" required autofocus autocomplete="number">
+                    @error('numPins')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="form-group">
-                    <label for="description" class="col-form-label">{{ __('Description') }}</label>
-                    <input id="description" name="lockDesc" type="text" class="form-control" value="{{ old('description', $lock['description']) }}">
-                    @error('description')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="buildingID" class="col-form-label">{{ __('Select Building') }}</label>
-                    <select id="buildingID" name="building" class="form-control">
-                        <option value="{{ $lock['buildingID'] }}" disabled selected>{{ $lock['building']->name }}</option>
+                    <label for="building" class="col-form-label">{{ __('Select Building') }}</label>
+                    <select id="building" name="building" class="form-control">
+                        <option value="" disabled selected>Select Building</option>
                         @foreach($buildings as $building)
-                            @if($building['id'] != $lock['building_id'])
-                                <option value="{{ $building['id'] }}">{{ $building['name'] }}</option>
-                            @endif
+                            <option value="{{ $building['id'] }}">{{ $building['name'] }}</option>
                         @endforeach
                     </select>
                 </div>
 
+                <div class="form-group" id="roomSelection" style="display: none;">
+                    <label for="room" class="col-form-label">{{ __('Select Room') }}</label>
+                    <select id="room" name="room" class="form-control">
+                        <!-- Options will be dynamically populated based on selected building -->
+                    </select>
+                </div>
+
                 <div class="form-group">
-                    <label for="doorDesc" class="col-form-label">{{ __('Door Description') }}</label>
-                    <input id="doorDesc" name="doorDesc" type="text" class="form-control" value="{{ old('doorDesc', $lock->doors->first()->description) }}">
-                    @error('doorDesc')
+                    <label for="upperPinLengths" class="col-form-label">{{ __('Upper Pin Lengths') }}</label>
+                    <input id="upperPinLengths" name="upperPinLengths" type="text" class="form-control" value="{{ old('upperPinLengths', $lock['upperPinLengths']) }}">
+                    @error('upperPinLengths')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="form-group">
-                    <label for="doorHWDesc" class="col-form-label">{{ __('Door Hardware Description') }}</label>
-                    <input id="doorHWDesc" name="doorHWDesc" type="text" class="form-control" value="{{ old('doorHWDesc', $lock->doors->first()->hardwareDescription) }}">
-                    @error('doorHWDesc')
+                    <label for="lowerPinLengths" class="col-form-label">{{ __('Lower Pin Lengths') }}</label>
+                    <input id="lowerPinLengths" name="lowerPinLengths" type="text" class="form-control" value="{{ old('lowerPinLengths', $lock['lowerPinLengths']) }}">
+                    @error('lowerPinLengths')
                         <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="installDate" class="col-form-label">{{ __('Install Date') }}</label>
+                    <input id="installDate" name="installDate" type="text" class="form-control" value="{{ old('installDate', $lock['installDate']) }}">
+                    @error('installDate')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="keyway_id">Keyway</label>
+                    <select class="form-control" id="keyway_id" name="keyway_id">
+                        @foreach($keyways as $keyway)
+                            @if($keyway['id'] != $lock['keyway'])
+                                <option value="{{ $keyway['id'] }}">
+                                    {{ $keyway['name'] }}
+                                </option>
+                            @endif
+                        @endforeach
+                    </select>
+                    @error('keyway_id')
+                        <p class="text-danger">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -66,4 +87,46 @@
             </form>
         </div>
     </div>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.en-GB.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#installDate').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            });
+
+            $('#building').change(function() {
+                var buildingID = $(this).val();
+                if (buildingID) {
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ route('getRooms') }}?building_id=" + buildingID,
+                        success: function(res) {
+                            if (res) {
+                                $("#roomSelection").show();
+                                $("#room").empty();
+                                $.each(res, function(key, value) {
+                                    $("#room").append('<option value="' + key + '">' + value + '</option>');
+                                });
+                            } else {
+                                $("#roomSelection").hide();
+                            }
+                        }
+                    });
+                } else {
+                    $("#roomSelection").hide();
+                }
+            });
+        });
+    </script>
+
 @stop

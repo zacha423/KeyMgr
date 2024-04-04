@@ -76,7 +76,6 @@
     $(() => {
         console.log("fuck shit");
         $(window).load($('#updateGroupModal').modal('show'));
-        // $(window).load( ()=>{$('#updateGroupModal').modal('show'); });
     });
 </script>
 @endif

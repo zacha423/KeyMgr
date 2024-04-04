@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Auth\Events\Registered;
 use App\Http\Resources\GroupResource;
+use App\Http\Resources\UserResource;
 
 class UserGroupController extends Controller
 {
@@ -86,6 +87,18 @@ class UserGroupController extends Controller
    */
   public function show(UserGroup $group)
   {
+    $users = $group->users()->get();
+    $usersTableData = [];
+
+    foreach ($users as $user)
+    {
+      $u = new UserResource ($user);
+      array_push($usersTableData, [$u['id'], $u['firstName'], $u['lastName'], '<a href="' . route('users.show', $u['id']) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+            <i class="fa fa-lg fa-fw fa-eye"></i>
+            </a>']);
+    }
+
+
     $allGroups = UserGroup::all()->load('parent');
 
     $groupsArray = [];
@@ -97,6 +110,7 @@ class UserGroupController extends Controller
     return view('users.groupShow', [
       'group' => $group->load('children')->load('parent')->toArray(),
       'groups' => $groupsArray,
+      'users' => $usersTableData,
     ]);
   }
 

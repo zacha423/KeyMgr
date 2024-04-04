@@ -34,9 +34,12 @@ class UserRoleController extends Controller
                 <i class="fa fa-lg fa-fw fa-eye"></i>
                 </a>';
 
+      // $userCount = $role->users()->get()->count();
+      $userCount = 5;
+
       $roleData = [
         'name' => $role['name'],
-        'id' => $role['id'],
+        'id' => $userCount,
         '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
       ];
 
@@ -55,13 +58,6 @@ class UserRoleController extends Controller
 
     return view('users.userrole', $data);
 
-
-
-
-    // return view('users.userrole', [
-    //   'roles' => UserRole::all()->toArray(),
-    //   'rolesJSON' => UserRole::all()->toJson(),
-    // ]);
   }
 
 

@@ -1,12 +1,13 @@
 @extends("adminlte::page")
-@section('title', 'Groups | ' . ($group['name']))
+
+@section('title', 'Groups | ' . $group['name'])
 
 @section('content_header')
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Group Details | {{$group['name']}}</h1>
+                    <h1 class="m-0 text-dark">Group Details | {{ $group['name'] }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -25,27 +26,30 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="card card-primary card-outline">
-                <div class="card-header">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="m-0">Group Information</h5>
-
-                        <div class="btn-group">
-                                
-                            <a href="{{ route('groups.edit', ['group' => $group['id']]) }}" data-toggle="modal" data-target="#updateGroupModal" 
-                                id="newGroup" name="newGroup" label="Create New Group" class="btn btn-info mr-1"><i class="fas fa-edit"></i> Edit</a>
-
-                            @include('users.groups.updateGroupModal', ['options' => $groups, 'title' => 'Group Update Form'])
-                            
-                            <form action="{{ route('groups.destroy', ['group' => $group['id']]) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>
-                            </form>
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="m-0">Group Information</h5>
+                            <div class="btn-group">
+                                <a href="{{ route('groups.edit', ['group' => $group['id']]) }}" data-toggle="modal" data-target="#updateGroupModal" id="newGroup" name="newGroup" class="btn btn-info mr-1"><i class="fas fa-edit"></i> Edit</a>
+                                @include('users.groups.updateGroupModal', ['options' => $groups, 'title' => 'Group Update Form'])
+                                <form action="{{ route('groups.destroy', ['group' => $group['id']]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
                     <div class="card-body">
-                        <p><strong>Parent Group:</strong> @if($group['parent']){{$group['parent']['name']}}@else Parent information not available @endif</p>
+                        <p><strong>Parent Group:</strong> 
+                            @if($group['parent'])
+                                <a href="{{ route('groups.show', ['group' => $group['parent']['id']]) }}">
+                                    {{ $group['parent']['name'] }}
+                                </a>
+                            @else
+                                Parent information not available
+                            @endif
+                        </p>
 
                         @if(count($group['children']) > 0)
                             <p><strong>Child Groups:</strong></p>
@@ -61,12 +65,10 @@
                         @else
                             <p>No child groups available.</p>
                         @endif
-
                     </div>
                 </div>
             </div>
         </div>
-        
     </div>
 </div>
 @stop

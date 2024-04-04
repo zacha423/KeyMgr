@@ -86,7 +86,7 @@ class UserGroupController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(UserGroup $group)
+  public function show(Request $request, UserGroup $group)
   {
     $allGroups = UserGroup::all()->load('parent');
 
@@ -107,9 +107,18 @@ class UserGroupController extends Controller
    */
   public function edit(UserGroup $group)
   {
-    return view('users.usergroup', [
-      'group' => $group->load('children')->toArray(),
-      'groups' => [],
+    $allGroups = UserGroup::all()->load('parent');
+
+    $groupsArray = [];
+    foreach ($allGroups as $agroup)
+    {
+      $groupsArray[$agroup['id']] = $agroup['name'];
+    }
+
+    return view('users.groupShow', [
+      'group' => $group->load('children')->load('parent')->toArray(),
+      'groups' => $groupsArray,
+      'open' => 'true',
     ]);
   }
 
@@ -120,8 +129,8 @@ class UserGroupController extends Controller
   {
     $validated = $request->safe();
 
-    if (isset($validated['groupName'])) {
-      $group->name = $validated['groupName'];
+    if (isset($validated['name'])) {
+      $group->name = $validated['name'];
     }
 
     if (isset($validated['parentGroup'])) {

@@ -1,5 +1,5 @@
 @extends("adminlte::page")
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @section('title', 'Groups | ' . $group['name'])
 
 @section('content_header')
@@ -71,4 +71,13 @@
         </div>
     </div>
 </div>
+@if(isset($open))
+<script>
+    $(() => {
+        console.log("fuck shit");
+        $(window).load($('#updateGroupModal').modal('show'));
+        // $(window).load( ()=>{$('#updateGroupModal').modal('show'); });
+    });
+</script>
+@endif
 @stop

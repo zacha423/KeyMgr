@@ -14,7 +14,7 @@
       </x-adminlte-select>
 
       {{-- Group Name Input --}}
-      <x-adminlte-input name="groupName" :value="old('name', $group['name'])" label="Edit Group Name"/>
+      <x-adminlte-input name="name" :value="old('name', $group['name'])" label="Edit Group Name"/>
       
     </div>
     <x-slot name="footerSlot">

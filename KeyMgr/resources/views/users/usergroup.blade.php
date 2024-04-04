@@ -1,4 +1,5 @@
 @extends ("adminlte::page")
+<script src="http://localhost:8080/vendor/jquery/jquery.min.js"></script>
 @section('title', __('User Groups'))
 
 @section('content_header')
@@ -8,6 +9,7 @@
 @section('content')
 
 @section('plugins.Datatables', true)
+@section('plugins.BootStrapSwitch', true)
 
 {{-- Limit Search Results Card --}}
 <x-adminlte-card theme="info" theme-mode="outline" title="Limit results by:" collapsible>

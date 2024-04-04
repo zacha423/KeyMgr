@@ -10,6 +10,7 @@
 
 @section('plugins.Datatables', true)
 @section('plugins.BootStrapSwitch', true)
+@section('plugins.BootStrapSelect', true)
 
 {{-- Limit Search Results Card --}}
 <x-adminlte-card theme="info" theme-mode="outline" title="Limit results by:" collapsible>
@@ -24,7 +25,7 @@
     id="users" name="users" label="Manage Users" disabled/>
   <x-adminlte-button type="button" theme="success" data-toggle="modal" data-target="#newGroupModal" 
     id="newGroup" name="newGroup" label="Create New Group"/>
-  @include('users.groups.manageRolesModal', ['title' => 'Role Permissions Management'])
+  @include('users.groups.manageRolesModal', ['title' => 'Role Permissions Management', 'options' => $groupsArray])
   @include('users.groups.manageUsersModal', [])
   @include('users.groups.newGroupModal', ['options' => $groupsArray, 'title' => 'Group Creation Form'])
 </x-adminlte-card>

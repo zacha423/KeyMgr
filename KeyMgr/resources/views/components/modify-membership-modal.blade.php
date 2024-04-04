@@ -38,7 +38,7 @@
       </div>
     </form>
     <x-slot name="footerSlot">
-      <x-adminlte-button id="submitModal" type="submit" class="mr-auto" label="Save" theme="success" form='modalForm'/>
+      <x-adminlte-button :id="'submitModal' . $id" type="submit" class="mr-auto" label="Save" theme="success" form='modalForm'/>
       <x-adminlte-button label="Cancel" theme="danger" data-dismiss='modal'/>
     </x-slot>
   </x-adminlte-modal>
@@ -60,7 +60,7 @@
 
       // Disable submit button if no users are selected.
       $(()=> {
-        getSelectedIDs('table5').length === 0 ? $('#submitModal').attr('disabled', true):$('#submitModal').attr('disabled',false);
+        getSelectedIDs('table5').length === 0 ? $('#submitModal' + '<?php echo $id ?>').attr('disabled', true):$('#submitModal' + '<?php echo $id ?>').attr('disabled',false);
       });
     });
   })

@@ -1,5 +1,5 @@
 <div class="container-flex">
-  <form action="/groups/roles" method="post">
+  <form id="modalForm" action="/groups/roles" method="post">
   <x-adminlte-modal :title="$title" id="roleModal" theme="info" v-centered>
     <x-adminlte-info-box title="Selected Users" text="a" icon-theme="info" icon="fas fa-user"/>
   <x-adminlte-input-switch id="addMode" name="addMode" label="Operation" :config="[
@@ -25,14 +25,27 @@
 </div>
 <script>
   $(() =>{
-    // Add # selected groups to info box in modal.
+    
     $('#roleModal').on('show.bs.modal', ($e) => {
+      // Add # selected groups to info box in modal.
       $('#roleModal').find('.info-box-number')[0].innerHTML = getSelectedIDs('groupTable').length;
+
+      // Add items to hidden select.
+      $('#selectedGroups').remove();
+      $('<select id="selectedGroups" name="selectedGroups[]" multiple hidden>').appendTo('#modalForm');
+      $(() => {
+        getSelectedIDs('groupTable').forEach(($id) => {
+          $('<option selected />').attr('value', $id).appendTo('#selectedGroups');
+        });
+      });
+
+      // Disable modal's submit button if no groups selected.
+      $(() => {
+        getSelectedIDs('groupTable').length === 0 ? $('#saveRoles').attr('disabled', true):$('#saveRoles').attr('disabled', false);
+      })
     });
 
-    // Disable modal's submit button if no groups selected. (not working)
-    $(() => {
-      getSelectedIDs('groupTable').length === 0 ? $('#saveRoles').attr('disabled', true):$('#saveRoles').attr('disabled', false);
-    })
+    
+    
   });
 </script>

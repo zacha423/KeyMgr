@@ -6,18 +6,61 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRoleRequest;
 use App\Models\UserRole;
+use Illuminate\Http\Request;
+use App\Http\Resources\RoleResource;
 
 class UserRoleController extends Controller
 {
   /**
    * Display a listing of the resource.
    */
-  public function index()
+  public function index(Request $request)
   {
-    return view('users.userrole', [
-      'roles' => UserRole::all()->toArray(),
-      'rolesJSON' => UserRole::all()->toJson(),
-    ]);
+    $roles = [];
+    $allRoles = UserRole::all();
+
+    foreach (RoleResource::collection($allRoles)->toArray($request) as $role) {
+      $btnEdit = '<a href="' . route('groups.edit', $role['id']) .
+        '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+          <i class="fa fa-lg fa-fw fa-pen"></i>
+          </a>';
+      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-campus-id="'
+        . $role['id'] . '">
+          <i class="fa fa-lg fa-fw fa-trash"></i>
+          </button>';
+      $btnDetails = '<a href="' . route('groups.show', $role['id']) .
+        '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+                <i class="fa fa-lg fa-fw fa-eye"></i>
+                </a>';
+
+      $roleData = [
+        'name' => $role['name'],
+        'id' => $role['id'],
+        '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
+      ];
+
+      array_push($roles, $roleData);
+    }
+
+    $rolesArray = [];
+    foreach ($allRoles as $role)
+    {
+      $rolesArray[$role['id']] = $role['name'];
+    }
+    $data = [
+      'roles' => $roles,
+      'rolesArray' => $rolesArray
+    ];
+
+    return view('users.userrole', $data);
+
+
+
+
+    // return view('users.userrole', [
+    //   'roles' => UserRole::all()->toArray(),
+    //   'rolesJSON' => UserRole::all()->toJson(),
+    // ]);
   }
 
 

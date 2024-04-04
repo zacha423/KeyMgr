@@ -10,49 +10,41 @@
 @section('plugins.Datatables', true)
 
 <x-adminlte-card theme="info" theme-mode="outline" title="Add New Group" collapsible>
-{{--<div class="col-sm-4">--}}
+  <form action="/groups" method="POST">
+    @csrf
     <div class="row">
-<form action="/groups" method="POST">
-  @csrf
-  <x-adminlte-select name="parentGroup" label="Parent Group" label-class="info">
-    <x-slot name="prependSlot">
-      <div class="input-group-text bg-info">
-        <i class="fas fa-users"></i>
+      {{-- Parent Group Select --}}
+      <div class="col">
+        <x-adminlte-select name="parentGroup" label="Parent Group" label-class="info">
+          <x-slot name="prependSlot">
+            <div class="input-group-text bg-primary">
+              <i class="fas fa-users"></i>
+            </div>
+          </x-slot>
+          <x-adminlte-options :options="$groupsArray" :selected="[]"/>
+        </x-adminlte-select>
       </div>
-    </x-slot>
-    <x-adminlte-options :options="$groups"/>
-  </x-adminlte-select>
-
-  <label for="parentGroup">Parent Group</label>
-  <div class="form-group">
-  <select name="parentGroup" class="form-control">
-    @if(isset($groups))
-        @foreach($groups as $group)
-            <option value="{{$group['id']}}">{{$group['name']}}</option>
-        @endforeach
-    @endif
-</select>
-
-</div>
-<div class="form-group">
-  <label for="inputGroup">Group Name</label>
-  <input type="text" class="form-control" name="groupName" placeholder="Enter group name">
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-3">
-
-    <button type="submit" class="btn btn-block btn-primary">Submit</button>
-  </div>
-</div>
-</form>
-{{--</div>--}}
+      
+      {{-- Group Name Input --}}
+      <div class="col">
+        <x-adminlte-input name="groupName" placeholder="Enter group name" label="Group Name"/>
+      </div>
+    </div>
+    
+    {{-- Temporary submit button until a tool card is added. --}}
+    <div class="row">
+      <x-adminlte-button type="submit" theme="success" label="Submit"/>
+    </div>
+  </form>
 </x-adminlte-card>
 
+{{-- Full Data Table --}}
+<x-adminlte-card theme="info" theme-mode="outline">
+  <div class="flex-container">
+    @include('users.partials.grouptable')
+  </div>
+</x-adminlte-card>
 
-<div class="flex-container">
-  @include('users.partials.grouptable')
-</div>
 @stop
 
 <script>

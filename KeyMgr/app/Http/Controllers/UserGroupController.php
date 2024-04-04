@@ -48,7 +48,11 @@ class UserGroupController extends Controller
       array_push($groups, $groupData);
     }
 
-    $groupsArray = $allGroups->toArray();
+    $groupsArray = [];
+    foreach ($allGroups as $group)
+    {
+      $groupsArray[$group['id']] = $group['name'];
+    }
     $data = [
       'groups' => $groups,
       'groupsArray' => $groupsArray

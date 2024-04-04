@@ -33,7 +33,7 @@
 {{-- Full Data Table --}}
 <x-adminlte-card theme="info" theme-mode="outline">
   <div class="flex-container">
-    @include('users.partials.grouptable')
+    @include('users.partials.grouptable', ['groups' => $groups])
   </div>
 </x-adminlte-card>
 

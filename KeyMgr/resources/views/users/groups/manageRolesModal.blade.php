@@ -1,6 +1,7 @@
 <div class="container-flex">
   <form action="/groups/roles" method="post">
   <x-adminlte-modal :title="$title" id="roleModal" theme="info" v-centered>
+    <x-adminlte-info-box title="Selected Users" text="a" icon-them="info" icon="fas fa-user"/>
   <x-adminlte-input-switch id="addMode" name="addMode" label="Operation" :config="[
           'onColor' => 'green',
           'offColor' => 'red',
@@ -22,3 +23,10 @@
   </x-adminlte-modal>
   </form>
 </div>
+<script>
+  $(() =>{
+    $('#roleModal').on('show.bs.modal', ($e) => {
+      $('#roleModal').find('.info-box-number')[0].innerHTML = getSelectedIDs('groupTable').length;
+    });
+  });
+</script>

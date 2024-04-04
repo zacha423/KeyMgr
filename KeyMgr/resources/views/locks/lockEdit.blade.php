@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <label for="building" class="col-form-label">{{ __('Select Building') }}</label>
                     <select id="building" name="building" class="form-control">
-                        <option value="{{ $lock['building'] }}">{{ $lock['building'] }}</option>
+                        <option value="{{ $lock['building_id'] }}">{{ $lock['building'] }}</option>
                         @foreach($buildings as $building)
                              <option value="{{ $building['id'] }}">{{ $building['name'] }}</option>
                         @endforeach
@@ -117,7 +117,10 @@ $(document).ready(function() {
         if (buildingID) {
             $.ajax({
                 type: "GET",
-                url: "{{ route('getRooms') }} $building_id=" + buildingID,
+                url: "{{ route('getRooms') }}",//&$building_id=" + buildingID,
+                data: {
+                  building_id: buildingID
+                },
                 success: function(res) {
                     if (res) {
                         console.log("success");

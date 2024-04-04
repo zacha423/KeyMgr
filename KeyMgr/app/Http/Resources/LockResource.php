@@ -16,7 +16,7 @@ class LockResource extends JsonResource
    */
   public function toArray(Request $request): array
   {
-    $building = $room = null;
+    $buildingID = $roomID = $building = $room = null;
     
     if ($this->door)
     {
@@ -33,6 +33,8 @@ class LockResource extends JsonResource
       'keyway' => $this->keyway->name,
       'keyway_id' => $this->keyway->id,
       'room' => $room,
+      'room_id' => $roomID,
+      'building_id' => $buildingID,
       'building' => $building,
       'door' => $this->door->number,
     ], (new LockModelResource($this->lockModel))->toArray($request));

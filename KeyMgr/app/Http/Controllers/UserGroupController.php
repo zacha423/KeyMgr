@@ -38,14 +38,11 @@ class UserGroupController extends Controller
                 <i class="fa fa-lg fa-fw fa-eye"></i>
                 </a>';
 
-      $groupData = [
-        'id' => $group['id'],
-        'name' => $group['name'],
-        'parent_name' => $group['parentName'],
-        '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
-      ];
-
-      array_push($groups, $groupData);
+      array_push($groups, [
+        $group['id'],
+        $group['name'],
+        $group['parentName'] ? $group['parentName'] : ' ',
+      '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>']);
     }
 
     $groupsArray = [];

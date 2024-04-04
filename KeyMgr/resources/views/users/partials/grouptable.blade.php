@@ -14,7 +14,7 @@ $config = [
 ];
 @endphp
 
-<x-adminlte-datatable id="groupTable" :heads="$heads" :config="$config" bordered compressed hoverable>
+<x-adminlte-datatable id="groupTable" name="test" :heads="$heads" :config="$config" bordered compressed hoverable>
     @foreach($config['data'] as $row)
         <tr>
             @foreach($row as $cell)
@@ -24,17 +24,17 @@ $config = [
     @endforeach
 </x-adminlte-datatable>
 <script>
-  // function getSelectedIDs ($tableID) {
-  //   let $IDs = [];
-  //   if (!$.fn.DataTable.isDataTable('#' + $tableID))
-  //   {
-  //     return null;
-  //   }
+  function getSelectedIDs ($tableID) {
+    let $IDs = [];
+    if (!$.fn.DataTable.isDataTable('#' + $tableID))
+    {
+      return null;
+    }
 
-  //   new DataTable ('#' + $tableID).rows({selected:true}).data().toArray().forEach(($row) => {
-  //     $IDs.push($row[0]);
-  //   });
+    new DataTable ('#' + $tableID).rows({selected:true}).data().toArray().forEach(($row) => {
+      $IDs.push($row[0]);
+    });
 
-  //   return $IDs;
-  // }
+    return $IDs;
+  }
 </script>

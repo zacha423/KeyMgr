@@ -9,33 +9,22 @@
 
 @section('plugins.Datatables', true)
 
-<x-adminlte-card theme="info" theme-mode="outline" title="Add New Group" collapsible>
-  <form action="/groups" method="POST">
-    @csrf
-    <div class="row">
-      {{-- Parent Group Select --}}
-      <div class="col">
-        <x-adminlte-select name="parentGroup" label="Parent Group" label-class="info">
-          <x-slot name="prependSlot">
-            <div class="input-group-text bg-primary">
-              <i class="fas fa-users"></i>
-            </div>
-          </x-slot>
-          <x-adminlte-options :options="$groupsArray" :selected="[]"/>
-        </x-adminlte-select>
-      </div>
-      
-      {{-- Group Name Input --}}
-      <div class="col">
-        <x-adminlte-input name="groupName" placeholder="Enter group name" label="Group Name"/>
-      </div>
-    </div>
-    
-    {{-- Temporary submit button until a tool card is added. --}}
-    <div class="row">
-      <x-adminlte-button type="submit" theme="success" label="Submit"/>
-    </div>
-  </form>
+{{-- Limit Search Results Card --}}
+<x-adminlte-card theme="info" theme-mode="outline" title="Limit results by:" collapsible>
+  <form></form>
+</x-adminlte-card>
+
+{{-- Tools Card --}}
+<x-adminlte-card theme="info" theme-mode="outline" title="Tools" collapsible>
+  <x-adminlte-button type="button" theme="primary" data-toggle="modal" data-target="#roleModal" 
+    id="roles" name="roles" label="Manage Roles"/>
+  <x-adminlte-button type="button" theme="primary" data-toggle="modal" data-target="#userModal" 
+    id="users" name="users" label="Manage Users" disabled/>
+  <x-adminlte-button type="button" theme="success" data-toggle="modal" data-target="#newGroupModal" 
+    id="newGroup" name="newGroup" label="Create New Group"/>
+  @include('users.groups.manageRolesModal', ['title' => 'Role Permissions Management'])
+  @include('users.groups.manageUsersModal')
+  @include('users.groups.newGroupModal', ['options' => $groupsArray, 'title' => 'Group Creation Form'])
 </x-adminlte-card>
 
 {{-- Full Data Table --}}

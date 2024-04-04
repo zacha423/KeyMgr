@@ -10,7 +10,7 @@
             <i class="fas fa-users"></i>
           </div>
         </x-slot>
-        <x-adminlte-options :options="$options"/>
+        <x-adminlte-options :options="$options" :selected="$group['parent']"/>
       </x-adminlte-select>
 
       {{-- Group Name Input --}}

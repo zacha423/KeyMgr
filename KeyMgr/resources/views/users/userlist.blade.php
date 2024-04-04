@@ -1,4 +1,8 @@
 @extends ("adminlte::page")
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 @section('title', __('User List'))
 
 
@@ -6,9 +10,6 @@
   <h1>User List</h1>
 @stop
 
-<!-- @push('js') -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- @endpush -->
 
 @section ("content")
 {{-- Load plugin data --}}
@@ -16,11 +17,11 @@
 @section('plugins.BootStrapSelect', true)
 @section('plugins.BootStrapSwitch', true)
 
-{{-- Tool Card for limiting shown user data.  --}}
+ <!-- Tool Card for limiting shown user data.   -->
 <x-adminlte-card theme="info" theme-mode="outline" title="Limit results by:" collapsible>
   <form action="/users" method="GET">
     <div class="flex-container">
-      {{-- Group/Role Selectors --}}
+      <!-- Group/Role Selectors -->
       <div class="row">
         <div class="col-6" id="groupSelector">
           <x-group-selector id="gSelector" :options="$groupOptions" :selected="$selectedGroups"></x-group-selector>
@@ -40,8 +41,8 @@
   </form>
 </x-adminlte-card>
 
-{{-- User Management Tools --}}
-<x-adminlte-card theme="info" theme-mode="outline" title="Tools" collapsible>
+<!-- User Management Tools -->
+{<x-adminlte-card theme="info" theme-mode="outline" title="Tools" collapsible>
   <x-adminlte-button type="button" theme="primary" data-toggle="modal" data-target="#roleModal" id="addRole" name="addRole" label="Manage Roles"></x-adminlte-button>
   <x-adminlte-button type="button" theme="primary" data-toggle="modal" data-target="#groupModal" id="addGroup" name="addGroup" label="Manage Groups"></x-adminlte-button>
   <x-adminlte-button type="button" theme="success" data-toggle="modal" data-target="#userForm" label="Register New User"></x-adminlte-button>
@@ -55,7 +56,7 @@
       <form id="newUser" action="/users" method="POST">
         @csrf
 
-        {{-- First Name field --}}
+        <!-- First Name field  -->
         <div class="input-group mb-3">
           <input type="text" name="firstName" class="form-control @error('firstName') is-invalid @enderror"
                 value="{{ old('firstName') }}" placeholder="{{ __('adminlte::adminlte.first_name') }}" autofocus>
@@ -71,7 +72,7 @@
           @enderror
         </div>
 
-        {{-- Last Name field --}}
+        <!-- Last Name field  -->
         <div class="input-group mb-3">
           <input type="text" name="lastName" class="form-control @error('lastName') is-invalid @enderror"
                 value="{{ old('lastName') }}" placeholder="{{ __('adminlte::adminlte.last_name') }}" autofocus>
@@ -87,7 +88,7 @@
           @enderror
         </div>
 
-          {{-- Username field --}}
+          <!-- Username field  -->
           <div class="input-group mb-3">
             <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" 
                   value="{{ old('email') }}" placeholder="{{__('adminlte::adminlte.username') }}">
@@ -103,7 +104,7 @@
             @enderror
           </div>
 
-          {{-- Email field --}}
+           <!-- Email field  -->
           <div class="input-group mb-3">
             <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
                   value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}">
@@ -119,7 +120,7 @@
             @enderror
           </div>
 
-          {{-- Password field --}}
+           <!-- Password field  -->
           <div class="input-group mb-3">
             <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
                   placeholder="{{ __('adminlte::adminlte.password') }}">
@@ -135,7 +136,7 @@
             @enderror
           </div>
 
-          {{-- Confirm password field --}}
+           <!-- Confirm password field  -->
           <div class="input-group mb-3">
             <input type="password" name="password_confirmation"
                   class="form-control @error('password_confirmation') is-invalid @enderror"
@@ -152,7 +153,7 @@
             @enderror
           </div>
       
-          {{-- If the button is in the footer, it's not part of the form for some reason." --}}
+          <!-- If the button is in the footer, it's not part of the form for some reason."  -->
         <x-slot name="footerSlot">
           <x-adminlte-button type="submit" class="block mr-auto" theme="success" label="Add User" form="newUser"/>
           <x-adminlte-button type="button" class="block ml-auto" theme="danger" label="Cancel" data-dismiss="modal"/>
@@ -162,33 +163,35 @@
   </x-adminlte-modal>
 </x-adminlte-card>
 
-{{-- The actual datatable --}}
+<!-- The actual datatable  -->
 <div class="flex-container">
   @include('users.partials.usertable')
 </div>
-@stop
+
 
 <script>
-    $(document).ready(function() {
-        $('.btn-delete').click(function(e) {
-            e.preventDefault();
-            const userId = $(this).data('user-id');
-            if (confirm('Are you sure you want to delete this user?')) {
-                $.ajax({
-                    url: '/users/' + userId,
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        _method: 'DELETE'
-                    },
-                    success: function(response) {
-                        location.reload();
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
-            }
-        });
-    });
+  console.log('hello world');
+  $(()=>{console.log("shit fuck");});
+  $(()=> {
+    $('.btn-delete').click(function(e) {
+      e.preventDefault();
+      const userId = $(this).data('user-id');
+      if (confirm('Are you sure you want to delete this user?')) {
+        $.ajax({
+          url: '/users/' + userId,
+          method: 'POST',
+          data: {
+          _token: '{{ csrf_token() }}',
+          _method: 'DELETE'
+        },
+        success: function(response) {
+          location.reload();
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+        }
+      });
+    }});
+  });
 </script>
+@endsection

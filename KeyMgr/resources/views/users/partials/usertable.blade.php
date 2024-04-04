@@ -28,7 +28,7 @@ $config = [
           </tr>
       @endforeach
   </x-adminlte-datatable>
-</x-adminlt-card>
+</x-adminlte-card>
 <script>
   function getSelectedIDs ($tableID) {
     let $IDs = [];

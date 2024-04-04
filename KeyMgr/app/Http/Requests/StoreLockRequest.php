@@ -29,7 +29,7 @@ class StoreLockRequest extends FormRequest
       'lowerPinLengths' => ['required', 'alpha-num'],
       'installDate' => ['required'],
       'keywayid' => ['exists:keyways,id', 'required'],
-      'manufacturer_id' => ['exists:manufacturers,id', 'required'],
+      'lockmodel_id' => ['exists:lock_models,id', 'required'],
     ];
   }
 }

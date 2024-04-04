@@ -89,9 +89,17 @@ class UserGroupController extends Controller
    */
   public function show(UserGroup $group)
   {
+    $allGroups = UserGroup::all()->load('parent');
+
+    $groupsArray = [];
+    foreach ($allGroups as $agroup)
+    {
+      $groupsArray[$agroup['id']] = $agroup['name'];
+    }
+
     return view('users.groupShow', [
       'group' => $group->load('children')->load('parent')->toArray(),
-      'groups' => [],
+      'groups' => $groupsArray,
     ]);
   }
 
@@ -123,9 +131,7 @@ class UserGroupController extends Controller
 
     $group->save();
 
-    return view('users.usergroup', [
-      'group' => $group->load('children')->toArray,
-    ]);
+    return redirect('/groups');
   }
 
   /**

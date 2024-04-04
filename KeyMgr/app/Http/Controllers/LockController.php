@@ -123,8 +123,11 @@ class LockController extends Controller
     $lock->upperPinLengths = $data['upperPinLengths'];
     $lock->lowerPinLengths = $data['lowerPinLengths'];
     $lock->installDate = $data['installDate'];
-    $lock->keyway_id = $data['keyway_id'];
-    $lock->manufacturer_id = $data['manufacturer_id'];
+    $lock->keyway = $data['keyway'];
+    $lock->lock_model_id = $data['lockmodel_id'];
+    $lock->room = $data['room'];
+    $lock->building = $data['building'];
+
 
 
     $lock->save();

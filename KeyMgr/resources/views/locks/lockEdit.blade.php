@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <label for="building" class="col-form-label">{{ __('Select Building') }}</label>
                     <select id="building" name="building" class="form-control">
-                    <option value="{{ $lock['building'] }}">{{ $lock['building'] }}</option>
+                        <option value="{{ $lock['building'] }}">{{ $lock['building'] }}</option>
                         @foreach($buildings as $building)
                              <option value="{{ $building['id'] }}">{{ $building['name'] }}</option>
                         @endforeach
@@ -48,6 +48,9 @@
                     <select id="room" name="room" class="form-control">
                         <!-- Options will be dynamically populated based on selected building -->
                     </select>
+                    @error('room')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-group">
@@ -86,7 +89,7 @@
                         @endforeach
                     </select>
                     @error('keyway_id')
-                        <p class="text-danger">{{ $message }}</p>
+                        <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
@@ -100,50 +103,50 @@
         </div>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            $('.datepicker').datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                todayHighlight: true
-            });
-            $('.datepicker').datepicker('update', $('.datepicker').val());
+<script>
+$(document).ready(function() {
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        todayHighlight: true
+    });
+    $('.datepicker').datepicker('update', $('.datepicker').val());
 
-            $('#building').change(function() {
-                var buildingID = $(this).val();
-                if (buildingID) {
-                    $.ajax({
-                        type: "GET",
-                        url: "{{ route('getRooms') }}?building_id=" + buildingID,
-                        success: function(res) {
-                            if (res) {
-                                console.log("success");
-                                $("#roomSelection").show();
-                                $("#room").empty();
-                                $.each(res, function(key, value) {
-                                    $("#room").append('<option value="' + key + '">' + value + '</option>');
-                                });
-                            } else {
-                                $("#roomSelection").hide();
-                            }
-                        }
-                    });
-                } else {
-                    $("#roomSelection").hide();
+    $('#building').change(function() {
+        var buildingID = $(this).val();
+        if (buildingID) {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('getRooms') }} $building_id=" + buildingID,
+                success: function(res) {
+                    if (res) {
+                        console.log("success");
+                        $("#roomSelection").show();
+                        $("#room").empty();
+                        $.each(res, function(key, value) {
+                            $("#room").append('<option value="' + key + '">' + value + '</option>');
+                        });
+                    } else {
+                        $("#roomSelection").hide();
+                    }
                 }
             });
+        } else {
+            $("#roomSelection").hide();
+        }
+    });
 
-            // Set lock's room initially if available
-            var lockRoomNumber = "{{ $lock['room'] }}";
-            if (lockRoomNumber && lockRoomNumber.trim() !== "") {
-                $("#room").append('<option value="' + lockRoomNumber + '" selected>' + lockRoomNumber + '</option>');
-                $("#roomSelection").show();
-            }
+    // Set lock's room initially if available
+    var lockRoomNumber = "{{ $lock['room'] }}";
+    if (lockRoomNumber && lockRoomNumber.trim() !== "") {
+        $("#room").append('<option value="' + lockRoomNumber + '" selected>' + lockRoomNumber + '</option>');
+        $("#roomSelection").show();
+    }
 
-            // Trigger change event for initial value
-            $('#building').change();
-        });
-    </script>
+    // Trigger change event for initial value
+    $('#building').change();
+});
+</script>
 
 
 

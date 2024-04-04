@@ -42,13 +42,27 @@
                             </div>
                         </div>
                         <div class="card-body">
-                        <p><strong>Users In Role</strong> 
+                        
                             
                     </div>
                     </div>
                 </div>
             </div>
+            
         </div>
+        
+            <div class="card card-primary card-outline">
+                <div class="card-header">
+                    <h5 class="m-0">Users Assigned Role: {{ $role['name'] }}</h5>
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('users.index') }}">View all Users</a></li>
+                    </ol>
+                </div>
+                <div class="card-body">
+                    @include('users.partials.usersAssignedRoleTable')
+                </div>
+            </div>
+                
     </div>
 </div>
 @stop

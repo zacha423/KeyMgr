@@ -8,196 +8,159 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<form action="/users" method="GET">
-  <!-- Drop Down for UserRoles and UserGroups -->
-  <div class="flex-container">
-    <div class="row">
-      <h5>Limit results by:</h5>
-    </div>
-    <div class="row">
+@section ("content")
+{{-- Load plugin data --}}
+@section('plugins.Datatables', true)
+@section('plugins.BootStrapSelect', true)
+@section('plugins.BootStrapSwitch', true)
 
-      {{-- UserGroup Selector --}}
-      <div class="col" id="groupSelector">
-        
-        {{-- Example with multiple selections (for SelectBs) --}}
-        @php
-        $config2 = [
-          "title" => "Select multiple options...",
-          "liveSearch" => true,
-          "liveSearchPlaceholder" => "Search...",
-          "showTick" => true,
-          "actionsBox" => true,
-        ];
-        @endphp
-        <x-adminlte-select-bs id="groups" name="groups[]" label="Groups"
-          label-class="text-info" :config="$config2" multiple enable-old-support>
-          <x-slot name="prependSlot">
-            <div class="input-group-text bg-gradient-lightblue">
-              <i class="fas fa-tag"></i>
+{{-- Tool Card for limiting shown user data.  --}}
+<x-adminlte-card theme="info" theme-mode="outline" title="Limit results by:" collapsible>
+  <form action="/users" method="GET">
+    <div class="flex-container">
+      {{-- Group/Role Selectors --}}
+      <div class="row">
+        <div class="col-6" id="groupSelector">
+          <x-group-selector id="gSelector" :options="$groupOptions" :selected="$selectedGroups"></x-group-selector>
+        </div>
+        <div class="col-6" id="roleSelector">
+          <x-role-selector id="rSelector" :options="$roleOptions" :selected="$selectedRoles"></x-role-selector>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button type="submit" class="btn btn-primary refineSearch" id="refineSearch">
+            Refine Search
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</x-adminlte-card>
+
+{{-- User Management Tools --}}
+<x-adminlte-card theme="info" theme-mode="outline" title="Tools" collapsible>
+  <x-adminlte-button type="button" theme="primary" data-toggle="modal" data-target="#roleModal" id="addRole" name="addRole" label="Manage Roles"></x-adminlte-button>
+  <x-adminlte-button type="button" theme="primary" data-toggle="modal" data-target="#groupModal" id="addGroup" name="addGroup" label="Manage Groups"></x-adminlte-button>
+  <x-adminlte-button type="button" theme="success" data-toggle="modal" data-target="#userForm" label="Register New User"></x-adminlte-button>
+  @include('users.partials.assignRolesModal', ['options' => $roleOptions])
+  @include('users.partials.assignGroupsModal', ['options' => $groupOptions])
+  
+  <!-- New USer Modal -->
+  <x-adminlte-modal id="userForm" title="User Creation Form" theme="lightblue" size="sm1" icon="fas fa-user" 
+                    v-centered static-backdrop scrollable>
+    <div>
+      <form id="newUser" action="/users" method="POST">
+        @csrf
+
+        {{-- First Name field --}}
+        <div class="input-group mb-3">
+          <input type="text" name="firstName" class="form-control @error('firstName') is-invalid @enderror"
+                value="{{ old('firstName') }}" placeholder="{{ __('adminlte::adminlte.first_name') }}" autofocus>
+          <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
             </div>
-          </x-slot>
-          <x-adminlte-options :options="$groupOptions" :selected="$selectedGroups"/>
-        </x-adminlte-select-bs>
-      </div>
+          </div>
+          @error('firstName')
+            <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+            </span>
+          @enderror
+        </div>
 
-      {{-- UserRole Selector --}}
-      <div class="col" id="roleSelector">
-
-        {{-- Example with multiple selections (for SelectBs) --}}
-        @php
-        $config2 = [
-          "title" => "Select multiple options...",
-          "liveSearch" => true,
-          "liveSearchPlaceholder" => "Search...",
-          "showTick" => true,
-          "actionsBox" => true,
-        ];
-        @endphp
-        <x-adminlte-select-bs id="roles" name="roles[]" label="Roles"
-          label-class="text-info" :config="$config2" multiple enable-old-support>
-          <x-slot name="prependSlot">
-            <div class="input-group-text bg-gradient-lightblue">
-              <i class="fas fa-tag"></i>
-            </div>
-          </x-slot>
-          <x-adminlte-options :options="$roleOptions" :selected="$selectedRoles"/>
-        </x-adminlte-select-bs>
-      </div>
-    </div>
-    
-    <div class="row">
-      {{-- Button to refresh page / limit search --}}
-      <div class="col">
-        <button type="submit" class="btn btn-primary refineSearch" id="refineSearch">
-          Refine Search
-        </button>
-      </div>
-
-      <!-- Button trigger modal -->
-      <div class="col text-right">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#userForm">
-        New User
-      </button>
-      </div>  
-    </div>
-  </div>
-</form>
-
-<!-- New USer Modal -->
-<x-adminlte-modal id="userForm" title="User Creation Form" theme="lightblue" size="sm1" icon="fas fa-user" 
-                  v-centered static-backdrop scrollable>
-  <div>
-    <form id="newUser" action="/users" method="POST">
-      @csrf
-
-      {{-- First Name field --}}
-      <div class="input-group mb-3">
-        <input type="text" name="firstName" class="form-control @error('firstName') is-invalid @enderror"
-              value="{{ old('firstName') }}" placeholder="{{ __('adminlte::adminlte.first_name') }}" autofocus>
-        <div class="input-group-append">
-          <div class="input-group-text">
+        {{-- Last Name field --}}
+        <div class="input-group mb-3">
+          <input type="text" name="lastName" class="form-control @error('lastName') is-invalid @enderror"
+                value="{{ old('lastName') }}" placeholder="{{ __('adminlte::adminlte.last_name') }}" autofocus>
+          <div class="input-group-append">
+            <div class="input-group-text">
               <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
-          </div>
-        </div>
-        @error('firstName')
-          <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-          </span>
-        @enderror
-      </div>
-
-      {{-- Last Name field --}}
-      <div class="input-group mb-3">
-        <input type="text" name="lastName" class="form-control @error('lastName') is-invalid @enderror"
-              value="{{ old('lastName') }}" placeholder="{{ __('adminlte::adminlte.last_name') }}" autofocus>
-        <div class="input-group-append">
-          <div class="input-group-text">
-            <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
-          </div>
-        </div>
-        @error('lastName')
-          <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-          </span>
-        @enderror
-      </div>
-
-        {{-- Username field --}}
-        <div class="input-group mb-3">
-          <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" 
-                value="{{ old('email') }}" placeholder="{{__('adminlte::adminlte.username') }}">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
             </div>
           </div>
-          @error('username')
+          @error('lastName')
             <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
             </span>
           @enderror
         </div>
 
-        {{-- Email field --}}
-        <div class="input-group mb-3">
-          <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
+          {{-- Username field --}}
+          <div class="input-group mb-3">
+            <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" 
+                  value="{{ old('email') }}" placeholder="{{__('adminlte::adminlte.username') }}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
+              </div>
             </div>
+            @error('username')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+            @enderror
           </div>
-          @error('email')
-            <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-            </span>
-          @enderror
-        </div>
 
-        {{-- Password field --}}
-        <div class="input-group mb-3">
-          <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                placeholder="{{ __('adminlte::adminlte.password') }}">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
+          {{-- Email field --}}
+          <div class="input-group mb-3">
+            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                  value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
+              </div>
             </div>
+            @error('email')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+            @enderror
           </div>
-          @error('password')
-            <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-            </span>
-          @enderror
-        </div>
 
-        {{-- Confirm password field --}}
-        <div class="input-group mb-3">
-          <input type="password" name="password_confirmation"
-                class="form-control @error('password_confirmation') is-invalid @enderror"
-                placeholder="{{ __('adminlte::adminlte.retype_password') }}">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
+          {{-- Password field --}}
+          <div class="input-group mb-3">
+            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
+                  placeholder="{{ __('adminlte::adminlte.password') }}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
+              </div>
             </div>
+            @error('password')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+            @enderror
           </div>
-          @error('password_confirmation')
-            <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-            </span>
-          @enderror
-        </div>
-    
-        {{-- If the button is in the footer, it's not part of the form for some reason." --}}
-      <x-slot name="footerSlot">
-        <x-adminlte-button type="submit" class="block mr-auto" theme="success" label="Add User" form="newUser"/>
-        <x-adminlte-button type="button" class="block ml-auto" theme="danger" label="Cancel" data-dismiss="modal"/>
-      </x-slot>  
-    </form>
-  </div>
-</x-adminlte-modal>
+
+          {{-- Confirm password field --}}
+          <div class="input-group mb-3">
+            <input type="password" name="password_confirmation"
+                  class="form-control @error('password_confirmation') is-invalid @enderror"
+                  placeholder="{{ __('adminlte::adminlte.retype_password') }}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
+              </div>
+            </div>
+            @error('password_confirmation')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+            @enderror
+          </div>
+      
+          {{-- If the button is in the footer, it's not part of the form for some reason." --}}
+        <x-slot name="footerSlot">
+          <x-adminlte-button type="submit" class="block mr-auto" theme="success" label="Add User" form="newUser"/>
+          <x-adminlte-button type="button" class="block ml-auto" theme="danger" label="Cancel" data-dismiss="modal"/>
+        </x-slot>  
+      </form>
+    </div>
+  </x-adminlte-modal>
+</x-adminlte-card>
 
 {{-- The actual datatable --}}
-@section('plugins.Datatables', true)
 <div class="flex-container">
   @include('users.partials.usertable')
 </div>

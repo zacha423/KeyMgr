@@ -454,6 +454,31 @@ return [
     */
 
     'plugins' => [
+        'BootStrapSelect' => [
+          'active' => false,
+          'files' => [
+            [
+              'type' => 'js',
+              'asset' => 'false',
+              'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js',
+            ],
+            [
+              'type' => 'css',
+              'asset' => false,
+              'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css',
+            ],
+          ],
+        ],
+        'BootStrapSwitch' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/vendor/bootstrap-switch/js/bootstrap-switch.min.js',
+                ]
+            ],
+        ],
         'Datatables' => [
             'active' => false,
             'files' => [

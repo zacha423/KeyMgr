@@ -18,13 +18,30 @@ $config = [
   'select' => true,
 ];
 @endphp
+<x-adminlte-card theme="info" theme-mode="outline">
+  <x-adminlte-datatable id="table5" :heads="$heads" :config="$config" bordered compressed hoverable>
+      @foreach($config['data'] as $row)
+          <tr>
+              @foreach($row as $cell)
+                  <td>{!! $cell !!}</td>
+              @endforeach
+          </tr>
+      @endforeach
+  </x-adminlte-datatable>
+</x-adminlt-card>
+<script>
+  function getSelectedIDs ($tableID) {
+    let $IDs = [];
+    
+    if (!$.fn.DataTable.isDataTable('#' + $tableID))
+    {
+      return null;
+    }
+    
+    new DataTable ('#' + $tableID).rows({selected:true}).data().toArray().forEach(($row)=>{
+      $IDs.push($row[0]);
+    });
 
-<x-adminlte-datatable id="table5" :heads="$heads" :config="$config" bordered compressed hoverable>
-    @foreach($config['data'] as $row)
-        <tr>
-            @foreach($row as $cell)
-                <td>{!! $cell !!}</td>
-            @endforeach
-        </tr>
-    @endforeach
-</x-adminlte-datatable>
+    return $IDs;
+  }
+</script>

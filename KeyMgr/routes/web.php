@@ -51,8 +51,8 @@ Route::middleware('auth')->group(function () {
     'campus' => CampusController::class,
   ]);
 
-  Route::post('/accounts/groups/assign', [UserController::class, 'assignUsersToGroup'])->name('user.group.assign');
-  Route::post('/accounts/groups/unassign', [UserController::class, 'unassignUsersFromGroup'])->name('user.group.unassign');
+  Route::post('/groups/members', [UserController::class, 'groupMembershipManagement'])->name('users.groups');
+  Route::post('/roles/members', [UserController::class, 'roleMembershipManagement'])->name('users.roles');
   Route::resource('room', RoomController::class,)->except(['create']);
   Route::resource('building', BuildingController::class)->except(['create']);
   Route::resource('keys', KeyController::class)->except(['create']);

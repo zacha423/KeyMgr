@@ -17,6 +17,7 @@ class modifyMembershipModal extends Component
       public string $selectName,
       public mixed $options,
       public string $submitURL,
+      public string $switchName,
     )
     {
       //

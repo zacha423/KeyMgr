@@ -10,7 +10,7 @@
 
       <div class="row"><div class="col">
         {{-- The name has to be different on each switch? --}}
-        <x-adminlte-input-switch :id="'sw'.$id" name="additionMode" label="Operation" :config="[
+        <x-adminlte-input-switch :id="'sw'.$id" :name="$switchName" label="Operation" :config="[
           'onColor' => 'green',
           'offColor' => 'red',
           'onText' => 'Add',

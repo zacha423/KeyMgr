@@ -23,7 +23,7 @@
   <x-adminlte-button type="button" theme="success" data-toggle="modal" data-target="#newGroupModal" 
     id="newGroup" name="newGroup" label="Create New Group"/>
   @include('users.groups.manageRolesModal', ['title' => 'Role Permissions Management'])
-  @include('users.groups.manageUsersModal')
+  @include('users.groups.manageUsersModal', [])
   @include('users.groups.newGroupModal', ['options' => $groupsArray, 'title' => 'Group Creation Form'])
 </x-adminlte-card>
 

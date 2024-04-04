@@ -1,5 +1,6 @@
 <div class="container-flex">
   <form id="modalForm" action="/groups/roles" method="post">
+    @csrf
   <x-adminlte-modal :title="$title" id="roleModal" theme="info" v-centered>
     <x-adminlte-info-box title="Selected Users" text="a" icon-theme="info" icon="fas fa-user"/>
   <x-adminlte-input-switch id="addMode" name="addMode" label="Operation" :config="[
@@ -17,7 +18,7 @@
         </x-adminlte-input-switch>
     <x-role-selector id="rSel" :options="$options" :selected="[]"></x-role-selector>
     <x-slot name="footerSlot">
-      <x-adminlte-button id="saveRoles" class="mr-auto" type="submit" theme="success" label="Save" form="roleForm"/>
+      <x-adminlte-button id="saveRoles" class="mr-auto" type="submit" theme="success" label="Submit" form="modalForm"/>
       <x-adminlte-button label="Cancel" theme="danger" data-dismiss="modal"/>
     </x-slot>
   </x-adminlte-modal>

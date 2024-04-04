@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserGroupRequest;
 use App\Models\UserGroup;
+use App\Models\UserRole;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Auth\Events\Registered;
 use App\Http\Resources\GroupResource;
+use App\Http\Requests\RoleAssignmentRequest;
 
 class UserGroupController extends Controller
 {
@@ -141,5 +143,25 @@ class UserGroupController extends Controller
     $group->delete();
 
     return redirect('/groups');
+  }
+
+  public function manageRoles(RoleAssignmentRequest $request)
+  {
+    $validated = $request->safe();
+
+    $roles = UserRole::find($validated['roles']);
+    $groups = UserGroup::find($validated['selectedGroups']);
+
+    foreach ($groups as $group)
+    {
+      if(isset($validated['addMode'])) {
+        $group->roles()->attach($roles);
+      }
+      else {
+        $group->roles()->detach($roles);
+      }
+    }
+
+    return redirect()->route('groups.store');
   }
 }

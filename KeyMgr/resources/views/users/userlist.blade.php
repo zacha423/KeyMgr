@@ -49,7 +49,7 @@
   @include('users.partials.assignRolesModal', ['options' => $roleOptions])
   @include('users.partials.assignGroupsModal', ['options' => $groupOptions])
   
-  <!-- New USer Modal -->
+  <!-- New User Modal -->
   <x-adminlte-modal id="userForm" title="User Creation Form" theme="lightblue" size="sm1" icon="fas fa-user" 
                     v-centered static-backdrop scrollable>
     <div>

@@ -1,5 +1,5 @@
 @extends ("adminlte::page")
-<script src="http://localhost:8080/vendor/jquery/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @section('title', __('User Roles'))
 
 @section('content_header')
@@ -42,7 +42,7 @@
             const roleId = $(this).data('role-id');
             if (confirm('Are you sure you want to delete this role?')) {
                 $.ajax({
-                    url: '/role/' + roleId,
+                    url: '/roles/' + roleId,
                     method: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',

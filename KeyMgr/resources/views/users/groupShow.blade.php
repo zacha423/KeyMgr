@@ -85,7 +85,6 @@
 @if(isset($open))
 <script>
     $(() => {
-        console.log("fuck shit");
         $(window).load($('#updateGroupModal').modal('show'));
     });
 </script>

@@ -20,7 +20,7 @@ class UserRoleController extends Controller
     $allRoles = UserRole::all();
 
     foreach (RoleResource::collection($allRoles)->toArray($request) as $role) {
-      $btnEdit = '<a href="' . route('groups.edit', $role['id']) .
+      $btnEdit = '<a href="' . route('roles.edit', $role['id']) .
         '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
           <i class="fa fa-lg fa-fw fa-pen"></i>
           </a>';
@@ -28,7 +28,7 @@ class UserRoleController extends Controller
         . $role['id'] . '">
           <i class="fa fa-lg fa-fw fa-trash"></i>
           </button>';
-      $btnDetails = '<a href="' . route('groups.show', $role['id']) .
+      $btnDetails = '<a href="' . route('roles.show', $role['id']) .
         '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
                 <i class="fa fa-lg fa-fw fa-eye"></i>
                 </a>';
@@ -88,7 +88,7 @@ class UserRoleController extends Controller
    */
   public function show(UserRole $role)
   {
-    return view('users.userrole', [
+    return view('users.roleShow', [
       'role' => $role->toArray(),
       'roleJSON' => $role->toJson(),
     ]);
@@ -99,7 +99,7 @@ class UserRoleController extends Controller
    */
   public function edit(UserRole $role)
   {
-    return view('users.userrole', [
+    return view('users.roleShow', [
       'role' => $role->toArray(),
       'roleJSON' => $role->toJson(),
     ]);

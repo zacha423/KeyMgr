@@ -1,4 +1,5 @@
 @extends ("adminlte::page")
+<script src="http://localhost:8080/vendor/jquery/jquery.min.js"></script>
 @section('title', __('User Roles'))
 
 @section('content_header')
@@ -8,9 +9,18 @@
 @section('content')
 
 @section('plugins.Datatables', true)
+@section('plugins.BootStrapSwitch', true)
+@section('plugins.BootStrapSelect', true)
 
-<x-adminlte-button type="button" theme="success" data-toggle="modal" data-target="#newGroupModal" 
-    id="newGroup" name="newGroup" label="Create New Group"/>
+<x-adminlte-card theme="info" theme-mode="outline" title="Tools" collapsible>
+
+    <x-adminlte-button type="button" theme="success" data-toggle="modal" data-target="#newRoleModal" 
+        id="newRole" name="newRole" label="Create New Role"/>
+    
+    @include('users.partials.newRoleModal', ['title' => 'Role Creation Form'])
+
+</x-adminlte-card>
+
 
 
 
@@ -21,6 +31,7 @@
     @include('users.partials.roletable')
   </div>
 </x-adminlte-card>
+
 
 @stop
 

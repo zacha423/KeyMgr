@@ -1,5 +1,5 @@
 <x-adminlte-modal id="newRoleModal" :title="$title" theme="info" v-centered>
-  <form id="newRoleForm" action="/groups" method="POST">
+  <form id="newRoleForm" action="/roles" method="POST">
     @csrf
     <div class="col">
 

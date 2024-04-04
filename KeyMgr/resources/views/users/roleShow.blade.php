@@ -21,6 +21,8 @@
 @stop
 
 @section("content")
+
+
 <div class="content">
     <div class="container-fluid">
         <div class="row">
@@ -30,8 +32,8 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="m-0">Role Information</h5>
                             <div class="btn-group">
-                                <a href="{{ route('roles.edit', ['role' => $role['id']]) }}" data-toggle="modal" data-target="#updateGroupModal" id="newGroup" name="newGroup" class="btn btn-info mr-1"><i class="fas fa-edit"></i> Edit</a>
-                                <!-- @include('users.groups.updateGroupModal', ['options' => $groups, 'title' => 'Group Update Form']) -->
+                                <a href="{{ route('roles.edit', ['role' => $role['id']]) }}" data-toggle="modal" data-target="#updateRoleModal" id="updateRole" name="updateRole" class="btn btn-info mr-1"><i class="fas fa-edit"></i> Edit</a>
+                                @include('users.partials.updateRoleModal', ['title' => 'Role Update Form'])
                                 <form action="{{ route('roles.destroy', ['role' => $role['id']]) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
@@ -39,8 +41,11 @@
                                 </form>
                             </div>
                         </div>
+                        <div class="card-body">
+                        <p><strong>Users In Role</strong> 
+                            
                     </div>
-                    
+                    </div>
                 </div>
             </div>
         </div>

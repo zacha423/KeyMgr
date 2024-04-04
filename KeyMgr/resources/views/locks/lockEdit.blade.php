@@ -36,9 +36,9 @@
                 <div class="form-group">
                     <label for="building" class="col-form-label">{{ __('Select Building') }}</label>
                     <select id="building" name="building" class="form-control">
-                        <!-- <option value="" disabled selected>Select Building</option> -->
+                    <option value="{{ $lock['building'] }}">{{ $lock['building'] }}</option>
                         @foreach($buildings as $building)
-                            <option value="{{ $building['id'] }}">{{ $building['name'] }}</option>
+                             <option value="{{ $building['id'] }}">{{ $building['name'] }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -102,10 +102,6 @@
 
     <script>
         $(document).ready(function() {
-            
-            // $('#room').prop('hidden', true);
-            // $('#roomLbl').prop('hidden', true);
-
             $('.datepicker').datepicker({
                 format: 'yyyy-mm-dd',
                 autoclose: true,
@@ -121,7 +117,7 @@
                         url: "{{ route('getRooms') }}?building_id=" + buildingID,
                         success: function(res) {
                             if (res) {
-                                console.log ("success");
+                                console.log("success");
                                 $("#roomSelection").show();
                                 $("#room").empty();
                                 $.each(res, function(key, value) {
@@ -136,7 +132,19 @@
                     $("#roomSelection").hide();
                 }
             });
+
+            // Set lock's room initially if available
+            var lockRoomNumber = "{{ $lock['room'] }}";
+            if (lockRoomNumber && lockRoomNumber.trim() !== "") {
+                $("#room").append('<option value="' + lockRoomNumber + '" selected>' + lockRoomNumber + '</option>');
+                $("#roomSelection").show();
+            }
+
+            // Trigger change event for initial value
+            $('#building').change();
         });
     </script>
+
+
 
 @stop

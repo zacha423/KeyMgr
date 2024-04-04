@@ -89,8 +89,8 @@ class UserGroupController extends Controller
    */
   public function show(UserGroup $group)
   {
-    return view('users.usergroup', [
-      'group' => $group->load('children')->toArray(),
+    return view('users.groupShow', [
+      'group' => $group->load('children')->load('parent')->toArray(),
       'groups' => [],
     ]);
   }

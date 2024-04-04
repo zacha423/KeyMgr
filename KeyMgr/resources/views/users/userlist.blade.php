@@ -170,8 +170,6 @@
 
 
 <script>
-  console.log('hello world');
-  $(()=>{console.log("shit fuck");});
   $(()=> {
     $('.btn-delete').click(function(e) {
       e.preventDefault();

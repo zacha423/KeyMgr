@@ -30,7 +30,7 @@ class UserGroupController extends Controller
         '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
           <i class="fa fa-lg fa-fw fa-pen"></i>
           </a>';
-      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-campus-id="'
+      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-group-id="'
         . $group['id'] . '">
           <i class="fa fa-lg fa-fw fa-trash"></i>
           </button>';

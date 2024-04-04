@@ -46,7 +46,7 @@
     $(document).ready(function() {
         $('.btn-delete').click(function(e) {
             e.preventDefault();
-            const userId = $(this).data('group-id');
+            const groupId = $(this).data('group-id');
             if (confirm('Are you sure you want to delete this group?')) {
                 $.ajax({
                     url: '/group/' + groupId,

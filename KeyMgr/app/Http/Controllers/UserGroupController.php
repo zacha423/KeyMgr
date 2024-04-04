@@ -15,6 +15,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\Auth\Events\Registered;
 use App\Http\Resources\GroupResource;
 use App\Http\Requests\RoleAssignmentRequest;
+use App\Http\Resources\UserResource;
 
 class UserGroupController extends Controller
 {
@@ -31,7 +32,7 @@ class UserGroupController extends Controller
         '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
           <i class="fa fa-lg fa-fw fa-pen"></i>
           </a>';
-      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-campus-id="'
+      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-group-id="'
         . $group['id'] . '">
           <i class="fa fa-lg fa-fw fa-trash"></i>
           </button>';
@@ -88,6 +89,18 @@ class UserGroupController extends Controller
    */
   public function show(Request $request, UserGroup $group)
   {
+    $users = $group->users()->get();
+    $usersTableData = [];
+
+    foreach ($users as $user)
+    {
+      $u = new UserResource ($user);
+      array_push($usersTableData, [$u['id'], $u['firstName'], $u['lastName'], '<a href="' . route('users.show', $u['id']) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+            <i class="fa fa-lg fa-fw fa-eye"></i>
+            </a>']);
+    }
+
+
     $allGroups = UserGroup::all()->load('parent');
 
     $groupsArray = [];
@@ -99,6 +112,7 @@ class UserGroupController extends Controller
     return view('users.groupShow', [
       'group' => $group->load('children')->load('parent')->toArray(),
       'groups' => $groupsArray,
+      'users' => $usersTableData,
     ]);
   }
 

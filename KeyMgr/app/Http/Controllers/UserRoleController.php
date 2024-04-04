@@ -8,6 +8,7 @@ use App\Http\Requests\UserRoleRequest;
 use App\Models\UserRole;
 use Illuminate\Http\Request;
 use App\Http\Resources\RoleResource;
+use App\Http\Resources\UserResource;
 
 class UserRoleController extends Controller
 {
@@ -20,22 +21,25 @@ class UserRoleController extends Controller
     $allRoles = UserRole::all();
 
     foreach (RoleResource::collection($allRoles)->toArray($request) as $role) {
-      $btnEdit = '<a href="' . route('groups.edit', $role['id']) .
+      $btnEdit = '<a href="' . route('roles.show', $role['id']) .
         '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
           <i class="fa fa-lg fa-fw fa-pen"></i>
           </a>';
-      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-campus-id="'
+      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-role-id="'
         . $role['id'] . '">
           <i class="fa fa-lg fa-fw fa-trash"></i>
           </button>';
-      $btnDetails = '<a href="' . route('groups.show', $role['id']) .
+      $btnDetails = '<a href="' . route('roles.show', $role['id']) .
         '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
                 <i class="fa fa-lg fa-fw fa-eye"></i>
                 </a>';
 
+      // $userCount = $role->users()->get()->count();
+      $userCount = 5;
+
       $roleData = [
         'name' => $role['name'],
-        'id' => $role['id'],
+        'id' => $userCount,
         '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
       ];
 
@@ -54,13 +58,6 @@ class UserRoleController extends Controller
 
     return view('users.userrole', $data);
 
-
-
-
-    // return view('users.userrole', [
-    //   'roles' => UserRole::all()->toArray(),
-    //   'rolesJSON' => UserRole::all()->toJson(),
-    // ]);
   }
 
 
@@ -86,11 +83,23 @@ class UserRoleController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(UserRole $role)
+  public function show(Request $request, UserRole $role)
   {
-    return view('users.userrole', [
+    $users = $role->users()->get();
+    $usersTableData = [];
+    foreach ($users as $user)
+    {
+      $u = new UserResource ($user);
+      array_push($usersTableData, [$u['id'], $u['firstName'], $u['lastName'], '<a href="' . route('users.show', $u['id']) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+            <i class="fa fa-lg fa-fw fa-eye"></i>
+            </a>']);
+    }
+
+
+    return view('users.roleShow', [
       'role' => $role->toArray(),
       'roleJSON' => $role->toJson(),
+      'users' => $usersTableData,
     ]);
   }
 
@@ -99,7 +108,7 @@ class UserRoleController extends Controller
    */
   public function edit(UserRole $role)
   {
-    return view('users.userrole', [
+    return view('users.roleShow', [
       'role' => $role->toArray(),
       'roleJSON' => $role->toJson(),
     ]);

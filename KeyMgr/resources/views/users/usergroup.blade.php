@@ -14,7 +14,10 @@
 
 {{-- Limit Search Results Card --}}
 <x-adminlte-card theme="info" theme-mode="outline" title="Limit results by:" collapsible>
-  <form></form>
+  <form>
+    <x-group-selector id="groupSelect" :options="$groupsArray" :selected="[]"></x-group-selector>
+    <x-adminlte-button type="submit" theme="primary" label="Refine Search"/>
+  </form>
 </x-adminlte-card>
 
 {{-- Tools Card --}}

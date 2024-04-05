@@ -4,7 +4,8 @@
  */
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Manufacturer;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\UserGroup;
@@ -12,6 +13,7 @@ use App\Models\UserRole;
 
 class DatabaseSeeder extends Seeder
 {
+  use WithoutModelEvents;
   /**
    * Seed the application's database.
    */
@@ -38,5 +40,8 @@ class DatabaseSeeder extends Seeder
     $this->call(StorageSeeder::class);
     $this->call(KeySeeder::class);
     $this->call(KeyAuthSeeder::class);
+    $this->call(ManufacturerSeeder::class);
+    $this->call(LockModelSeeder::class);
+    $this->call(LockSeeder::class);
   }
 }

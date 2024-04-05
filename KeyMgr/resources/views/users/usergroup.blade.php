@@ -1,8 +1,13 @@
 @extends ("adminlte::page")
-@section ("content")
+@section('title', __('User Groups'))
 
-<h1>User Group Data</h1>
-<div class="col-sm-6">
+@section ("content")
+@section('content_header')
+    <h1>User Groups</h1>
+@stop
+
+
+<div class="col-sm-4">
 <form action="/groups" method="POST">
   @csrf
   <label for="parentGroup">Parent Group</label>

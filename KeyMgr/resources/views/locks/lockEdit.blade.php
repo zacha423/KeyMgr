@@ -33,24 +33,25 @@
                 </div>
 
                 {{-- Building --}}
-                <!-- <div class="form-group">
-                    <label for="building" class="col-form-label">{{ __('Select Building') }}</label>
-                    <select id="building" name="building" class="form-control">
-                        <option value="{{ $lock['building_id'] }}">{{ $lock['building'] }}</option>
-                        @foreach($buildings as $building)
-                             <option value="{{ $building['id'] }}">{{ $building['name'] }}</option>
-                        @endforeach
-                    </select>
-                </div> -->
-<!-- 
-                <div class="form-group" id="roomSelection">
+                <x-adminlte-select-bs name="building" label="Building" data-live-search data-live-search-placeholder="Search..." data-show-tick>
+                  <x-adminlte-options :options="$buildings" :selected="$lock['building_id']"></x-adminlte-options>
+                </x-adminlte-select-bs>
+
+                {{-- Room --}}
+                <x-adminlte-select-bs name="room" label="Room" data-live-search data-live-search-placeholder="Search..." data-show-tick>
+                  
+                </x-adminlte-select-bs>
+
+                
+
+                {{--<div class="form-group" id="roomSelection">
                     <label id="roomLbl" for="room" class="col-form-label">{{ __('Select Room') }}</label>
                     <select id="room" name="room" class="form-control">
                     </select>
                     @error('room')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
-                </div> -->
+                </div> --}}
 
                 <div class="form-group">
                     <label for="upperPinLengths" class="col-form-label">{{ __('Upper Pin Lengths') }}</label>

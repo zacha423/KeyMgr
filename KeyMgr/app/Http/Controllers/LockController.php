@@ -103,9 +103,17 @@ class LockController extends Controller
    */
   public function edit(Request $request, Lock $lock)
   {
+    $buildings = [];
+    $rooms = [];
+
+    foreach (Building::all() as $building) {
+      $buildingRes = (new BuildingResource($building))->toArray($request);
+      $buildings[$buildingRes['id']] = $buildingRes['name'];
+    }
+
     return view('locks.lockEdit', [
       'lock' => (new LockResource($lock))->toArray($request),
-      'buildings' => BuildingResource::collection(Building::all()->load(BuildingWrapper::loadRelationships()))->toArray($request),
+      'buildings' => $buildings,
       'keyways' => Keyway::all()->toArray(),
       'models' => LockModelResource::collection(LockModel::all()->load(LockModelWrapper::loadRelationships()))->toArray($request),
     ]);
@@ -116,37 +124,34 @@ class LockController extends Controller
    */
   public function update(UpdateLockRequest $request, Lock $lock)
   {
-      $data = $request->validated();
-  
-      if (isset($data['numPins'])) {
-          $lock->numPins = $data['numPins'];
-      }
-      if (isset($data['upperPinLengths'])) {
-          $lock->upperPinLengths = $data['upperPinLengths'];
-      }
-      if (isset($data['lowerPinLengths'])) {
-          $lock->lowerPinLengths = $data['lowerPinLengths'];
-      }
-      if (isset($data['installDate'])) {
-          $lock->installDate = $data['installDate'];
-      }
-      if (isset($data['keyway_id'])) {
-          $lock->keyway_id = $data['keyway_id'];
-      }
-      if (isset($data['room'])) {
-          $lock->room = $data['room'];
-      }
-      if (isset($data['building'])) {
-          $lock->building = $data['building'];
-      }
-  
-      // Save the changes to the lock
-      $lock->save();
-  
-      // Redirect to the lock's show page
-      return redirect()->route('locks.show', ['lock' => $lock->id]);
+    $data = $request->validated();
+
+    if (isset($data['numPins'])) {
+      $lock->numPins = $data['numPins'];
+    }
+    if (isset($data['upperPinLengths'])) {
+      $lock->upperPinLengths = $data['upperPinLengths'];
+    }
+    if (isset($data['lowerPinLengths'])) {
+      $lock->lowerPinLengths = $data['lowerPinLengths'];
+    }
+    if (isset($data['installDate'])) {
+      $lock->installDate = $data['installDate'];
+    }
+    if (isset($data['keyway_id'])) {
+      $lock->keyway_id = $data['keyway_id'];
+    }
+    if (isset($data['room'])) {
+      $lock->door_id = Room::find($data['room'])->doors()->first()->id;
+    }
+
+    // Save the changes to the lock
+    $lock->save();
+
+    // Redirect to the lock's show page
+    return redirect()->route('locks.show', ['lock' => $lock->id]);
   }
-  
+
 
   /**
    * Remove the specified resource from storage.

@@ -32,7 +32,7 @@ class UserGroupController extends Controller
         '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
           <i class="fa fa-lg fa-fw fa-pen"></i>
           </a>';
-      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-group-id="'
+      $btnDelete = '<button disabled class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-group-id="'
         . $group['id'] . '">
           <i class="fa fa-lg fa-fw fa-trash"></i>
           </button>';
@@ -121,6 +121,18 @@ class UserGroupController extends Controller
    */
   public function edit(UserGroup $group)
   {
+    $users = $group->users()->get();
+    $usersTableData = [];
+
+    foreach ($users as $user)
+    {
+      $u = new UserResource ($user);
+      array_push($usersTableData, [$u['id'], $u['firstName'], $u['lastName'], '<a href="' . route('users.show', $u['id']) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+            <i class="fa fa-lg fa-fw fa-eye"></i>
+            </a>']);
+    }
+
+
     $allGroups = UserGroup::all()->load('parent');
 
     $groupsArray = [];
@@ -132,8 +144,22 @@ class UserGroupController extends Controller
     return view('users.groupShow', [
       'group' => $group->load('children')->load('parent')->toArray(),
       'groups' => $groupsArray,
+      'users' => $usersTableData,
       'open' => 'true',
     ]);
+    // $allGroups = UserGroup::all()->load('parent');
+
+    // $groupsArray = [];
+    // foreach ($allGroups as $agroup)
+    // {
+    //   $groupsArray[$agroup['id']] = $agroup['name'];
+    // }
+
+    // return view('users.groupShow', [
+    //   'group' => $group->load('children')->load('parent')->toArray(),
+    //   'groups' => $groupsArray,
+    //   'open' => 'true',
+    // ]);
   }
 
   /**

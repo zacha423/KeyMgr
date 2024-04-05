@@ -1,5 +1,5 @@
 @extends ("adminlte::page")
-<script src="http://localhost:8080/vendor/jquery/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @section('title', __('User Groups'))
 
 @section('content_header')
@@ -40,9 +40,8 @@
   </div>
 </x-adminlte-card>
 
-@stop
-
 <script>
+  // This doesn't work - it's not clear why, so the buttons are disabled in the controller.
     $(document).ready(function() {
         $('.btn-delete').click(function(e) {
             e.preventDefault();
@@ -66,3 +65,4 @@
         });
     });
 </script>
+@stop

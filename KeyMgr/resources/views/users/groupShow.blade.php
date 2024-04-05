@@ -21,6 +21,7 @@
 @stop
 
 @section("content")
+@section('plugins.Datatables', true)
 <div class="content">
     <div class="container-fluid">
         <div class="row">

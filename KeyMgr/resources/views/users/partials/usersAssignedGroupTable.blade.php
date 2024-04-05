@@ -9,11 +9,11 @@ $heads = [
 $config = [
     'data' => $users,
     'order' => [[1, 'asc']],
-    'columns' => [null, null, ['orderable' => false]],
+    'columns' => [null, null, null, ['orderable' => false]],
 ];
 @endphp
 
-<x-adminlte-datatable id="table5" :heads="$heads" bordered compressed hoverable>
+<x-adminlte-datatable id="table5" :config="$config" :heads="$heads" bordered compressed hoverable>
     @foreach($config['data'] as $row)
         <tr>
             @foreach($row as $cell)

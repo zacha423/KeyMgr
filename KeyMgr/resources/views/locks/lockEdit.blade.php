@@ -26,14 +26,14 @@
                 {{-- Number of pins --}}
                 <div class="form-group">
                     <label for="numPins" class="col-form-label">{{ __('Number of Pins') }}</label>
-                    <input id="numPins" name="numPins" type="text" class="form-control" value="{{ old('numPins', $lock['numPins']) }}" required autofocus autocomplete="number">
+                    <input id="numPins" name="numPins" type="text" class="form-control" value="{{ old('numPins', $lock['numPins']) }}">
                     @error('numPins')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
                 {{-- Building --}}
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="building" class="col-form-label">{{ __('Select Building') }}</label>
                     <select id="building" name="building" class="form-control">
                         <option value="{{ $lock['building_id'] }}">{{ $lock['building'] }}</option>
@@ -41,17 +41,16 @@
                              <option value="{{ $building['id'] }}">{{ $building['name'] }}</option>
                         @endforeach
                     </select>
-                </div>
-
+                </div> -->
+<!-- 
                 <div class="form-group" id="roomSelection">
                     <label id="roomLbl" for="room" class="col-form-label">{{ __('Select Room') }}</label>
                     <select id="room" name="room" class="form-control">
-                        <!-- Options will be dynamically populated based on selected building -->
                     </select>
                     @error('room')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
-                </div>
+                </div> -->
 
                 <div class="form-group">
                     <label for="upperPinLengths" class="col-form-label">{{ __('Upper Pin Lengths') }}</label>
@@ -93,6 +92,7 @@
                     @enderror
                 </div>
 
+
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                     @if (session('status') === 'lock-updated')
@@ -117,7 +117,7 @@ $(document).ready(function() {
         if (buildingID) {
             $.ajax({
                 type: "GET",
-                url: "{{ route('getRooms') }}",//&$building_id=" + buildingID,
+                url: "{{ route('getRooms') }}",
                 data: {
                   building_id: buildingID
                 },

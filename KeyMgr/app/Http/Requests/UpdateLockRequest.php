@@ -25,11 +25,11 @@ class UpdateLockRequest extends FormRequest
   {
     return [
       'numPins' => ['required', 'min:0', 'max:15'],
-      'upperPinLengths' => ['required', 'alpha-num'],
-      'lowerPinLengths' => ['required', 'alpha-num'],
+      'upperPinLengths' => ['required', 'numeric'],
+      'lowerPinLengths' => ['required', 'numeric'],
       'installDate' => ['required'],
-      'keywayid' => ['exists:keyways,id', 'required'],
-      'lockmodel_id' => ['exists:lock_models,id', 'required']
+      'keyway_id' => ['exists:keyways,id', 'required']
+      // 'lockmodel_id' => ['exists:lock_models,id', 'required']
     ];
   }
 }

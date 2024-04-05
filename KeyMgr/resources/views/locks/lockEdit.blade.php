@@ -71,8 +71,9 @@
                 <div class="form-group">
                     <label for="keyway_id">Keyway</label>
                     <select class="form-control" id="keyway_id" name="keyway_id">
+                    <option value="{{ $lock['keyway_id'] }}">{{ $lock['keyway'] }}</option>
                         @foreach($keyways as $keyway)
-                            @if($keyway['id'] != $lock['keyway'])
+                            @if($keyway['id'] != $lock['keyway_id'])
                                 <option value="{{ $keyway['id'] }}">
                                     {{ $keyway['name'] }}
                                 </option>
@@ -83,6 +84,26 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
+
+                <x-adminlte-select-bs name="lockmodel_id" label="Lock Model">
+                  <x-adminlte-options :options="$models" :selected="$lock['model_id']"/>
+                </x-adminlte-select-bs>
+                {{--<div class="form-group">
+                    <label for="lockmodel_id">Lock Model</label>
+                    <select class="form-control" id="lockmodel_id" name="lockmodel_id">
+                    <option value="{{ $lock['manufacturer_id'] }}">{{ $lock['manufacturer'] }}</option>
+                        @foreach($models as $model)
+                            @if($model['name'] != $lock['manufacturer'])
+                                <option value="{{ $model['name'] }}">
+                                    {{ $model['name'] }}
+                                </option>
+                            @endif
+                        @endforeach
+                    </select>
+                    @error('lockmodel_id')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>--}}
 
 
                 <div class="form-group">
@@ -123,7 +144,4 @@ $(document).ready(function() {
     });
 });
 </script>
-
-
-
 @stop

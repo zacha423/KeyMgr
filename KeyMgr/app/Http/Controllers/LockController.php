@@ -129,7 +129,7 @@ class LockController extends Controller
       'buildings' => $buildings,
       'rooms' => $rooms,
       'keyways' => Keyway::all()->toArray(),
-      'models' => LockModelResource::collection(LockModel::all()->load(LockModelWrapper::loadRelationships()))->toArray($request),
+      'models' => LockModel::all()->pluck('name', 'id')->toArray(),
     ]);
   }
 
@@ -163,7 +163,7 @@ class LockController extends Controller
     $lock->save();
 
     // Redirect to the lock's show page
-    return redirect()->route('locks.show', ['lock' => $lock->id]);
+    return redirect()->route('locks.show', ['lock' => $lock->id])->with('status', 'Lock updated successfully.');
   }
 
 

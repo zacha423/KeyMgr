@@ -19,44 +19,43 @@ class UserRoleController extends Controller
   {
     $roles = [];
     $allRoles = UserRole::all();
+    $rolesArray = [];
 
-    foreach (RoleResource::collection($allRoles)->toArray($request) as $role) {
-      $btnEdit = '<a href="' . route('roles.show', $role['id']) .
+    foreach ($allRoles as $role) {
+      $btnEdit = '<a href="' . route('roles.show', $role->id) .
         '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
           <i class="fa fa-lg fa-fw fa-pen"></i>
           </a>';
       $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-role-id="'
-        . $role['id'] . '">
+        . $role->id . '">
           <i class="fa fa-lg fa-fw fa-trash"></i>
           </button>';
-      $btnDetails = '<a href="' . route('roles.show', $role['id']) .
+      $btnDetails = '<a href="' . route('roles.show', $role->id) .
         '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
                 <i class="fa fa-lg fa-fw fa-eye"></i>
                 </a>';
 
-      // $userCount = $role->users()->get()->count();
-      $userCount = 5;
-
       $roleData = [
-        'name' => $role['name'],
-        'id' => $userCount,
+        $role->id,
+        $role->name,
+        $role->users()->count(),
+        $role->groups()->count(),
         '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
       ];
 
       array_push($roles, $roleData);
     }
 
-    $rolesArray = [];
+    
     foreach ($allRoles as $role)
     {
-      $rolesArray[$role['id']] = $role['name'];
+      $rolesArray[$role->id] = $role->name;
     }
-    $data = [
+
+    return view('users.userrole', [
       'roles' => $roles,
       'rolesArray' => $rolesArray
-    ];
-
-    return view('users.userrole', $data);
+    ]);
 
   }
 

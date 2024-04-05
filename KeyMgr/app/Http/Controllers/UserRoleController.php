@@ -60,15 +60,6 @@ class UserRoleController extends Controller
 
   }
 
-
-  /**
-   * Show the form for creating a new resource.
-   */
-  public function create()
-  {
-    return view('users.userrole'); 
-  }
-
   /**
    * Store a newly created resource in storage.
    */

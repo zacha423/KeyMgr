@@ -75,16 +75,6 @@ class UserGroupController extends Controller
   }
 
   /**
-   * Show the form for creating a new resource.
-   */
-  public function create(Request $request)
-  {
-    return view('users.usergroup', [
-      'groups' => GroupResource::collection(UserGroup::all())->toArray($request),
-    ]);
-  }
-
-  /**
    * Store a newly created resource in storage.
    */
   public function store(UserGroupRequest $request)

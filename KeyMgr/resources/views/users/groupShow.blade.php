@@ -30,13 +30,13 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="m-0">Group Information</h5>
                             <div class="btn-group">
-                                <a href="{{ route('groups.edit', ['group' => $group['id']]) }}" data-toggle="modal" data-target="#updateGroupModal" id="newGroup" name="newGroup" class="btn btn-info mr-1"><i class="fas fa-edit"></i> Edit</a>
+                                <x-adminlte-button type="button" theme="info" data-toggle="modal" data-target="#updateGroupModal" id="newGroup" name="newGroup"  label="Edit" icon="fas fa-edit"></x-adminlte-button>
                                 @include('users.groups.updateGroupModal', ['options' => $groups, 'title' => 'Group Update Form'])
-                                <form action="{{ route('groups.destroy', ['group' => $group['id']]) }}" method="POST">
+                                <form id="delForm" name="delForm" action="{{ route('groups.destroy', ['group' => $group['id']]) }}" method="POST">
                                     @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>
+                                    @method('DELETE')                                    
                                 </form>
+                                <x-adminlte-button type="submit" theme="danger" label="Delete" icon="fas fa-trash-alt" form="delForm"/>
                             </div>
                         </div>
                     </div>

@@ -73,7 +73,7 @@ class LockController extends Controller
       'numPins' => $data['numPins'],
       'upperPinLengths' => $data['upperPinLengths'],
       'lowerPinLengths' => $data['lowerPinLengths'],
-      'installDate' => $data['installDate'],
+      'installDate' => date('m/d/Y', strtotime($data['installDate'])),
       'keyway_id' => $data['keyway_id'],
       'manufacturer_id' => $data['manufacturer_id'],
     ]);
@@ -151,6 +151,14 @@ class LockController extends Controller
               return redirect()->back()->with('error', 'Invalid building selected.');
           }
       }
+
+      if (isset($data['lockmodel_id'])) {
+        if (LockModel::where('id', $data['lockmodel_id'])->exists()) {
+            $lock->lock_model_id = $data['lockmodel_id'];
+        } else {
+            return redirect()->back()->with('error', 'Invalid lock model selected.');
+        }
+    }
   
       $lock->save();
   

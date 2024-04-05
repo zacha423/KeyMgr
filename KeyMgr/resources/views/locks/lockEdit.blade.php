@@ -96,12 +96,13 @@
                 <div class="form-group">
                     <label for="lockmodel_id">Lock Model</label>
                     <select class="form-control" id="lockmodel_id" name="lockmodel_id">
-                    <option value="{{ $lock['manufacturer_id'] }}">{{ $lock['manufacturer'] }}</option>
+                    <option value="{{ $lock['lockmodel_id'] }}">{{ $lock['manufacturer'] }}</option>
                         @foreach($models as $model)
-                            @if($model['name'] != $lock['manufacturer'])
-                                <option value="{{ $model['name'] }}">
-                                    {{ $model['name'] }}
+                            @if($model['manufacturer'] != $lock['manufacturer'])
+                                <option value="{{ $model['id'] }}">
+                                    {{ $model['name'] }} {{ $model['id'] }}
                                 </option>
+
                             @endif
                         @endforeach
                     </select>

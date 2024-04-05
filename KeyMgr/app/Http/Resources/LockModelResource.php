@@ -17,6 +17,7 @@ class LockModelResource extends JsonResource
   public function toArray(Request $request): array
   {
     return [
+      'id' => $this->id,
       'MACS' => $this->MACS,
       'name' => $this->name,
       'manufacturer' => $this->manufacturer->name,

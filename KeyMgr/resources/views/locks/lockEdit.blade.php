@@ -16,6 +16,8 @@
     <h1>{{ __('Edit Lock') }}</h1>
 @stop
 
+@section('plugins.BootStrapSelect', true)
+
 @section('content')
     <div class="card">
         <div class="card-body">
@@ -39,19 +41,8 @@
 
                 {{-- Room --}}
                 <x-adminlte-select-bs name="room" label="Room" data-live-search data-live-search-placeholder="Search..." data-show-tick>
-                  
+                  <x-adminlte-options :options="$rooms" :selected="$lock['room_id']"></x-adminlte-options>
                 </x-adminlte-select-bs>
-
-                
-
-                {{--<div class="form-group" id="roomSelection">
-                    <label id="roomLbl" for="room" class="col-form-label">{{ __('Select Room') }}</label>
-                    <select id="room" name="room" class="form-control">
-                    </select>
-                    @error('room')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div> --}}
 
                 <div class="form-group">
                     <label for="upperPinLengths" class="col-form-label">{{ __('Upper Pin Lengths') }}</label>
@@ -113,42 +104,23 @@ $(document).ready(function() {
     });
     $('.datepicker').datepicker('update', $('.datepicker').val());
 
-    $('#building').change(function() {
-        var buildingID = $(this).val();
-        if (buildingID) {
-            $.ajax({
-                type: "GET",
-                url: "{{ route('getRooms') }}",
-                data: {
-                  building_id: buildingID
-                },
-                success: function(res) {
-                    if (res) {
-                        console.log("success");
-                        $("#roomSelection").show();
-                        $("#room").empty();
-                        $.each(res, function(key, value) {
-                            $("#room").append('<option value="' + key + '">' + value + '</option>');
-                        });
-                    } else {
-                        $("#roomSelection").hide();
-                    }
-                }
-            });
-        } else {
-            $("#roomSelection").hide();
+    $('#building').change(() => {
+      const id = $('#building').val();
+
+      $.ajax({
+        type: "GET",
+        url: "{{ route('getRooms') }}",
+        data: {
+          building_id: id
+        },
+        success: function(res) {
+          if(res) {
+            $('#room').html(res);
+            $('#room').selectpicker('refresh');
+          }
         }
+      });
     });
-
-    // Set lock's room initially if available
-    var lockRoomNumber = "{{ $lock['room'] }}";
-    if (lockRoomNumber && lockRoomNumber.trim() !== "") {
-        $("#room").append('<option value="' + lockRoomNumber + '" selected>' + lockRoomNumber + '</option>');
-        $("#roomSelection").show();
-    }
-
-    // Trigger change event for initial value
-    $('#building').change();
 });
 </script>
 

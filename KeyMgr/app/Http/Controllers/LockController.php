@@ -110,10 +110,24 @@ class LockController extends Controller
       $buildingRes = (new BuildingResource($building))->toArray($request);
       $buildings[$buildingRes['id']] = $buildingRes['name'];
     }
+    
+    $lock->load([
+      'door' => [
+        'room' => [
+          'building'
+        ],
+      ]
+    ]);
+
+    foreach ($lock->door->room->building->rooms()->get() as $room)
+    {
+      $rooms[$room->id] = $room->number;
+    }
 
     return view('locks.lockEdit', [
       'lock' => (new LockResource($lock))->toArray($request),
       'buildings' => $buildings,
+      'rooms' => $rooms,
       'keyways' => Keyway::all()->toArray(),
       'models' => LockModelResource::collection(LockModel::all()->load(LockModelWrapper::loadRelationships()))->toArray($request),
     ]);
@@ -163,9 +177,14 @@ class LockController extends Controller
 
   public function getRooms(Request $request)
   {
+
+
     $buildingID = $request->input('building_id');
-    $rooms = Room::where('building_id', $buildingID)->pluck('number', 'id');
-    return response()->json($rooms);
+    $rooms = Room::where('building_id', $buildingID)->get()->pluck('number', 'id')->toArray();
+
+    return view('locks.partials.roomOptions', ['options' => $rooms])->render();
+
+    // return response()->json($rooms);
   }
 
 }

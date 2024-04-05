@@ -8,7 +8,7 @@ $heads = [
 $config = [
   'data' => $roles,
   'order' => [[1, 'asc']],
-  'columns' => [null, null, ['orderable' => false]],
+  'columns' => [null, null, null, null, ['orderable' => false]],
 ];
 @endphp
 

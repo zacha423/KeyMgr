@@ -33,7 +33,7 @@
                 </div>
 
                 {{-- Building --}}
-                <!-- <div class="form-group">
+                <div class="form-group">
                     <label for="building" class="col-form-label">{{ __('Select Building') }}</label>
                     <select id="building" name="building" class="form-control">
                         <option value="{{ $lock['building_id'] }}">{{ $lock['building'] }}</option>
@@ -41,9 +41,9 @@
                              <option value="{{ $building['id'] }}">{{ $building['name'] }}</option>
                         @endforeach
                     </select>
-                </div> -->
-<!-- 
-                <div class="form-group" id="roomSelection">
+                </div> 
+
+                <!-- <div class="form-group" id="roomSelection">
                     <label id="roomLbl" for="room" class="col-form-label">{{ __('Select Room') }}</label>
                     <select id="room" name="room" class="form-control">
                     </select>
@@ -79,8 +79,9 @@
                 <div class="form-group">
                     <label for="keyway_id">Keyway</label>
                     <select class="form-control" id="keyway_id" name="keyway_id">
+                    <option value="{{ $lock['keyway_id'] }}">{{ $lock['keyway'] }}</option>
                         @foreach($keyways as $keyway)
-                            @if($keyway['id'] != $lock['keyway'])
+                            @if($keyway['id'] != $lock['keyway_id'])
                                 <option value="{{ $keyway['id'] }}">
                                     {{ $keyway['name'] }}
                                 </option>
@@ -88,6 +89,23 @@
                         @endforeach
                     </select>
                     @error('keyway_id')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="lockmodel_id">Lock Model</label>
+                    <select class="form-control" id="lockmodel_id" name="lockmodel_id">
+                    <option value="{{ $lock['manufacturer_id'] }}">{{ $lock['manufacturer'] }}</option>
+                        @foreach($models as $model)
+                            @if($model['name'] != $lock['manufacturer'])
+                                <option value="{{ $model['name'] }}">
+                                    {{ $model['name'] }}
+                                </option>
+                            @endif
+                        @endforeach
+                    </select>
+                    @error('lockmodel_id')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
@@ -105,25 +123,17 @@
 
 <script>
 $(document).ready(function() {
-    $('.datepicker').datepicker({
-        format: 'yyyy-mm-dd',
-        autoclose: true,
-        todayHighlight: true
-    });
-    $('.datepicker').datepicker('update', $('.datepicker').val());
-
-    $('#building').change(function() {
-        var buildingID = $(this).val();
+    // Function to fetch and populate rooms based on the selected building
+    function fetchRooms(buildingID) {
         if (buildingID) {
             $.ajax({
                 type: "GET",
                 url: "{{ route('getRooms') }}",
                 data: {
-                  building_id: buildingID
+                    building_id: buildingID
                 },
                 success: function(res) {
                     if (res) {
-                        console.log("success");
                         $("#roomSelection").show();
                         $("#room").empty();
                         $.each(res, function(key, value) {
@@ -137,6 +147,12 @@ $(document).ready(function() {
         } else {
             $("#roomSelection").hide();
         }
+    }
+
+    // Event listener for building selection change
+    $('#building').change(function() {
+        var buildingID = $(this).val();
+        fetchRooms(buildingID); // Call the function to fetch and populate rooms
     });
 
     // Set lock's room initially if available
@@ -149,6 +165,7 @@ $(document).ready(function() {
     // Trigger change event for initial value
     $('#building').change();
 });
+
 </script>
 
 

@@ -117,7 +117,8 @@ class LockController extends Controller
   public function update(UpdateLockRequest $request, Lock $lock)
   {
       $data = $request->validated();
-  
+
+
       if (isset($data['numPins'])) {
           $lock->numPins = $data['numPins'];
       }
@@ -133,18 +134,27 @@ class LockController extends Controller
       if (isset($data['keyway_id'])) {
           $lock->keyway_id = $data['keyway_id'];
       }
+      if (isset($data['keyway'])) {
+          $lock->keyway = $data['keyway'];
+      }
       if (isset($data['room'])) {
-          $lock->room = $data['room'];
+          if (Room::where('id', $data['room'])->exists()) {
+              $lock->room = $data['room'];
+          } else {
+              return redirect()->back()->with('error', 'Invalid room selected.');
+          }
       }
       if (isset($data['building'])) {
-          $lock->building = $data['building'];
+          if (Building::where('id', $data['building'])->exists()) {
+              $lock->building = $data['buildingID'];
+          } else {
+              return redirect()->back()->with('error', 'Invalid building selected.');
+          }
       }
   
-      // Save the changes to the lock
       $lock->save();
   
-      // Redirect to the lock's show page
-      return redirect()->route('locks.show', ['lock' => $lock->id]);
+      return redirect()->route('locks.show', ['lock' => $lock->id])->with('status', 'Lock updated successfully.');
   }
   
 

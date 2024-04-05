@@ -13,8 +13,8 @@
 @section('plugins.BootStrapSelect', true)
 
 <x-adminlte-card theme="info" theme-mode="outline" title="Tools" collapsible>
-
-    <x-adminlte-button type="button" theme="success" data-toggle="modal" data-target="#newRoleModal" 
+    {{--more buttons --}}
+    <x-adminlte-button class="float-right" type="button" theme="success" data-toggle="modal" data-target="#newRoleModal" 
         id="newRole" name="newRole" label="Create New Role"/>
     
     @include('users.partials.newRoleModal', ['title' => 'Role Creation Form'])

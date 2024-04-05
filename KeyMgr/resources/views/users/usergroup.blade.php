@@ -26,7 +26,7 @@
     id="roles" name="roles" label="Manage Roles"/>
   <x-adminlte-button type="button" theme="primary" data-toggle="modal" data-target="#userModal" 
     id="users" name="users" label="Manage Users" disabled/>
-  <x-adminlte-button type="button" theme="success" data-toggle="modal" data-target="#newGroupModal" 
+  <x-adminlte-button class="float-right" type="button" theme="success" data-toggle="modal" data-target="#newGroupModal" 
     id="newGroup" name="newGroup" label="Create New Group"/>
   @include('users.groups.manageRolesModal', ['title' => 'Role Permissions Management', 'options' => $groupsArray])
   @include('users.groups.manageUsersModal', [])

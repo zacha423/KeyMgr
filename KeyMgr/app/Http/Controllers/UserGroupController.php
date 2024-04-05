@@ -98,7 +98,11 @@ class UserGroupController extends Controller
     foreach ($users as $user)
     {
       $u = new UserResource ($user);
-      array_push($usersTableData, [$u['id'], $u['firstName'], $u['lastName'], '<a href="' . route('users.show', $u['id']) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+      array_push($usersTableData, [
+        $u['id'], 
+        $u['firstName'], 
+        $u['lastName'], '<a href="' . route('users.show', 
+        $u['id']) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
             <i class="fa fa-lg fa-fw fa-eye"></i>
             </a>']);
     }
@@ -130,7 +134,11 @@ class UserGroupController extends Controller
     foreach ($users as $user)
     {
       $u = new UserResource ($user);
-      array_push($usersTableData, [$u['id'], $u['firstName'], $u['lastName'], '<a href="' . route('users.show', $u['id']) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+      array_push($usersTableData, [
+        $u['id'], 
+        $u['firstName'], 
+        $u['lastName'], '<a href="' . route('users.show', 
+        $u['id']) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
             <i class="fa fa-lg fa-fw fa-eye"></i>
             </a>']);
     }
@@ -150,19 +158,6 @@ class UserGroupController extends Controller
       'users' => $usersTableData,
       'open' => 'true',
     ]);
-    // $allGroups = UserGroup::all()->load('parent');
-
-    // $groupsArray = [];
-    // foreach ($allGroups as $agroup)
-    // {
-    //   $groupsArray[$agroup['id']] = $agroup['name'];
-    // }
-
-    // return view('users.groupShow', [
-    //   'group' => $group->load('children')->load('parent')->toArray(),
-    //   'groups' => $groupsArray,
-    //   'open' => 'true',
-    // ]);
   }
 
   /**

@@ -21,10 +21,6 @@ use App\Http\Controllers\CampusController;
 |
 */
 
-Route::resources ([
-  'users' => UserController::class,
-]);
-
 Route::get('/', function () {
   return redirect('/login');
 });
@@ -48,7 +44,7 @@ Route::middleware('auth')->group(function () {
   Route::resources([
     'campus' => CampusController::class,
   ]);
-
+  Route::resources(['users' => UserController::class,]);
   Route::post('/groups/members', [UserController::class, 'groupMembershipManagement'])->name('users.groups');
   Route::post('/roles/members', [UserController::class, 'roleMembershipManagement'])->name('users.roles');
   Route::resource('room', RoomController::class,)->except(['create']);

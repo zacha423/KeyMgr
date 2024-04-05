@@ -214,6 +214,6 @@ class UserGroupController extends Controller
       }
     }
 
-    return redirect()->route('groups.store');
+    return redirect()->route('groups.index');
   }
 }

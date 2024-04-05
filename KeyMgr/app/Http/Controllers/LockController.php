@@ -103,11 +103,33 @@ class LockController extends Controller
    */
   public function edit(Request $request, Lock $lock)
   {
+    $buildings = [];
+    $rooms = [];
+
+    foreach (Building::all() as $building) {
+      $buildingRes = (new BuildingResource($building))->toArray($request);
+      $buildings[$buildingRes['id']] = $buildingRes['name'];
+    }
+    
+    $lock->load([
+      'door' => [
+        'room' => [
+          'building'
+        ],
+      ]
+    ]);
+
+    foreach ($lock->door->room->building->rooms()->get() as $room)
+    {
+      $rooms[$room->id] = $room->number;
+    }
+
     return view('locks.lockEdit', [
       'lock' => (new LockResource($lock))->toArray($request),
-      'buildings' => BuildingResource::collection(Building::all()->load(BuildingWrapper::loadRelationships()))->toArray($request),
+      'buildings' => $buildings,
+      'rooms' => $rooms,
       'keyways' => Keyway::all()->toArray(),
-      'models' => LockModelResource::collection(LockModel::all()->load(LockModelWrapper::loadRelationships()))->toArray($request),
+      'models' => LockModel::all()->pluck('name', 'id')->toArray(),
     ]);
   }
 
@@ -116,55 +138,33 @@ class LockController extends Controller
    */
   public function update(UpdateLockRequest $request, Lock $lock)
   {
-      $data = $request->validated();
+    $data = $request->validated();
 
-
-      if (isset($data['numPins'])) {
-          $lock->numPins = $data['numPins'];
-      }
-      if (isset($data['upperPinLengths'])) {
-          $lock->upperPinLengths = $data['upperPinLengths'];
-      }
-      if (isset($data['lowerPinLengths'])) {
-          $lock->lowerPinLengths = $data['lowerPinLengths'];
-      }
-      if (isset($data['installDate'])) {
-          $lock->installDate = $data['installDate'];
-      }
-      if (isset($data['keyway_id'])) {
-          $lock->keyway_id = $data['keyway_id'];
-      }
-      if (isset($data['keyway'])) {
-          $lock->keyway = $data['keyway'];
-      }
-      if (isset($data['room'])) {
-          if (Room::where('id', $data['room'])->exists()) {
-              $lock->room = $data['room'];
-          } else {
-              return redirect()->back()->with('error', 'Invalid room selected.');
-          }
-      }
-      if (isset($data['building'])) {
-          if (Building::where('id', $data['building'])->exists()) {
-              $lock->building = $data['buildingID'];
-          } else {
-              return redirect()->back()->with('error', 'Invalid building selected.');
-          }
-      }
-
-      if (isset($data['lockmodel_id'])) {
-        if (LockModel::where('id', $data['lockmodel_id'])->exists()) {
-            $lock->lock_model_id = $data['lockmodel_id'];
-        } else {
-            return redirect()->back()->with('error', 'Invalid lock model selected.');
-        }
+    if (isset($data['numPins'])) {
+      $lock->numPins = $data['numPins'];
     }
-  
-      $lock->save();
-  
-      return redirect()->route('locks.show', ['lock' => $lock->id])->with('status', 'Lock updated successfully.');
+    if (isset($data['upperPinLengths'])) {
+      $lock->upperPinLengths = $data['upperPinLengths'];
+    }
+    if (isset($data['lowerPinLengths'])) {
+      $lock->lowerPinLengths = $data['lowerPinLengths'];
+    }
+    if (isset($data['installDate'])) {
+      $lock->installDate = $data['installDate'];
+    }
+    if (isset($data['keyway_id'])) {
+      $lock->keyway_id = $data['keyway_id'];
+    }
+    if (isset($data['room'])) {
+      $lock->door_id = Room::find($data['room'])->doors()->first()->id;
+    }
+    // Save the changes to the lock
+    $lock->save();
+
+    // Redirect to the lock's show page
+    return redirect()->route('locks.show', ['lock' => $lock->id])->with('status', 'Lock updated successfully.');
   }
-  
+
 
   /**
    * Remove the specified resource from storage.
@@ -176,9 +176,14 @@ class LockController extends Controller
 
   public function getRooms(Request $request)
   {
+
+
     $buildingID = $request->input('building_id');
-    $rooms = Room::where('building_id', $buildingID)->pluck('number', 'id');
-    return response()->json($rooms);
+    $rooms = Room::where('building_id', $buildingID)->get()->pluck('number', 'id')->toArray();
+
+    return view('locks.partials.roomOptions', ['options' => $rooms])->render();
+
+    // return response()->json($rooms);
   }
 
 }

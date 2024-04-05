@@ -29,6 +29,7 @@ class UpdateLockRequest extends FormRequest
       'lowerPinLengths' => ['required', 'numeric'],
       'installDate' => ['required'],
       'keyway_id' => ['exists:keyways,id', 'required'],
+      'room' => ['exists:rooms,id', 'required'],
       'lockmodel_id' => ['exists:lock_models,id', 'required']
     ];
   }

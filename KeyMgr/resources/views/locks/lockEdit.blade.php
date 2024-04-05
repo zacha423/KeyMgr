@@ -16,6 +16,8 @@
     <h1>{{ __('Edit Lock') }}</h1>
 @stop
 
+@section('plugins.BootStrapSelect', true)
+
 @section('content')
     <div class="card">
         <div class="card-body">
@@ -33,24 +35,14 @@
                 </div>
 
                 {{-- Building --}}
-                <div class="form-group">
-                    <label for="building" class="col-form-label">{{ __('Select Building') }}</label>
-                    <select id="building" name="building" class="form-control">
-                        <option value="{{ $lock['building_id'] }}">{{ $lock['building'] }}</option>
-                        @foreach($buildings as $building)
-                             <option value="{{ $building['id'] }}">{{ $building['name'] }}</option>
-                        @endforeach
-                    </select>
-                </div> 
+                <x-adminlte-select-bs name="building" label="Building" data-live-search data-live-search-placeholder="Search..." data-show-tick>
+                  <x-adminlte-options :options="$buildings" :selected="$lock['building_id']"></x-adminlte-options>
+                </x-adminlte-select-bs>
 
-                <!-- <div class="form-group" id="roomSelection">
-                    <label id="roomLbl" for="room" class="col-form-label">{{ __('Select Room') }}</label>
-                    <select id="room" name="room" class="form-control">
-                    </select>
-                    @error('room')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div> -->
+                {{-- Room --}}
+                <x-adminlte-select-bs name="room" label="Room" data-live-search data-live-search-placeholder="Search..." data-show-tick>
+                  <x-adminlte-options :options="$rooms" :selected="$lock['room_id']"></x-adminlte-options>
+                </x-adminlte-select-bs>
 
                 <div class="form-group">
                     <label for="upperPinLengths" class="col-form-label">{{ __('Upper Pin Lengths') }}</label>
@@ -93,7 +85,10 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
+                <x-adminlte-select-bs name="lockmodel_id" label="Lock Model">
+                  <x-adminlte-options :options="$models" :selected="$lock['model_id']"/>
+                </x-adminlte-select-bs>
+                {{--<div class="form-group">
                     <label for="lockmodel_id">Lock Model</label>
                     <select class="form-control" id="lockmodel_id" name="lockmodel_id">
                     <option value="{{ $lock['lockmodel_id'] }}">{{ $lock['manufacturer'] }}</option>
@@ -109,7 +104,7 @@
                     @error('lockmodel_id')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
-                </div>
+                </div>--}}
 
 
                 <div class="form-group">
@@ -124,51 +119,30 @@
 
 <script>
 $(document).ready(function() {
-    // Function to fetch and populate rooms based on the selected building
-    function fetchRooms(buildingID) {
-        if (buildingID) {
-            $.ajax({
-                type: "GET",
-                url: "{{ route('getRooms') }}",
-                data: {
-                    building_id: buildingID
-                },
-                success: function(res) {
-                    if (res) {
-                        $("#roomSelection").show();
-                        $("#room").empty();
-                        $.each(res, function(key, value) {
-                            $("#room").append('<option value="' + key + '">' + value + '</option>');
-                        });
-                    } else {
-                        $("#roomSelection").hide();
-                    }
-                }
-            });
-        } else {
-            $("#roomSelection").hide();
-        }
-    }
-
-    // Event listener for building selection change
-    $('#building').change(function() {
-        var buildingID = $(this).val();
-        fetchRooms(buildingID); // Call the function to fetch and populate rooms
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        todayHighlight: true
     });
+    $('.datepicker').datepicker('update', $('.datepicker').val());
 
-    // Set lock's room initially if available
-    var lockRoomNumber = "{{ $lock['room'] }}";
-    if (lockRoomNumber && lockRoomNumber.trim() !== "") {
-        $("#room").append('<option value="' + lockRoomNumber + '" selected>' + lockRoomNumber + '</option>');
-        $("#roomSelection").show();
-    }
+    $('#building').change(() => {
+      const id = $('#building').val();
 
-    // Trigger change event for initial value
-    $('#building').change();
+      $.ajax({
+        type: "GET",
+        url: "{{ route('getRooms') }}",
+        data: {
+          building_id: id
+        },
+        success: function(res) {
+          if(res) {
+            $('#room').html(res);
+            $('#room').selectpicker('refresh');
+          }
+        }
+      });
+    });
 });
-
 </script>
-
-
-
 @stop

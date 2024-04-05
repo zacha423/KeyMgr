@@ -22,6 +22,8 @@ class LockResource extends JsonResource
     {
       $room = $this->door->room->number;
       $building = $this->door->room->building->name;
+      $buildingID = $this->door->room->building->id;
+      $roomID = $this->door->room->id;
     }
 
     return array_merge([

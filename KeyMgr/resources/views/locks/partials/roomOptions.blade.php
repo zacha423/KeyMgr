@@ -1,0 +1,1 @@
+<x-adminlte-options :options="$options" empty-option="Select an option..."/>

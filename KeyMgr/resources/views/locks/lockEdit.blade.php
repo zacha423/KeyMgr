@@ -88,24 +88,6 @@
                 <x-adminlte-select-bs name="lockmodel_id" label="Lock Model">
                   <x-adminlte-options :options="$models" :selected="$lock['model_id']"/>
                 </x-adminlte-select-bs>
-                {{--<div class="form-group">
-                    <label for="lockmodel_id">Lock Model</label>
-                    <select class="form-control" id="lockmodel_id" name="lockmodel_id">
-                    <option value="{{ $lock['lockmodel_id'] }}">{{ $lock['manufacturer'] }}</option>
-                        @foreach($models as $model)
-                            @if($model['manufacturer'] != $lock['manufacturer'])
-                                <option value="{{ $model['id'] }}">
-                                    {{ $model['name'] }} {{ $model['id'] }}
-                                </option>
-
-                            @endif
-                        @endforeach
-                    </select>
-                    @error('lockmodel_id')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>--}}
-
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>

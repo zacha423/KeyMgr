@@ -39,7 +39,6 @@ class LockResource extends JsonResource
       'building_id' => $buildingID,
       'building' => $building,
       'door' => $this->door->number,
-      'lockmodel_id' => $this->model->id,
     ], (new LockModelResource($this->lockModel))->toArray($request));
   }
 }

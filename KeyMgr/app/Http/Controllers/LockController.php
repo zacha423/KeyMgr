@@ -172,11 +172,12 @@ class LockController extends Controller
   public function destroy(Lock $lock)
   {
     $lock->delete();
+    return redirect()->route('locks.index');
+
   }
 
   public function getRooms(Request $request)
   {
-
 
     $buildingID = $request->input('building_id');
     $rooms = Room::where('building_id', $buildingID)->get()->pluck('number', 'id')->toArray();

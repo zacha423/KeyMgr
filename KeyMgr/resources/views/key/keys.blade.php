@@ -135,7 +135,7 @@
 
 
 @section('plugins.Datatables', true)
-    <!-- Datatable -->
+@section('content')   <!-- Datatable -->
     <div class="card">
         <div class="card-body">
             <x-adminlte-datatable id="key-table" :heads="$heads" bordered compressed hoverable>

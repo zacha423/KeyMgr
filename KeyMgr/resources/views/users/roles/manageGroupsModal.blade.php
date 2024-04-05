@@ -35,7 +35,7 @@
 
       // Add items to hidden select.
       $('#selectedRoles').remove();
-      $('<select id="selectedRolels" name="selectedRoles[]" multiple hidden/>').appendTo('#groupsModal');
+      $('<select id="selectedRoles" name="selectedRoles[]" multiple hidden/>').appendTo('#groupsModal');
       $(() => {
         getSelectedIDs('table5').forEach (($id) => {
           $('<option selected />').attr('value', $id).appendTo('#selectedRoles');

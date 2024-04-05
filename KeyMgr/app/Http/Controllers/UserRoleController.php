@@ -4,7 +4,9 @@
  */
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GroupAssignmentRequest;
 use App\Http\Requests\UserRoleRequest;
+use App\Models\UserGroup;
 use App\Models\UserRole;
 use Illuminate\Http\Request;
 use App\Http\Resources\RoleResource;
@@ -128,7 +130,23 @@ class UserRoleController extends Controller
     return redirect('/roles');
   }
 
-  public function manageGroups () {
+  public function manageGroups (GroupAssignmentRequest $request) {
+    $validated = $request->safe();
 
+    $groups = UserGroup::find($validated['groups']);
+    $roles = UserRole::find($validated['selectedRoles']);
+
+    foreach ($roles as $role)
+    {
+      if (isset ($validated['addMode']))
+      {
+        $role->groups()->attach($groups);
+      }
+      else {
+        $role->groups()->detach($groups);
+      }
+    }
+
+    return redirect()->route('roles.index');
   }
 }

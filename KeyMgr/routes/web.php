@@ -58,6 +58,7 @@ Route::middleware('auth')->group(function () {
   Route::resource('roles', UserRoleController::class)->except(['create']);
   Route::get('building/{building}/rooms', [BuildingController::class, 'showRooms'])->name('building.buildingRooms');
   Route::post('groups/roles', [UserGroupController::class, 'manageRoles'])->name('groups.roles');
+  Route::post('roles/groups', [UserRoleController::class, 'manageGroups'])->name('roles.groups');
 });
 
 

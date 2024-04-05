@@ -127,4 +127,8 @@ class UserRoleController extends Controller
     $role->delete();
     return redirect('/roles');
   }
+
+  public function manageGroups () {
+
+  }
 }

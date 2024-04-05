@@ -20,6 +20,7 @@
   <x-adminlte-button class="float-right" type="button" theme="success" data-toggle="modal" data-target="#newRoleModal" 
     id="newRole" name="newRole" label="Create New Role"/>
   
+  @include('users.roles.manageGroupsModal', ['options' => $rolesArray])
   @include('users.partials.newRoleModal', ['title' => 'Role Creation Form'])
 
 </x-adminlte-card>

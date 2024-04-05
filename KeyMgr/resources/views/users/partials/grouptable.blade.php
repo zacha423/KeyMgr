@@ -3,13 +3,15 @@ $heads = [
   'ID',
   'Group Name',
   'Parent Group',
+  'Member Users',
+  'Assigned Roles',
   ['label' => 'Actions', 'no-export' => false, 'width' => 5],
 ];
 
 $config = [
   'data' => $groups,
   'order' => [[1, 'asc']],
-  'columns' => [null, null, null, ['orderable' => false]],
+  'columns' => [null, null, null, null, null, ['orderable' => false]],
   'select' => true,
 ];
 @endphp

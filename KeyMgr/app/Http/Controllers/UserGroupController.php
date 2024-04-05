@@ -36,31 +36,34 @@ class UserGroupController extends Controller
     
     $groupSearchResults = $groupSearchResults->get();
 
-    foreach (GroupResource::collection($groupSearchResults)->toArray($request) as $group) {
-      $btnEdit = '<a href="' . route('groups.edit', $group['id']) .
+    foreach (($groupSearchResults) as $group) {
+      $groupRes = (new GroupResource ($group))->toArray($request);
+      $btnEdit = '<a href="' . route('groups.edit', $groupRes['id']) .
         '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
           <i class="fa fa-lg fa-fw fa-pen"></i>
           </a>';
       $btnDelete = '<button disabled class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-group-id="'
-        . $group['id'] . '">
+        . $groupRes['id'] . '">
           <i class="fa fa-lg fa-fw fa-trash"></i>
           </button>';
-      $btnDetails = '<a href="' . route('groups.show', $group['id']) .
+      $btnDetails = '<a href="' . route('groups.show', $groupRes['id']) .
         '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
                 <i class="fa fa-lg fa-fw fa-eye"></i>
                 </a>';
 
       array_push($datatableData, [
-        $group['id'],
-        $group['name'],
-        $group['parentName'] ? $group['parentName'] : ' ',
+        $groupRes['id'],
+        $groupRes['name'],
+        $groupRes['parentName'] ? $groupRes['parentName'] : ' ',
+        $group->users()->count(),
+        $group->roles()->count(),
       '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>']);
     }
 
     $groupsArray = [];
-    foreach (UserGroup::all() as $group)
+    foreach (UserGroup::all() as $groupRes)
     {
-      $groupsArray[$group['id']] = $group['name'];
+      $groupsArray[$groupRes['id']] = $groupRes['name'];
     }
     $data = [
       'groups' => $datatableData,

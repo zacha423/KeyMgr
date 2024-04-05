@@ -53,7 +53,7 @@ $config = [
             const lockId = $(this).data('key-id');
             if (confirm('Are you sure you want to delete this lock?')) {
                 $.ajax({
-                    url: '/locks',
+                    url: '/locks/' + lockId,
                     method: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',

@@ -24,10 +24,19 @@ class UserGroupController extends Controller
    */
   public function index(Request $request)
   {
-    $groups = [];
-    $allGroups = UserGroup::all()->load('parent');
+    $datatableData = [];
+    $groupSearchResults = UserGroup::with('parent');
 
-    foreach (GroupResource::collection($allGroups)->toArray($request) as $group) {
+    if($request->query('groups'))
+    {
+      $groupSearchResults->whereHas('parent', function ($query) use ($request) {
+        $query->whereIn('id', $request->query('groups'));
+      });
+    }
+    
+    $groupSearchResults = $groupSearchResults->get();
+
+    foreach (GroupResource::collection($groupSearchResults)->toArray($request) as $group) {
       $btnEdit = '<a href="' . route('groups.edit', $group['id']) .
         '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
           <i class="fa fa-lg fa-fw fa-pen"></i>
@@ -41,7 +50,7 @@ class UserGroupController extends Controller
                 <i class="fa fa-lg fa-fw fa-eye"></i>
                 </a>';
 
-      array_push($groups, [
+      array_push($datatableData, [
         $group['id'],
         $group['name'],
         $group['parentName'] ? $group['parentName'] : ' ',
@@ -49,13 +58,14 @@ class UserGroupController extends Controller
     }
 
     $groupsArray = [];
-    foreach ($allGroups as $group)
+    foreach (UserGroup::all() as $group)
     {
       $groupsArray[$group['id']] = $group['name'];
     }
     $data = [
-      'groups' => $groups,
-      'groupsArray' => $groupsArray
+      'groups' => $datatableData,
+      'groupsArray' => $groupsArray,
+      'selected' => $request->query('groups'),
     ];
 
     return view('users.usergroup', $data);

@@ -23,5 +23,8 @@ class PacUSeeder extends Seeder
     ]);
 
     $CAS = UserGroup::create(['name' => 'College or Arts and Sciences']);
+    $SNS = new UserGroup (['name' => 'School of Natural Sciences']);
+    $SNS->parent_id_fk = $CAS->id;
+    $SNS->save();
   }
 }

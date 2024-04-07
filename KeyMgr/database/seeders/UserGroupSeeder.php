@@ -16,19 +16,11 @@ class UserGroupSeeder extends Seeder
    */
   public function run(): void
   {
-    $NatSci = UserGroup::factory()->create (['name' => 'School of Natural Sciences']);
-    
-    UserGroup::factory()->createMany ([
-      ['name'=>'Computer Science'],
-      ['name'=>'Mathematics']
-    ])->each (function ($subdepartment) use ($NatSci) {
-      $subdepartment->parent()->associate($NatSci)->save();
-    });
+    foreach (UserGroup::factory()->createMany (3)->unique() as $group)
+    {
+      $group->children()->saveMany (UserGroup::factory(2)->create()->unique());
+    }
 
-    UserGroup::factory()->createMany([
-      ['name' => 'Undergraduate Students'],
-      ['name' => 'Staff'],
-      ['name' => 'Faculty'],
-    ]);
+    UserGroup::factory()->createMany(2)->unique();
   }
 }

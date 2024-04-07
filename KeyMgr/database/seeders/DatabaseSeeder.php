@@ -26,16 +26,7 @@ class DatabaseSeeder extends Seeder
     $this->call(RoomSeeder::class);
     $this->call(DoorSeeder::class);
     $this->call(TestAccountsSeeder::class);
-
-
-    // User::factory(50)->create();
-
-    // foreach (User::all() as $user) { 
-    //   $user->groups()->syncWithoutDetaching(UserGroup::all()->random(1));
-    //   $user->roles()->syncWithoutDetaching(UserRole::all()->random(1)); 
-    // }
     $this->call(MessageTemplateSeeder::class);
-    // \App\Models\User::factory(50)->create();
     $this->call(KeywaySeeder::class);
     $this->call(StorageSeeder::class);
     $this->call(KeySeeder::class);

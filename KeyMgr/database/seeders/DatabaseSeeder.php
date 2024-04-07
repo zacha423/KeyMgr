@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
    */
   public function run(): void
   {
+    $this->call(RealLifeSeeder::class);
     $this->call(UserGroupSeeder::class);
     $this->call(AddressSeeder::class);
     $this->call(CampusSeeder::class);
@@ -35,6 +36,6 @@ class DatabaseSeeder extends Seeder
     $this->call(LockModelSeeder::class);
     $this->call(LockSeeder::class);
     $this->call(UserAccountSeeder::class);
-    $this->call(PacUSeeder::class);
+    
   }
 }

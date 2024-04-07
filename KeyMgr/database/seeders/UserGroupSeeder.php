@@ -16,11 +16,11 @@ class UserGroupSeeder extends Seeder
    */
   public function run(): void
   {
-    foreach (UserGroup::factory()->createMany (3)->unique() as $group)
+    foreach (UserGroup::factory()->createMany (2)->unique() as $group)
     {
       $group->children()->saveMany (UserGroup::factory(2)->create()->unique());
     }
 
-    UserGroup::factory()->createMany(2)->unique();
+    UserGroup::factory()->createMany(1)->unique();
   }
 }

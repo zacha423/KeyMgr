@@ -6,19 +6,6 @@
 -- -----------------------------------------------------------------------------
 
 -- -----------------------------------------------------------------------------
--- Campuses Table
--- -----------------------------------------------------------------------------
-WITH campuses (Name, StreetAddress) AS (VALUES 
-  ('Forest Grove Campus','2043 College Way'),
-  ('Hillsboro Health Professions Campus','222 SE 8th Ave'),
-  ('City of Cornelius', '1355 N Barlow St')
-)
-INSERT INTO "KeyMgr"."rawCampuses" (Name, AddressID)
-SELECT campuses.Name, AddressID
-FROM campuses
-JOIN "KeyMgr"."rawAddresses" ON "KeyMgr"."rawAddresses".StreetAddress = campuses.StreetAddress;
-
--- -----------------------------------------------------------------------------
 -- Buildings Table
 -- -----------------------------------------------------------------------------
 WITH buildings (Name, StreetAddress, Campus) AS (VALUES

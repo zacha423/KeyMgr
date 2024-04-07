@@ -4,9 +4,13 @@
  */
 namespace Database\Seeders;
 
+use App\Models\Wrappers\AddressWrapper;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+use App\Models\Campus;
+use App\Models\Room;
+use App\Models\Building;
 use App\Models\UserGroup;
 use App\Models\UserRole;
 use App\Models\User;
@@ -121,7 +125,10 @@ class RealLifeSeeder extends Seeder
       'password' => $testAcctPassword,
     ]);
     $CSProf->groups()->save(UserGroup::where(['name' => 'Computer Science'])->first());
-    $CSProf->roles()->saveMany([UserRole::where(['name' => config('constants.roles.holder')])->first(),UserRole::where(['name' => config('constants.roles.requestor')])->first()]);
+    $CSProf->roles()->saveMany([
+      UserRole::where(['name' => config('constants.roles.holder')])->first(),
+      UserRole::where(['name' => config('constants.roles.requestor')])->first(),
+    ]);
 
     $MathProf = User::create([
       'firstName' => 'Math',
@@ -131,7 +138,10 @@ class RealLifeSeeder extends Seeder
       'password' => $testAcctPassword,
     ]);
     $MathProf->groups()->save(UserGroup::where(['name' => 'Mathematics'])->first());
-    $MathProf->roles()->saveMany([UserRole::where(['name' => config('constants.roles.holder')])->first(),UserRole::where(['name' => config('constants.roles.requestor')])->first()]);
+    $MathProf->roles()->saveMany([
+      UserRole::where(['name' => config('constants.roles.holder')])->first(),
+      UserRole::where(['name' => config('constants.roles.requestor')])->first(),
+    ]);
 
     $DSProf = User::create([
       'firstName' => 'Data Sci',
@@ -141,7 +151,10 @@ class RealLifeSeeder extends Seeder
       'password' => $testAcctPassword,
     ]);
     $DSProf->groups()->save(UserGroup::where(['name' => 'Data Science'])->first());
-    $DSProf->roles()->saveMany([UserRole::where(['name' => config('constants.roles.holder')])->first(),UserRole::where(['name' => config('constants.roles.requestor')])->first()]);
+    $DSProf->roles()->saveMany([
+      UserRole::where(['name' => config('constants.roles.holder')])->first(),
+      UserRole::where(['name' => config('constants.roles.requestor')])->first(),
+    ]);
 
     $BIProf = User::create([
       'firstName' => 'Bio-Info',
@@ -151,9 +164,59 @@ class RealLifeSeeder extends Seeder
       'password' => $testAcctPassword,
     ]);
     $BIProf->groups()->save(UserGroup::where(['name' => 'Bio-Informatics'])->first());
-    $BIProf->roles()->saveMany([UserRole::where(['name' => config('constants.roles.holder')])->first(),UserRole::where(['name' => config('constants.roles.requestor')])->first()]);
+    $BIProf->roles()->saveMany([
+      UserRole::where(['name' => config('constants.roles.holder')])->first(),
+      UserRole::where(['name' => config('constants.roles.requestor')])->first(),
+    ]);
 
+    $PacUFG = AddressWrapper::build([
+      'country' => 'United States of America', 
+      'state' => 'Oregon', 
+      'city' => 'Forest Grove', 
+      'postalCode' => 97116, 
+      'streetAddress' => '2043 College Way',
+    ]);
 
+    $FGUGCampus = (new Campus ([
+      'name' => 'Forest Grove', 
+      'address_id' => $PacUFG->id
+    ]))->save();
+
+    $PacUHills = AddressWrapper::build([
+      'country' => 'United States of America',
+      'state' => 'Oregon',
+      'city' => 'Hillsboro',
+      'postalCode' => 97116,
+      'streetAddress' => '222 SE 8th Ave',
+    ]);
+    $HPCampus = (new Campus ([
+      'name' => 'College of Health Professions',
+      'address_id' => $PacUHills->id,
+    ]))->save();
+
+    $CoCCityHall = AddressWrapper::build([
+      'country' => 'United States of America',
+      'state' => 'Oregon',
+      'city' => 'Cornelius',
+      'postalCode' => 97113,
+      'streetAddress' => '1355 N Barlow St',
+    ]);
+    $CoCCityCenter = (new Campus([
+      'name' => 'Cornelius City Center',
+      'address_id' => $CoCCityHall->id,
+    ]))->save();
+
+    $CoCKodiak = AddressWrapper::build([
+      'country' => 'United States of America',
+      'state' => 'Oregon',
+      'city' => 'Cornelius',
+      'postalCode' => 97113,
+      'streetAddress' => '1300 S Kodiak Circle',
+    ]);
+    $CocKodiakCampus = (new Campus ([
+      'name' => 'Cornelius Public Works',
+      'address_id' => $CoCKodiak->id,
+    ]))->save();
     
     
   }

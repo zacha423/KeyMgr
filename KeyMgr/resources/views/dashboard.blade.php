@@ -82,6 +82,8 @@
     </div>
 </div>
 
+<div class="row">
+<div class="col-md-8">
 <div class="card">
     <div class="card-header border-transparent">
         <h3 class="card-title">Recent Activity</h3>
@@ -127,6 +129,60 @@
                             Huh
                         </td>
                     </tr>
+                    <tr>
+                        <td><a href="#">#####</a></td>
+                        <td>Sun Apr 07, 2024 7:06AM</td>
+                        <td>WOW KEY</td>
+                        <td>Bob the Great</td>
+                        <td>
+                            Huh
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">#####</a></td>
+                        <td>Sun Apr 07, 2024 7:06AM</td>
+                        <td>WOW KEY</td>
+                        <td>Bob the Great</td>
+                        <td>
+                            Huh
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">#####</a></td>
+                        <td>Sun Apr 07, 2024 7:06AM</td>
+                        <td>WOW KEY</td>
+                        <td>Bob the Great</td>
+                        <td>
+                            Huh
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">#####</a></td>
+                        <td>Sun Apr 07, 2024 7:06AM</td>
+                        <td>WOW KEY</td>
+                        <td>Bob the Great</td>
+                        <td>
+                            Huh
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">#####</a></td>
+                        <td>Sun Apr 07, 2024 7:06AM</td>
+                        <td>WOW KEY</td>
+                        <td>Bob the Great</td>
+                        <td>
+                            Huh
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">#####</a></td>
+                        <td>Sun Apr 07, 2024 7:06AM</td>
+                        <td>WOW KEY</td>
+                        <td>Bob the Great</td>
+                        <td>
+                            Huh
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -136,8 +192,10 @@
         <a href="#" class="btn btn-sm btn-secondary float-right">View All Activity</a>
     </div>
 </div>
+</div>
 
-<div class="col-md-6">
+
+<div class="col-md-4">
     <div class="card card-danger">
         <div class="card-header">
             <h3 class="card-title">Key Statuses</h3>
@@ -154,6 +212,7 @@
             <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 322px;" width="644" height="500" class="chartjs-render-monitor"></canvas>
         </div>
     </div>
+</div>
 </div>
 
 
@@ -173,17 +232,16 @@ $(function () {
     //-------------
     var donutData        = {
       labels: [
-          'Chrome',
-          'IE',
-          'FireFox',
-          'Safari',
-          'Opera',
-          'Navigator',
+          'Checked out',
+          'Assigned',
+          'Lost',
+          'In Inventory',
+          'Other',
       ],
       datasets: [
         {
-          data: [700,500,400,600,300,100],
-          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+          data: [700,500,400,600,300],
+          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
         }
       ]
     }

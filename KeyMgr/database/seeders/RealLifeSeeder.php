@@ -8,9 +8,13 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 use App\Models\UserGroup;
+use App\Models\UserRole;
+use App\Models\User;
 
 class RealLifeSeeder extends Seeder
 {
+  use WithoutModelEvents;
+
   /**
    * Run the database seeds.
    */
@@ -27,7 +31,7 @@ class RealLifeSeeder extends Seeder
     ]);
 
     $CAS = UserGroup::create(['name' => 'College or Arts and Sciences']);
-    $SNS = new UserGroup (['name' => 'School of Natural Sciences']);
+    $SNS = new UserGroup(['name' => 'School of Natural Sciences']);
     $SNS->parent_id_fk = $CAS->id;
     $SNS->save();
 
@@ -37,5 +41,38 @@ class RealLifeSeeder extends Seeder
       ['name' => 'Data Science'],
       ['name' => 'Bio-Informatics'],
     ]));
+
+    $testAcctPassword = "Abcd123!";
+    $UISAdmin = User::create(
+      [
+        'firstName' => 'UIS',
+        'lastName' => 'IT Admin',
+        'username' => 'itadmin',
+        'email' => 'itadmin@keymgr.com',
+        'password' => $testAcctPassword
+      ]
+    );
+    $UISAdmin->groups()->save(UserGroup::where(['name' => 'University Information Services'])->first());
+    $UISAdmin->roles()->save(UserRole::where(['name' => config('constants.roles.admin')])->first());
+
+    $FacilitiesLocksmith = User::create([
+
+      'firstName' => 'Facilities',
+      'lastName' => 'Locksmith',
+      'username' => 'facilitiesls',
+      'email' => 'locksmith2@keymgr.com',
+      'password' => $testAcctPassword,
+    ]);
+
+    $FacilitiesLocksmith->groups()->save(UserGroup::where(['name' => 'Facilities'])->first());
+    $FacilitiesLocksmith->roles()->save(UserRole::where(['name' => config('constants.roles.locksmith')])->first());
+
+    $FacilitiesKeyIssuer = User::create([
+      'firstName' => 'Facilities',
+      'lastName' => 'Key Issuer',
+      'username' => 'facilitieski',
+      'email' => 'keyissuer2@keymgr.com',
+      'password' => $testAcctPassword,
+    ]);
   }
 }

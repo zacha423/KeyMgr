@@ -28,14 +28,14 @@ class DatabaseSeeder extends Seeder
     $this->call(TestAccountsSeeder::class);
 
 
-    User::factory(50)->create();
+    // User::factory(50)->create();
 
-    foreach (User::all() as $user) { 
-      $user->groups()->syncWithoutDetaching(UserGroup::all()->random(1));
-      $user->roles()->syncWithoutDetaching(UserRole::all()->random(1)); 
-    }
+    // foreach (User::all() as $user) { 
+    //   $user->groups()->syncWithoutDetaching(UserGroup::all()->random(1));
+    //   $user->roles()->syncWithoutDetaching(UserRole::all()->random(1)); 
+    // }
     $this->call(MessageTemplateSeeder::class);
-    \App\Models\User::factory(50)->create();
+    // \App\Models\User::factory(50)->create();
     $this->call(KeywaySeeder::class);
     $this->call(StorageSeeder::class);
     $this->call(KeySeeder::class);
@@ -43,5 +43,7 @@ class DatabaseSeeder extends Seeder
     $this->call(ManufacturerSeeder::class);
     $this->call(LockModelSeeder::class);
     $this->call(LockSeeder::class);
+    $this->call(UserAccountSeeder::class);
+    $this->call(PacUSeeder::class);
   }
 }

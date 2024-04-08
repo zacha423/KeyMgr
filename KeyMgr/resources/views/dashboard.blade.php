@@ -218,7 +218,6 @@
 
 @stop
 
-
 @section('js')
     <script>
         $(function () {

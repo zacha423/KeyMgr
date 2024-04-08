@@ -15,7 +15,7 @@ return [
     */
 
     'title' => 'KeyMgr',
-    'title_prefix' => '',
+    'title_prefix' => 'KeyMgr | ',
     'title_postfix' => '',
 
     /*
@@ -291,11 +291,7 @@ return [
 
     'menu' => [
         // Navbar items:
-        [
-            'type' => 'navbar-search',
-            'text' => 'search',
-            'topnav_right' => true,
-        ],
+
         [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
@@ -307,6 +303,11 @@ return [
             'text' => 'search',
         ],
         ['header' => 'RESOURCES'],
+        [
+            'text' => 'Dashboard',
+            'url' => '/',
+            'icon' => 'fas fa-tachometer-alt',
+        ],
         [
             'text' => 'Buildings',
             'url' => 'building',

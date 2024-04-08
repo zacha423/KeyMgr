@@ -23,7 +23,12 @@ class LockModelSeeder extends Seeder
     LockModel::firstOrNew (['MACS' => 4, 'name' => 'Kwikset Titan', 'manufacturer_id' => $kwikset->id,])->save();
     LockModel::firstOrNew (['MACS' => 4, 'name' => 'Kwikset SmartKey', 'manufacturer_id' => $kwikset->id,])->save();
 
+    $schlage = Manufacturer::firstOrCreate(['name' => 'Schlage']);
+    LockModel::firstOrNew (['MACS' => 7, 'name' => 'Everest', 'manufacturer_id' => $schlage->id])->save();
+    LockModel::firstOrNew (['MACS' => 7, 'name' => 'SecureKey', 'manufacturer_id' => $schlage->id])->save();
+
     LockModel::factory()->createMany(10)->unique();
   }
 }
+
 

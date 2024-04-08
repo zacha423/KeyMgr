@@ -302,12 +302,12 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
-        ['header' => 'RESOURCES'],
         [
             'text' => 'Dashboard',
             'url' => '/',
             'icon' => 'fas fa-tachometer-alt',
         ],
+        ['header' => 'RESOURCES'],   
         [
             'text' => 'Buildings',
             'url' => 'building',

@@ -35,7 +35,7 @@
                 <p>Keys</p>
             </div>
             <div class="icon">
-                <!-- Icon for keys goes here -->
+                <i class="fas fa-fw fa-key"></i>
             </div>
             <a href="/keys" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
@@ -75,9 +75,9 @@
                 <p>People</p>
             </div>
             <div class="icon">
-                <!-- Icon for people goes here -->
+                <i class="fas fa-fw fa-users"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="/users" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
 </div>
@@ -105,6 +105,7 @@
                         
                         <th>Transaction ID</th>
                         <th>Date</th>
+                        <th>Admin</th>
                         <th>Key</th>
                         <th>User</th>
                         <th>Location</th>
@@ -114,6 +115,7 @@
                     <tr>
                         <td><a href="#">#####</a></td>
                         <td>Sun Apr 07, 2024 7:06AM</td>
+                        <td>New Admin</td>
                         <td>New Key</td>
                         <td>Bobby</td>
                         <td>
@@ -123,64 +125,51 @@
                     <tr>
                         <td><a href="#">#####</a></td>
                         <td>Sun Apr 07, 2024 7:06AM</td>
-                        <td>WOW KEY</td>
-                        <td>Bob the Great</td>
+                        <td>New Admin</td>
+                        <td>New Key</td>
+                        <td>Bobby</td>
                         <td>
-                            Huh
+                            Nah
                         </td>
                     </tr>
                     <tr>
                         <td><a href="#">#####</a></td>
                         <td>Sun Apr 07, 2024 7:06AM</td>
-                        <td>WOW KEY</td>
-                        <td>Bob the Great</td>
+                        <td>New Admin</td>
+                        <td>New Key</td>
+                        <td>Bobby</td>
                         <td>
-                            Huh
+                            Nah
                         </td>
                     </tr>
                     <tr>
                         <td><a href="#">#####</a></td>
                         <td>Sun Apr 07, 2024 7:06AM</td>
-                        <td>WOW KEY</td>
-                        <td>Bob the Great</td>
+                        <td>New Admin</td>
+                        <td>New Key</td>
+                        <td>Bobby</td>
                         <td>
-                            Huh
+                            Nah
                         </td>
                     </tr>
                     <tr>
                         <td><a href="#">#####</a></td>
                         <td>Sun Apr 07, 2024 7:06AM</td>
-                        <td>WOW KEY</td>
-                        <td>Bob the Great</td>
+                        <td>New Admin</td>
+                        <td>New Key</td>
+                        <td>Bobby</td>
                         <td>
-                            Huh
+                            Nah
                         </td>
                     </tr>
                     <tr>
                         <td><a href="#">#####</a></td>
                         <td>Sun Apr 07, 2024 7:06AM</td>
-                        <td>WOW KEY</td>
-                        <td>Bob the Great</td>
+                        <td>New Admin</td>
+                        <td>New Key</td>
+                        <td>Bobby</td>
                         <td>
-                            Huh
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">#####</a></td>
-                        <td>Sun Apr 07, 2024 7:06AM</td>
-                        <td>WOW KEY</td>
-                        <td>Bob the Great</td>
-                        <td>
-                            Huh
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">#####</a></td>
-                        <td>Sun Apr 07, 2024 7:06AM</td>
-                        <td>WOW KEY</td>
-                        <td>Bob the Great</td>
-                        <td>
-                            Huh
+                            Nah
                         </td>
                     </tr>
                 </tbody>

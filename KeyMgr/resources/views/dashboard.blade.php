@@ -62,7 +62,7 @@
                 <p>Key Requests</p>
             </div>
             <div class="icon">
-                <i class="ion ion-person-add"></i>
+                <!-- Icon for key requests goes here -->
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
@@ -218,57 +218,34 @@
 
 @stop
 
-<script>
 
+@section('js')
+    <script>
+        $(function () {
+            /* ChartJS
+            * -------
+            * Pie Chart using ChartJS
+            */
 
-$(function () {
-    /* ChartJS
-     * -------
-     * Pie Chart using ChartJS
-     */
+            //-------------
+            //- PIE CHART -
+            //-------------
+            // Get context with jQuery - using jQuery's .get() method.
+            
+            var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+            var pieData = @json($pieData);
+            var pieOptions     = {
+            maintainAspectRatio : false,
+            responsive : true,
+            }
 
-    //-------------
-    //- Donut Chart Data -
-    //-------------
-    var donutData        = {
-      labels: [
-          'Checked out',
-          'Assigned',
-          'Lost',
-          'In Inventory',
-          'Other',
-      ],
-      datasets: [
-        {
-          data: [700,500,400,600,300],
-          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
-        }
-      ]
-    }
-    var donutOptions     = {
-      maintainAspectRatio : false,
-      responsive : true,
-    }
-
-    //-------------
-    //- PIE CHART -
-    //-------------
-    // Get context with jQuery - using jQuery's .get() method.
-    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-    var pieData        = donutData;
-    var pieOptions     = {
-      maintainAspectRatio : false,
-      responsive : true,
-    }
-
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    new Chart(pieChartCanvas, {
-      type: 'pie',
-      data: pieData,
-      options: pieOptions
-    })
-
-  })
-
-</script>
+            //Create pie or donut chart
+            // You can switch between pie and donut using the method below.
+            new Chart(pieChartCanvas, {
+            type: 'pie',
+            data: pieData,
+            options: pieOptions
+            })
+        })
+    </script>
+@stop

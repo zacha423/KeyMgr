@@ -43,10 +43,27 @@ class DashboardController extends Controller
         $counts['users'] = \App\Models\User::count();
 
 
+        $pieData = [
+            'labels' => [
+                'Checked out',
+                'Assigned',
+                'Lost',
+                'In Inventory',
+                'Other',
+            ],
+            'datasets' => [
+                [
+                    'data' => [700, 500, 400, 600, 300],
+                    'backgroundColor' => ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
+                ]
+            ]
+        ];
+
 
 
         return view('dashboard', [
             'counts' => $counts,
+            'pieData' => $pieData,
         ]);
     }
 

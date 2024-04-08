@@ -11,6 +11,8 @@ use Illuminate\Database\Seeder;
 use App\Models\Building;
 use App\Models\Campus;
 use App\Models\Door;
+use App\Models\Lock;
+use App\Models\Key;
 use App\Models\Room;
 use App\Models\UserGroup;
 use App\Models\UserRole;
@@ -331,8 +333,14 @@ class RealLifeSeeder extends Seeder
     {
       foreach ($building->rooms()->get() as $room)
       {
-        $room->doors()->save(new Door());
+        $door = new Door();
+        $room->doors()->save($door);
+        $lock = Lock::factory()->Create();
+        $lock->keys()->save(Key::factory()->create());
+        $door->locks()->save($lock);
       }
     }
+
+
   }
 }

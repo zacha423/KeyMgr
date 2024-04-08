@@ -19,7 +19,12 @@ class DatabaseSeeder extends Seeder
    */
   public function run(): void
   {
+    $this->call(ManufacturerSeeder::class);
+    $this->call(LockModelSeeder::class);
+    $this->call(KeywaySeeder::class);
+
     $this->call(RealLifeSeeder::class);
+    
     $this->call(UserGroupSeeder::class);
     $this->call(AddressSeeder::class);
     $this->call(CampusSeeder::class);
@@ -28,12 +33,9 @@ class DatabaseSeeder extends Seeder
     $this->call(DoorSeeder::class);
     $this->call(TestAccountsSeeder::class);
     $this->call(MessageTemplateSeeder::class);
-    $this->call(KeywaySeeder::class);
     $this->call(StorageSeeder::class);
     $this->call(KeySeeder::class);
     $this->call(KeyAuthSeeder::class);
-    $this->call(ManufacturerSeeder::class);
-    $this->call(LockModelSeeder::class);
     $this->call(LockSeeder::class);
     $this->call(UserAccountSeeder::class);
     

@@ -19,6 +19,12 @@ class DatabaseSeeder extends Seeder
    */
   public function run(): void
   {
+    $this->call(ManufacturerSeeder::class);
+    $this->call(LockModelSeeder::class);
+    $this->call(KeywaySeeder::class);
+
+    $this->call(RealLifeSeeder::class);
+    
     $this->call(UserGroupSeeder::class);
     $this->call(AddressSeeder::class);
     $this->call(CampusSeeder::class);
@@ -26,22 +32,12 @@ class DatabaseSeeder extends Seeder
     $this->call(RoomSeeder::class);
     $this->call(DoorSeeder::class);
     $this->call(TestAccountsSeeder::class);
-
-
-    User::factory(50)->create();
-
-    foreach (User::all() as $user) { 
-      $user->groups()->syncWithoutDetaching(UserGroup::all()->random(1));
-      $user->roles()->syncWithoutDetaching(UserRole::all()->random(1)); 
-    }
     $this->call(MessageTemplateSeeder::class);
-    \App\Models\User::factory(50)->create();
-    $this->call(KeywaySeeder::class);
     $this->call(StorageSeeder::class);
     $this->call(KeySeeder::class);
     $this->call(KeyAuthSeeder::class);
-    $this->call(ManufacturerSeeder::class);
-    $this->call(LockModelSeeder::class);
     $this->call(LockSeeder::class);
+    $this->call(UserAccountSeeder::class);
+    
   }
 }

@@ -6,6 +6,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Door extends Model
@@ -17,8 +19,13 @@ class Door extends Model
     'hardwareDescription',
   ];
 
-  public function room (): HasOne
+  public function room (): BelongsTo
   {
-    return $this->hasOne(Room::class);
+    return $this->belongsTo(Room::class);
+  }
+
+  public function locks(): HasMany
+  {
+    return $this->hasMany(Lock::class);
   }
 }

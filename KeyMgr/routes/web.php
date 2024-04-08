@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BuildingController;
+use App\Http\Controllers\LockController;
 use App\Http\Controllers\KeyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserGroupController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\CampusController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 
 Route::get('/', function () {
   return redirect('/login');
@@ -55,6 +57,8 @@ Route::middleware('auth')->group(function () {
   Route::get('building/{building}/rooms', [BuildingController::class, 'showRooms'])->name('building.buildingRooms');
   Route::post('groups/roles', [UserGroupController::class, 'manageRoles'])->name('groups.roles');
   Route::post('roles/groups', [UserRoleController::class, 'manageGroups'])->name('roles.groups');
+  Route::resource('locks', LockController::class)->except(['create']);
+  Route::get('rooms', [LockController::class, 'getRooms'])->name('getRooms');
 });
 
 

@@ -31,7 +31,7 @@
         <div class="small-box bg-info">
 
             <div class="inner">
-                <h3>OVER 9000!!!!</h3>
+                <h3>{{$counts['keys']}}</h3>
                 <p>Keys</p>
             </div>
             <div class="icon">
@@ -45,7 +45,7 @@
     <div class="col-lg-3 col-6">
         <div class="small-box bg-success">
             <div class="inner">
-                <h3>597</h3>
+                <h3>{{$counts['doors']}}</h3>
                 <p>Doors</p>
             </div>
             <div class="icon">
@@ -58,7 +58,7 @@
     <div class="col-lg-3 col-6">
         <div class="small-box bg-warning">
             <div class="inner">
-                <h3>44</h3>
+                <h3>{{$counts['key_requests']}}</h3>
                 <p>Key Requests</p>
             </div>
             <div class="icon">
@@ -71,7 +71,7 @@
     <div class="col-lg-3 col-6">
         <div class="small-box bg-danger">
             <div class="inner">
-                <h3>3,000</h3>
+                <h3>{{$counts['users']}}</h3>
                 <p>People</p>
             </div>
             <div class="icon">

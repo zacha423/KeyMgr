@@ -1,22 +1,21 @@
 @php
 $heads = [
   'ID',
-  'Group Name',
-  'Parent Group',
+  'Name',
   'Member Users',
-  'Assigned Roles',
+  'Member Groups',
   ['label' => 'Actions', 'no-export' => false, 'width' => 5],
 ];
 
 $config = [
-  'data' => $groups,
+  'data' => $roles,
   'order' => [[1, 'asc']],
-  'columns' => [null, null, null, null, null, ['orderable' => false]],
+  'columns' => [null, null, null, null, ['orderable' => false]],
   'select' => true,
 ];
 @endphp
 
-<x-adminlte-datatable id="groupTable" name="test" :heads="$heads" :config="$config" bordered compressed hoverable>
+<x-adminlte-datatable id="table5" :config="$config" :heads="$heads" bordered compressed hoverable>
     @foreach($config['data'] as $row)
         <tr>
             @foreach($row as $cell)

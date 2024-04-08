@@ -22,12 +22,6 @@ use App\Http\Controllers\CampusController;
 |
 */
 
-Route::resources ([
-  'groups' => UserGroupController::class,
-  'roles' => UserRoleController::class,
-  'users' => UserController::class,
-  'locks' => LockController::class,
-]);
 
 Route::get('/', function () {
   return redirect('/login');
@@ -52,14 +46,18 @@ Route::middleware('auth')->group(function () {
   Route::resources([
     'campus' => CampusController::class,
   ]);
-
+  Route::resources(['users' => UserController::class,]);
   Route::post('/groups/members', [UserController::class, 'groupMembershipManagement'])->name('users.groups');
   Route::post('/roles/members', [UserController::class, 'roleMembershipManagement'])->name('users.roles');
   Route::resource('room', RoomController::class,)->except(['create']);
   Route::resource('building', BuildingController::class)->except(['create']);
   Route::resource('keys', KeyController::class)->except(['create']);
-  Route::resource('locks', LockController::class)->except(['create']);
+  Route::resource('groups', UserGroupController::class)->except(['create']);
+  Route::resource('roles', UserRoleController::class)->except(['create']);
   Route::get('building/{building}/rooms', [BuildingController::class, 'showRooms'])->name('building.buildingRooms');
+  Route::post('groups/roles', [UserGroupController::class, 'manageRoles'])->name('groups.roles');
+  Route::post('roles/groups', [UserRoleController::class, 'manageGroups'])->name('roles.groups');
+  Route::resource('locks', LockController::class)->except(['create']);
   Route::get('rooms', [LockController::class, 'getRooms'])->name('getRooms');
 });
 

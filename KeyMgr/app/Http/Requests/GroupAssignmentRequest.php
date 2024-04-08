@@ -4,21 +4,16 @@
  */
 namespace App\Http\Requests;
 
-use App\Models\UserGroup;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UserGroupRequest extends FormRequest
+class GroupAssignmentRequest extends FormRequest
 {
   /**
    * Determine if the user is authorized to make this request.
-   * @todo Add RBAC - if user is admin
    */
   public function authorize(): bool
   {
-    $OVERRIDE = true;
-    
-    return $OVERRIDE;
+    return true;
   }
 
   /**
@@ -28,11 +23,10 @@ class UserGroupRequest extends FormRequest
    */
   public function rules(): array
   {
-    // return (dd($this));
     return [
-      'parentGroup' => ['exists:App\Models\UserGroup,id'],
-      'name' => ['required', 'string', 'max:50', Rule::unique(UserGroup::class)->ignore($this->route('group'))],
-
+      'addMode' => ['nullable'],
+      'groups.*' => ['required', 'exists:user_groups,id'],
+      'selectedRoles.*' => ['required', 'exists:user_roles,id'],
     ];
   }
 }

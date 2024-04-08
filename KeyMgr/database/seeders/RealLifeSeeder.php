@@ -8,9 +8,10 @@ use App\Models\Wrappers\AddressWrapper;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-use App\Models\Campus;
-use App\Models\Room;
 use App\Models\Building;
+use App\Models\Campus;
+use App\Models\Door;
+use App\Models\Room;
 use App\Models\UserGroup;
 use App\Models\UserRole;
 use App\Models\User;
@@ -236,6 +237,7 @@ class RealLifeSeeder extends Seeder
     ]))->save();
 
 
+    // Add some buildings
     ($MarshHall = new Building([
       'name' => 'Marsh Hall',
       'campus_id' => $FGUGCampus->id,
@@ -272,6 +274,65 @@ class RealLifeSeeder extends Seeder
       'streetAddress'=>'190 SE 8th Ave'])->id,
     ]))->save();
 
-    
+    // Add rooms to the buildings
+    $MarshHall->rooms()->saveMany([
+      new Room ([
+        'number' => 'LL6',
+        'description' => 'TIC Helpdesk'
+      ]),
+      new Room ([
+        'number' => '216',
+        'description' => 'Taylor Auditorium',
+      ]),
+    ]);
+
+    $PriceHall->rooms()->saveMany([
+      new Room([
+        'number' => 204,
+      ]),
+      new Room([
+        'number' => 218,
+      ]),
+    ]);
+
+    $Strain->rooms()->saveMany([
+      new Room ([
+        'number' => 222,
+        'description' => 'CS Lab',
+      ]),
+      new Room([
+        'number' => 201,
+      ]),
+      new Room([
+        'number' => 202,
+      ]),
+      new Room([
+        'number' => '203C',
+      ]),
+      new Room([
+        'number' => 221,
+      ]),
+    ]);
+
+    $AuCoin->rooms()->saveMany([
+      new Room([
+        'number' => 203,
+      ]),
+      new Room([
+        'number' => 204,
+      ]),
+      new Room([
+        'number' => 205,
+      ]),
+    ]);
+
+    // Attach a blank door to each of the created rooms
+    foreach([$MarshHall, $PriceHall, $Strain, $AuCoin] as $building)
+    {
+      foreach ($building->rooms()->get() as $room)
+      {
+        $room->doors()->save(new Door());
+      }
+    }
   }
 }

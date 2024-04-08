@@ -177,7 +177,7 @@ class RealLifeSeeder extends Seeder
       'streetAddress' => '2043 College Way',
     ]);
 
-    $FGUGCampus = (new Campus ([
+    ($FGUGCampus = new Campus ([
       'name' => 'Forest Grove', 
       'address_id' => $PacUFG->id
     ]))->save();
@@ -189,7 +189,7 @@ class RealLifeSeeder extends Seeder
       'postalCode' => 97116,
       'streetAddress' => '222 SE 8th Ave',
     ]);
-    $HPCampus = (new Campus ([
+    ($HPCampus = new Campus ([
       'name' => 'College of Health Professions',
       'address_id' => $PacUHills->id,
     ]))->save();
@@ -201,7 +201,7 @@ class RealLifeSeeder extends Seeder
       'postalCode' => 97113,
       'streetAddress' => '1355 N Barlow St',
     ]);
-    $CoCCityCenter = (new Campus([
+    ($CoCCityCenter = new Campus([
       'name' => 'Cornelius City Center',
       'address_id' => $CoCCityHall->id,
     ]))->save();
@@ -213,11 +213,65 @@ class RealLifeSeeder extends Seeder
       'postalCode' => 97113,
       'streetAddress' => '1300 S Kodiak Circle',
     ]);
-    $CocKodiakCampus = (new Campus ([
+    ($CocKodiakCampus = new Campus ([
       'name' => 'Cornelius Public Works',
       'address_id' => $CoCKodiak->id,
     ]))->save();
     
+    ($CoCCityHallBuilding = new Building([
+      'name' => 'Cornelius City Hall',
+      'campus_id' => $CoCCityCenter->id,
+      'address_id' => $CoCCityHall->id,
+    ]))->save();
+
+    ($CoCLibrary = new Building([
+      'name' => 'Cornelius Public Library',
+      'campus_id' => $CoCCityCenter->id,
+      'address_id' => AddressWrapper::build(['country' => 'United States of America','state'=>'Oregon','city'=>'Cornelius','postalCode' => 97113,'streetAddress'=>'1370 N Adair St'])->id,
+    ]))->save();
+    ($CoCPublicSafety = new Building([
+      'name' => 'Public Safety',
+      'campus_id' => $CoCCityCenter->id,
+      'address_id' => AddressWrapper::build(['country' => 'United States of America', 'state'=>'Oregon','city'=>'Cornelius','postalCode'=>97113,'streetAddress'=>'1311 N Barlow St'])->id,
+    ]))->save();
+
+
+    ($MarshHall = new Building([
+      'name' => 'Marsh Hall',
+      'campus_id' => $FGUGCampus->id,
+      'address_id' => $PacUFG->id,
+    ]))->save();
+    ($PriceHall = new Building([
+      'name' => 'Price Hall',
+      'campus_id' => $FGUGCampus->id,
+      'address_id' => AddressWrapper::build(['country' => 'United States of America', 'state'=>'Oregon','city'=>'Cornelius','postalCode'=>97113,
+      'streetAddress'=>'2150 Cedar Street'])->id,
+    ]))->save();
+    ($Strain = new Building([
+      'name' => 'Strain Science Center',
+      'campus_id' => $FGUGCampus->id,
+      'address_id' => AddressWrapper::build(['country' => 'United States of America', 'state'=>'Oregon','city'=>'Cornelius','postalCode'=>97113,
+      'streetAddress'=>'2172 Cedar Street'])->id,
+    ]))->save();
+    ($AuCoin = new Building([
+      'name' => 'AuCoin Hall',
+      'campus_id' => $FGUGCampus->id,
+      'address_id' => AddressWrapper::build(['country' => 'United States of America', 'state'=>'Oregon','city'=>'Cornelius','postalCode'=>97113,
+      'streetAddress'=>'2125 College Way'])->id,
+    ]))->save();
+    ($Creighton = new Building([
+      'name' => 'Creighton Hall',
+      'campus_id' => $HPCampus->id,
+      'address_id' => AddressWrapper::build(['country' => 'United States of America', 'state'=>'Oregon','city'=>'Cornelius','postalCode'=>97113,
+      'streetAddress'=>'222 SE 8th Ave'])->id,
+    ]))->save();
+    ($HPC2 = new Building([
+      'name' => 'Health Professions Campus 2',
+      'campus_id' => $HPCampus->id,
+      'address_id' => AddressWrapper::build(['country' => 'United States of America', 'state'=>'Oregon','city'=>'Cornelius','postalCode'=>97113,
+      'streetAddress'=>'190 SE 8th Ave'])->id,
+    ]))->save();
+
     
   }
 }

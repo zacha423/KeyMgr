@@ -135,17 +135,20 @@
 
 
 @section('plugins.Datatables', true)
-    <!-- Datatable -->
-    <x-adminlte-datatable id="key-table" :heads="$heads" bordered compressed hoverable>
-        @foreach($config['data'] as $row)
-            <tr>
-                @foreach($row as $cell)
-                    <td>{!! $cell !!}</td>
+@section('content')   <!-- Datatable -->
+    <div class="card">
+        <div class="card-body">
+            <x-adminlte-datatable id="key-table" :heads="$heads" bordered compressed hoverable>
+                @foreach($config['data'] as $row)
+                    <tr>
+                        @foreach($row as $cell)
+                            <td>{!! $cell !!}</td>
+                        @endforeach
+                    </tr>
                 @endforeach
-            </tr>
-        @endforeach
-    </x-adminlte-datatable>
-
+            </x-adminlte-datatable>
+        </div>
+    </div>
     <script>
         $(document).ready(function() {
 

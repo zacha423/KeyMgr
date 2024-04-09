@@ -30,24 +30,27 @@ $config = [
 
 @section('plugins.Datatables', true)
 @section("content")
-    <x-adminlte-datatable id="room-table" :heads="$heads" bordered compressed hoverable>
-        @foreach($config['data'] as $row)
-            <tr>
-                @foreach($row as $cell)
-                    <td>{!! $cell !!}</td>
-                @endforeach
-            </tr>
-        @endforeach
-    </x-adminlte-datatable>
-
+<div class="card">
+    <div class="card-body">
+        <x-adminlte-datatable id="room-table" :heads="$heads" bordered compressed hoverable>
+            @foreach($config['data'] as $row)
+                <tr>
+                    @foreach($row as $cell)
+                        <td>{!! $cell !!}</td>
+                    @endforeach
+                </tr>
+            @endforeach
+        </x-adminlte-datatable>
+    </div>
+</div>
 <script>
     $(document).ready(function() {
         $('.btn-delete').click(function(e) {
             e.preventDefault();
-            const userId = $(this).data('key-id');
+            const keyID = $(this).data('key-id');
             if (confirm('Are you sure you want to delete this room?')) {
                 $.ajax({
-                    url: '/room/' + userId,
+                    url: '/room/' + keyID,
                     method: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',

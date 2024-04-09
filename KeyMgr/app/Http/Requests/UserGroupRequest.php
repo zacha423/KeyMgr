@@ -4,7 +4,9 @@
  */
 namespace App\Http\Requests;
 
+use App\Models\UserGroup;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserGroupRequest extends FormRequest
 {
@@ -26,9 +28,11 @@ class UserGroupRequest extends FormRequest
    */
   public function rules(): array
   {
+    // return (dd($this));
     return [
       'parentGroup' => ['exists:App\Models\UserGroup,id'],
-      'groupName' => ['required','string','max:50','unique:App\Models\UserGroup,name']
+      'name' => ['required', 'string', 'max:50', Rule::unique(UserGroup::class)->ignore($this->route('group'))],
+
     ];
   }
 }

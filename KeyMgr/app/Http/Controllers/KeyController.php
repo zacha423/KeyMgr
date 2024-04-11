@@ -27,7 +27,7 @@ class KeyController extends Controller
   {
     $data = [];
 
-    foreach (KeyResource::collection(Key::all()->load('keyway','type'))->toArray($request) as $key) {
+    foreach (KeyResource::collection(Key::all()->load('keyway', 'type'))->toArray($request) as $key) {
       $btnEdit = '<a href="' . route('keys.edit', $key['id']) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
         <i class="fa fa-lg fa-fw fa-pen"></i>
         </button> </a>';
@@ -39,18 +39,18 @@ class KeyController extends Controller
           </button> </a>';
 
 
-          array_push($data, [
-            'id' => (int)$key['id'],
-            'keyLevel' => (string)$key['keyLevel'],
-            'keySystem' => (string)$key['keySystem'],
-            'copyNumber' => (int)$key['copyNumber'],
-            'bitting' => (string)$key['bitting'],
-            'replacementCost' => (float)$key['replacementCost'],
-            'status' => (string)$key['status'],
-            'keyway' => (string)$key['keyway'],
-            'actions' => '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
-        ]);
-            }
+      array_push($data, [
+        $key['id'],
+        $key['keyLevel'],
+        $key['keySystem'],
+        $key['copyNumber'],
+        $key['bitting'],
+        $key['replacementCost'],
+        $key['status'],
+        $key['keyway'],
+        '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
+      ]);
+    }
 
     return view('key.keys', [
       'keys' => $data,
@@ -128,26 +128,26 @@ class KeyController extends Controller
   {
     $validated = $request->safe();
 
-    if (isset ($validated['keyLevel'])) {
+    if (isset($validated['keyLevel'])) {
       $key->keyLevel = $validated['keyLevel'];
     }
-    if (isset ($validated['keySystem'])) {
+    if (isset($validated['keySystem'])) {
       $key->keySystem = $validated['keySystem'];
     }
-    if (isset ($validated['copyNumber'])) {
+    if (isset($validated['copyNumber'])) {
       $key->copyNumber = $validated['copyNumber'];
     }
-    if (isset ($validated['bitting'])) {
+    if (isset($validated['bitting'])) {
       $key->bitting = $validated['bitting'];
     }
 
-    if (isset ($validated['replacementCost'])) {
+    if (isset($validated['replacementCost'])) {
       $key->replacementCost = $validated['replacementCost'];
     }
-    if (isset ($validated['key_status_id'])) {
+    if (isset($validated['key_status_id'])) {
       $key->key_status_id = $validated['key_status_id'];
     }
-    if (isset ($validated['keyway_id'])) {
+    if (isset($validated['keyway_id'])) {
       $key->keyway_id = $validated['keyway_id'];
     }
 

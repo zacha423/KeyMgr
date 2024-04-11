@@ -16,59 +16,52 @@
 @section('plugins.Datatables', true)
 @include ('key.modals.newKey')
 
-{{-- Setup data for datatables --}}
-@php
-$heads = [
-  'ID',
-  'Key Level',
-  'Key System',
-  'Copy Number',
-  'Bitting',
-  'Replacement Cost',
-  'Key Status',
-  'Keyway',
-  ['label' => 'Actions', 'no-export' => false, 'width' => 5],
-];
-
-$config = [
-  'data' => $keys,
-  'order' => [[1, 'asc']],
-  'columns' => [
-    null,
-    null,
-    null, 
-    null,
-    null,
-    null,
-    null,
-    null,
-    ['orderable' => false],
-  ],
-  'select' => true,
-];
-@endphp
-
 <!-- Search Limiter -->
 <x-adminlte-card theme="info" theme-mode="outline" title="Limit results by:" collapsible>
-  
+  <form>
+    {{-- Building and Room Selector --}}
+    <div class="row">
+      <div class="col">
+        <x-select-bs-wrapper id="id" name="na[]" label="immalabel" :options="[]" :selected="[]" fa-icon="" :config="[]"/>
+      
+        {{--<x-adminlte-select-bs id="id" name="name[]" label="Label" label-class="text-info" :config="[]" multiple enable-old-support>
+          <x-slot name="prependSlot">
+            <div class="input-group-text bg-gradient-lightblue">
+              <i class="fas fa-tag"></i>
+            </div>
+          </x-slot>
+          <x-adminlte-options :options="[]" :selected="[]"/>
+        </x-adminlte-select-bs>--}}
+      </div>
+      <div class="col">
+
+      </div>
+    </div>
+    {{-- Status and Keyway Selector --}}
+    <div class="row">
+      <div class="col">
+
+      </div>
+      <div class="col">
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <x-adminlte-button theme="primary" type="submit" label="Refine Search"/>
+      </div>
+    </div>
+  </form>
 </x-adminlte-card>
 
 <!-- Key Tools -->
 <x-adminlte-card theme="info" theme-mode="outline" title="Tools" collapsible>
-
+  <div class="row"><div class="col-1"></div><div class="col-1"></div><div class="col-1"></div></div>
 </x-adminlte-card>
 
 <!-- Main Datatable -->
 <x-adminlte-card theme="info" theme-mode="outline" >
-  <x-adminlte-datatable id="key-table" :heads="$heads" :config="$config" bordered compressed hoverable>
-    @foreach($config['data'] as $row)
-      <tr>
-        @foreach($row as $cell)
-          <td>{!! $cell !!}</td>
-        @endforeach
-      </tr>
-    @endforeach
-  </x-adminlte-datatable>
+  @include('key.partials.keysTable')
 </x-adminlte-card>
 
 <script>

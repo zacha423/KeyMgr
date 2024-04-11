@@ -5,6 +5,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Http\Resources\RoleResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -96,5 +97,24 @@ class User extends Authenticatable
   public function unassignRole(UserRole $userRole): void
   {
     $this->roles()->detach($userRole);
+  }
+
+  public function isElevated()
+  {
+    $configRoles = config('constants.roles');    
+    $elevatedRoles = (UserRole::whereIn('name', [
+      $configRoles['issuer'], 
+      $configRoles['locksmith'], 
+      $configRoles['admin'],
+    ])->get());
+
+    foreach ($elevatedRoles as $role)
+    {
+      if ($this->roles->contains($role))
+      {
+        return true;
+      }
+    }
+    return false;
   }
 }

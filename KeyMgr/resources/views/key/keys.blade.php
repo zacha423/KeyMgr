@@ -14,6 +14,7 @@
 
 @section("content")
 @section('plugins.Datatables', true)
+@section('plugins.BootStrapSelect', true)
 @include ('key.modals.newKey')
 
 <!-- Search Limiter -->
@@ -22,28 +23,19 @@
     {{-- Building and Room Selector --}}
     <div class="row">
       <div class="col">
-        <x-select-bs-wrapper id="id" name="na[]" label="immalabel" :options="[]" :selected="[]" fa-icon="" :config="[]"/>
-      
-        {{--<x-adminlte-select-bs id="id" name="name[]" label="Label" label-class="text-info" :config="[]" multiple enable-old-support>
-          <x-slot name="prependSlot">
-            <div class="input-group-text bg-gradient-lightblue">
-              <i class="fas fa-tag"></i>
-            </div>
-          </x-slot>
-          <x-adminlte-options :options="[]" :selected="[]"/>
-        </x-adminlte-select-bs>--}}
+        <x-select-bs-wrapper id="buildingSelect" name="buildings[]" label="Building" :options="[]" :selected="[]" faicon="fas fa-building" :config="[]"/>
       </div>
       <div class="col">
-
+        <x-select-bs-wrapper id="roomSelect" name="rooms[]" label="Room" :options="['title' => 'test']" :selected="[]" faicon="fas fa-door-closed" :config="[]"/>
       </div>
     </div>
     {{-- Status and Keyway Selector --}}
     <div class="row">
       <div class="col">
-
+        <x-select-bs-wrapper id="statusSelect" name="statuses[]" label="Status" :options="[]" :selected="[]" faicon="fas fa-traffic-light" :config="[]"/>
       </div>
       <div class="col">
-
+        <x-select-bs-wrapper id="keywaySelect" name="keyways[]" label="Keyway" :options="[]" :selected="[]" faicon="fas fa-key" :config="[]"/>
       </div>
     </div>
     <div class="row">

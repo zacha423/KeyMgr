@@ -23,7 +23,7 @@
     {{-- Building and Room Selector --}}
     <div class="row">
       <div class="col">
-        <x-select-bs-wrapper id="buildingSelect" name="buildings[]" label="Building" :options="[]" :selected="[]" faicon="fas fa-building" :config="[]"/>
+        <x-select-bs-wrapper id="buildingSelect" name="buildings[]" label="Building" :options="$buildings" :selected="[]" faicon="fas fa-building" :config="[]"/>
       </div>
       <div class="col">
         <x-select-bs-wrapper id="roomSelect" name="rooms[]" label="Room" :options="['title' => 'test']" :selected="[]" faicon="fas fa-door-closed" :config="[]"/>
@@ -32,10 +32,10 @@
     {{-- Status and Keyway Selector --}}
     <div class="row">
       <div class="col">
-        <x-select-bs-wrapper id="statusSelect" name="statuses[]" label="Status" :options="[]" :selected="[]" faicon="fas fa-traffic-light" :config="[]"/>
+        <x-select-bs-wrapper id="statusSelect" name="statuses[]" label="Status" :options="$keyStatuses" :selected="[]" faicon="fas fa-traffic-light" :config="[]"/>
       </div>
       <div class="col">
-        <x-select-bs-wrapper id="keywaySelect" name="keyways[]" label="Keyway" :options="[]" :selected="[]" faicon="fas fa-key" :config="[]"/>
+        <x-select-bs-wrapper id="keywaySelect" name="keyways[]" label="Keyway" :options="$keyways" :selected="[]" faicon="fas fa-key" :config="[]"/>
       </div>
     </div>
     <div class="row">

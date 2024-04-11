@@ -54,13 +54,14 @@ class KeyController extends Controller
 
     return view('key.keys', [
       'keys' => $data,
-      'keyStatuses' => KeyStatus::all(),
-      'keyStorages' => KeyStorage::all(),
-      'keyTypes' => KeyType::all(),
-      'keyways' => Keyway::all(),
-      'buildings' => Building::with('rooms.doors')->get(),
+      'keyStatuses' => KeyStatus::all()->pluck('name', 'id')->toArray(),
+      // 'keyStorages' => KeyStorage::all(),
+      // 'keyTypes' => KeyType::all(),
+      'keyways' => Keyway::all()->pluck('name','id')->toArray(),
+      // 'buildings' => Building::with('rooms.doors')->get(),
+      'buildings' => Building::all()->pluck('name', 'id')->toArray(),
       'rooms' => Room::with('doors')->get(),
-      'doors' => Door::all(),
+      // 'doors' => Door::all(),
     ]);
   }
 

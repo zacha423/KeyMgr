@@ -62,8 +62,8 @@
             <label for="key_status_id">Key Status</label>
             <select class="form-control @error('key_status_id') is-invalid @enderror" id="key_status_id" name="key_status_id">
                 <option value="" disabled selected>Select Key Status</option>
-                @foreach($keyStatuses as $keyStatus)
-                    <option value="{{ $keyStatus['id'] }}">{{ $keyStatus['name'] }}</option>
+                @foreach($keyStatuses as $indx => $keyStatus)
+                  <option value="{{ $indx }}"> {{$keyStatus}}</option>
                 @endforeach
             </select>
             @error('key_status_id')
@@ -78,8 +78,8 @@
             <label for="keyway_id">Keyway</label>
             <select class="form-control @error('keyway_id') is-invalid @enderror" id="keyway_id" name="keyway_id">
                 <option value="" disabled selected>Select Keyway</option>
-                @foreach($keyways as $keyway)
-                    <option value="{{ $keyway['id'] }}">{{ $keyway['name'] }}</option>
+                @foreach($keyways as $indx => $keyway)
+                  <option value="{{ $indx }}"> {{$keyway}}</option>    
                 @endforeach
             </select>
             @error('keyway_id')

@@ -25,6 +25,20 @@ class KeyController extends Controller
    */
   public function index(Request $request)
   {
+    $keys = Key::with('keyway', 'type');
+    // $groupIDs = $request->query('groups');
+    // $roleIDs = $request->query('roles');
+    // if ($groupIDs) {
+    //   $query->whereHas('groups', function ($query) use ($groupIDs) {
+    //     $query->whereIn('user_group_id', $groupIDs);
+    //   });
+    // }
+
+    // if($request->query('buildings'))
+    // {
+    //   $keys->whereHas('')
+    // }
+
     $data = [];
 
     foreach (KeyResource::collection(Key::all()->load('keyway', 'type'))->toArray($request) as $key) {
@@ -37,7 +51,6 @@ class KeyController extends Controller
       $btnDetails = '<a href="' . route('keys.show', $key['id']) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
               <i class="fa fa-lg fa-fw fa-eye"></i>
           </button> </a>';
-
 
       array_push($data, [
         $key['id'],
@@ -55,13 +68,9 @@ class KeyController extends Controller
     return view('key.keys', [
       'keys' => $data,
       'keyStatuses' => KeyStatus::all()->pluck('name', 'id')->toArray(),
-      // 'keyStorages' => KeyStorage::all(),
-      // 'keyTypes' => KeyType::all(),
       'keyways' => Keyway::all()->pluck('name','id')->toArray(),
-      // 'buildings' => Building::with('rooms.doors')->get(),
       'buildings' => Building::all()->pluck('name', 'id')->toArray(),
       'rooms' => Room::with('doors')->get(),
-      // 'doors' => Door::all(),
     ]);
   }
 

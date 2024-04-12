@@ -26,32 +26,29 @@ class KeyController extends Controller
   public function index(Request $request)
   {
     $keys = Key::with('keyway', 'type');
-    // $groupIDs = $request->query('groups');
-    // $roleIDs = $request->query('roles');
-    // if ($groupIDs) {
-    //   $query->whereHas('groups', function ($query) use ($groupIDs) {
-    //     $query->whereIn('user_group_id', $groupIDs);
-    //   });
-    // }
 
-    if($request->query('building'))
-    {
-      $keys->whereHas('openableLocks.door.room.building', function ($query) use ($request) { $query->where('id', $request->query('building'));});
+    if ($request->query('building')) {
+      $keys->whereHas('openableLocks.door.room.building', function ($query) use ($request) {
+        $query->where('id', $request->query('building'));
+      });
     }
 
-    if ($request->query('room'))
-    {
-      $keys->whereHas('openableLocks.door.room', function ($query) use ($request) {$query->where('id', $request->query('room'));});
+    if ($request->query('room')) {
+      $keys->whereHas('openableLocks.door.room', function ($query) use ($request) {
+        $query->where('id', $request->query('room'));
+      });
     }
 
-    if($request->query('statuses'))
-    {
-      $keys->whereHas('status', function ($query) use ($request) { $query->whereIn('key_status_id', $request->query('statuses'));});
+    if ($request->query('statuses')) {
+      $keys->whereHas('status', function ($query) use ($request) {
+        $query->whereIn('key_status_id', $request->query('statuses'));
+      });
     }
 
-    if ($request->query('keyways'))
-    {
-      $keys->whereHas('keyway', function ($query) use ($request) {$query->whereIn('keyway_id', $request->query('keyways'));});
+    if ($request->query('keyways')) {
+      $keys->whereHas('keyway', function ($query) use ($request) {
+        $query->whereIn('keyway_id', $request->query('keyways'));
+      });
     }
 
     $data = [];
@@ -83,12 +80,11 @@ class KeyController extends Controller
     return view('key.keys', [
       'keys' => $data,
       'keyStatuses' => KeyStatus::all()->pluck('name', 'id')->toArray(),
-      'keyways' => Keyway::all()->pluck('name','id')->toArray(),
+      'keyways' => Keyway::all()->pluck('name', 'id')->toArray(),
       'buildings' => Building::all()->pluck('name', 'id')->toArray(),
       'rooms' => Room::with('doors')->get(),
     ]);
   }
-
 
   /**
    * Show the form for creating a new resource.

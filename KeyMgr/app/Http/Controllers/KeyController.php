@@ -34,14 +34,29 @@ class KeyController extends Controller
     //   });
     // }
 
-    // if($request->query('buildings'))
-    // {
-    //   $keys->whereHas('')
-    // }
+    if($request->query('building'))
+    {
+      $keys->whereHas('openableLocks.door.room.building', function ($query) use ($request) { $query->where('id', $request->query('building'));});
+    }
+
+    if ($request->query('room'))
+    {
+      $keys->whereHas('openableLocks.door.room', function ($query) use ($request) {$query->where('id', $request->query('room'));});
+    }
+
+    if($request->query('statuses'))
+    {
+      $keys->whereHas('status', function ($query) use ($request) { $query->whereIn('key_status_id', $request->query('statuses'));});
+    }
+
+    if ($request->query('keyways'))
+    {
+      $keys->whereHas('keyway', function ($query) use ($request) {$query->whereIn('keyway_id', $request->query('keyways'));});
+    }
 
     $data = [];
 
-    foreach (KeyResource::collection(Key::all()->load('keyway', 'type'))->toArray($request) as $key) {
+    foreach (KeyResource::collection($keys->get())->toArray($request) as $key) {
       $btnEdit = '<a href="' . route('keys.edit', $key['id']) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
         <i class="fa fa-lg fa-fw fa-pen"></i>
         </button> </a>';

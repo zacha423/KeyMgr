@@ -22,6 +22,7 @@ class SelectBSWrapper extends Component
     public mixed $selected,
     public string $faicon,
     public mixed $config,
+    public bool $multiple,
   ) {
     // 
   }

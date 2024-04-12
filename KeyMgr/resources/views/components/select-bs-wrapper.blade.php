@@ -15,7 +15,7 @@
     :name="$name" 
     :label="$label" 
     label-class="text-info" 
-    multiple 
+    :multiple="$multiple"
     enable-old-support 
     :config="$config"
   >

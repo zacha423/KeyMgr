@@ -1,21 +1,17 @@
 @extends("adminlte::page")
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
-
 @section('title', 'KeyMgr | Keys')
 
 @section('content_header')
-    <div class="d-flex justify-content-between align-items-center">
-        <h1>List of Keys</h1>
-        <button class="btn btn-primary" data-toggle="modal" data-target="#newKeyModal">New Key</button>
-    </div>
+  <div class="d-flex justify-content-between align-items-center">
+    <h1>List of Keys</h1>
+  </div>
 @stop
 
 @section("content")
 @section('plugins.Datatables', true)
 @section('plugins.BootStrapSelect', true)
-@include ('key.modals.newKey')
 
 <!-- Search Limiter -->
 <x-adminlte-card theme="info" theme-mode="outline" title="Limit results by:" collapsible>
@@ -48,7 +44,19 @@
 
 <!-- Key Tools -->
 <x-adminlte-card theme="info" theme-mode="outline" title="Tools" collapsible>
-  <div class="row"><div class="col-1"></div><div class="col-1"></div><div class="col-1"></div></div>
+  <div class="row">
+    <div class="col-1 p-0">
+      <x-adminlte-button theme="primary" type="button" label="Manage Users" data-toggle="modal" data-target="#usersForm"/>
+    </div>
+    <div class="col-1 p-0">
+      <x-adminlte-button theme="primary" type="button" label="Manage Locks" data-toggle="modal" disabled/>
+    </div>
+    <div class="col-9 p-0"></div>
+    <div class="col-1 p-0">
+      @include ('key.modals.newKey')  
+      <x-adminlte-button class="float-right" theme="success" type="button" label="New Key" data-toggle="modal" data-target="#newKeyModal"/>
+    </div>
+  </div>
 </x-adminlte-card>
 
 <!-- Main Datatable -->

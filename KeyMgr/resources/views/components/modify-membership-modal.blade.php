@@ -1,6 +1,6 @@
 <div class="container-flex">
   <x-adminlte-modal :title="$title" :id="$id" theme="info" v-centered>
-    <form id="modalForm" action="{{$submitURL}}" method="post">
+    <form :id="'modalForm' . $id" action="{{$submitURL}}" method="post">
       @csrf
       
       {{-- A basic textbox listing the number of users to operate on.  --}}
@@ -10,7 +10,7 @@
 
       <div class="row"><div class="col">
         {{-- The name has to be different on each switch? --}}
-        <x-adminlte-input-switch :id="'sw'.$id" name="additionMode" label="Operation" :config="[
+        <x-adminlte-input-switch :id="'sw'.$id" :name="$switchName" label="Operation" :config="[
           'onColor' => 'green',
           'offColor' => 'red',
           'onText' => 'Add',
@@ -26,7 +26,7 @@
       </div></div>
       <div class="row">
         <div class="col">
-          <x-adminlte-select id="modalSelector" name="selectedData[]" :label="$selectName" multiple>
+          <x-adminlte-select :id="'modalSelector' . $id" name="selectedData[]" :label="$selectName" multiple>
             <x-slot name="prependSlot">
               <div class="input-group-text bg-info">
                 <i class="fas fa-users"></i>
@@ -38,7 +38,7 @@
       </div>
     </form>
     <x-slot name="footerSlot">
-      <x-adminlte-button :id="'submitModal' . $id" type="submit" class="mr-auto" label="Save" theme="success" form='modalForm'/>
+      <x-adminlte-button :id="'submitModal' . $id" type="submit" class="mr-auto" label="Save" theme="success" :form='"modalForm" . $id'/>
       <x-adminlte-button label="Cancel" theme="danger" data-dismiss='modal'/>
     </x-slot>
   </x-adminlte-modal>
@@ -51,7 +51,7 @@
       $('#' + '<?php echo $id ?>').find('.info-box-number')[0].innerHTML = getSelectedIDs('table5').length;
 
       // Add a hidden select to hold selected user IDs.
-      $('<select id="selectedUsers" name="selectedUsers[]" multiple hidden >').appendTo('#modalForm');
+      $('<select id="selectedUsers" name="selectedUsers[]" multiple hidden >').appendTo('#modalForm' + '<?php echo $id ?>');
       // Load each user ID into the hidden select.
       $(()=>{getSelectedIDs('table5').forEach(($ID)=>{
           $('<option selected />').attr('value', $ID).appendTo('#selectedUsers');

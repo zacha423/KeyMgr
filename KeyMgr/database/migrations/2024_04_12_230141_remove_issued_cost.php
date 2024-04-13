@@ -12,9 +12,8 @@ return new class extends Migration {
    */
   public function up(): void
   {
-    Schema::table('buildings', function (Blueprint $table) {
-      $table->dropForeign(['campus_id']);
-      $table->foreign('campus_id')->references('id')->on('campuses')->onDelete('cascade');
+    Schema::table('key_key_authorization', function (Blueprint $table) {
+      $table->dropColumn('replacement_cost');
     });
   }
 
@@ -23,9 +22,8 @@ return new class extends Migration {
    */
   public function down(): void
   {
-    Schema::table('buildings', function(Blueprint $table) {
-      $table->dropForeign(['campus_id']);
-      $table->foreign('campus_id')->references('id')->on('campuses');
+    Schema::table('key_key_authorization', function (Blueprint $table) {
+      $table->unsignedDouble('replacement_cost', 10, 4)->default(0.0);
     });
   }
 };

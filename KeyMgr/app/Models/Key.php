@@ -19,13 +19,13 @@ class Key extends Model
     'bitting',
     'replacementCost',
   ];
-  
+
   /**
    * Generates a serial number for the key based on the key level and key system
    */
   protected function getSerial(): string
   {
-    return $this->keyLevel .  ' ' . $this->keySystem;
+    return $this->keyLevel . ' ' . $this->keySystem;
   }
   public function type(): BelongsTo
   {
@@ -55,6 +55,16 @@ class Key extends Model
   public function keyAuthorizationAgreements(): BelongsToMany
   {
     return $this->belongsToMany(KeyAuthorization::class);
+  }
+
+  public function room(): Room
+  {
+    return $this->openableLocks()->first()->door()->first()->room()->first();
+  }
+
+  public function building(): Building
+  {
+    return $this->room()->building()->first();
   }
 }
 

@@ -50,13 +50,13 @@
                             available @endif</p>
 
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <x-adminlte-select label="Group Memberships" id="usergroups" name="usergroups[]"
                                     disabled multiple>
                                     <x-adminlte-options :options="$memberGroups"></x-adminlte-options>
                                 </x-adminlte-select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <x-adminlte-select label="Role Memberships" id="userroles" name="userroles[]"
                                     disabled multiple>
                                     <x-adminlte-options :options="$memberRoles"></x-adminlte-options>

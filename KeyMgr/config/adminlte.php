@@ -459,6 +459,21 @@ return [
     */
 
     'plugins' => [
+        'BootStrapDatePicker' => [
+          'active' => false,
+          'files' => [
+            [
+              'type' => 'js',
+              'asset' => 'false',
+              'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js',
+            ],
+            [
+              'type' => 'js',
+              'asset' => 'false',
+              'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.en-GB.min.js',
+            ],
+          ]
+        ],
         'BootStrapSelect' => [
           'active' => false,
           'files' => [

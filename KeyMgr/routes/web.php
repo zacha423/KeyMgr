@@ -44,23 +44,29 @@ Route::middleware('auth')->group(function () {
   Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
   Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
   Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-  Route::resources([
-    'campus' => CampusController::class,
-  ]);
-  Route::resources(['users' => UserController::class,]);
   Route::post('/groups/members', [UserController::class, 'groupMembershipManagement'])->name('users.groups');
   Route::post('/roles/members', [UserController::class, 'roleMembershipManagement'])->name('users.roles');
-  Route::resource('room', RoomController::class,)->except(['create']);
-  Route::resource('building', BuildingController::class)->except(['create']);
-  Route::resource('keys', KeyController::class)->except(['create']);
-  Route::resource('groups', UserGroupController::class)->except(['create']);
-  Route::resource('roles', UserRoleController::class)->except(['create']);
   Route::get('building/{building}/rooms', [BuildingController::class, 'showRooms'])->name('building.buildingRooms');
   Route::post('groups/roles', [UserGroupController::class, 'manageRoles'])->name('groups.roles');
   Route::post('roles/groups', [UserRoleController::class, 'manageGroups'])->name('roles.groups');
-  Route::resource('locks', LockController::class)->except(['create']);
   Route::get('rooms', [LockController::class, 'getRooms'])->name('getRooms');
   Route::post('/keyauth/bulk', [KeyAuthorizationController::class, 'bulkAssign'])->name('keys.massassign');
+  
+  $resourceControllers = [
+    'groups' => UserGroupController::class,
+    'roles' => UserRoleController::class,
+    'users' => UserController::class,
+    'locks' => LockController::class,
+    'room' => RoomController::class,
+    'building' => BuildingController::class,
+    'keys' => KeyController::class,
+    'key-authorization' => KeyAuthorizationController::class,
+    'campus' => CampusController::class,
+  ];
+  foreach ($resourceControllers as $name => $controller) {
+    Route::resource($name, $controller)->except(['create']);
+  }
+
 });
 
 

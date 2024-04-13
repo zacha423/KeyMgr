@@ -14,6 +14,7 @@ use App\Models\Keyway;
 use App\Models\Building;
 use App\Models\Room;
 use App\Models\Door;
+use App\Models\User;
 use App\Http\Resources\KeyResource;
 use App\Models\StorageHook;
 use Illuminate\Http\Request;
@@ -77,12 +78,18 @@ class KeyController extends Controller
       ]);
     }
 
+    $users = [];
+    foreach (User::all() as $user) {
+      $users[$user->id] = $user->getFullName();
+    }
+
     return view('key.keys', [
       'keys' => $data,
       'keyStatuses' => KeyStatus::all()->pluck('name', 'id')->toArray(),
       'keyways' => Keyway::all()->pluck('name', 'id')->toArray(),
       'buildings' => Building::all()->pluck('name', 'id')->toArray(),
       'rooms' => Room::with('doors')->get(),
+      'users' => $users,
     ]);
   }
 

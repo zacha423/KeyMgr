@@ -44,9 +44,11 @@
 
 <!-- Key Tools -->
 <x-adminlte-card theme="info" theme-mode="outline" title="Tools" collapsible>
-  <x-adminlte-button theme="primary" type="button" label="Manage Users" data-toggle="modal" data-target="#usersForm"/>
+  <x-adminlte-button theme="primary" type="button" label="Bulk Assign Keys" data-toggle="modal" data-target="#usersForm"/>
+  <x-adminlte-button theme="primary" type="button" label="Return Keys" disabled/>
   <x-adminlte-button theme="primary" type="button" label="Manage Locks" data-toggle="modal" disabled/>
   <x-adminlte-button class="float-right" theme="success" type="button" label="New Key" data-toggle="modal" data-target="#newKeyModal"/>
+  @include('key.modals.assignKeyModal')
   @include ('key.modals.newKey')  
 </x-adminlte-card>
 
@@ -89,13 +91,29 @@
           building_id: IDs
         },
         success:function(res) {
-          console.log ("success AJAX");
-          console.log(res);
           if (res) {
             $('#roomSelect').html(res);
             $('#roomSelect').selectpicker('refresh');
           }
         }
+      });
+    });
+
+    // Modal Controls
+    $('#usersForm').on('show.bs.modal', ($e) => {
+      // Update selected count
+      $('#usersForm').find('.info-box-number')[0].innerHTML = getSelectedIDs('key-table').length;
+
+      $('#selectedKeys').remove();
+      $('<select id="selectedKeys" name="selectedKeys[]" multiple hidden/>').appendTo('#usersForm');
+      $(() => {
+        getSelectedIDs('key-table').forEach (($id) => {
+          $('<option selected />').attr('value', $id).appendTo('#selectedKeys');
+        });
+      });
+
+      $(() => {
+        getSelectedIDs('key-table').length === 0 ? $('#saveAssignments').attr('disabled', true):$('#saveAssignments').attr('disabled', false);
       });
     });
   });

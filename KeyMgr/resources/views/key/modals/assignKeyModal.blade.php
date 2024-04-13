@@ -1,6 +1,6 @@
 <div class="container-flex">
 {{-- Should use: route('keys.massAssign') --}}  
-<form id="assignKey" action="a" method="POST">
+<form id="assignKey" action="{{ route('keys.massassign') }}" method="POST">
     @csrf
 <x-adminlte-modal id="usersForm" title="Assign Key" theme="lightblue" v-centered>
   <x-adminlte-info-box title="Selected Keys" text="a" icon-theme="info" icon="fas fa-key"/>

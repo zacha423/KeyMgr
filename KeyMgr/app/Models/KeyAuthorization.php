@@ -17,12 +17,12 @@ class KeyAuthorization extends Model
 
   public function keyHolder (): BelongsTo
   {
-    return $this->belongsTo(User::class);
+    return $this->belongsTo(User::class, 'key_holder_user_id', 'id');
   }
 
   public function keyRequestor (): BelongsTo
   {
-    return $this->belongsTo(User::class);
+    return $this->belongsTo(User::class, 'requestor_user_id', 'id');
   }
 
   public function keyHolderContacts (): BelongsToMany

@@ -46,6 +46,31 @@ class KeyAuthorizationController extends Controller
    * Display a listing of the resource.
    */
   public function index (Request $request) {
-    return view('authorizations.auths');
+    $auths = [];
+
+    foreach (KeyAuthorization::all() as $auth)
+    {
+      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-auth-id="' . $auth->id . '"><i class="fa fa-lg fa-fw fa-trash"></i></button>';
+      $btnDetails = '<a href="' . route('authorizations.show', $auth->id)
+        . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+            <i class="fa fa-lg fa-fw fa-eye"></i>
+            </button>';
+      $btnEdit = '<a href="' . route('authorizations.edit', $auth->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+            <i class="fa fa-lg fa-fw fa-pen"></i>
+            </a>';
+            
+      array_push($auths, [
+        $auth->id,
+        $auth->keyHolder()->first()->getFullname(),
+        $auth->keyRequestor()->first()->getFullname(),
+        $auth->created_at,
+        $auth->issuedKeys()->count(),
+        '<nobr>'. $btnEdit . $btnDelete . $btnDetails . '<nobr>',
+      ]);
+    }
+
+    return view('authorizations.auths', [
+      'auths' => $auths,
+    ]);
   }
 }

@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function () {
     'room' => RoomController::class,
     'building' => BuildingController::class,
     'keys' => KeyController::class,
-    'key-authorization' => KeyAuthorizationController::class,
+    'authorizations' => KeyAuthorizationController::class,
     'campus' => CampusController::class,
   ];
   foreach ($resourceControllers as $name => $controller) {

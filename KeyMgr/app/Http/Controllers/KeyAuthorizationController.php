@@ -14,6 +14,9 @@ use Illuminate\Http\Request;
 
 class KeyAuthorizationController extends Controller
 {
+  /**
+   * Assign multiple keys to a user with a generic agreement.
+   */
   public function bulkAssign (KeyBulkAssignmentRequest $request)
   {
     $validated = $request->safe();
@@ -37,5 +40,12 @@ class KeyAuthorizationController extends Controller
     }
 
     return redirect()->route('keys.index');
+  }
+
+  /**
+   * Display a listing of the resource.
+   */
+  public function index (Request $request) {
+    return view('authorizations.auths');
   }
 }

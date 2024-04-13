@@ -13,9 +13,7 @@ class KeyAuthorization extends Model
 {
   use HasFactory;
 
-  protected $fillable = [
-    'agreement',
-  ];
+  protected $fillable = [];
 
   public function keyHolder (): BelongsTo
   {

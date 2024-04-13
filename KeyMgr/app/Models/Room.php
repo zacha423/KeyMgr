@@ -42,4 +42,24 @@ class Room extends Model
   {
     return $this->hasMany (KeyStorage::class);
   }
+
+  /**
+   * Get available keys, do run the query.
+   */
+  public function availableKeys() {
+    return $this->availableKeys_query()->get();
+  }
+
+  /**
+   * Get available keys, do not run the query.
+   */
+  public function availableKeys_query() {
+    return Key::whereHas('openableLocks.door.room', function ($query) { 
+      $query->where(['number' => $this->number, 'building_id' => $this->building_id]); 
+    })->where([
+      'key_status_id' => KeyStatus::where([
+        'name' => config('constants.keys.statuses.unassigned.name')
+      ])->first()->id,
+    ]);
+  }
 }

@@ -82,7 +82,7 @@ class User extends Authenticatable
   {
     $this->groups()->detach(($userGroup));
   }
-  
+
   /**
    * Helper function to add a role to a user.
    */
@@ -101,20 +101,27 @@ class User extends Authenticatable
 
   public function isElevated()
   {
-    $configRoles = config('constants.roles');    
+    $configRoles = config('constants.roles');
     $elevatedRoles = (UserRole::whereIn('name', [
-      $configRoles['issuer'], 
-      $configRoles['locksmith'], 
+      $configRoles['issuer'],
+      $configRoles['locksmith'],
       $configRoles['admin'],
     ])->get());
 
-    foreach ($elevatedRoles as $role)
-    {
-      if ($this->roles->contains($role))
-      {
+    foreach ($elevatedRoles as $role) {
+      if ($this->roles->contains($role)) {
         return true;
       }
     }
     return false;
+  }
+
+  public static function getIssuers()
+  {
+    return User::whereHas('roles', function ($query) {
+      $query->where([
+        'name' => config('constants.roles.issuer')
+      ]); 
+    })->get();
   }
 }

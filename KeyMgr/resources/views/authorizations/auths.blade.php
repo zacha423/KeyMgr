@@ -23,6 +23,7 @@
 <x-adminlte-card theme="info" theme-mode="outline" title="Tools" collapsible>
   <x-adminlte-button theme="primary" type="button" label="Bulk Communication" disabled/>
   <x-adminlte-button theme="primary" type="button" label="Extend All" disabled/>
+  <x-adminlte-button theme="danger" type="button" label="Terminate" disabled/>
   <x-adminlte-button theme="success" type="button" data-toggle="modal" data-target="" label="Authorize Key(s)" class="float-right"/>
 </x-adminlte-card>
 {{-- Main Datatable --}}

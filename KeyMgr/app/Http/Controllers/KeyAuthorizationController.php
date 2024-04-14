@@ -10,6 +10,7 @@ use App\Models\KeyAuthorization;
 use App\Models\KeyAuthStatus;
 use App\Models\Key;
 use App\Models\KeyStatus;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class KeyAuthorizationController extends Controller
@@ -69,8 +70,23 @@ class KeyAuthorizationController extends Controller
       ]);
     }
 
+    $allAuths = KeyAuthorization::all();
+    $holderIDs = $allAuths->pluck('key_holder_user_id')->toArray();
+    $requestorIDs = $allAuths->pluck('requestor_user_id')->toArray();
+    $holders = [];
+    $requestors = [];
+    foreach (User::whereIn('id', $holderIDs)->get() as $user) {
+      $holders[$user->id] = $user->getFullname();
+    }
+    foreach (User::whereIn('id', $requestorIDs)->get() as $user) {
+      $requestors[$user->id] = $user->getFullname();
+    }
+
+
     return view('authorizations.auths', [
       'auths' => $auths,
+      'holders' => $holders,
+      'requestors' => $requestors,
     ]);
   }
 }

@@ -130,4 +130,20 @@ class User extends Authenticatable
       ]); 
     })->get();
   }
+
+  public static function getHolders() {
+    return User::whereHas('roles', function ($query) {
+      $query->where([
+        'name' => config('constants.roles.holder')
+      ]);
+    });
+  }
+
+  public static function getRequestors() {
+    return User::whereHas('roles', function ($query) {
+      $query->where([
+        'name' => config('constants.roles.requestor'),
+      ]);
+    });
+  }
 }

@@ -13,6 +13,7 @@
 @section('plugins.Datatables', true)
 @section('plugins.BootStrapDatePicker', true)
 @section('plugins.BootStrapSelect', true)
+@section('plugins.DateRangePicker', true)
 
 {{-- Search Limiter --}}
 <x-adminlte-card theme="info" theme-mode="outline" title="Limit results by: " collapsible>

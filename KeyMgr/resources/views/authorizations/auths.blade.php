@@ -15,7 +15,9 @@
 @section('plugins.BootStrapSelect', true)
 
 {{-- Search Limiter --}}
-<x-adminlte-card theme="info" theme-mode="outline" title="Limit results by: " collapsible></x-adminlte-card>
+<x-adminlte-card theme="info" theme-mode="outline" title="Limit results by: " collapsible>
+  @include('authorizations.partials.authTableFilter')
+</x-adminlte-card>
 {{-- Key Authorization Tools --}}
 <x-adminlte-card theme="info" theme-mode="outline" title="Tools" collapsible></x-adminlte-card>
 {{-- Main Datatable --}}

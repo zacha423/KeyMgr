@@ -34,7 +34,7 @@ $baseConfig = [
       :config="array_merge ($baseConfig, ['title' => 'Select room...'])"
     >
       <x-slot name="prependSlot">
-        <div class="input-group-text bg-gradiant-lightblue">
+        <div class="input-group-text bg-gradient-lightblue">
           <i class="fas fa-door-closed"></i> {{-- fa-building --}}
         </div>
       </x-slot>

@@ -11,7 +11,10 @@
 </div>
   {{-- Date and Quantity Filters --}}
   <div class="card-info card-outline">
-  <div class="row"><x-adminlte-card theme="info" theme-mode="outline" collapsible></x-adminlte-card></div></div>
+  <div class="row">
+    <div class="col"><x-room-selector></x-room-selector></div>
+  </div>
+</div>
   {{-- Location Filters --}}
   <div class="card-info card-outline"><div class="row"><x-adminlte-card theme="info" theme-mode="outline" collapsible></x-adminlte-card></div></div>
 </form>

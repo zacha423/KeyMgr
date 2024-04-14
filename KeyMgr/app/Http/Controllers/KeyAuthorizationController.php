@@ -5,6 +5,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\KeyBulkAssignmentRequest;
+use App\Models\Building;
 use App\Models\IssuedKey;
 use App\Models\KeyAuthorization;
 use App\Models\KeyAuthStatus;
@@ -83,10 +84,13 @@ class KeyAuthorizationController extends Controller
     }
 
 
+
+
     return view('authorizations.auths', [
       'auths' => $auths,
       'holders' => $holders,
       'requestors' => $requestors,
+      'buildings' => Building::all()->pluck('name' , 'id')->toArray(),
     ]);
   }
 }

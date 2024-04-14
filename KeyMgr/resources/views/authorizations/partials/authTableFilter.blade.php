@@ -25,7 +25,7 @@
     {{-- Location and Quantity Filters --}}
     <div class="row">
       <div class="col-8">
-        <x-room-selector/>
+        <x-room-selector :options="$buildings"/>
       </div>
       <div class="col-4">
           <x-adminlte-input label-class="text-info" name="count" label="Minimum Number of Keys" type="number" min=1 enable-old-support><x-slot name="prependSlot"><div class="input-group-text bg-gradient-lightblue"><i class="fas fa-hashtag"></i></div></x-slot></x-adminlte-input>

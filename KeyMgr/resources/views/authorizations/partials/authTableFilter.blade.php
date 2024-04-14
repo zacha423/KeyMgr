@@ -17,8 +17,9 @@
   {{-- Date and Quantity Filters --}}
   {{--<div class="card-info card-outline">--}}
   <div class="row">
-    <div class="col"><x-room-selector/>
-  </div>
+    <div class="col">
+      <x-room-selector/>
+    </div>
   </div>
 {{--</div>--}}
 <br>

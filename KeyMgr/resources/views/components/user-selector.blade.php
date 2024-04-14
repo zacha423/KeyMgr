@@ -14,9 +14,8 @@
     <x-slot name="prependSlot">
       <div class="input-group-text bg-gradient-lightblue">
         <i class="fas fa-user"></i>
-</div>
-</x-slot>
-
-<x-adminlte-options :options="$options" :selected="$selected"/>
+      </div>
+    </x-slot>
+    <x-adminlte-options :options="$options" :selected="$selected"/>
   </x-adminlte-select-bs>
 </div>

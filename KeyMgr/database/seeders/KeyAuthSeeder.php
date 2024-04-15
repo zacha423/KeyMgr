@@ -24,7 +24,9 @@ class KeyAuthSeeder extends Seeder
     foreach ($agreements as $agreement) {
       $agreement->save();
       $agreement->keyHolderContacts()->attach($users->random(1)->unique());
-      $agreement->issuedKeys()->attach(Key::all()->random(1)->first()->id);
+      $key = Key::all()->random(1)->first();
+      $agreement->issuedKeys()->attach($key->id);
+      $agreement->rooms()->attach($key->room()->id);
       IssuedKey::where([
         'key_authorization_id' => $agreement->id
       ])->get()->first()->messages()->attach(

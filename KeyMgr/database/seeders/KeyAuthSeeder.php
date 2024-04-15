@@ -19,14 +19,23 @@ class KeyAuthSeeder extends Seeder
   public function run(): void
   {
     $users = User::all();
-    $agreements = KeyAuthorization::factory()->createMany(5);
+    $agreements = KeyAuthorization::factory()->createMany(20);
 
-    foreach ($agreements as $agreement) {
+    foreach ($agreements as $indx => $agreement) {
       $agreement->save();
       $agreement->keyHolderContacts()->attach($users->random(1)->unique());
-      $key = Key::all()->random(1)->first();
-      $agreement->issuedKeys()->attach($key->id);
-      $agreement->rooms()->attach($key->room()->id);
+      $key = Key::all()->random(($indx % 4) + 1);
+      
+      $agreement->issuedKeys()->attach($key);
+
+      foreach ($key as $k)
+      {
+        $agreement->rooms()->attach($k->room()->id);
+      }
+      
+
+
+
       IssuedKey::where([
         'key_authorization_id' => $agreement->id
       ])->get()->first()->messages()->attach(

@@ -32,7 +32,7 @@ class KeyAuthorization extends Model
 
   public function rooms (): BelongsToMany
   {
-    return $this->belongsToMany (Room::class);
+    return $this->belongsToMany (Room::class, 'key_authorization_room', 'key_authorization_id', 'room_id');
   }
 
   public function issuedKeys(): BelongsToMany

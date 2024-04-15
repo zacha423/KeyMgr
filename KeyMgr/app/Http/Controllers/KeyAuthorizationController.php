@@ -4,6 +4,7 @@
  */
 namespace App\Http\Controllers;
 
+use App\Http\Requests\KeyAuthorizationFilterRequest;
 use App\Http\Requests\KeyBulkAssignmentRequest;
 use App\Models\Building;
 use App\Models\IssuedKey;
@@ -47,20 +48,64 @@ class KeyAuthorizationController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index (Request $request) {
+  public function index (KeyAuthorizationFilterRequest $request) {
+
+    $validated = $request->safe();
+    $keyAuthorizations = KeyAuthorization::with('issuedKeys', 'keyHolder', 'keyRequestor', 'rooms', 'rooms.building');
+    
+    if (isset($validated['holderSel'])) {
+      $keyAuthorizations->whereIn('key_holder_user_id', $validated['holderSel']);
+    }
+
+    if (isset($validated['requestorSel'])) {
+      $keyAuthorizations->whereIn('requestor_user_id', $validated['requestorSel']);
+    }
+
+    if (isset($validated['range'])) {
+      $dates = explode(' - ', $validated['range']);
+      $keyAuthorizations->where('updated_at', '>', $dates[0])->where('updated_at', '<', $dates[1]);
+    }
+
+    if (isset($validated['count'])) {
+      $keyAuthorizations->whereHas('issuedKeys', function ($query) {}, '>=', $validated['count']);
+    }
+
+    if (isset($validated['roomSel']))
+    {
+      $keyAuthorizations->whereHas('rooms', function ($query) use ($validated) {
+        $query->whereIn('rooms.id', $validated['roomSel']);
+      });
+    }
+    else if (isset($validated['buildingSel']))
+    {
+      $keyAuthorizations->whereHas('rooms.building', function ($query) use ($validated) {
+        $query->where(['buildings.id' => $validated['buildingSel']]);
+
+        // try just 'rooms', and then
+        /*
+        $query->whereHas('building', function($query) use ($validated) {
+          $query->where(['id' => $validated['buildingSel']]);
+        });*/
+      });
+    }
+
     $auths = [];
 
-    foreach (KeyAuthorization::all() as $auth)
+    foreach ($keyAuthorizations->get() as $auth)
     {
-      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-auth-id="' . $auth->id . '"><i class="fa fa-lg fa-fw fa-trash"></i></button>';
+      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-auth-id="' 
+        . $auth->id . '"><i class="fa fa-lg fa-fw fa-trash"></i></button>';
       $btnDetails = '<a href="' . route('authorizations.show', $auth->id)
         . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
             <i class="fa fa-lg fa-fw fa-eye"></i>
             </button>';
-      $btnEdit = '<a href="' . route('authorizations.edit', $auth->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+      $btnEdit = '<a href="' . route('authorizations.edit', $auth->id) 
+        . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
             <i class="fa fa-lg fa-fw fa-pen"></i>
             </a>';
             
+
+            // reformat date as MMDDYYYY
       array_push($auths, [
         $auth->id,
         $auth->keyHolder()->first()->getFullname(),

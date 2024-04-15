@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Building;
 
@@ -41,6 +42,11 @@ class Room extends Model
   public function keyStorages(): HasMany
   {
     return $this->hasMany (KeyStorage::class);
+  }
+
+  public function authorizations(): BelongsToMany
+  {
+    return $this->belongsToMany(KeyAuthorization::class, 'key_authorization_room', 'room_id', 'key_authorization_id');
   }
 
   /**

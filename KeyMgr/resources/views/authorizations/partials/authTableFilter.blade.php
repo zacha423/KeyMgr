@@ -1,9 +1,9 @@
 <div>
-  <form>
+  <form action="{{ route('authorizations.index') }}" method="GET">
     {{-- People and Date Filters --}}
     <div class="row">  
       <div class="col">
-        <x-user-selector id="holderSel" name="holderSel" label="Key Holder" :options="$holders" :selected="[]" multiple="a"/>
+        <x-user-selector id="holderSel" name="holderSel[]" label="Key Holder" :options="$holders" :selected="[]" multiple="a"/>
       </div>
       <div class="col">
         <x-user-selector id="requestorSel" name="requestorSel[]" label="Key Requestor" :options="$requestors" :selected="[]" multiple="a"/>
@@ -12,7 +12,13 @@
           See https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Advanced-Forms-Components#daterange  
         --}}  
         <div class="col">
-          <x-adminlte-date-range label-class="text-info" name="range" placeholder="Select a date range..." label="Date Range" :config="['timePicker' => true]">
+          @php 
+          $dateConfig = [
+            'timePicker' => false,
+            'locale' => ['format' => 'MM-DD-YYYY'],
+          ];
+          @endphp
+          <x-adminlte-date-range label-class="text-info" name="range" placeholder="Select a date range..." label="Date Range" :config="$dateConfig">
             <x-slot name="prependSlot">
               <div class="input-group-text bg-gradient-lightblue">
                 <i class="far fa-g fa-calendar-alt"></i>
@@ -25,7 +31,7 @@
     {{-- Location and Quantity Filters --}}
     <div class="row">
       <div class="col-8">
-        <x-room-selector :options="$buildings"/>
+        <x-room-selector multiple="a" :options="$buildings"/>
       </div>
       <div class="col-4">
           <x-adminlte-input label-class="text-info" name="count" label="Minimum Number of Keys" type="number" min=1 enable-old-support><x-slot name="prependSlot"><div class="input-group-text bg-gradient-lightblue"><i class="fas fa-hashtag"></i></div></x-slot></x-adminlte-input>

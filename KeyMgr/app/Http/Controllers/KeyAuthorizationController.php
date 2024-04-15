@@ -80,12 +80,6 @@ class KeyAuthorizationController extends Controller
     {
       $keyAuthorizations->whereHas('rooms.building', function ($query) use ($validated) {
         $query->where(['buildings.id' => $validated['buildingSel']]);
-
-        // try just 'rooms', and then
-        /*
-        $query->whereHas('building', function($query) use ($validated) {
-          $query->where(['id' => $validated['buildingSel']]);
-        });*/
       });
     }
 
@@ -103,14 +97,12 @@ class KeyAuthorizationController extends Controller
         . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
             <i class="fa fa-lg fa-fw fa-pen"></i>
             </a>';
-            
 
-            // reformat date as MMDDYYYY
       array_push($auths, [
         $auth->id,
         $auth->keyHolder()->first()->getFullname(),
         $auth->keyRequestor()->first()->getFullname(),
-        $auth->created_at,
+        $auth->created_at->format('m-d-Y'),
         $auth->issuedKeys()->count(),
         '<nobr>'. $btnEdit . $btnDelete . $btnDetails . '<nobr>',
       ]);

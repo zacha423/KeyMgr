@@ -33,6 +33,7 @@ $config = [
 </x-adminlte-datatable>
 {{-- Default script to get the selected IDs --}}
 <script>
+  // Get the selected IDs from the table
   function getSelectedIDs ($tableID) {
     let $IDs = [];
     

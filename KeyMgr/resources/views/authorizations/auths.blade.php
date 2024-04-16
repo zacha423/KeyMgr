@@ -25,7 +25,8 @@
   <x-adminlte-button theme="primary" type="button" label="Bulk Communication" disabled/>
   <x-adminlte-button theme="primary" type="button" label="Extend All" disabled/>
   <x-adminlte-button theme="danger" type="button" label="Terminate" disabled/>
-  <x-adminlte-button theme="success" type="button" data-toggle="modal" data-target="" label="Authorize Key(s)" class="float-right"/>
+  <x-adminlte-button theme="success" type="button" data-toggle="modal" data-target="#newAuthModal" label="Authorize Key(s)" class="float-right"/>
+  @include('authorizations.modals.newAuthorization')
 </x-adminlte-card>
 {{-- Main Datatable --}}
 <x-adminlte-card theme="info" theme-mode="outline" title="Key Authorizations">
@@ -33,5 +34,30 @@
 </x-adminlte-card>
 
 {{-- Page Scripts --}}
-<script></script>
+@push ('js')
+<script>  
+  $(() => {
+    $('.btn-delete').click(function(e) {
+      e.preventDefault();
+      const authID = $(this).data('auth-id');
+      if (confirm('Are you sure you want to delete this authorization?')) {
+        $.ajax({
+          url: '/authorizations/' + authID,
+          method: 'POST',
+          data: {
+            _token: '{{ csrf_token() }}',
+            _method: 'DELETE'
+          },
+          success: function(response) {
+            location.reload();
+          },
+          error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+          }
+        });
+      }
+    });
+  });
+</script>
+@endpush
 @stop

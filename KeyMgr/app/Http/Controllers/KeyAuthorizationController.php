@@ -87,12 +87,10 @@ class KeyAuthorizationController extends Controller
 
     foreach ($keyAuthorizations->get() as $auth)
     {
-      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-auth-id="' 
-        . $auth->id . '"><i class="fa fa-lg fa-fw fa-trash"></i></button>';
+      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-auth-id="1"><i class="fa fa-lg fa-fw fa-trash"></i></button>';
       $btnDetails = '<a href="' . route('authorizations.show', $auth->id)
         . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
-            <i class="fa fa-lg fa-fw fa-eye"></i>
-            </button>';
+            <i class="fa fa-lg fa-fw fa-eye"></i>';
       $btnEdit = '<a href="' . route('authorizations.edit', $auth->id) 
         . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
             <i class="fa fa-lg fa-fw fa-pen"></i>
@@ -104,7 +102,7 @@ class KeyAuthorizationController extends Controller
         $auth->keyRequestor()->first()->getFullname(),
         $auth->created_at->format('m-d-Y'),
         $auth->issuedKeys()->count(),
-        '<nobr>'. $btnEdit . $btnDelete . $btnDetails . '<nobr>',
+        '<nobr>'. $btnEdit . $btnDelete . $btnDetails . '</nobr>',
       ]);
     }
 
@@ -120,14 +118,41 @@ class KeyAuthorizationController extends Controller
       $requestors[$user->id] = $user->getFullname();
     }
 
-
-
-
     return view('authorizations.auths', [
       'auths' => $auths,
       'holders' => $holders,
       'requestors' => $requestors,
       'buildings' => Building::all()->pluck('name' , 'id')->toArray(),
     ]);
+  }
+
+  /**
+   * Store a newly created Key Authorization in storage.
+   */
+  public function store (Request $request){}
+
+  /**
+   * Display the specified key authorization.
+   */
+  public function show (KeyAuthorization $keyAuthorization){}
+
+  /**
+   * Show the form editing the specified resource
+   */
+  public function edit (KeyAuthorization $keyAuthorization){}
+
+  /**
+   * Update the specified resource in storage.
+   */
+  public function update (Request $request, KeyAuthorization $keyAuthorization){}
+
+  /**
+   * Remove the specified Key Authorization from storage.
+   * 
+   * @todo - DOesn't seem to work, but at least it creates a popup window.
+   */
+  public function destroy (KeyAuthorization $keyAuthorization) {
+    $keyAuthorization->delete();
+    return redirect()->route('authorizations.index');
   }
 }

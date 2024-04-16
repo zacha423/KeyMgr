@@ -13,10 +13,12 @@
     <div class="row">
       <div class="col">
         <x-adminlte-card>
-          <x-room-selector id="modal" :options="$buildings"/>
+          <div class="row"><div class="col"><x-room-selector id="modal" :options="$buildings"/></div></div>
+          <div class="row"><div class="col"><x-adminlte-input-date name="dueDate" :config="['format' => 'MM-DD-YYYY','minDate' => 'js:moment()', 'daysOfWeekDisabled' => [0, 6],]" enable-old-support label="Key Due Date" label-class="text-info"><x-slot name="prependSlot"><div class="input-group-text bg-gradient-lightblue"><i class="fas fa-calendar-alt"></i></div></x-slot></x-adminlte-input-date></div><div class="col"></div></div>
         </x-adminlte-card>
       </div>
     </div>
+    
   
     <x-slot name="footerSlot">
       <div class="container">

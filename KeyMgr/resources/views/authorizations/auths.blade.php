@@ -15,6 +15,7 @@
 @section('plugins.BootStrapDatePicker', true)
 @section('plugins.BootStrapSelect', true)
 @section('plugins.DateRangePicker', true)
+@section('plugins.TempusDominusBs4', true)
 
 {{-- Search Limiter --}}
 <x-adminlte-card theme="info" theme-mode="outline" title="Limit results by: " collapsible>
@@ -34,9 +35,33 @@
 </x-adminlte-card>
 
 {{-- Page Scripts --}}
-@push ('js')
+@push('js')
 <script>  
+  // Garbarino - replace this trash.
   $(() => {
+    // $('div#auth-table_wrapper').click(($e) => {
+    //   $('.btn-delete').click(function(e) {
+    //     e.preventDefault();
+    //     const authID = $(this).data('auth-id');
+    //     if (confirm('Are you sure you want to delete this authorization?')) {
+    //       $.ajax({
+    //         url: '/authorizations/' + authID,
+    //         method: 'POST',
+    //         data: {
+    //           _token: '{ { csrf_token() }}',
+    //           _method: 'DELETE'
+    //         },
+    //         success: function(response) {
+    //           location.reload();
+    //         },
+    //         error: function (xhr, status, error) {
+    //           console.error(xhr.responseText);
+    //         }
+    //       });
+    //     }
+    //   });
+    // });
+    
     $('.btn-delete').click(function(e) {
       e.preventDefault();
       const authID = $(this).data('auth-id');

@@ -5,6 +5,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\KeyAuthorizationFilterRequest;
+use App\Http\Requests\KeyAuthorizationRequest;
 use App\Http\Requests\KeyBulkAssignmentRequest;
 use App\Models\Building;
 use App\Models\IssuedKey;
@@ -12,6 +13,7 @@ use App\Models\KeyAuthorization;
 use App\Models\KeyAuthStatus;
 use App\Models\Key;
 use App\Models\KeyStatus;
+use App\Models\Room;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -20,7 +22,7 @@ class KeyAuthorizationController extends Controller
   /**
    * Assign multiple keys to a user with a generic agreement.
    */
-  public function bulkAssign (KeyBulkAssignmentRequest $request)
+  public function bulkAssign(KeyBulkAssignmentRequest $request)
   {
     $validated = $request->safe();
 
@@ -33,7 +35,7 @@ class KeyAuthorizationController extends Controller
     $keyAuthAgreement->save();
 
     foreach ($validated['selectedKeys'] as $key) {
-      $issuedKey = new IssuedKey ();
+      $issuedKey = new IssuedKey();
       $issuedKey->key_authorization_id = $keyAuthAgreement->id;
       $issuedKey->key_id = $key;
       $issuedKey->save();
@@ -48,11 +50,12 @@ class KeyAuthorizationController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index (KeyAuthorizationFilterRequest $request) {
+  public function index(KeyAuthorizationFilterRequest $request)
+  {
 
     $validated = $request->safe();
     $keyAuthorizations = KeyAuthorization::with('issuedKeys', 'keyHolder', 'keyRequestor', 'rooms', 'rooms.building');
-    
+
     if (isset($validated['holderSel'])) {
       $keyAuthorizations->whereIn('key_holder_user_id', $validated['holderSel']);
     }
@@ -70,14 +73,11 @@ class KeyAuthorizationController extends Controller
       $keyAuthorizations->whereHas('issuedKeys', function ($query) {}, '>=', $validated['count']);
     }
 
-    if (isset($validated['roomSel']))
-    {
+    if (isset($validated['roomSel'])) {
       $keyAuthorizations->whereHas('rooms', function ($query) use ($validated) {
         $query->whereIn('rooms.id', $validated['roomSel']);
       });
-    }
-    else if (isset($validated['buildingSel']))
-    {
+    } else if (isset($validated['buildingSel'])) {
       $keyAuthorizations->whereHas('rooms.building', function ($query) use ($validated) {
         $query->where(['buildings.id' => $validated['buildingSel']]);
       });
@@ -85,13 +85,12 @@ class KeyAuthorizationController extends Controller
 
     $auths = [];
 
-    foreach ($keyAuthorizations->get() as $auth)
-    {
+    foreach ($keyAuthorizations->get() as $auth) {
       $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-auth-id="1"><i class="fa fa-lg fa-fw fa-trash"></i></button>';
       $btnDetails = '<a href="' . route('authorizations.show', $auth->id)
         . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
             <i class="fa fa-lg fa-fw fa-eye"></i>';
-      $btnEdit = '<a href="' . route('authorizations.edit', $auth->id) 
+      $btnEdit = '<a href="' . route('authorizations.edit', $auth->id)
         . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
             <i class="fa fa-lg fa-fw fa-pen"></i>
             </a>';
@@ -101,8 +100,9 @@ class KeyAuthorizationController extends Controller
         $auth->keyHolder()->first()->getFullname(),
         $auth->keyRequestor()->first()->getFullname(),
         $auth->created_at->format('m-d-Y'),
-        $auth->issuedKeys()->count(),
-        '<nobr>'. $btnEdit . $btnDelete . $btnDetails . '</nobr>',
+        // Since the key might not be immediately available - have to assume off requested rooms.
+        $auth->rooms()->count(),
+        '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>',
       ]);
     }
 
@@ -118,16 +118,16 @@ class KeyAuthorizationController extends Controller
       $requestors[$user->id] = $user->getFullname();
     }
 
-    $allHolders = []; 
+    $allHolders = [];
     $allRequestors = [];
 
-    foreach(User::whereHas('roles', function ($query) {
+    foreach (User::whereHas('roles', function ($query) {
       $query->where(['name' => config('constants.roles.holder')]);
     })->get() as $holder) {
       $allHolders[$holder->id] = $holder->getFullname();
     }
 
-    foreach (User::whereHas('roles', function($query) { 
+    foreach (User::whereHas('roles', function ($query) {
       $query->where(['name' => config('constants.roles.requestor')]);
     })->get() as $requestor) {
       $allRequestors[$requestor->id] = $requestor->getFullName();
@@ -139,36 +139,70 @@ class KeyAuthorizationController extends Controller
       'requestors' => $requestors,
       'allHolders' => $allHolders,
       'allRequestors' => $allRequestors,
-      'buildings' => Building::all()->pluck('name' , 'id')->toArray(),
+      'buildings' => Building::all()->pluck('name', 'id')->toArray(),
     ]);
   }
 
   /**
    * Store a newly created Key Authorization in storage.
    */
-  public function store (Request $request){}
+  public function store(KeyAuthorizationRequest $request)
+  {
+    $validated = $request->safe();
+
+    $agreement = new KeyAuthorization;
+    $agreement->key_holder_user_id = $validated['holderSel_create'];
+    $agreement->requestor_user_id = $validated['requestorSel_create'];
+    $agreement->key_auth_status_id = KeyAuthStatus::where([
+      'name' => config('constants.keyauthreq.statuses.new.name'),
+    ])->first()->id;
+
+    $agreement->save();
+
+    $room = Room::find($validated['roomSel'][0]);
+    $key = $room->availableKeys_query()->first();
+
+    // Key might not be immediately available
+    if ($key !== null) {
+      $agreement->issuedKeys()->save($key);
+    }
+
+    $agreement->rooms()->save($room);
+
+
+
+    return redirect()->route('authorizations.index');
+  }
 
   /**
    * Display the specified key authorization.
    */
-  public function show (KeyAuthorization $keyAuthorization){}
+  public function show(KeyAuthorization $keyAuthorization)
+  {
+  }
 
   /**
    * Show the form editing the specified resource
    */
-  public function edit (KeyAuthorization $keyAuthorization){}
+  public function edit(KeyAuthorization $keyAuthorization)
+  {
+  }
 
   /**
    * Update the specified resource in storage.
    */
-  public function update (Request $request, KeyAuthorization $keyAuthorization){}
+  public function update(KeyAuthorizationRequest $request, KeyAuthorization $keyAuthorization)
+  {
+
+  }
 
   /**
    * Remove the specified Key Authorization from storage.
    * 
    * @todo - DOesn't seem to work, but at least it creates a popup window.
    */
-  public function destroy (KeyAuthorization $keyAuthorization) {
+  public function destroy(KeyAuthorization $keyAuthorization)
+  {
     $keyAuthorization->delete();
     return redirect()->route('authorizations.index');
   }

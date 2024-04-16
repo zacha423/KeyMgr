@@ -10,11 +10,23 @@
       </div>
     </div>
     <div class="row">
-
+      <div class="col"><x-room-selector></x-room-selector></div>
+    </div>
+    <div class="row">
+      
     </div>
     <x-slot name="footerSlot">
+      <div class="col">
       <x-adminlte-button type="submit" class="block mr-auto" theme="success" label="Add Authorization" form="newAuth"/>
-      <x-adminlte-button type="button" class="block ml-auto" theme="danger" label="Cancel" data-dismiss="modal"/>
+</div>
+  <div clasa="col">
+      <x-adminlte-button id="addRoom" type="button" theme="primary" disabled label="Add Additional Room"/>  
+</div>
+
+<diV class="col ">
+      <x-adminlte-button class="btn=block " type="button" theme="danger" label="Cancel" data-dismiss="modal"/>
+      
+</div>
     </x-slot>
   </form>
 </x-adminlte-modal>

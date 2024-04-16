@@ -17,9 +17,9 @@ class UserSelector extends Component
     public string $id,
     public string $name,
     public string $label,
-    public mixed $options,
-    public mixed $selected,
-    public bool $multiple
+    public mixed $options = [],
+    public mixed $selected = [],
+    public bool $multiple = false,
   ) {
     //
   }

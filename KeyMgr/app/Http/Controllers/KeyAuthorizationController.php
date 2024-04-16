@@ -118,10 +118,27 @@ class KeyAuthorizationController extends Controller
       $requestors[$user->id] = $user->getFullname();
     }
 
+    $allHolders = []; 
+    $allRequestors = [];
+
+    foreach(User::whereHas('roles', function ($query) {
+      $query->where(['name' => config('constants.roles.holder')]);
+    })->get() as $holder) {
+      $allHolders[$holder->id] = $holder->getFullname();
+    }
+
+    foreach (User::whereHas('roles', function($query) { 
+      $query->where(['name' => config('constants.roles.requestor')]);
+    })->get() as $requestor) {
+      $allRequestors[$requestor->id] = $requestor->getFullName();
+    }
+
     return view('authorizations.auths', [
       'auths' => $auths,
       'holders' => $holders,
       'requestors' => $requestors,
+      'allHolders' => $allHolders,
+      'allRequestors' => $allRequestors,
       'buildings' => Building::all()->pluck('name' , 'id')->toArray(),
     ]);
   }

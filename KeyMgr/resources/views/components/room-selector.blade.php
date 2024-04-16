@@ -11,7 +11,7 @@ $baseConfig = [
   {{-- Building Div --}}
   <div class="col">
     <x-adminlte-select-bs
-      id="buildingSel"
+      id="{{ 'buildingSel' . $id}}"
       name="buildingSel"
       label="Building"
       label-class="text-info"
@@ -25,7 +25,7 @@ $baseConfig = [
   {{-- Room Div --}}
   <div class="col">
     <x-adminlte-select-bs 
-      id="roomSel" 
+      id="{{'roomSel' . $id}}" 
       name="roomSel[]" 
       label="Room" 
       label-class="text-info" 
@@ -42,8 +42,8 @@ $baseConfig = [
     </x-adminlte-select-bs>
   </div>
   <script>
-    $('#buildingSel').change(() => {
-      const IDs = $('#buildingSel').val();
+    $('#buildingSel' + '{{$id}}').change(() => {
+      const IDs = $('#buildingSel' + '{{$id}}').val();
       $.ajax({
         type: "GET",
         url: "{{ route('getRooms') }}",
@@ -52,8 +52,8 @@ $baseConfig = [
         },
         success: function (res) {
           if (res) {
-            $('#roomSel').html(res);
-            $('#roomSel').selectpicker('refresh');
+            $('#roomSel' + '{{$id}}').html(res);
+            $('#roomSel' + '{{$id}}').selectpicker('refresh');
           }
         }
       });

@@ -70,7 +70,7 @@ class User extends Authenticatable
 
   public function authorizations(): HasMany
   {
-    return $this->hasMany(KeyAuthorization::class);
+    return $this->hasMany(KeyAuthorization::class, 'key_holder_user_id');
   }
 
   /**

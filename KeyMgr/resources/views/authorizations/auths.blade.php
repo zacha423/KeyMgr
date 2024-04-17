@@ -3,7 +3,7 @@
 @section('title', 'KeyMgr | Key Authorizations')
 
 @section('content_header')
-<div class=d-flex justify-content-between align-items-center>
+<div class='d-flex justify-content-between align-items-center'>
   <h1>List of Key Authorizations</h1>
 </div>
 @stop

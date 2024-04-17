@@ -86,7 +86,8 @@ class KeyAuthorizationController extends Controller
     $auths = [];
 
     foreach ($keyAuthorizations->get() as $auth) {
-      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-auth-id="1"><i class="fa fa-lg fa-fw fa-trash"></i></button>';
+      $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-auth-id="' 
+        . $auth->id . '"><i class="fa fa-lg fa-fw fa-trash"></i></button>';
       $btnDetails = '<a href="' . route('authorizations.show', $auth->id)
         . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
             <i class="fa fa-lg fa-fw fa-eye"></i>';
@@ -177,21 +178,48 @@ class KeyAuthorizationController extends Controller
   /**
    * Display the specified key authorization.
    */
-  public function show(KeyAuthorization $keyAuthorization)
+  public function show(KeyAuthorization $authorization)
   {
+    $authorization->load('keyHolder','keyRequestor','rooms','issuedKeys', 'rooms.building');
+    $keyHolder = $authorization->keyHolder()->first();
+    $keyRequestor = $authorization->keyRequestor()->first();
+    $holder = [];
+    $requestor = [];
+    
+    $keys = 0;
+    foreach ($keyHolder->authorizations()->get() as $agree) {
+      $keys += $agree->issuedKeys()->count();
+    }
+    $holder['keys'] = $keys;
+
+    $keys = 0;
+    foreach ($keyRequestor->authorizations()->get() as $agree) {
+      $keys += $agree->issuedKeys()->count();
+    }
+
+    $requestor['keys'] = $keys;
+
+    return view('authorizations.authSingle', [
+      'auth' => $authorization, 'k' => $keys,
+      'holder' => $holder,
+      'requestor' => $requestor,
+    ]);
   }
 
   /**
    * Show the form editing the specified resource
    */
-  public function edit(KeyAuthorization $keyAuthorization)
+  public function edit(KeyAuthorization $authorization)
   {
+    $keyHolder = $authorization->keyHolder()->get();
+
+    
   }
 
   /**
    * Update the specified resource in storage.
    */
-  public function update(KeyAuthorizationRequest $request, KeyAuthorization $keyAuthorization)
+  public function update(KeyAuthorizationRequest $request, KeyAuthorization $authorization)
   {
 
   }
@@ -201,9 +229,9 @@ class KeyAuthorizationController extends Controller
    * 
    * @todo - DOesn't seem to work, but at least it creates a popup window.
    */
-  public function destroy(KeyAuthorization $keyAuthorization)
+  public function destroy(KeyAuthorization $authorization)
   {
-    $keyAuthorization->delete();
+    $authorization->delete();
     return redirect()->route('authorizations.index');
   }
 }

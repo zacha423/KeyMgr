@@ -14,6 +14,7 @@ use App\Models\Keyway;
 use App\Models\Building;
 use App\Models\Room;
 use App\Models\Door;
+use App\Models\User;
 use App\Http\Resources\KeyResource;
 use App\Models\StorageHook;
 use Illuminate\Http\Request;
@@ -25,9 +26,35 @@ class KeyController extends Controller
    */
   public function index(Request $request)
   {
+    $keys = Key::with('keyway', 'type');
+
+    if ($request->query('building')) {
+      $keys->whereHas('openableLocks.door.room.building', function ($query) use ($request) {
+        $query->where('id', $request->query('building'));
+      });
+    }
+
+    if ($request->query('room')) {
+      $keys->whereHas('openableLocks.door.room', function ($query) use ($request) {
+        $query->where('id', $request->query('room'));
+      });
+    }
+
+    if ($request->query('statuses')) {
+      $keys->whereHas('status', function ($query) use ($request) {
+        $query->whereIn('key_status_id', $request->query('statuses'));
+      });
+    }
+
+    if ($request->query('keyways')) {
+      $keys->whereHas('keyway', function ($query) use ($request) {
+        $query->whereIn('keyway_id', $request->query('keyways'));
+      });
+    }
+
     $data = [];
 
-    foreach (KeyResource::collection(Key::all()->load('keyway','type'))->toArray($request) as $key) {
+    foreach (KeyResource::collection($keys->get())->toArray($request) as $key) {
       $btnEdit = '<a href="' . route('keys.edit', $key['id']) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
         <i class="fa fa-lg fa-fw fa-pen"></i>
         </button> </a>';
@@ -38,32 +65,33 @@ class KeyController extends Controller
               <i class="fa fa-lg fa-fw fa-eye"></i>
           </button> </a>';
 
+      array_push($data, [
+        $key['id'],
+        $key['keyLevel'],
+        $key['keySystem'],
+        $key['copyNumber'],
+        $key['bitting'],
+        $key['replacementCost'],
+        $key['status'],
+        $key['keyway'],
+        '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
+      ]);
+    }
 
-          array_push($data, [
-            'id' => (int)$key['id'],
-            'keyLevel' => (string)$key['keyLevel'],
-            'keySystem' => (string)$key['keySystem'],
-            'copyNumber' => (int)$key['copyNumber'],
-            'bitting' => (string)$key['bitting'],
-            'replacementCost' => (float)$key['replacementCost'],
-            'status' => (string)$key['status'],
-            'keyway' => (string)$key['keyway'],
-            'actions' => '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
-        ]);
-            }
+    $users = [];
+    foreach (User::all() as $user) {
+      $users[$user->id] = $user->getFullName();
+    }
 
     return view('key.keys', [
       'keys' => $data,
-      'keyStatuses' => KeyStatus::all(),
-      'keyStorages' => KeyStorage::all(),
-      'keyTypes' => KeyType::all(),
-      'keyways' => Keyway::all(),
-      'buildings' => Building::with('rooms.doors')->get(),
+      'keyStatuses' => KeyStatus::all()->pluck('name', 'id')->toArray(),
+      'keyways' => Keyway::all()->pluck('name', 'id')->toArray(),
+      'buildings' => Building::all()->pluck('name', 'id')->toArray(),
       'rooms' => Room::with('doors')->get(),
-      'doors' => Door::all(),
+      'users' => $users,
     ]);
   }
-
 
   /**
    * Show the form for creating a new resource.
@@ -128,26 +156,26 @@ class KeyController extends Controller
   {
     $validated = $request->safe();
 
-    if (isset ($validated['keyLevel'])) {
+    if (isset($validated['keyLevel'])) {
       $key->keyLevel = $validated['keyLevel'];
     }
-    if (isset ($validated['keySystem'])) {
+    if (isset($validated['keySystem'])) {
       $key->keySystem = $validated['keySystem'];
     }
-    if (isset ($validated['copyNumber'])) {
+    if (isset($validated['copyNumber'])) {
       $key->copyNumber = $validated['copyNumber'];
     }
-    if (isset ($validated['bitting'])) {
+    if (isset($validated['bitting'])) {
       $key->bitting = $validated['bitting'];
     }
 
-    if (isset ($validated['replacementCost'])) {
+    if (isset($validated['replacementCost'])) {
       $key->replacementCost = $validated['replacementCost'];
     }
-    if (isset ($validated['key_status_id'])) {
+    if (isset($validated['key_status_id'])) {
       $key->key_status_id = $validated['key_status_id'];
     }
-    if (isset ($validated['keyway_id'])) {
+    if (isset($validated['keyway_id'])) {
       $key->keyway_id = $validated['keyway_id'];
     }
 

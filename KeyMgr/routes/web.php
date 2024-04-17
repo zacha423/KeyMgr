@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BuildingController;
+use App\Http\Controllers\KeyAuthorizationController;
 use App\Http\Controllers\LockController;
 use App\Http\Controllers\KeyController;
 use App\Http\Controllers\ProfileController;
@@ -59,6 +60,7 @@ Route::middleware('auth')->group(function () {
   Route::post('roles/groups', [UserRoleController::class, 'manageGroups'])->name('roles.groups');
   Route::resource('locks', LockController::class)->except(['create']);
   Route::get('rooms', [LockController::class, 'getRooms'])->name('getRooms');
+  Route::post('/keyauth/bulk', [KeyAuthorizationController::class, 'bulkAssign'])->name('keys.massassign');
 });
 
 

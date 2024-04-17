@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\IssuedKey;
 use App\Models\KeyAuthorization;
 use App\Models\KeyAuthStatus;
+use App\Models\KeyStatus;
 use App\Models\MessageTemplate;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -25,15 +26,16 @@ class KeyAuthSeeder extends Seeder
       $agreement->save();
       $agreement->keyHolderContacts()->attach($users->random(1)->unique());
       $key = Key::all()->random(($indx % 4) + 1);
-      
-      $agreement->issuedKeys()->attach($key);
+      // $key->status()->attach(KeyStatus::where(['name' => 'Unassigned'])->first());
+      $key->key_status_id = KeyStatus::where(['name' => 'Assigned'])->first()->id;
+      $agreement->issuedKeys()->attach($key, ['due_date' => fake()->dateTimeBetween('-2 week', '+2 month')->format('Y-m-d')]);
 
       foreach ($key as $k)
       {
         $agreement->rooms()->attach($k->room()->id);
       }
       
-
+      fake()->dateTimeThisYear();
 
 
       IssuedKey::where([

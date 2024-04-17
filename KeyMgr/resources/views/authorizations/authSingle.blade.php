@@ -21,12 +21,56 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-6">
-      <x-adminlte-card theme="info" theme-mode="outline" title="Key Holder"><p><strong>Name: </strong>alyssa mendosa</p><p><strong>Email: </strong>am@pacu.edu</p><div class="text-center"><div class="row"><div class="col"><x-adminlte-info-box title="Held Keys" text="{{ $holder['keys'] }}"/></div><div class="col"><x-adminlte-info-box title="Outstanding Keys" text="test"/></div><div class="col"><x-adminlte-info-box title="Agreements" text="test"/></div></div></div></x-adminlte-card>
-      <x-adminlte-card theme="info" theme-mode="outline" title="Key Requestor"><p><strong>Name: </strong>alyssa mendosa</p><p><strong>Email: </strong>am@pacu.edu</p><div class="text-center"><div class="row"><div class="col"><x-adminlte-info-box title="Held Keys" text="{{ $requestor['keys'] }}"/></div><div class="col"><x-adminlte-info-box title="test" text="test"/></div><div class="col"><x-adminlte-info-box title="test" text="test"/></div></div></div></x-adminlte-card>
+      <x-adminlte-card theme="info" theme-mode="outline" title="Key Holder">
+        <p><strong>Name: </strong>{{ $holder['name']}}</p>
+        <p><strong>Email: </strong>{{ $holder['email'] }}</p>
+        <div class="text-center">
+          <div class="row">
+            <div class="col">
+              <x-adminlte-info-box title="Held Keys" text="{{ $holder['keys'] }}"/>
+            </div>
+            <div class="col">
+              <x-adminlte-info-box title="Outstanding Keys" text="{{ $holder['withstanding'] }}"/>
+            </div>
+            <div class="col">
+              <x-adminlte-info-box title="Agreements" text="{{ $holder['agreements'] }}"/>
+            </div>
+          </div>
+        </div>
+      </x-adminlte-card>
+      <x-adminlte-card theme="info" theme-mode="outline" title="Key Requestor">
+        <p><strong>Name: </strong>{{ $requestor['name'] }}</p>
+        <p><strong>Email: </strong>{{ $requestor['email'] }}</p>
+        <div class="text-center">
+          <div class="row">
+            <div class="col">
+              <x-adminlte-info-box title="Held Keys" text="{{ $requestor['keys'] }}"/>
+            </div>
+            <div class="col">
+              <x-adminlte-info-box title="test" text="{{ $requestor['withstanding'] }}"/>
+            </div>
+            <div class="col">
+              <x-adminlte-info-box title="test" text="{{ $requestor['agreements'] }}"/>
+            </div>
+          </div>
+        </div>
+      </x-adminlte-card>
     </div>
     <div class="col-md-6">
-      <x-adminlte-card theme="info" theme-mode="outline" title="Issued Key #1">a</x-adminlte-card>
-      <x-adminlte-card theme="info" theme-mode="outline" title="Issued Key #2"><p></p></x-adminlte-card>
+      <x-adminlte-card theme="info" theme-mode="outline" title="Issued Key #1">
+        <p><strong>Serial: </strong>{{ $key['serial'] }}</p>
+        <div class="text-center">
+          <div class="row">
+            <div class="col">
+              <x-adminlte-info-box title="Building" text="{{ $key['building'] }}"/>
+            </div>
+            <div class="col">
+              <x-adminlte-info-box title="Room" text="{{$key['room']}}"/>
+            </div>
+          </div>
+        </div>
+      </x-adminlte-card>
+      <x-adminlte-card theme="info" theme-mode="outline" title="Issued Key #2"><p>< To Be Implemented... ></p></x-adminlte-card>
     </div>
   </div>
 </div>

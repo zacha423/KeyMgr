@@ -23,7 +23,7 @@ class Key extends Model
   /**
    * Generates a serial number for the key based on the key level and key system
    */
-  protected function getSerial(): string
+  public function getSerial(): string
   {
     return $this->keyLevel . ' ' . $this->keySystem;
   }
@@ -54,7 +54,7 @@ class Key extends Model
 
   public function keyAuthorizationAgreements(): BelongsToMany
   {
-    return $this->belongsToMany(KeyAuthorization::class);
+    return $this->belongsToMany(KeyAuthorization::class)->withPivot('due_date');
   }
 
   public function room(): Room

@@ -37,6 +37,6 @@ class KeyAuthorization extends Model
 
   public function issuedKeys(): BelongsToMany
   {
-    return $this->belongsToMany(Key::class);
+    return $this->belongsToMany(Key::class)->withPivot('due_date');
   }
 }

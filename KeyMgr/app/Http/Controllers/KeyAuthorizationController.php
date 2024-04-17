@@ -92,7 +92,7 @@ class KeyAuthorizationController extends Controller
         . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
             <i class="fa fa-lg fa-fw fa-eye"></i>';
       $btnEdit = '<a href="' . route('authorizations.edit', $auth->id)
-        . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+        . '" class="btn btn-xs btn-default text-primary mx-1 shadow disabled" title="Edit">
             <i class="fa fa-lg fa-fw fa-pen"></i>
             </a>';
 
@@ -170,8 +170,6 @@ class KeyAuthorizationController extends Controller
 
     $agreement->rooms()->save($room);
 
-
-
     return redirect()->route('authorizations.index');
   }
 
@@ -185,24 +183,51 @@ class KeyAuthorizationController extends Controller
     $keyRequestor = $authorization->keyRequestor()->first();
     $holder = [];
     $requestor = [];
-    
-    $keys = 0;
-    foreach ($keyHolder->authorizations()->get() as $agree) {
-      $keys += $agree->issuedKeys()->count();
-    }
-    $holder['keys'] = $keys;
+
+    $holder['email'] = $keyHolder->email;
+    $holder['name'] = $keyHolder->getFullname();
+    $requestor['email'] = $keyRequestor->email;
+    $requestor['name'] = $keyRequestor->getFullname();
 
     $keys = 0;
+    $keys_withstanding = 0;
+
+    foreach ($keyHolder->authorizations()->get() as $agree) {
+      $keys += $agree->issuedKeys()->wherePivot('due_date', '>', date('Y-m-d'))->count();
+      $keys_withstanding = $agree->issuedKeys()->wherePivot('due_date', '<', date('Y-m-d'))->whereHas('status', function ($query) {
+        $query->where(['name' => 'Assigned']);
+      })->count();
+    }
+
+    $holder['keys'] = $keys;
+    $holder['withstanding'] = $keys_withstanding;
+    $holder['agreements'] = $keyHolder->authorizations()->count();
+    $keys = 0;
+    $keys_withstanding = 0;
+
     foreach ($keyRequestor->authorizations()->get() as $agree) {
-      $keys += $agree->issuedKeys()->count();
+      $keys += $agree->issuedKeys()->wherePivot('due_date', '>', date('Y-m-d'))->count();
+      $keys_withstanding = $agree->issuedKeys()->wherePivot('due_date', '<', date('Y-m-d'))->whereHas('status', function ($query) {
+        $query->where(['name' => 'Assigned']);
+      })->count();
     }
 
     $requestor['keys'] = $keys;
+    $requestor['agreements'] = $keyRequestor->authorizations()->count();
+    $requestor['withstanding'] = $keys_withstanding;
+
+
+    $key = [];
+    $firstKey = $authorization->issuedKeys()->first();
+    $key['serial'] = $firstKey->getSerial();
+    $key['room'] = $firstKey->room()->number;
+    $key['building'] = $firstKey->building()->name;
 
     return view('authorizations.authSingle', [
       'auth' => $authorization, 'k' => $keys,
       'holder' => $holder,
       'requestor' => $requestor,
+      'key' => $key,
     ]);
   }
 
@@ -211,9 +236,9 @@ class KeyAuthorizationController extends Controller
    */
   public function edit(KeyAuthorization $authorization)
   {
-    $keyHolder = $authorization->keyHolder()->get();
+    // $keyHolder = $authorization->keyHolder()->get();
 
-    
+    return redirect()->route('authorizations.index');
   }
 
   /**
@@ -221,7 +246,7 @@ class KeyAuthorizationController extends Controller
    */
   public function update(KeyAuthorizationRequest $request, KeyAuthorization $authorization)
   {
-
+    return redirect()->route('authorizations.index');
   }
 
   /**

@@ -32,4 +32,18 @@ class KeyFactory extends Factory
       'key_type_id' => KeyType::all()->random()->first()->id,
     ];
   }
+
+  /**
+   * Force the key to be loaded with the unassigned status.
+   */
+  public function unassigned(): Factory
+  {
+    return $this->state(function (array $attributes) {
+      return [
+        'key_status_id' => KeyStatus::where([
+          'name' => config('constants.keys.statuses.unassigned.name')
+        ])->first()->id,
+      ];
+    });
+  }
 }

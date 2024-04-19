@@ -84,10 +84,6 @@ class UserGroupController extends Controller
       new UserGroup(['name' => $validated['groupName']])
     );
 
-    // return view ('users.usergroup', [
-    //   'group' => $group->toArray(),
-    //   'groupJSON' => $group->toJson(),
-    // ]);
     return redirect('/groups');
   }
 

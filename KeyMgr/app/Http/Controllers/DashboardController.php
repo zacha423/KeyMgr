@@ -13,7 +13,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // if (Auth::user()->hasAccess('admin')) {
+        // if (Auth::user()->isElevated()) {
             
         //     $counts['keys'] = \App\Models\Key::count();
         //     $counts['doors'] = \App\Models\Door::count();

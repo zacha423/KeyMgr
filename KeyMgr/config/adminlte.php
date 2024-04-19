@@ -460,6 +460,21 @@ return [
     */
 
     'plugins' => [
+        'BootStrapDatePicker' => [
+          'active' => false,
+          'files' => [
+            [
+              'type' => 'js',
+              'asset' => 'false',
+              'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js',
+            ],
+            [
+              'type' => 'js',
+              'asset' => 'false',
+              'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.en-GB.min.js',
+            ],
+          ]
+        ],
         'BootStrapSelect' => [
           'active' => false,
           'files' => [
@@ -510,6 +525,26 @@ return [
                 ]
             ],
         ],
+        'DateRangePicker' => [
+          'active' => false,
+          'files' => [
+            [
+              'type' => 'js',
+              'asset' => true,
+              'location' => 'vendor/moment/moment.min.js',
+            ],
+            [
+              'type' => 'js',
+              'asset' => true,
+              'location' => 'vendor/daterangepicker/daterangepicker.js',
+            ],
+            [
+              'type' => 'css',
+              'asset' => true,
+              'location' => 'vendor/daterangepicker/daterangepicker.css',
+            ],
+          ],
+        ],
         'Select2' => [
             'active' => false,
             'files' => [
@@ -524,6 +559,26 @@ return [
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
                 ],
             ],
+        ],
+        'TempusDominusBs4' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/moment/moment.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css',
+                ],
+            ]
         ],
         'Chartjs' => [
             'active' => false,

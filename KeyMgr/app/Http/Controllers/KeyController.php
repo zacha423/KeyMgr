@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreKeyRequest;
 use App\Http\Requests\UpdateKeyRequest;
 use App\Models\Key;
+use App\Models\KeyAuthorization;
 use App\Models\KeyStatus;
 use App\Models\KeyStorage;
 use App\Models\KeyType;
@@ -18,6 +19,7 @@ use App\Models\User;
 use App\Http\Resources\KeyResource;
 use App\Models\StorageHook;
 use Illuminate\Http\Request;
+use DateTime;
 
 class KeyController extends Controller
 {
@@ -132,8 +134,32 @@ class KeyController extends Controller
    */
   public function show(Key $key)
   {
+    $authorized = KeyAuthorization::whereHas('issuedKeys', function ($query) use ($key) {
+      $query->where(['keys.id' => $key->id]);
+    })->orderBy('created_at', 'DESC')->first();
+
+    $hold = [];
+    $hold['auth'] = $authorized->id;
+    $hold['holder'] = $authorized->keyHolder()->first()->getFullname();
+    $hold['holderID'] = $authorized->keyHolder()->first()->id;
+    $hold['dueDate'] = $authorized->issuedKeys()->where(['keys.id' => $key->id])->first()->pivot->due_date;
+
+
+    $locks = [];
+    foreach ($key->openableLocks()->with('lockModel')->get() as $lock) {
+      array_push ($locks, [
+        $lock->id,
+        $lock->lockModel->name,
+        explode(' ', $lock->installDate)[0],
+        '<a href="' . route('locks.show', $lock->id) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="View Lock">
+              <i class="fa fa-lg fa-fw fa-eye"></i>
+          </button> </a>',
+      ]);
+    }
     return view('key.singleKey', [
       'key' => (new KeyResource($key))->toArray(new Request()),
+      'holder' => $hold,
+      'locks' => $locks,
     ]);
   }
 

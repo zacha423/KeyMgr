@@ -17,6 +17,7 @@
 @stop
 
 @section('content')
+@section('plugins.Datatables', true)
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
@@ -47,19 +48,17 @@
             </div>
 
             <div class="col-md-6">
-                <div class="card card-info card-outline">
-                    <div class="card-body">
-                        <h5 class="card-title">LOCKS</h5>
-                        <!-- Add content related to locks here -->
-                    </div>
-                </div>
-
-                <div class="card card-info card-outline">
-                    <div class="card-body">
-                        <h5 class="card-title">USER</h5>
-                        <!-- Add content related to users here -->
-                    </div>
-                </div>
+                <x-adminlte-card title="Locks" theme="primary" theme-mode="outline">
+                    @include ('key.partials.locksMiniTable')
+                </x-adminlte-card>
+                @if(isset($holder))
+                <x-adminlte-card id="keyHolderCard" title="Key Holder" theme="primary" theme-mode="outline">
+                    <p><strong>Key Holder ID: </strong>{{  $holder['holderID'] }}</p>
+                    <p><strong>Full name: </strong>{{ $holder['holder'] }}</p>
+                    <p><strong>Key Authorization: </strong>#{{ $holder['auth'] }}</p>
+                    <p><strong>Return Date: </strong>{{ $holder['dueDate'] }}</p>
+                </x-adminlte-card>
+                @endif
             </div>
         </div>
     </div>
@@ -69,7 +68,7 @@
     <script>
         function confirmDelete(keyID) {
             if (confirm("Are you sure you want to delete this key?")) {
-                window.location.href = "{{ route('keys.destroy', ['key' => $key['id']]) }}" + "/" + keyID;
+                window.location.href = "{{ route('keys.destroy', ['key' => $key['id']]) }}";
             }
         }
     </script>

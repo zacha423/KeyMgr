@@ -36,10 +36,7 @@ class DashboardController extends Controller
 
         $counts['keys'] = \App\Models\Key::count();
         $counts['doors'] = \App\Models\Door::count();
-        // Building right now is a place-holder until key requests is finalized
-        // ----------------------------------------------------
-        $counts['key_requests'] = \App\Models\Building::count();
-        // ----------------------------------------------------
+        $counts['key_requests'] = \App\Models\KeyAuthorization::count();
         $counts['users'] = \App\Models\User::count();
 
 
@@ -58,8 +55,6 @@ class DashboardController extends Controller
                 ]
             ]
         ];
-
-
 
         return view('dashboard', [
             'counts' => $counts,

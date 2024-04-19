@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Key;
 
 class DashboardController extends Controller
 {
@@ -15,7 +16,7 @@ class DashboardController extends Controller
     {
         // if (Auth::user()->isElevated()) {
             
-        //     $counts['keys'] = \App\Models\Key::count();
+        //     $counts['keys'] = Key::count();
         //     $counts['doors'] = \App\Models\Door::count();
         //     // Building right now is a place-holder until key requests is finalized
         //     // ----------------------------------------------------
@@ -34,17 +35,16 @@ class DashboardController extends Controller
         //     return redirect('profile');
         // }
 
-        $counts['keys'] = \App\Models\Key::count();
+        $counts['keys'] = Key::count();
         $counts['doors'] = \App\Models\Door::count();
         $counts['key_requests'] = \App\Models\KeyAuthorization::count();
         $counts['users'] = \App\Models\User::count();
 
-        $counts1['unassigned'] = \App\Models\Key::keyStatus('unassigned')->count();
-        $counts1['assigned'] = \App\Models\Key::keyStatus('assigned')->count();
-        $counts1['lost'] = \App\Models\Key::keyStatus('lost')->count();
-        $counts1['broken'] = \App\Models\Key::keyStatus('broken')->count();
-        $counts1['requested'] = \App\Models\Key::keyStatus('requested')->count();
-
+        $counts1['unassigned'] = Key::keyStatus(config('constants.keys.statuses.unassigned.name'))->count();
+        $counts1['assigned'] = Key::keyStatus(config('constants.keys.statuses.assigned.name'))->count();
+        $counts1['lost'] = Key::keyStatus(config('constants.keys.statuses.lost.name'))->count();
+        $counts1['broken'] = Key::keyStatus(config('constants.keys.statuses.broken.name'))->count();
+        $counts1['requested'] = Key::keyStatus(config('constants.keys.statuses.requested.name'))->count();
 
         $pieData = [
             'labels' => [

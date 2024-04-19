@@ -23,7 +23,7 @@
             <div class="col-md-6">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
-                        <h2 class="card-title"><strong>Key ID:</strong> {{ $key['id'] }}</h2>
+                        <h2 class="card-title text-primary">Key ID: {{ $key['id'] }}</h2>
                         <div class="card-tools">
                             <a href="{{ route('keys.edit', ['key' => $key['id']]) }}" class="btn btn-primary">
                                 <i class="fas fa-edit"></i> Edit

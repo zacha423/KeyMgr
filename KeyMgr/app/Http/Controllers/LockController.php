@@ -89,12 +89,30 @@ class LockController extends Controller
   public function show(Request $request, Lock $lock)
   {
     $lock->load(LockWrapper::loadRelationships());
+    $location = [];
+    $location['room'] = $lock->room()->number;
+    $location['building'] = $lock->building()->name;
+    $location['campus'] = $lock->building()->first()->campus()->first()->name;
+    $location['date'] = explode(' ', $lock->installDate)[0];
 
+
+    $keys = [];
+    foreach ($lock->keys()->with('status')->get() as $key) {
+      array_push($keys, [
+        $key->id,
+        $key->getSerial(),
+        $key->status->name,
+        '<a href="' . route('keys.show', $key->id) 
+        . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="View Lock"><i class="fa fa-lg fa-fw fa-eye"></i></button> </a>',
+      ]);
+    }
     return view('locks.locksingle', [
       'lockRes' => (new LockResource($lock))->toArray($request),
       'buildingName' => $lock->building()->name,
       'roomName' => $lock->getRoom()->number,
       'lock' => (new LockResource($lock))->toArray($request),
+      'location' => $location,
+      'keys' => $keys,
     ]);
   }
 

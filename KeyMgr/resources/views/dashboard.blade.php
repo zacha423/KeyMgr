@@ -98,84 +98,35 @@
     </div>
 
     <div class="card-body p-0">
-        <div class="table-responsive">
-            <table class="table m-0">
-                <thead>
-                    <tr>
-                        
-                        <th>Transaction ID</th>
-                        <th>Date</th>
-                        <th>Admin</th>
-                        <th>Key</th>
-                        <th>User</th>
-                        <th>Location</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><a href="#">#####</a></td>
-                        <td>Sun Apr 07, 2024 7:06AM</td>
-                        <td>New Admin</td>
-                        <td>New Key</td>
-                        <td>Bobby</td>
-                        <td>
-                            Nah
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">#####</a></td>
-                        <td>Sun Apr 07, 2024 7:06AM</td>
-                        <td>New Admin</td>
-                        <td>New Key</td>
-                        <td>Bobby</td>
-                        <td>
-                            Nah
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">#####</a></td>
-                        <td>Sun Apr 07, 2024 7:06AM</td>
-                        <td>New Admin</td>
-                        <td>New Key</td>
-                        <td>Bobby</td>
-                        <td>
-                            Nah
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">#####</a></td>
-                        <td>Sun Apr 07, 2024 7:06AM</td>
-                        <td>New Admin</td>
-                        <td>New Key</td>
-                        <td>Bobby</td>
-                        <td>
-                            Nah
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">#####</a></td>
-                        <td>Sun Apr 07, 2024 7:06AM</td>
-                        <td>New Admin</td>
-                        <td>New Key</td>
-                        <td>Bobby</td>
-                        <td>
-                            Nah
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">#####</a></td>
-                        <td>Sun Apr 07, 2024 7:06AM</td>
-                        <td>New Admin</td>
-                        <td>New Key</td>
-                        <td>Bobby</td>
-                        <td>
-                            Nah
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+
+    <div class="table-responsive">
+        <table class="table m-0">
+            <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Date</th>
+                    <th>Admin</th>
+                    <th>Key</th>
+                    <th>User</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($keyAuthorizations as $authorization)
+                <tr>
+                    <td><a href="/authorizations/{{ $authorization['id'] }}">{{ $authorization['id'] }}</a></td>
+                    <td>{{ $authorization['date'] }}</td>
+                    <td>{{ $authorization['admin'] }}</td>
+                    <td>{{ $authorization['key'] }}</td>
+                    <td>{{ $authorization['user'] }}</td>
+                    <td>{{ $authorization['location'] }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
+</div>
+
 
     <div class="card-footer clearfix">
         <a href="#" class="btn btn-sm btn-secondary float-right">View All Activity</a>

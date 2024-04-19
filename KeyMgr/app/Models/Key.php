@@ -66,6 +66,13 @@ class Key extends Model
   {
     return $this->room()->building()->first();
   }
+
+  public function scopeKeyStatus($query, $statusName)
+  {
+      return $query->whereHas('status', function ($q) use ($statusName) {
+          $q->where('name', $statusName);
+      });
+  }
 }
 
 

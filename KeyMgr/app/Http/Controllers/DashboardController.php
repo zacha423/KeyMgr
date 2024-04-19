@@ -39,18 +39,24 @@ class DashboardController extends Controller
         $counts['key_requests'] = \App\Models\KeyAuthorization::count();
         $counts['users'] = \App\Models\User::count();
 
+        $counts1['unassigned'] = \App\Models\Key::keyStatus('unassigned')->count();
+        $counts1['assigned'] = \App\Models\Key::keyStatus('assigned')->count();
+        $counts1['lost'] = \App\Models\Key::keyStatus('lost')->count();
+        $counts1['broken'] = \App\Models\Key::keyStatus('broken')->count();
+        $counts1['requested'] = \App\Models\Key::keyStatus('requested')->count();
+
 
         $pieData = [
             'labels' => [
-                'Checked out',
+                'Unassigned',
                 'Assigned',
                 'Lost',
-                'In Inventory',
-                'Other',
+                'Broken',
+                'Requested',
             ],
             'datasets' => [
                 [
-                    'data' => [700, 500, 400, 600, 300],
+                    'data' => [$counts1['unassigned'], $counts1['assigned'], $counts1['lost'], $counts1['broken'], $counts1['requested']],
                     'backgroundColor' => ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
                 ]
             ]

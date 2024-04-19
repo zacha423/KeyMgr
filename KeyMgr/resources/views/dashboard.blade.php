@@ -129,7 +129,7 @@
 
 
     <div class="card-footer clearfix">
-        <a href="#" class="btn btn-sm btn-secondary float-right">View All Authorizations</a>
+        <a href="/authorizations" class="btn btn-sm btn-secondary float-right">View All Authorizations</a>
     </div>
 </div>
 </div>

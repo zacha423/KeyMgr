@@ -8,7 +8,9 @@
  */
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GroupMembershipRequest;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\RoleMembershipRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\GroupResource;
 use App\Http\Resources\RoleResource;
@@ -73,20 +75,10 @@ class UserController extends Controller
       ]);
     }
 
-    $groups = [];
-    foreach (GroupResource::collection(UserGroup::all())->toArray($request) as $group) {
-      $groups[$group['id']] = $group['name'];
-    }
-
-    $roles = [];
-    foreach (RoleResource::collection(UserRole::all())->toArray($request) as $role) {
-      $roles[$role['id']] = $role['name'];
-    }
-
     return view('users.userlist', [
       'users' => $data,
-      'groupOptions' => $groups,
-      'roleOptions' => $roles,
+      'groupOptions' => UserGroup::all()->pluck('name', 'id')->toArray(),
+      'roleOptions' => UserRole::all()->pluck('name', 'id')->toArray(),
       'selectedGroups' => $groupIDs,
       'selectedRoles' => $roleIDs,
     ]);
@@ -97,22 +89,51 @@ class UserController extends Controller
    * 
    * @todo Determine appropriate return type
    */
-  public function assignUsersToGroup(Request $request): RedirectResponse
+  public function groupMembershipManagement (GroupMembershipRequest $request)
   {
-    // RBACWrapper::assignUsersToGroup();
+    $validated = $request->validated();
+    $users = User::find($validated['selectedUsers']);
+    $groups = UserGroup::find($validated['selectedData']);
 
-    return redirect('/');
+    foreach ($users as $user)
+    {
+      if (isset($validated['additionMode']))
+      {
+        $user->groups()->attach($groups);
+      }
+      else
+      {
+        $user->groups()->detach($groups);
+      }
+      
+    }
+
+    return redirect()->route('users.index');
   }
   /**
    * Remove a group membership from a set of users
    * 
    * @todo Determine appropriate return type
    */
-  public function unassignUsersFromGroup(Request $request): RedirectResponse
+  public function roleMembershipManagement(RoleMembershipRequest $request): RedirectResponse
   {
-    // RBACWrapper::unassignUsersFromGroup();
+    $validated = $request->validated();
+    $users = User::find($validated['selectedUsers']);
+    $roles = UserRole::find($validated['selectedData']);
 
-    return redirect('/');
+    foreach ($users as $user)
+    {
+      if(isset($validated['additionMode']))
+      {
+        $user->roles()->attach($roles);
+      }
+      else
+      {
+        $user->roles()->detach($roles);
+      }
+    }
+    
+    return redirect()->route('users.index');
   }
 
   public function store(Request $request)
@@ -193,8 +214,8 @@ class UserController extends Controller
 
     return view('users.usershow', [
       'user' => $user,
-      'memberRoles' => $formatForAdminLTE((RoleResource::collection($user->roles()->get()))->toArray($request)),
-      'memberGroups' => $formatForAdminLTE((GroupResource::collection($user->groups()->get()))->toArray($request)),
+      'memberRoles' => $user->roles()->get()->pluck('name', 'id')->toArray(),
+      'memberGroups' => $user->groups()->get()->pluck('name', 'id')->toArray(),
     ]);
   }
 

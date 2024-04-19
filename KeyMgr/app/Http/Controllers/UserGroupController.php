@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserGroupRequest;
 use App\Models\UserGroup;
+use App\Models\UserRole;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -13,8 +14,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Auth\Events\Registered;
 use App\Http\Resources\GroupResource;
-
-
+use App\Http\Requests\RoleAssignmentRequest;
+use App\Http\Resources\UserResource;
 
 class UserGroupController extends Controller
 {
@@ -23,55 +24,54 @@ class UserGroupController extends Controller
    */
   public function index(Request $request)
   {
+    $datatableData = [];
+    $groupSearchResults = UserGroup::with('parent');
 
-    $groups = [];
-    $allGroups = UserGroup::all()->load('parent');
+    if($request->query('groups'))
+    {
+      $groupSearchResults->whereHas('parent', function ($query) use ($request) {
+        $query->whereIn('id', $request->query('groups'));
+      });
+    }
+    
+    $groupSearchResults = $groupSearchResults->get();
 
-    foreach (GroupResource::collection($allGroups)->toArray($request) as $group) {
-
-        $btnEdit = '<a href="' . route('groups.edit', $group['id']) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+    foreach (($groupSearchResults) as $group) {
+      $groupRes = (new GroupResource ($group))->toArray($request);
+      $btnEdit = '<a href="' . route('groups.edit', $groupRes['id']) .
+        '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
           <i class="fa fa-lg fa-fw fa-pen"></i>
           </a>';
-        $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-campus-id="'
-          . $group['id'] . '">
+      $btnDelete = '<button disabled class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-group-id="'
+        . $groupRes['id'] . '">
           <i class="fa fa-lg fa-fw fa-trash"></i>
           </button>';
-        $btnDetails = '<a href="' . route('groups.show', $group['id']) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+      $btnDetails = '<a href="' . route('groups.show', $groupRes['id']) .
+        '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
                 <i class="fa fa-lg fa-fw fa-eye"></i>
                 </a>';
 
-            
-        $groupData = [
-            'id' => $group['id'],
-            'name' => $group['name'],
-            'parent_name' => $group['parentName'],
-            '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
-        ];
-
-        array_push($groups, $groupData);
-
-        
+      array_push($datatableData, [
+        $groupRes['id'],
+        $groupRes['name'],
+        $groupRes['parentName'] ? $groupRes['parentName'] : ' ',
+        $group->users()->count(),
+        $group->roles()->count(),
+      '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>']);
     }
 
-    $groupsArray = $allGroups->toArray();
-
+    $groupsArray = [];
+    foreach (UserGroup::all() as $groupRes)
+    {
+      $groupsArray[$groupRes['id']] = $groupRes['name'];
+    }
     $data = [
-        'groups' => $groups,
-        'groupsArray' => $groupsArray
-    ];    
-    
-    return view ('users.usergroup', $data);
-  }
+      'groups' => $datatableData,
+      'groupsArray' => $groupsArray,
+      'selected' => $request->query('groups'),
+    ];
 
-  /**
-   * Show the form for creating a new resource.
-   */
-  public function create()
-  {
-    return view ('users.usergroup', [
-      'groups' => UserGroup::all()->toArray(),
-      'groupsJSON'=> UserGroup::all()->toJson(),
-    ]);   
+    return view('users.usergroup', $data);
   }
 
   /**
@@ -80,21 +80,45 @@ class UserGroupController extends Controller
   public function store(UserGroupRequest $request)
   {
     $validated = $request->safe();
-    $group = UserGroup::find($validated['parentGroup'])->children()->save(
+    UserGroup::find($validated['parentGroup'])->children()->save(
       new UserGroup(['name' => $validated['groupName']])
     );
-    
     return redirect('/groups');
   }
 
   /**
    * Display the specified resource.
    */
-  public function show(UserGroup $group)
+  public function show(Request $request, UserGroup $group)
   {
-    return view ('users.usergroup', [
-      'group' => $group->load('children')->toArray(),
-      'groupJSON' => $group->load('children')->toJson(),
+    $users = $group->users()->get();
+    $usersTableData = [];
+
+    foreach ($users as $user)
+    {
+      $u = new UserResource ($user);
+      array_push($usersTableData, [
+        $u['id'], 
+        $u['firstName'], 
+        $u['lastName'], '<a href="' . route('users.show', 
+        $u['id']) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+            <i class="fa fa-lg fa-fw fa-eye"></i>
+            </a>']);
+    }
+
+
+    $allGroups = UserGroup::all()->load('parent');
+
+    $groupsArray = [];
+    foreach ($allGroups as $agroup)
+    {
+      $groupsArray[$agroup['id']] = $agroup['name'];
+    }
+
+    return view('users.groupShow', [
+      'group' => $group->load('children')->load('parent')->toArray(),
+      'groups' => $groupsArray,
+      'users' => $usersTableData,
     ]);
   }
 
@@ -103,9 +127,35 @@ class UserGroupController extends Controller
    */
   public function edit(UserGroup $group)
   {
-    return view ('users.usergroup', [
-      'group' => $group->load('children')->toArray(),
-      'groupJSON' => $group->load('children')->toJson(),
+    $users = $group->users()->get();
+    $usersTableData = [];
+
+    foreach ($users as $user)
+    {
+      $u = new UserResource ($user);
+      array_push($usersTableData, [
+        $u['id'], 
+        $u['firstName'], 
+        $u['lastName'], '<a href="' . route('users.show', 
+        $u['id']) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+            <i class="fa fa-lg fa-fw fa-eye"></i>
+            </a>']);
+    }
+
+
+    $allGroups = UserGroup::all()->load('parent');
+
+    $groupsArray = [];
+    foreach ($allGroups as $agroup)
+    {
+      $groupsArray[$agroup['id']] = $agroup['name'];
+    }
+
+    return view('users.groupShow', [
+      'group' => $group->load('children')->load('parent')->toArray(),
+      'groups' => $groupsArray,
+      'users' => $usersTableData,
+      'open' => 'true',
     ]);
   }
 
@@ -115,26 +165,18 @@ class UserGroupController extends Controller
   public function update(UserGroupRequest $request, UserGroup $group)
   {
     $validated = $request->safe();
-    $mapped = [];
-    if(isset($validated['groupName']))
-    {
-      $group->name = $validated['groupName'];
-      $mapped['name']= $validated['groupName'];
+
+    if (isset($validated['name'])) {
+      $group->name = $validated['name'];
     }
 
-    if (isset($validated['parentGroup']))
-    {
+    if (isset($validated['parentGroup'])) {
       $group->parent_id_fk = $validated['parentGroup'];
-      $mapped['parent_id_fk']=$validated['parentGroup'];
     }
-    
-    // $group->update($mapped);
+
     $group->save();
 
-    return view ('users.usergroup', [
-      'group' => $group->load('children')->toArray,
-      'groupJSON' => $group->load('children')->toJson(),
-    ]);
+    return redirect('/groups');
   }
 
   /**
@@ -146,6 +188,26 @@ class UserGroupController extends Controller
   {
     $group->delete();
 
-    return redirect('/groups'); 
+    return redirect('/groups');
+  }
+
+  public function manageRoles(RoleAssignmentRequest $request)
+  {
+    $validated = $request->safe();
+
+    $roles = UserRole::find($validated['roles']);
+    $groups = UserGroup::find($validated['selectedGroups']);
+
+    foreach ($groups as $group)
+    {
+      if(isset($validated['addMode'])) {
+        $group->roles()->attach($roles);
+      }
+      else {
+        $group->roles()->detach($roles);
+      }
+    }
+
+    return redirect()->route('groups.index');
   }
 }

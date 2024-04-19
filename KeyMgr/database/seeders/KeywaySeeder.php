@@ -11,8 +11,17 @@ class KeywaySeeder extends Seeder
 {
   public function run(): void
   {
-    Keyway::create(['name' => 'Keyway A']);
-    Keyway::create(['name' => 'Keyway B']);
-    Keyway::create(['name' => 'Keyway C']);
+    Keyway::create(['name' => 'KW1']);
+    Keyway::create(['name' => 'KW10']);
+    Keyway::create(['name' => 'KS']);
+
+    $SchlageKeyways = [
+      'L','H','J','K','C','CE','E','EF','F','FG','G',
+    ];
+
+    foreach ($SchlageKeyways as $keyway)
+    {
+      KeyWay::create(['name' => $keyway]);
+    }
   }
 }

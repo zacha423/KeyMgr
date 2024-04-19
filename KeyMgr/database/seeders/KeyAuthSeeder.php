@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\IssuedKey;
 use App\Models\KeyAuthorization;
 use App\Models\KeyAuthStatus;
+use App\Models\KeyStatus;
 use App\Models\MessageTemplate;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,12 +20,24 @@ class KeyAuthSeeder extends Seeder
   public function run(): void
   {
     $users = User::all();
-    $agreements = KeyAuthorization::factory()->createMany(5);
+    $agreements = KeyAuthorization::factory()->createMany(20);
 
-    foreach ($agreements as $agreement) {
+    foreach ($agreements as $indx => $agreement) {
       $agreement->save();
       $agreement->keyHolderContacts()->attach($users->random(1)->unique());
-      $agreement->issuedKeys()->attach(Key::all()->random(1)->first()->id);
+      $key = Key::all()->random(($indx % 4) + 1);
+      // $key->status()->attach(KeyStatus::where(['name' => 'Unassigned'])->first());
+      $key->key_status_id = KeyStatus::where(['name' => 'Assigned'])->first()->id;
+      $agreement->issuedKeys()->attach($key, ['due_date' => fake()->dateTimeBetween('-2 week', '+2 month')->format('Y-m-d')]);
+
+      foreach ($key as $k)
+      {
+        $agreement->rooms()->attach($k->room()->id);
+      }
+      
+      fake()->dateTimeThisYear();
+
+
       IssuedKey::where([
         'key_authorization_id' => $agreement->id
       ])->get()->first()->messages()->attach(

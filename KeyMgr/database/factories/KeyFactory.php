@@ -28,8 +28,22 @@ class KeyFactory extends Factory
       'copyNumber' => fake()->numberBetween(1, 30),
       'key_status_id' => KeyStatus::all()->random(1)->first()->id,
       'keyway_id' => Keyway::all()->random(1)->first()->id,
-      'storage_hook_id' => StorageHook::all()->random(1)->first()->id,
+      // 'storage_hook_id' => StorageHook::all()->random(1)->first()->id,
       'key_type_id' => KeyType::all()->random()->first()->id,
     ];
+  }
+
+  /**
+   * Force the key to be loaded with the unassigned status.
+   */
+  public function unassigned(): Factory
+  {
+    return $this->state(function (array $attributes) {
+      return [
+        'key_status_id' => KeyStatus::where([
+          'name' => config('constants.keys.statuses.unassigned.name')
+        ])->first()->id,
+      ];
+    });
   }
 }

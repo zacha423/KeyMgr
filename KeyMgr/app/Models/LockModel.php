@@ -4,12 +4,14 @@
  */
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class LockModel extends Model
 {
+  use HasFactory;
   protected $fillable = [
     'MACS',
     'name',
@@ -23,5 +25,10 @@ class LockModel extends Model
   public function locks(): HasMany
   {
     return $this->hasMany(Lock::class);
+  }
+
+  public function door(): BelongsTo
+  {
+    return $this->belongsTo(Door::class);
   }
 }

@@ -29,7 +29,6 @@ class KeyAuthorizationFactory extends Factory
     $users = User::all();
 
     return [
-      'agreement' => fake()->text(),
       'key_holder_user_id' => $users->random(1)->unique()->first()->id,
       'requestor_user_id' => $users->random(1)->unique()->first()->id,
       'key_auth_status_id' => KeyAuthStatus::all()->random(1)->first()->id,

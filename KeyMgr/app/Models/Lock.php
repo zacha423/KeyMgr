@@ -56,5 +56,15 @@ class Lock extends Model
   {
     return $this->door()->first()->room()->first();
   }
+
+  /**
+   * Provided as an alias to getRoom.
+   * 
+   * @todo Remove all references to getRoom().
+   */
+  public function room(): Room
+  {
+    return $this->getRoom();
+  }
   
 }

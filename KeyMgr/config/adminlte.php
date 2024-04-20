@@ -332,6 +332,11 @@ return [
             'url' => 'locks',
             'icon' => 'fas fa-fw fa-lock',
         ],
+        [
+            'text' => 'Authorizations',
+            'url' => 'authorizations',
+            'icon' => 'fas fa-fw fa-file-signature'
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
@@ -409,15 +414,15 @@ return [
             'submenu' => [
                 [
                     'text' => 'List',
-                    'route'  => 'users.index',
+                    'route' => 'users.index',
                 ],
                 [
-                    'text'=> 'Roles',
+                    'text' => 'Roles',
                     'route' => 'roles.index',
                 ],
                 [
-                    'text'=> 'Groups',
-                    'route'=> 'groups.index',
+                    'text' => 'Groups',
+                    'route' => 'groups.index',
                 ]
             ]
         ]
@@ -460,34 +465,34 @@ return [
 
     'plugins' => [
         'BootStrapDatePicker' => [
-          'active' => false,
-          'files' => [
-            [
-              'type' => 'js',
-              'asset' => 'false',
-              'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js',
-            ],
-            [
-              'type' => 'js',
-              'asset' => 'false',
-              'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.en-GB.min.js',
-            ],
-          ]
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => 'false',
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => 'false',
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.en-GB.min.js',
+                ],
+            ]
         ],
         'BootStrapSelect' => [
-          'active' => false,
-          'files' => [
-            [
-              'type' => 'js',
-              'asset' => 'false',
-              'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js',
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => 'false',
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css',
+                ],
             ],
-            [
-              'type' => 'css',
-              'asset' => false,
-              'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css',
-            ],
-          ],
         ],
         'BootStrapSwitch' => [
             'active' => false,
@@ -525,24 +530,24 @@ return [
             ],
         ],
         'DateRangePicker' => [
-          'active' => false,
-          'files' => [
-            [
-              'type' => 'js',
-              'asset' => true,
-              'location' => 'vendor/moment/moment.min.js',
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/moment/moment.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/daterangepicker/daterangepicker.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/daterangepicker/daterangepicker.css',
+                ],
             ],
-            [
-              'type' => 'js',
-              'asset' => true,
-              'location' => 'vendor/daterangepicker/daterangepicker.js',
-            ],
-            [
-              'type' => 'css',
-              'asset' => true,
-              'location' => 'vendor/daterangepicker/daterangepicker.css',
-            ],
-          ],
         ],
         'Select2' => [
             'active' => false,

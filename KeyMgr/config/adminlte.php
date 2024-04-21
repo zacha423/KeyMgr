@@ -253,13 +253,13 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'dashboard',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
     'password_reset_url' => 'forgot-password',
     'password_email_url' => 'forgot-password',
-    'profile_url' => false,
+    'profile_url' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -299,6 +299,21 @@ return [
         [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
+        ],
+        [
+            'topnav' => true,
+            'text' => 'menu',
+            'icon' => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'child 1',
+                    'url' => 'menu/child1',
+                ],
+                [
+                    'text' => 'child 2',
+                    'url' => 'menu/child2',
+                ],
+            ],
         ],
 
         // Sidebar items:

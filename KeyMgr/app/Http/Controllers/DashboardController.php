@@ -53,7 +53,7 @@ class DashboardController extends Controller
         
             $keyAuthorizations = KeyAuthorization::with(['keyHolder', 'keyRequestor', 'rooms'])
                 ->orderBy('created_at', 'desc')
-                ->take(15)
+                ->take(10)
                 ->get()
                 ->map(function ($authorization) {
                     return [

@@ -133,7 +133,7 @@
     <div class="col-md-4">
         <div class="row">
             <div class="col-md-12">
-                <div class="card card-info disabled">
+                <div class="card card-lightblue disabled">
                     <div class="card-header">
                         <h3 class="card-title">Key Statuses</h3>
                         <div class="card-tools">
@@ -151,7 +151,7 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="card card-warning disabled">
+                <div class="card card-teal disabled">
                     <div class="card-header">
                         <h3 class="card-title">Authorization Statuses</h3>
                         <div class="card-tools">

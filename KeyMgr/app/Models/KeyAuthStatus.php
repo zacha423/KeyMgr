@@ -5,6 +5,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class KeyAuthStatus extends Model
 {
@@ -12,4 +13,9 @@ class KeyAuthStatus extends Model
     'name',
     'description',
   ];
+
+  public function authorizations(): HasMany
+  {
+    return $this->hasMany(KeyAuthorization::class);
+  }
 }

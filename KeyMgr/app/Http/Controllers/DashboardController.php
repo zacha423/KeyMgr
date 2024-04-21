@@ -14,28 +14,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-
-        // if (Auth::user()->isElevated()) {
-            
-        //     $counts['keys'] = \App\Models\Key::count();
-        //     $counts['doors'] = \App\Models\Door::count();
-        //     // Building right now is a place-holder until key requests is finalized
-        //     // ----------------------------------------------------
-        //     $counts['key_requests'] = \App\Models\Building::count();
-        //     // ----------------------------------------------------
-        //     $counts['users'] = \App\Models\User::count();
-
-
-
-
-        //     return view('dashboard', [
-        //         'counts' => $counts,
-        //     ]);
-        // } else {
-        //     // Profile right now is a place-holder until view is finalized
-        //     return redirect('profile');
-        // }
-
         if (Auth::user()->isElevated()) {
             $counts['keys'] = Key::count();
             $counts['doors'] = \App\Models\Door::count();

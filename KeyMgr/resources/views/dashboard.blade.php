@@ -49,7 +49,7 @@
                 <p>Doors</p>
             </div>
             <div class="icon">
-                <!-- Icon for doors goes here -->
+                <i class="fas fa-fw fa-door-open"></i>
             </div>
             <a href="/doors" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
@@ -59,10 +59,10 @@
         <div class="small-box bg-warning">
             <div class="inner">
                 <h3>{{$counts['key_requests']}}</h3>
-                <p>Key Requests</p>
+                <p>Key Authorizations</p>
             </div>
             <div class="icon">
-                <!-- Icon for key requests goes here -->
+                <i class="fas fa-fw fa-file-signature"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
@@ -105,9 +105,9 @@
                 <tr>
                     <th>Authorization ID</th>
                     <th>Date</th>
-                    <th>Admin</th>
+                    <th>Requestor</th>
                     <th>Key</th>
-                    <th>User</th>
+                    <th>Holder</th>
                     <th>Location</th>
                 </tr>
             </thead>

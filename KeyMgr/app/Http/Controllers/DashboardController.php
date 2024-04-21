@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Key;
+use App\Models\KeyAuthorization;
 
 class DashboardController extends Controller
 {
@@ -17,7 +18,7 @@ class DashboardController extends Controller
         if (Auth::user()->isElevated()) {
             $counts['keys'] = Key::count();
             $counts['doors'] = \App\Models\Door::count();
-            $counts['key_requests'] = \App\Models\KeyAuthorization::count();
+            $counts['key_requests'] = KeyAuthorization::count();
             $counts['users'] = \App\Models\User::count();
         
             $counts1['unassigned'] = Key::keyStatus(config('constants.keys.statuses.unassigned.name'))->count();
@@ -25,8 +26,12 @@ class DashboardController extends Controller
             $counts1['lost'] = Key::keyStatus(config('constants.keys.statuses.lost.name'))->count();
             $counts1['broken'] = Key::keyStatus(config('constants.keys.statuses.broken.name'))->count();
             $counts1['requested'] = Key::keyStatus(config('constants.keys.statuses.requested.name'))->count();
+
+            $counts2['new'] = KeyAuthorization::authorizationStatus(config('constants.keyauthreq.statuses.new.name'))->count();
+            $counts2['noncomply'] = KeyAuthorization::authorizationStatus(config('constants.keyauthreq.statuses.noncomply.name'))->count();
+            $counts2['active'] = KeyAuthorization::authorizationStatus(config('constants.keyauthreq.statuses.active.name'))->count();
         
-            $pieData = [
+            $pieData1 = [
                 'labels' => ['Unassigned', 'Assigned', 'Lost', 'Broken', 'Requested'],
                 'datasets' => [
                     [
@@ -35,8 +40,18 @@ class DashboardController extends Controller
                     ]
                 ]
             ];
+
+            $pieData2 = [
+                'labels' => ['New', 'Non-Complient', 'Active'],
+                'datasets' => [
+                    [
+                        'data' => [$counts2['new'], $counts2['noncomply'], $counts2['active']],
+                        'backgroundColor' => ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
+                    ]
+                ]
+            ];
         
-            $keyAuthorizations = \App\Models\KeyAuthorization::with(['keyHolder', 'keyRequestor', 'rooms'])
+            $keyAuthorizations = KeyAuthorization::with(['keyHolder', 'keyRequestor', 'rooms'])
                 ->orderBy('created_at', 'desc')
                 ->take(15)
                 ->get()
@@ -54,7 +69,8 @@ class DashboardController extends Controller
         
             return view('dashboard', [
                 'counts' => $counts,
-                'pieData' => $pieData,
+                'pieData1' => $pieData1,
+                'pieData2' => $pieData2,
                 'keyAuthorizations' => $keyAuthorizations,
             ]);
     

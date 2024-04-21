@@ -149,7 +149,27 @@
             </div>
         </div>
         <div class="card-body">
-            <canvas id="pieChart" style="min-height: 250px; height: 450px; max-height: 250px; max-width: 100%; display: block; width: 500px;" width="1000" height="800" class="chartjs-render-monitor"></canvas>
+            <canvas id="pieChart1" style="min-height: 250px; height: 450px; max-height: 250px; max-width: 100%; display: block; width: 500px;" width="1000" height="800" class="chartjs-render-monitor"></canvas>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="col-md-4">
+    <div class="card card-danger">
+        <div class="card-header">
+            <h3 class="card-title">Authorization Statuses</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <canvas id="pieChart2" style="min-height: 250px; height: 450px; max-height: 250px; max-width: 100%; display: block; width: 500px;" width="1000" height="800" class="chartjs-render-monitor"></canvas>
         </div>
     </div>
 </div>
@@ -171,8 +191,10 @@
             //-------------
             // Get context with jQuery - using jQuery's .get() method.
             
-            var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-            var pieData = @json($pieData);
+            var pieChartCanvas1 = $('#pieChart1').get(0).getContext('2d')
+            var pieChartCanvas2 = $('#pieChart2').get(0).getContext('2d')
+            var pieData1 = @json($pieData1);
+            var pieData2 = @json($pieData2);
             var pieOptions     = {
             maintainAspectRatio : false,
             responsive : true,
@@ -180,9 +202,15 @@
 
             //Create pie or donut chart
             // You can switch between pie and donut using the method below.
-            new Chart(pieChartCanvas, {
+            new Chart(pieChartCanvas1, {
             type: 'pie',
-            data: pieData,
+            data: pieData1,
+            options: pieOptions
+            })
+
+            new Chart(pieChartCanvas2, {
+            type: 'pie',
+            data: pieData2,
             options: pieOptions
             })
         })

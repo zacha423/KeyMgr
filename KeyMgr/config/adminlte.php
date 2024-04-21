@@ -134,7 +134,7 @@ return [
     'usermenu_header_class' => 'bg-primary',
     'usermenu_image' => false,
     'usermenu_desc' => false,
-    'usermenu_profile_url' => false,
+    'usermenu_profile_url' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -336,12 +336,6 @@ return [
             'text' => 'Authorizations',
             'url' => 'authorizations',
             'icon' => 'fas fa-fw fa-file-signature'
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url' => 'profile',
-            'icon' => 'fas fa-fw fa-user',
         ],
         ['header' => 'SETTINGS'],
         [

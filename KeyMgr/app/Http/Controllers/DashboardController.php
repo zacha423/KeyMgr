@@ -46,7 +46,7 @@ class DashboardController extends Controller
                     'admin' => $authorization->keyRequestor()->first()->getFullname(),
                     'key' => $authorization->key->id ?? 'N/A',
                     'user' => $authorization->keyHolder()->first()->getFullname(),
-                    'location' => $authorization->rooms->pluck('name') ?? 'N/A'
+                    'location' => $authorization->rooms->pluck('name')->join(', ') ?? 'N/A'
                 ];
             });
 

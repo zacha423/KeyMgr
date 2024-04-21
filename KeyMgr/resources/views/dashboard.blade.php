@@ -151,7 +151,7 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="card card-teal disabled">
+                <div class="card card-olive disabled">
                     <div class="card-header">
                         <h3 class="card-title">Authorization Statuses</h3>
                         <div class="card-tools">

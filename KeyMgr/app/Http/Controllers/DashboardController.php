@@ -17,7 +17,7 @@ class DashboardController extends Controller
     {
         if (Auth::user()->isElevated()) {
             $counts['keys'] = Key::count();
-            $counts['doors'] = \App\Models\Door::count();
+            $counts['locks'] = \App\Models\Lock::count();
             $counts['key_requests'] = KeyAuthorization::count();
             $counts['users'] = \App\Models\User::count();
         

@@ -45,13 +45,13 @@
     <div class="col-lg-3 col-6">
         <div class="small-box bg-success">
             <div class="inner">
-                <h3>{{$counts['doors']}}</h3>
-                <p>Doors</p>
+                <h3>{{$counts['locks']}}</h3>
+                <p>Locks</p>
             </div>
             <div class="icon">
                 <i class="fas fa-fw fa-door-open"></i>
             </div>
-            <a href="/doors" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="/door" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
 
@@ -64,7 +64,7 @@
             <div class="icon">
                 <i class="fas fa-fw fa-file-signature"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="/authorizations" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
 

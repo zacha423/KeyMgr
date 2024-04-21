@@ -39,10 +39,15 @@ class KeyAuthorization extends Model
   {
     return $this->belongsToMany(Key::class)->withPivot('due_date');
   }
+
+  public function status(): BelongsTo
+  {
+    return $this->belongsTo(KeyAuthStatus::class);
+  }
   public function scopeAuthorizationStatus($query, $statusName)
   {
-      return $query->whereHas('status', function ($q) use ($statusName) {
-          $q->where('name', $statusName);
-      });
+    return $query->whereHas('status', function ($q) use ($statusName) {
+      $q->where('name', $statusName);
+    });
   }
 }

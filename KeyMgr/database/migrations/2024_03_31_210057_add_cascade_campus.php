@@ -23,6 +23,9 @@ return new class extends Migration {
    */
   public function down(): void
   {
-    //
+    Schema::table('buildings', function(Blueprint $table) {
+      $table->dropForeign(['campus_id']);
+      $table->foreign('campus_id')->references('id')->on('campuses');
+    });
   }
 };

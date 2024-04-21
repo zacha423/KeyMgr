@@ -83,11 +83,6 @@ class UserGroupController extends Controller
     UserGroup::find($validated['parentGroup'])->children()->save(
       new UserGroup(['name' => $validated['groupName']])
     );
-
-    // return view ('users.usergroup', [
-    //   'group' => $group->toArray(),
-    //   'groupJSON' => $group->toJson(),
-    // ]);
     return redirect('/groups');
   }
 

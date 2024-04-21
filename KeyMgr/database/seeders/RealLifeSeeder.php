@@ -52,7 +52,6 @@ class RealLifeSeeder extends Seeder
       ['name' => 'Bio-Informatics'],
     ]));
 
-    
     $ITAdmin = User::create(
       [
         'firstName' => 'UIS',
@@ -88,22 +87,22 @@ class RealLifeSeeder extends Seeder
     $FacilitiesKeyIssuer->roles()->save(UserRole::where(['name' => config('constants.roles.issuer')])->first());
 
     $MailClerk = User::create([
-      'firstName' => 'Mail', 
-      'lastName' => 'Clerk', 
-      'username' => 'clerk', 
-      'email' => 'mailclerk' . $emailTLD, 
+      'firstName' => 'Mail',
+      'lastName' => 'Clerk',
+      'username' => 'clerk',
+      'email' => 'mailclerk' . $emailTLD,
       'password' => $testAcctPassword,
     ]);
     $MailClerk->groups()->save(UserGroup::where(['name' => 'Mail Services'])->first());
     $MailClerk->roles()->saveMany([
-      UserRole::where(['name' => config('constants.roles.issuer')])->first(), 
+      UserRole::where(['name' => config('constants.roles.issuer')])->first(),
       UserRole::where(['name' => config('constants.roles.locksmith')])->first(),
     ]);
 
     $CASDirector = User::create([
       'firstName' => 'CAS',
       'lastName' => 'Director',
-      'username'=>'casdirector',
+      'username' => 'casdirector',
       'email' => 'cas' . $emailTLD,
       'password' => $testAcctPassword,
     ]);
@@ -173,15 +172,15 @@ class RealLifeSeeder extends Seeder
     ]);
 
     $PacUFG = AddressWrapper::build([
-      'country' => 'United States of America', 
-      'state' => 'Oregon', 
-      'city' => 'Forest Grove', 
-      'postalCode' => 97116, 
+      'country' => 'United States of America',
+      'state' => 'Oregon',
+      'city' => 'Forest Grove',
+      'postalCode' => 97116,
       'streetAddress' => '2043 College Way',
     ]);
 
-    ($FGUGCampus = new Campus ([
-      'name' => 'Forest Grove', 
+    ($FGUGCampus = new Campus([
+      'name' => 'Forest Grove',
       'address_id' => $PacUFG->id
     ]))->save();
 
@@ -192,7 +191,7 @@ class RealLifeSeeder extends Seeder
       'postalCode' => 97116,
       'streetAddress' => '222 SE 8th Ave',
     ]);
-    ($HPCampus = new Campus ([
+    ($HPCampus = new Campus([
       'name' => 'College of Health Professions',
       'address_id' => $PacUHills->id,
     ]))->save();
@@ -216,27 +215,41 @@ class RealLifeSeeder extends Seeder
       'postalCode' => 97113,
       'streetAddress' => '1300 S Kodiak Circle',
     ]);
-    ($CocKodiakCampus = new Campus ([
+    ($CocKodiakCampus = new Campus([
       'name' => 'Cornelius Public Works',
       'address_id' => $CoCKodiak->id,
     ]))->save();
-    
+
     ($CoCCityHallBuilding = new Building([
       'name' => 'Cornelius City Hall',
       'campus_id' => $CoCCityCenter->id,
       'address_id' => $CoCCityHall->id,
     ]))->save();
 
+
     ($CoCLibrary = new Building([
       'name' => 'Cornelius Public Library',
       'campus_id' => $CoCCityCenter->id,
-      'address_id' => AddressWrapper::build(['country' => 'United States of America','state'=>'Oregon','city'=>'Cornelius','postalCode' => 97113,'streetAddress'=>'1370 N Adair St'])->id,
+      'address_id' => AddressWrapper::build([
+        'country' => 'United States of America',
+        'state' => 'Oregon',
+        'city' => 'Cornelius',
+        'postalCode' => 97113,
+        'streetAddress' => '1370 N Adair St'
+      ])->id,
     ]))->save();
     ($CoCPublicSafety = new Building([
       'name' => 'Public Safety',
       'campus_id' => $CoCCityCenter->id,
-      'address_id' => AddressWrapper::build(['country' => 'United States of America', 'state'=>'Oregon','city'=>'Cornelius','postalCode'=>97113,'streetAddress'=>'1311 N Barlow St'])->id,
+      'address_id' => AddressWrapper::build([
+        'country' => 'United States of America',
+        'state' => 'Oregon',
+        'city' => 'Cornelius',
+        'postalCode' => 97113,
+        'streetAddress' => '1311 N Barlow St'
+      ])->id,
     ]))->save();
+
 
 
     // Add some buildings
@@ -248,41 +261,87 @@ class RealLifeSeeder extends Seeder
     ($PriceHall = new Building([
       'name' => 'Price Hall',
       'campus_id' => $FGUGCampus->id,
-      'address_id' => AddressWrapper::build(['country' => 'United States of America', 'state'=>'Oregon','city'=>'Cornelius','postalCode'=>97113,
-      'streetAddress'=>'2150 Cedar Street'])->id,
+      'address_id' => AddressWrapper::build([
+        'country' => 'United States of America',
+        'state' => 'Oregon',
+        'city' => 'Cornelius',
+        'postalCode' => 97113,
+        'streetAddress' => '2150 Cedar Street'
+      ])->id,
     ]))->save();
     ($Strain = new Building([
       'name' => 'Strain Science Center',
       'campus_id' => $FGUGCampus->id,
-      'address_id' => AddressWrapper::build(['country' => 'United States of America', 'state'=>'Oregon','city'=>'Cornelius','postalCode'=>97113,
-      'streetAddress'=>'2172 Cedar Street'])->id,
+      'address_id' => AddressWrapper::build([
+        'country' => 'United States of America',
+        'state' => 'Oregon',
+        'city' => 'Cornelius',
+        'postalCode' => 97113,
+        'streetAddress' => '2172 Cedar Street'
+      ])->id,
     ]))->save();
     ($AuCoin = new Building([
       'name' => 'AuCoin Hall',
       'campus_id' => $FGUGCampus->id,
-      'address_id' => AddressWrapper::build(['country' => 'United States of America', 'state'=>'Oregon','city'=>'Cornelius','postalCode'=>97113,
-      'streetAddress'=>'2125 College Way'])->id,
+      'address_id' => AddressWrapper::build([
+        'country' => 'United States of America',
+        'state' => 'Oregon',
+        'city' => 'Cornelius',
+        'postalCode' => 97113,
+        'streetAddress' => '2125 College Way'
+      ])->id,
     ]))->save();
     ($Creighton = new Building([
       'name' => 'Creighton Hall',
       'campus_id' => $HPCampus->id,
-      'address_id' => AddressWrapper::build(['country' => 'United States of America', 'state'=>'Oregon','city'=>'Cornelius','postalCode'=>97113,
-      'streetAddress'=>'222 SE 8th Ave'])->id,
+      'address_id' => AddressWrapper::build([
+        'country' => 'United States of America',
+        'state' => 'Oregon',
+        'city' => 'Cornelius',
+        'postalCode' => 97113,
+        'streetAddress' => '222 SE 8th Ave'
+      ])->id,
     ]))->save();
     ($HPC2 = new Building([
       'name' => 'Health Professions Campus 2',
       'campus_id' => $HPCampus->id,
-      'address_id' => AddressWrapper::build(['country' => 'United States of America', 'state'=>'Oregon','city'=>'Cornelius','postalCode'=>97113,
-      'streetAddress'=>'190 SE 8th Ave'])->id,
+      'address_id' => AddressWrapper::build([
+        'country' => 'United States of America',
+        'state' => 'Oregon',
+        'city' => 'Cornelius',
+        'postalCode' => 97113,
+        'streetAddress' => '190 SE 8th Ave'
+      ])->id,
     ]))->save();
+
+    $CoCCityHallBuilding->rooms()->saveMany([
+      new Room(['number' => 'Council Chambers']),
+      new Room(['number' => 'Lobby']),
+    ]);
+
+    $CoCPublicSafety->rooms()->saveMany([
+      new Room(['number' => 'Fire Bay']),
+      new Room(['number' => '2A']),
+      new Room(['number' => 'Break Room']),
+    ]);
+
+    $CoCLibrary->rooms()->saveMany([
+      new Room(['number' => 'Westerling Board Room']),
+      new Room(['number' => "Walter's Gallery"]),
+      new Room(['number' => "Walter's Community Room"]),
+      new Room(['number' => 'Study Room 1']),
+      new Room(['number' => 'Study Room 2']),
+      new Room(['number' => 'Study Room 3']),
+      new Room(['number' => 'Makerspace']),
+    ]);
 
     // Add rooms to the buildings
     $MarshHall->rooms()->saveMany([
-      new Room ([
+      new Room([
         'number' => 'LL6',
         'description' => 'TIC Helpdesk'
       ]),
-      new Room ([
+      new Room([
         'number' => '216',
         'description' => 'Taylor Auditorium',
       ]),
@@ -298,7 +357,7 @@ class RealLifeSeeder extends Seeder
     ]);
 
     $Strain->rooms()->saveMany([
-      new Room ([
+      new Room([
         'number' => 222,
         'description' => 'CS Lab',
       ]),
@@ -329,10 +388,8 @@ class RealLifeSeeder extends Seeder
     ]);
 
     // Attach a blank door to each of the created rooms
-    foreach([$MarshHall, $PriceHall, $Strain, $AuCoin] as $building)
-    {
-      foreach ($building->rooms()->get() as $room)
-      {
+    foreach ([$MarshHall, $PriceHall, $Strain, $AuCoin] as $building) {
+      foreach ($building->rooms()->get() as $room) {
         $door = new Door();
         $room->doors()->save($door);
         $lock = Lock::factory()->Create();
@@ -340,7 +397,5 @@ class RealLifeSeeder extends Seeder
         $door->locks()->save($lock);
       }
     }
-
-
   }
 }

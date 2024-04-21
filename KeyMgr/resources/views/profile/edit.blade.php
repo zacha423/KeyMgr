@@ -25,7 +25,8 @@ if($user->isElevated()){
             <x-adminlte-card theme="info" theme-mode="outline" title="Account Information">
                 <x-adminlte-input label="Account ID" name="accountID" :value="$user->id" disabled/>
                 <x-adminlte-input label="Username" name="username" :value="$user->username" disabled/>
-                <x-adminlte-button label="Update Password" data-toggle="modal"/>
+                <x-adminlte-button label="Update Password" data-toggle="modal" data-target="#passwordModal"/>
+                @include('profile.modals.updatePasswordForm')
             </x-adminlte-card >
 
             @if(!empty($groups))

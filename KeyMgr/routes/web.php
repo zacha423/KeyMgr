@@ -11,6 +11,8 @@ use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CampusController;
+use App\Http\Controllers\HolderController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,9 +30,12 @@ Route::get('/', function () {
   return redirect('/login');
 });
 
-Route::get('/dashboard', function () {
-  return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     $user = auth()->user();
+//     View::share('user', $user);
+
+//     return view('holder');
+// })->middleware(['auth', 'verified'])->name('holder');
 
 Route::get('/index', function () {
   return view('index');
@@ -51,6 +56,9 @@ Route::middleware('auth')->group(function () {
   Route::post('roles/groups', [UserRoleController::class, 'manageGroups'])->name('roles.groups');
   Route::get('rooms', [LockController::class, 'getRooms'])->name('getRooms');
   Route::post('/keyauth/bulk', [KeyAuthorizationController::class, 'bulkAssign'])->name('keys.massassign');
+  Route::get('/dashboard', [HolderController::class, 'dashboard'])->name('dashboard');
+
+
   
   $resourceControllers = [
     'groups' => UserGroupController::class,

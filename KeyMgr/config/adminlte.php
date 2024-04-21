@@ -15,7 +15,7 @@ return [
     */
 
     'title' => 'KeyMgr',
-    'title_prefix' => '',
+    'title_prefix' => 'KeyMgr | ',
     'title_postfix' => '',
 
     /*
@@ -64,11 +64,11 @@ return [
     */
 
     'logo' => '<b>KeyMgr</b>',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img' => 'vendor/adminlte/dist/img/KeyMgrLogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Admin Logo',
+    'logo_img_alt' => 'KeyMgr Logo',
 
     /*
     |--------------------------------------------------------------------------
@@ -86,7 +86,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/KeyMgrLogo.png',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -109,7 +109,7 @@ return [
     'preloader' => [
         'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/KeyMgrLogo.png',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
@@ -291,11 +291,7 @@ return [
 
     'menu' => [
         // Navbar items:
-        [
-            'type' => 'navbar-search',
-            'text' => 'search',
-            'topnav_right' => true,
-        ],
+
         [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
@@ -306,7 +302,12 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
-        ['header' => 'RESOURCES'],
+        [
+            'text' => 'Dashboard',
+            'url' => '/',
+            'icon' => 'fas fa-tachometer-alt',
+        ],
+        ['header' => 'RESOURCES'],   
         [
             'text' => 'Buildings',
             'url' => 'building',
@@ -527,6 +528,7 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
+                    
                 ],
             ],
         ],

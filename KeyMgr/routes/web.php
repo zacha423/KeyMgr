@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BuildingController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KeyAuthorizationController;
 use App\Http\Controllers\LockController;
 use App\Http\Controllers\KeyController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CampusController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,14 +25,24 @@ use App\Http\Controllers\CampusController;
 |
 */
 
+Route::resources ([
+  'groups' => UserGroupController::class,
+  'roles' => UserRoleController::class,
+  'users' => UserController::class,
+]);
 
-Route::get('/', function () {
-  return redirect('/login');
-});
+// Route::get('/', function () {
+//   return redirect('/login');
+// });
 
 Route::get('/dashboard', function () {
   return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth'])->get(
+  '/',
+  [DashboardController::class, 'index']
+)->name('dashboard');
 
 Route::get('/index', function () {
   return view('index');

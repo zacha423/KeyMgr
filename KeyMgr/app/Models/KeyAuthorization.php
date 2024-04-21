@@ -42,7 +42,7 @@ class KeyAuthorization extends Model
 
   public function status(): BelongsTo
   {
-    return $this->belongsTo(KeyAuthStatus::class);
+    return $this->belongsTo(KeyAuthStatus::class, 'key_auth_status_id');
   }
   public function scopeAuthorizationStatus($query, $statusName)
   {

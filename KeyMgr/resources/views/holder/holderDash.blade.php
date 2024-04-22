@@ -16,33 +16,9 @@
 				'Return Status',
     ];
 
-    $processedKeyDates = [];
-    foreach ($keysData as $row) {
-        $dueDate = Carbon::parse($row[1]);
-        //$daysUntilDue = (Carbon::now()->diffInDays($dueDate, false));
-        $daysUntilDue = abs($dueDate->diffInDays(Carbon::now(), false));
-        var_dump($daysUntilDue);
-        if ($daysUntilDue < 0) {
-            $status = 'Overdue';
-            $colorClass = 'text-danger';
-        } elseif ($daysUntilDue == 0) {
-            $status = 'Due Today';
-            $colorClass = 'text-warning';
-        } elseif ($daysUntilDue <= 7) {
-            $status = 'Due Soon';
-            $colorClass = 'text-warning';
-        } else {
-            $status = 'Upcoming';
-            $colorClass = 'text-success';
-        }
-
-        $row[] = '<span class="' . $colorClass . '">' . $status . '</span>';
-        
-        $processedKeyDates[] = $row;
-    }
 
     $config = [
-        'data' => $processedKeyDates,
+        'data' => $keysData,
         'order' => [[1, 'asc']],
         'columns' => [
             null, 
@@ -62,7 +38,7 @@
 
             <div class="inner">
                 <h3>{{$counts['keys']}}</h3>
-                <p>Keys</p>
+                <p>Total Keys</p>
             </div>
             <div class="icon">
                 <i class="fas fa-fw fa-key"></i>
@@ -78,7 +54,7 @@
 
 				<div class="inner">
 						<h3>{{$counts['upcoming']}}</h3>
-						<p>Keys</p>
+						<p>Keys Due in 7 Days</p>
 				</div>
 				<div class="icon">
 						<i class="fas fa-fw fa-key"></i>
@@ -90,11 +66,11 @@
 
 		<div class="col-lg-3 col-6">
 
-		<div class="small-box bg-info">
+		<div class="small-box bg-success">
 
 				<div class="inner">
 						<h3>{{$counts['dueSoon']}}</h3>
-						<p>Keys</p>
+						<p>Keys Due in 30 Days</p>
 				</div>
 				<div class="icon">
 						<i class="fas fa-fw fa-key"></i>
@@ -106,11 +82,11 @@
 
 		<div class="col-lg-3 col-6">
 
-<div class="small-box bg-info">
+<div class="small-box bg-danger">
 
 		<div class="inner">
 				<h3>{{$counts['overdue']}}</h3>
-				<p>Keys</p>
+				<p>Overdue Keys</p>
 		</div>
 		<div class="icon">
 				<i class="fas fa-fw fa-key"></i>

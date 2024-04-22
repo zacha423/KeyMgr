@@ -327,6 +327,15 @@ return [
             'url' => 'keys',
             'icon' => 'fas fa-fw fa-key',
         ],
+<<<<<<< Updated upstream
+=======
+        [
+            'text' => 'Locks',
+            'url' => 'locks',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
+        ['header' => 'account_settings'],
+>>>>>>> Stashed changes
         [
             'text' => 'Locks',
             'url' => 'locks',
@@ -343,6 +352,10 @@ return [
             'url' => 'profile',
             'icon' => 'fas fa-fw fa-user',
         ],
+<<<<<<< Updated upstream
+=======
+        
+>>>>>>> Stashed changes
         ['header' => 'SETTINGS'],
         [
             'text' => 'User Settings',

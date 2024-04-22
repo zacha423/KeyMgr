@@ -19,9 +19,10 @@
     $processedKeyDates = [];
     foreach ($keysData as $row) {
         $dueDate = Carbon::parse($row[1]);
-        $daysUntilDue = Carbon::now()->diffInDays($dueDate, false);
-        
-				if ($daysUntilDue < 0) {
+        //$daysUntilDue = (Carbon::now()->diffInDays($dueDate, false));
+        $daysUntilDue = abs($dueDate->diffInDays(Carbon::now(), false));
+        var_dump($daysUntilDue);
+        if ($daysUntilDue < 0) {
             $status = 'Overdue';
             $colorClass = 'text-danger';
         } elseif ($daysUntilDue == 0) {

@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @author Maximus Hudson
+ * @author Zachary Abela-Gale <abel1325@pacificu.edu>
+ */
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -15,9 +18,9 @@ class HolderController extends Controller
 
         $keyAuthorizations = $user->authorizations;
 
-        if ($keyAuthorizations->isEmpty()) {
-            return view('holder.holderDash')->with('error', 'No keys found for this user.');
-        }
+        // if ($keyAuthorizations->isEmpty()) {
+        //     return view('holder.holderDash')->with('error', 'No keys found for this user.');
+        // }
 
         $uniqueKeys = [];
 
@@ -25,28 +28,36 @@ class HolderController extends Controller
             $keys = $keyAuthorization->issuedKeys()->get();
             foreach ($keys as $key) {
                 $uniqueKeys[$key->id] = $key;
+                $test = $key->pivot->due_date;
             }
         }
 
-        $counts['keys'] = count($uniqueKeys);
-        
-				$today = Carbon::today();
+        $today = Carbon::today();
+        $counts['keys'] = $counts['upcoming'] = $counts['dueSoon'] = $counts['overdue'] = 0;
 
-				$counts['upcoming'] = $keyAuthorizations->filter(function ($key) use ($today) {
-					$dueDate = Carbon::parse($key->due_date);
-					return $dueDate->isAfter($today);
-			})->count();
-			
+        foreach ($uniqueKeys as $id => $key) {
+            $counts['keys']++;
+            $dueDate = Carbon::parse($key->pivot->due_date);
+            if (abs($dueDate->diffInDays($today, false)) <= 7 && $dueDate->isAfter($today)) {
+                $counts['dueSoon']++;
+            }
+            else if (abs($dueDate->diffInDays($today, false)) <= 20 && $dueDate->isAfter($today)) {
+                $counts['upcoming']++;
+            }
+            else if($dueDate->isPast() && !($dueDate->isToday())) {
+                $counts['overdue']++;
+            }
+        }
 
-        $counts['dueSoon'] = $keyAuthorizations->filter(function ($key) use ($today) {
-            $dueDate = Carbon::parse($key->due_date);
-            return $dueDate->diffInDays($today, false) <= 7 && $dueDate->isAfter($today);
-        })->count();
+        // $counts['dueSoon'] = $keyAuthorizations->filter(function ($key) use ($today) {
+        //     $dueDate = Carbon::parse($key->due_date);
+        //     return $dueDate->diffInDays($today, false) <= 7 && $dueDate->isAfter($today);
+        // })->count();
 
-        $counts['overdue'] = $keyAuthorizations->filter(function ($key) use ($today) {
-            $dueDate = Carbon::parse($key->due_date);
-            return $dueDate->isPast() && !$dueDate->isToday();
-        })->count();
+        // $counts['overdue'] = $keyAuthorizations->filter(function ($key) use ($today) {
+        //     $dueDate = Carbon::parse($key->due_date);
+        //     return $dueDate->isPast() && !$dueDate->isToday();
+        // })->count();
 
         $keysData = [];
 

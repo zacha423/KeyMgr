@@ -51,7 +51,74 @@
         ],
     ];
 @endphp
+
 @section('content')
+
+<div class="row">
+    <div class="col-lg-3 col-6">
+
+        <div class="small-box bg-info">
+
+            <div class="inner">
+                <h3>{{$counts['keys']}}</h3>
+                <p>Keys</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-fw fa-key"></i>
+            </div>
+            <a href="/keys" class="small-box-footer">More info <i class="fas fa-arrow-circle-right" disabled></i></a>
+        </div>
+
+    </div>
+
+		<div class="col-lg-3 col-6">
+
+		<div class="small-box bg-warning">
+
+				<div class="inner">
+						<h3>{{$counts['upcoming']}}</h3>
+						<p>Keys</p>
+				</div>
+				<div class="icon">
+						<i class="fas fa-fw fa-key"></i>
+				</div>
+				<a href="/keys" class="small-box-footer">More info <i class="fas fa-arrow-circle-right" disabled></i></a>
+		</div>
+
+		</div>
+
+		<div class="col-lg-3 col-6">
+
+		<div class="small-box bg-info">
+
+				<div class="inner">
+						<h3>{{$counts['dueSoon']}}</h3>
+						<p>Keys</p>
+				</div>
+				<div class="icon">
+						<i class="fas fa-fw fa-key"></i>
+				</div>
+				<a href="/keys" class="small-box-footer">More info <i class="fas fa-arrow-circle-right" disabled></i></a>
+		</div>
+
+		</div>
+
+		<div class="col-lg-3 col-6">
+
+<div class="small-box bg-info">
+
+		<div class="inner">
+				<h3>{{$counts['overdue']}}</h3>
+				<p>Keys</p>
+		</div>
+		<div class="icon">
+				<i class="fas fa-fw fa-key"></i>
+		</div>
+		<a href="/keys" class="small-box-footer">More info <i class="fas fa-arrow-circle-right" disabled></i></a>
+</div>
+
+</div>
+
 	<x-adminlte-card title="Users Keys" theme="info" icon="fas fa-key" collapsible>
 		<x-adminlte-datatable id="upcomingDueDatesTable" :heads="$heads" :config="$config" bordered compressed hoverable>
 				@foreach ($config['data'] as $row)

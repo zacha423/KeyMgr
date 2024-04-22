@@ -296,21 +296,6 @@ return [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
         ],
-        [
-            'topnav' => true,
-            'text' => 'menu',
-            'icon' => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'child 1',
-                    'url' => 'menu/child1',
-                ],
-                [
-                    'text' => 'child 2',
-                    'url' => 'menu/child2',
-                ],
-            ],
-        ],
 
         // Sidebar items:
         [

@@ -27,17 +27,6 @@ use App\Http\Controllers\HolderController;
 |
 */
 
-// Route::get('/', function () {
-//   return redirect('/login');
-// });
-
-// Route::get('/dashboard', function () {
-//     $user = auth()->user();
-//     View::share('user', $user);
-
-//     return view('holder');
-// })->middleware(['auth', 'verified'])->name('holder');
-
 Route::middleware(['auth'])->get(
   '/', [HolderController::class, 'dashboard']
 )->name('dashboard');
@@ -64,8 +53,6 @@ Route::middleware('auth')->group(function () {
   Route::post('/keyauth/bulk', [KeyAuthorizationController::class, 'bulkAssign'])->name('keys.massassign');
   Route::get('/dashboard', [HolderController::class, 'dashboard'])->name('dashboard');
 
-
-  
   $resourceControllers = [
     'groups' => UserGroupController::class,
     'roles' => UserRoleController::class,
@@ -80,9 +67,6 @@ Route::middleware('auth')->group(function () {
   foreach ($resourceControllers as $name => $controller) {
     Route::resource($name, $controller)->except(['create']);
   }
-
 });
-
-
 
 require __DIR__ . '/auth.php';

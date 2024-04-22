@@ -27,12 +27,6 @@ use App\Http\Controllers\HolderController;
 |
 */
 
-Route::resources ([
-  'groups' => UserGroupController::class,
-  'roles' => UserRoleController::class,
-  'users' => UserController::class,
-]);
-
 // Route::get('/', function () {
 //   return redirect('/login');
 // });
@@ -45,10 +39,10 @@ Route::resources ([
 // })->middleware(['auth', 'verified'])->name('holder');
 
 Route::middleware(['auth'])->get(
-  '/',
-  [DashboardController::class, 'index']
+  '/', [HolderController::class, 'dashboard']
 )->name('dashboard');
 
+Route::middleware(['auth'])->get('/admin', [DashboardController::class, 'index'])->name('adminDash');
 Route::get('/index', function () {
   return view('index');
 })->middleware(['auth', 'verified'])->name('index');

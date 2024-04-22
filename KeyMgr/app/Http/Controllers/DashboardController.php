@@ -75,7 +75,7 @@ class DashboardController extends Controller
             ]);
     
         } else {
-            return redirect('profile');
+            return redirect('dashboard');
         }
 
     }

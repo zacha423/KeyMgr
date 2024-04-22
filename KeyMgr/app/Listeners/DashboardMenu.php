@@ -25,6 +25,7 @@ class DashboardMenu
    */
   public function handle(BuildingMenu $event): void
   {
+    // Add button to top nav if route is the key holder dashboard, and the user is admin.
     if (Route::currentRouteName() === 'dashboard' && Auth::user()->isElevated()) {
       $event->menu->add([
         'topnav' => true,
@@ -32,6 +33,7 @@ class DashboardMenu
         'url' => '/admin',
       ], );
     }
+    // Add button to top nav if route is the admin dashboard.
     else if (Route::currentRouteName() === 'adminDash') {
       $event->menu->add([
         'topnav' => true,

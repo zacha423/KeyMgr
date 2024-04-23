@@ -2,7 +2,7 @@
   <form id="modalForm" action="/groups/roles" method="post">
     @csrf
   <x-adminlte-modal :title="$title" id="roleModal" theme="info" v-centered>
-    <x-adminlte-info-box title="Selected Users" text="a" icon-theme="info" icon="fas fa-user"/>
+    <x-adminlte-info-box title="Selected Roles" text="a" icon-theme="info" icon="fas fa-user"/>
   <x-adminlte-input-switch id="addMode" name="addMode" label="Operation" :config="[
           'onColor' => 'green',
           'offColor' => 'red',

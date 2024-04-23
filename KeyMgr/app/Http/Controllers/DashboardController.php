@@ -78,17 +78,7 @@ class DashboardController extends Controller
                     ];
                 });
     
-        
-            return view('dashboard', [
-                'counts' => $counts,
-                'pieData1' => $pieData1,
-                'pieData2' => $pieData2,
-                'keyAuthorizations' => $keyAuthorizations,
-            ]);
-    
-        } else {
-            return redirect('profile');
-        }
+
 
 
       return view('dashboard', [

@@ -48,11 +48,7 @@ class UserRoleController extends Controller
       array_push($roles, $roleData);
     }
 
-    
-    foreach ($allRoles as $role)
-    {
-      $rolesArray[$role->id] = $role->name;
-    }
+    $rolesArray = UserGroup::all()->pluck('name', 'id')->toArray();
 
     return view('users.userrole', [
       'roles' => $roles,

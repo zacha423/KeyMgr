@@ -38,7 +38,7 @@ $baseConfig = [
           <i class="fas fa-door-closed"></i> {{-- fa-building --}}
         </div>
       </x-slot>
-      <x-adminlte-options :options="$options" :selected="$selected"/>
+      <x-adminlte-options :options="[]" :selected="$selected"/>
     </x-adminlte-select-bs>
   </div>
   <script>

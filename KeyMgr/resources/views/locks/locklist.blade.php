@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 @extends('adminlte::page')
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -28,74 +27,9 @@ $config = [
 ];
 @endphp
 
-@section('content_header')
-    <h1>List of Locks</h1>
-@stop
 
-@section('plugins.Datatables', true)
-@section("content")
-<div class="card">
-    <div class="card-body">
-        <x-adminlte-datatable id="lock-table" :heads="$heads" bordered compressed hoverable>
-            @foreach($config['data'] as $row)
-                <tr>
-                    @foreach($row as $cell)
-                        <td>{!! $cell !!}</td>
-                    @endforeach
-                </tr>
-            @endforeach
-        </x-adminlte-datatable>
-    </div>
-</div>
-<script>
-    $(document).ready(function() {
-        $('.btn-delete').click(function(e) {
-            e.preventDefault();
-            const lockId = $(this).data('key-id');
-            if (confirm('Are you sure you want to delete this lock?')) {
-                $.ajax({
-                    url: '/locks/' + lockId,
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        _method: 'DELETE'
-                    },
-                    success: function(response) {
-                        location.reload();
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
-            }
-        });
-    });
-</script>
-=======
-@extends("adminlte::page")
 
-{{-- Setup data for datatables --}}
-@php
-    $heads = [
-        'ID',
-        'Number of Pins',
-        'Upper Pin Lengths',
-        'Lower Pin Lengths',
-        'Master Pin Lengths',
-        ['label' => 'Actions', 'no-export' => false, 'width' => 5],
-    ];
 
-    $config = [
-        'data' => $locks,
-        'order' => [[1, 'asc']],
-        'columns' => [
-            null,
-            null,
-            null,
-            ['orderable' => false],
-        ],    
-    ];
-@endphp
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
@@ -140,33 +74,28 @@ $config = [
             </tr>
         @endforeach
     </x-adminlte-datatable>
-
     <script>
-        $(document).ready(function() {
-
-            // Handle key deletion
-            $('.btn-delete').click(function(e) {
-                e.preventDefault();
-                const keyId = $(this).data('key-id');
-                if (confirm('Are you sure you want to delete this lock?')) {
-                    $.ajax({
-                        url: '/locks/' + keyId,
-                        method: 'POST',
-                        data: {
-                            _token: '{{ csrf_token() }}',
-                            _method: 'DELETE'
-                        },
-                        success: function(response) {
-                            location.reload();
-                        },
-                        error: function(xhr, status, error) {
-                            console.error(xhr.responseText);
-                        }
-                    });
-                }
-            });
-            
+    $(document).ready(function() {
+        $('.btn-delete').click(function(e) {
+            e.preventDefault();
+            const lockId = $(this).data('key-id');
+            if (confirm('Are you sure you want to delete this lock?')) {
+                $.ajax({
+                    url: '/locks/' + lockId,
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        _method: 'DELETE'
+                    },
+                    success: function(response) {
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
         });
-    </script>
->>>>>>> Stashed changes
+    });
+</script>
 @stop

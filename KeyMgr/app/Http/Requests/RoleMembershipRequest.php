@@ -26,7 +26,7 @@ class RoleMembershipRequest extends FormRequest
   public function rules(): array
   {
     return [
-      'additionMode' => ['nullable',], 
+      'addRoleToggle' => ['nullable',], 
       'selectedData.*' => ['required', 'exists:user_roles,id'],
       'selectedUsers.*' => ['required', 'exists:users,id'],
     ];

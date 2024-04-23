@@ -1,6 +1,6 @@
 <div class="container-flex">
   <x-adminlte-modal :title="$title" :id="$id" theme="info" v-centered>
-    <form :id="'modalForm' . $id" action="{{$submitURL}}" method="post">
+    <form id="{{'modalForm' . $id }}" action="{{$submitURL}}" method="post">
       @csrf
       
       {{-- A basic textbox listing the number of users to operate on.  --}}

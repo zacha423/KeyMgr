@@ -26,7 +26,7 @@ class GroupMembershipRequest extends FormRequest
   public function rules(): array
   {
     return [
-      'additionMode' => ['nullable', ], //further testing TBD - would like to evaluate T/F/0/1 too.
+      'addGroupToggle' => ['nullable', ], //further testing TBD - would like to evaluate T/F/0/1 too.
       'selectedData.*' => ['required', 'exists:user_groups,id'],
       'selectedUsers.*' => ['required', 'exists:users,id'],
     ];

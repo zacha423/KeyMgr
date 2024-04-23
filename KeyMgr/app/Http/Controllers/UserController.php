@@ -97,7 +97,7 @@ class UserController extends Controller
 
     foreach ($users as $user)
     {
-      if (isset($validated['additionMode']))
+      if (isset($validated['addGroupToggle']))
       {
         $user->groups()->attach($groups);
       }
@@ -123,7 +123,7 @@ class UserController extends Controller
 
     foreach ($users as $user)
     {
-      if(isset($validated['additionMode']))
+      if(isset($validated['addRoleToggle']))
       {
         $user->roles()->attach($roles);
       }

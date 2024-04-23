@@ -60,14 +60,11 @@ class UserGroupController extends Controller
       '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>']);
     }
 
-    $groupsArray = [];
-    foreach (UserGroup::all() as $groupRes)
-    {
-      $groupsArray[$groupRes['id']] = $groupRes['name'];
-    }
+    $rolesArray = UserRole::all()->pluck('name','id')->toArray();
+
     $data = [
       'groups' => $datatableData,
-      'groupsArray' => $groupsArray,
+      'groupsArray' => $rolesArray,
       'selected' => $request->query('groups'),
     ];
 

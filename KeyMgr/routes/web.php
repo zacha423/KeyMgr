@@ -26,7 +26,6 @@ use App\Http\Controllers\HolderController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::middleware(['auth'])->get(
   '/', [HolderController::class, 'dashboard']
 )->name('dashboard');

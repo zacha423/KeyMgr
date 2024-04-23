@@ -139,11 +139,15 @@ class KeyController extends Controller
     })->orderBy('created_at', 'DESC')->first();
 
     $hold = [];
+    if ($authorized) {
     $hold['auth'] = $authorized->id;
     $hold['holder'] = $authorized->keyHolder()->first()->getFullname();
     $hold['holderID'] = $authorized->keyHolder()->first()->id;
     $hold['dueDate'] = $authorized->issuedKeys()->where(['keys.id' => $key->id])->first()->pivot->due_date;
-
+    }
+    else {
+      $hold = null;
+    }
 
     $locks = [];
     foreach ($key->openableLocks()->with('lockModel')->get() as $lock) {

@@ -53,20 +53,42 @@ class DashboardController extends Controller
         ]
       ];
 
-      $keyAuthorizations = KeyAuthorization::with(['keyHolder', 'keyRequestor', 'rooms'])
-        ->orderBy('created_at', 'desc')
-        ->take(15)
-        ->get()
-        ->map(function ($authorization) {
-          return [
-            'id' => $authorization->id,
-            'date' => $authorization->created_at->format('D M d, Y h:iA'),
-            'admin' => $authorization->keyRequestor()->first()->getFullname(),
-            'key' => $authorization->issuedKeys()->first()->getSerial() ?? 'N/A',
-            'user' => $authorization->keyHolder()->first()->getFullname(),
-            'location' => $authorization->issuedKeys()->first()->building()->name ?? 'N/A'
-          ];
-        });
+            $pieData2 = [
+                'labels' => ['New', 'Non-Complient', 'Active'],
+                'datasets' => [
+                    [
+                        'data' => [$counts2['new'], $counts2['noncomply'], $counts2['active']],
+                        'backgroundColor' => ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
+                    ]
+                ]
+            ];
+        
+            $keyAuthorizations = KeyAuthorization::with(['keyHolder', 'keyRequestor', 'rooms'])
+                ->orderBy('created_at', 'desc')
+                ->take(10)
+                ->get()
+                ->map(function ($authorization) {
+                    return [
+                        'id' => $authorization->id,
+                        'date' => $authorization->created_at->format('D M d, Y h:iA'),
+                        'admin' => $authorization->keyRequestor()->first()->getFullname(),
+                        'key' => $authorization->issuedKeys()->first()->getSerial() ?? 'N/A',
+                        'user' => $authorization->keyHolder()->first()->getFullname(),
+                        'location' => $authorization->issuedKeys()->first()->building()->name ?? 'N/A'
+                    ];
+                });
+    
+        
+            return view('dashboard', [
+                'counts' => $counts,
+                'pieData1' => $pieData1,
+                'pieData2' => $pieData2,
+                'keyAuthorizations' => $keyAuthorizations,
+            ]);
+    
+        } else {
+            return redirect('profile');
+        }
 
 
       return view('dashboard', [

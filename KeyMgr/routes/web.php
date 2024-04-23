@@ -26,29 +26,11 @@ use App\Http\Controllers\HolderController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::resources ([
-  'groups' => UserGroupController::class,
-  'roles' => UserRoleController::class,
-  'users' => UserController::class,
-]);
-
-// Route::get('/', function () {
-//   return redirect('/login');
-// });
-
-// Route::get('/dashboard', function () {
-//     $user = auth()->user();
-//     View::share('user', $user);
-
-//     return view('holder');
-// })->middleware(['auth', 'verified'])->name('holder');
-
 Route::middleware(['auth'])->get(
-  '/',
-  [DashboardController::class, 'index']
+  '/', [HolderController::class, 'dashboard']
 )->name('dashboard');
 
+Route::middleware(['auth'])->get('/admin', [DashboardController::class, 'index'])->name('adminDash');
 Route::get('/index', function () {
   return view('index');
 })->middleware(['auth', 'verified'])->name('index');
@@ -70,8 +52,6 @@ Route::middleware('auth')->group(function () {
   Route::post('/keyauth/bulk', [KeyAuthorizationController::class, 'bulkAssign'])->name('keys.massassign');
   Route::get('/dashboard', [HolderController::class, 'dashboard'])->name('dashboard');
 
-
-  
   $resourceControllers = [
     'groups' => UserGroupController::class,
     'roles' => UserRoleController::class,
@@ -86,9 +66,6 @@ Route::middleware('auth')->group(function () {
   foreach ($resourceControllers as $name => $controller) {
     Route::resource($name, $controller)->except(['create']);
   }
-
 });
-
-
 
 require __DIR__ . '/auth.php';

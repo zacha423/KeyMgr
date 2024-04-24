@@ -25,18 +25,15 @@ class KeyAuthSeeder extends Seeder
     foreach ($agreements as $indx => $agreement) {
       $agreement->save();
       $agreement->keyHolderContacts()->attach($users->random(1)->unique());
-      $key = Key::all()->random(($indx % 4) + 1);
+      $keys = Key::all()->random(($indx % 4) + 1);
       // $key->status()->attach(KeyStatus::where(['name' => 'Unassigned'])->first());
-      $key->key_status_id = KeyStatus::where(['name' => 'Assigned'])->first()->id;
-      $agreement->issuedKeys()->attach($key, ['due_date' => fake()->dateTimeBetween('-2 week', '+2 month')->format('Y-m-d')]);
+      $keys->key_status_id = KeyStatus::where(['name' => 'Assigned'])->first()->id;
+      $agreement->issuedKeys()->attach($keys, ['due_date' => fake()->dateTimeBetween('-2 week', '+2 month')->format('Y-m-d')]);
 
-      foreach ($key as $k)
+      foreach ($keys as $k)
       {
         $agreement->rooms()->attach($k->room()->id);
       }
-      
-      fake()->dateTimeThisYear();
-
 
       IssuedKey::where([
         'key_authorization_id' => $agreement->id

@@ -39,5 +39,6 @@ class DatabaseSeeder extends Seeder
     $this->call(LockSeeder::class);
     $this->call(UserAccountSeeder::class);
     $this->call(ForceAvailableKeysSeeder::class);
+    $this->call(DemoUserSeeder::class);
   }
 }

@@ -22,14 +22,16 @@ class KeyFactory extends Factory
    */
   public function definition(): array
   {
+    $keyway = Keyway::inRandomOrder()->first();
     return [
-      'keyLevel' => fake()->text(5),
-      'keySystem' => fake()->numberBetween(1, 100),
+      'keyLevel' => $this->level(),
+      'keySystem' => fake()->numberBetween(1, 31),
       'copyNumber' => fake()->numberBetween(1, 30),
       'key_status_id' => KeyStatus::all()->random(1)->first()->id,
-      'keyway_id' => Keyway::all()->random(1)->first()->id,
+      'keyway_id' => $keyway->id,
       // 'storage_hook_id' => StorageHook::all()->random(1)->first()->id,
       'key_type_id' => KeyType::all()->random()->first()->id,
+      'bitting' => $this->bitting(),
     ];
   }
 
@@ -45,5 +47,26 @@ class KeyFactory extends Factory
         ])->first()->id,
       ];
     });
+  }
+
+  protected function level(): string {
+    $str = '';
+    
+    for($i = 0; $i < fake()->numberBetween(1, 3); $i++) {
+      $str = $str . fake()->randomLetter();
+    }
+
+    return strtoupper($str);
+  }
+
+  protected function bitting(): string {
+    $str = '';
+    $lim = fake()->numberBetween(5, 7);
+
+    for($i = 0; $i < $lim; $i++){
+      $str = $str . fake()->numberBetween(0, 5);
+    }
+
+    return $str;
   }
 }

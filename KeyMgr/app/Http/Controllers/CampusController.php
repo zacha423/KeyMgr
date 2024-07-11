@@ -53,7 +53,7 @@ class CampusController extends Controller
               $campusRes['city'],
               $campusRes['postalCode'],
               $campusRes['streetAddress'],
-              '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
+              // '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
           ];
       }
   

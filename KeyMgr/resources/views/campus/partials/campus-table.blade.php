@@ -7,7 +7,7 @@ $heads = [
     'City',
     'Zip',
     'Street Address',
-    ['label' => 'Actions', 'no-export' => false, 'width' => 5],
+    ['label' => 'Actions', 'no-export' => false, 'width' => 10],
 ];
 
 $config = [
@@ -24,6 +24,13 @@ $config = [
                         @foreach($row as $cell)
                             <td>{!! $cell !!}</td>
                         @endforeach
+                        <td>
+                          <div class="row">
+                          <x-edit-button route="{{route('campus.edit', $row[0])}}"></x-edit-button>
+                          <x-delete-button data-attribute="data-campus-id" campus-ID="{{$row[0]}}"></x-delete-button>
+                          <x-details-button route="{{route('campus.show', $row[0])}}"></x-details-button>
+                          </div>
+                        </td>
                     </tr>
                 @endforeach
             </x-adminlte-datatable>

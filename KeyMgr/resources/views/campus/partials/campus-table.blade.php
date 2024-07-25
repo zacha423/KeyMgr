@@ -1,5 +1,5 @@
 @php
-$heads = [
+  $heads = [
     'ID',
     'Name',
     'Country',
@@ -7,25 +7,32 @@ $heads = [
     'City',
     'Zip',
     'Street Address',
-    ['label' => 'Actions', 'no-export' => false, 'width' => 5],
-];
+    ['label' => 'Actions', 'no-export' => false, 'width' => 10],
+  ];
 
-$config = [
-    'data' => $campuses,
+  $config = [
+    //'data' => $campuses,
     'order' => [[1, 'asc']],
-    'columns' => [null, null, null, ['orderable' => false]],
-];
+    'columns' => [null, null, null, null, null, null, null, ['orderable' => false]],
+  ];
 @endphp
-    <div class="card">
-        <div class="card-body">
-            <x-adminlte-datatable id="table5" :heads="$heads" bordered compressed hoverable>
-                @foreach($config['data'] as $row)
-                    <tr>
-                        @foreach($row as $cell)
-                            <td>{!! $cell !!}</td>
-                        @endforeach
-                    </tr>
-                @endforeach
-            </x-adminlte-datatable>
-    </div>
+<div class="card">
+  <div class="card-body">
+    <x-adminlte-datatable id="table5" :heads="$heads" :config="$config" bordered compressed hoverable>
+      @foreach($campuses as $row)
+      <tr>
+      @foreach($row as $cell)
+      <td>{!! $cell !!}</td>
+    @endforeach
+      <td>
+        <div class="row">
+          <x-edit-button route="{{route('campus.edit', $row[0])}}"></x-edit-button>
+          <x-delete-button data-attribute="data-campus-id" campus-ID="{{$row[0]}}"></x-delete-button>
+          <x-details-button route="{{route('campus.show', $row[0])}}"></x-details-button>
+        </div>
+      </td>
+      </tr>
+    @endforeach
+    </x-adminlte-datatable>
+  </div>
 </div>

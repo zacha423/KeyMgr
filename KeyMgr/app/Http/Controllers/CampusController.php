@@ -11,8 +11,6 @@ use App\Models\Campus;
 use App\Models\Wrappers\AddressWrapper;
 use Illuminate\Http\Request;
 use App\Http\Resources\BuildingResource;
-use App\Models\Building;
-use App\Models\Wrappers\BuildingWrapper;
 
 class CampusController extends Controller
 {
@@ -23,46 +21,33 @@ class CampusController extends Controller
    */
   public function index(Request $request)
   {
-      // Fetch all campuses with related data
-      $campuses = Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get();
-  
-      // Prepare data for datatable
-      $data = [];
-  
-      foreach ($campuses as $campus) {
-        $campusRes = (new CampusResource($campus))->toArray($request);
-          // Buttons for edit, delete, and details
+    // Fetch all campuses with related data
+    $campuses = Campus::with(AddressWrapper::loadRelationships(), 'buildings')->get();
 
-          $btnEdit = '<a href="' . route('campus.edit', $campus->id) . '" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
-              <i class="fa fa-lg fa-fw fa-pen"></i>
-              </a>';
-          $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow btn-delete" title="Delete" data-campus-id="'
-            . $campus->id . '">
-            <i class="fa fa-lg fa-fw fa-trash"></i>
-            </button>';
-          $btnDetails = '<a href="' . route('campus.show', $campus->id) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
-                  <i class="fa fa-lg fa-fw fa-eye"></i>
-                  </a>';
-  
-          // Push campus data into $data array
-          $data[] = [
-              $campus->id,
-              $campus->name,
-              $campusRes['country'],
-              $campusRes['state'],
-              $campusRes['city'],
-              $campusRes['postalCode'],
-              $campusRes['streetAddress'],
-              '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'
-          ];
-      }
-  
-      // Pass the formatted data to the view
-      return view('campus.campusList', [
-          'campuses' => $data,
-      ]);
+    // Prepare data for datatable
+    $data = [];
+
+    foreach ($campuses as $campus) {
+      $campusRes = (new CampusResource($campus))->toArray($request);
+
+      // Push campus data into $data array
+      $data[] = [
+        $campus->id,
+        $campus->name,
+        $campusRes['country'],
+        $campusRes['state'],
+        $campusRes['city'],
+        $campusRes['postalCode'],
+        $campusRes['streetAddress'],
+      ];
+    }
+
+    // Pass the formatted data to the view
+    return view('campus.campusList', [
+      'campuses' => $data,
+    ]);
   }
-  
+
   /**
    * Show the form for creating a new campus.
    * 
@@ -81,7 +66,7 @@ class CampusController extends Controller
   public function store(StoreCampusRequest $request)
   {
     $validated = $request->safe();
-    $address = AddressWrapper::build ([
+    $address = AddressWrapper::build([
       'country' => $validated['country'],
       'state' => $validated['state'],
       'city' => $validated['city'],
@@ -103,12 +88,15 @@ class CampusController extends Controller
   {
     $buildings = $campus->buildings()->get();
     $buildingTableData = [];
-    foreach ($buildings as $buidling)
-    {
-      $d = new BuildingResource ($buidling);
-      array_push($buildingTableData, [$d['id'], $d['name'], '<a href="' . route('building.show', $d['id']) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+    foreach ($buildings as $buidling) {
+      $d = new BuildingResource($buidling);
+      array_push($buildingTableData, [
+        $d['id'],
+        $d['name'],
+        '<a href="' . route('building.show', $d['id']) . '" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
             <i class="fa fa-lg fa-fw fa-eye"></i>
-            </a>']);
+            </a>'
+      ]);
     }
 
     return view('campus.campusSingle', [
@@ -143,38 +131,32 @@ class CampusController extends Controller
   {
     $data = $request->safe();
     $mapped = array();
-    if (isset ($data['name'])) 
-    {
+    if (isset($data['name'])) {
       $campus->name = $data['name'];
     }
 
-    if (isset ($data['country']))
-    {
+    if (isset($data['country'])) {
       $mapped['country'] = $data['country'];
     }
 
-    if (isset ($data['state']))
-    {
+    if (isset($data['state'])) {
       $mapped['state'] = $data['state'];
     }
 
-    if (isset ($data['city']))
-    {
+    if (isset($data['city'])) {
       $mapped['city'] = $data['city'];
     }
 
-    if (isset ($data['streetAddress']))
-    {
+    if (isset($data['streetAddress'])) {
       $mapped['streetAddress'] = $data['streetAddress'];
     }
 
-    if (isset ($data['postalCode']))
-    {
+    if (isset($data['postalCode'])) {
       $mapped['postalCode'] = $data['postalCode'];
     }
-    
+
     $campus->save();
-    $address = AddressWrapper::merge ($mapped, $campus->address()->getRelated()->first());
+    $address = AddressWrapper::merge($mapped, $campus->address()->getRelated()->first());
     $address->campus()->save($campus);
 
     return redirect('/campus');
@@ -187,9 +169,9 @@ class CampusController extends Controller
    */
   public function destroy(Campus $campus)
   {
-    $campus->delete ();
+    $campus->delete();
 
-    return redirect ('/campus');
+    return redirect('/campus');
   }
 }
 

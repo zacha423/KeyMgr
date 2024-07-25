@@ -17,7 +17,7 @@ return new class extends Migration {
       $table->foreignId('key_authorization_id');
       $table->foreignId('key_id');
       $table->date('due_date')->nullable();
-      $table->unsignedDouble('replacement_cost', 10, 4)->default(0.0);
+      $table->decimal('replacement_cost', 10, 4)->default(0.0)->unsigned();
       $table->timestamps();
     });
   }

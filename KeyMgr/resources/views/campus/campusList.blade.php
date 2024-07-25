@@ -2,15 +2,30 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @section('title', __('Campuses'))
 
-@section ("content")
+
+@php
+$crumbs=[
+  ['link' => '/locations', 'text' => 'Locations'],
+  ['link' => '/campus', 'text' => 'Campuses'],
+];
+@endphp
+
 @section('content_header')
+<div class="row mb-2">
+  <div class="col-sm-6">
     <h1>List of Campuses</h1>
-    <div class="col text-right">
+    </div>
+    <div class="col-sm-6">
+    <x-breadcrumb :crumbs="$crumbs"></x-breadcrumb>
+    </div>
+</div>
+<div class="col text-right">
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#campusForm">
         New Campus
       </button>
-      </div>  
+    </div>  
 @stop
+@section ("content")
 @section('plugins.Datatables', true)
 
 @include('campus.partials.newCampusModal')

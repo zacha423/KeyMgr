@@ -1,9 +1,9 @@
 @extends ("adminlte::page")
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 @section('title', __('Campuses'))
 
-
 @php
+// Details for breadcrumb navigation
 $crumbs=[
   ['link' => '/locations', 'text' => 'Locations'],
   ['link' => '/campus', 'text' => 'Campuses'],
@@ -11,28 +11,33 @@ $crumbs=[
 @endphp
 
 @section('content_header')
-<div class="row mb-2">
-  <div class="col-sm-6">
-    <h1>List of Campuses</h1>
+  <div class="row mb-2">
+    <div class="col-sm">
+      <h1>List of Campuses</h1> {{-- Translation? --}}
     </div>
-    <div class="col-sm-6">
-    <x-breadcrumb :crumbs="$crumbs"></x-breadcrumb>
+    <div class="col-sm">
+      <x-breadcrumb :crumbs="$crumbs"></x-breadcrumb>
     </div>
-</div>
-<div class="col text-right">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#campusForm">
-        New Campus
-      </button>
-    </div>  
+  </div>
 @stop
+
 @section ("content")
 @section('plugins.Datatables', true)
+<x-adminlte-card> {{-- Temporary placeholder card just for visual benefit--}}
+  <div class="col text-right">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#campusForm">New Campus</button>
+  </div>  
+</x-adminlte-card>
 
-@include('campus.partials.newCampusModal')
 
+
+@include('campus.partials.createCampusModal')
+
+<x-adminlte-card theme="info" theme-mode="outline">
 <div class="flex-container">
-  @include('campus.partials.campus-table')
+  @include('campus.partials.campusesDatatable')
 </div>
+</x-adminlte-card>
 @stop
 
 @push('js')

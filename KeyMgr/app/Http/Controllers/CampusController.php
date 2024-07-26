@@ -39,7 +39,7 @@ class CampusController extends Controller
         $campusRes['city'],
         $campusRes['postalCode'],
         $campusRes['streetAddress'],
-      ];
+      ]; // this may not be necessary
     }
 
     // Pass the formatted data to the view

@@ -1,5 +1,4 @@
-<x-adminlte-modal id="campusForm" title="Campus Creation Form" theme="lightblue" size="sm1" 
-                  v-centered static-backdrop scrollable>
+<x-adminlte-modal id="campusForm" title="Campus Creation Form" theme="lightblue" size="sm1" v-centered static-backdrop scrollable>
   <div>
     <form id="newCampus" action="/campus" method="POST">
       @csrf

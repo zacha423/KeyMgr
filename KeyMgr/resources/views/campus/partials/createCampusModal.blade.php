@@ -1,108 +1,69 @@
-<x-adminlte-modal id="campusForm" title="Campus Creation Form" theme="lightblue" size="sm1" v-centered static-backdrop scrollable>
+<x-adminlte-modal id="campusForm" title="Campus Creation Form" theme="lightblue" size="sm1" 
+  v-centered static-backdrop scrollable>
   <div>
-    <form id="newCampus" action="/campus" method="POST">
+    <form id="newCampus" action="/campus" method="POST"> {{-- convert to use a route() call --}}
       @csrf
 
-      {{-- Name field --}}
-      <div class="input-group mb-3">
-        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-              value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.campus_name') }}" autofocus>
-        <div class="input-group-append">
-          <div class="input-group-text">
-              
-          </div>
-        </div>
-        @error('name')
-          <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-          </span>
-        @enderror
-      </div>
+      {{-- AdminLTE Name Field --}}
+      <x-adminlte-input name="name" label="{{ __('adminlte::adminlte.campus_name') }}"
+        enable-old-support></x-adminlte-input>
+      {{-- Append slot can hold the help toggle. Add a full help toggle to the top right corner.
+      If there is no help text simply disable the toggle in off position
+      bottomSlot can be used for the actual help text.
+      https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Basic-Forms-Components#input
+      --}}
+      @error('name')
+        <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+        </span>
+      @enderror
 
-      {{-- Country field --}}
-      <div class="input-group mb-3">
-        <input type="text" name="country" class="form-control @error('country') is-invalid @enderror"
-              value="{{ old('country') }}" placeholder="{{ __('adminlte::adminlte.country') }}" autofocus>
-        <div class="input-group-append">
-          <div class="input-group-text">
-              
-          </div>
-        </div>
-        @error('country')
-          <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-          </span>
-        @enderror
-      </div>
+      {{-- AdminLTE Country field --}}
+      <x-adminlte-input name="country" label="{{ __('adminlte::adminlte.country') }}" enable-old-support></x-adminlte-input>
+      @error('country')
+        <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+        </span>
+      @enderror
 
-      {{-- State field --}}
-      <div class="input-group mb-3">
-        <input type="text" name="state" class="form-control @error('state') is-invalid @enderror"
-              value="{{ old('state') }}" placeholder="{{ __('adminlte::adminlte.state') }}" autofocus>
-        <div class="input-group-append">
-          <div class="input-group-text">
-              
-          </div>
-        </div>
-        @error('state')
-          <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-          </span>
-        @enderror
-      </div>
+      {{-- AdmninLTE state field --}}
+      <x-adminlte-input name="state" label="{{ __('adminlte::adminlte.state') }}" enable-old-support></x-adminlte-input>
+      @error('state')
+        <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+        </span>
+      @enderror
 
-      {{-- City field --}}
-      <div class="input-group mb-3">
-        <input type="text" name="city" class="form-control @error('city') is-invalid @enderror"
-              value="{{ old('city') }}" placeholder="{{ __('adminlte::adminlte.city') }}" autofocus>
-        <div class="input-group-append">
-          <div class="input-group-text">
-              
-          </div>
-        </div>
-        @error('city')
-          <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-          </span>
-        @enderror
-      </div>
+      {{-- AdminLTE city field --}}
+      <x-adminlte-input name="city" label="{{ __('adminlte::adminlte.city') }}" enable-old-support></x-adminlte-input>
+      @error('city')
+        <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+        </span>
+      @enderror
 
-      {{-- Street field --}}
-      <div class="input-group mb-3">
-        <input type="text" name="streetAddress" class="form-control @error('streetAddress') is-invalid @enderror"
-              value="{{ old('streetAddress') }}" placeholder="{{ __('adminlte::adminlte.streetAddress') }}" autofocus>
-        <div class="input-group-append">
-          <div class="input-group-text">
-              
-          </div>
-        </div>
-        @error('streetAddress')
-          <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-          </span>
-        @enderror
-      </div>
+      {{-- AdminLTE streetAddress field--}}
+      <x-adminlte-input name="streetAddress" label="{{ __('adminlte::adminlte.streetAddress') }}"
+        enable-old-support></x-adminlte-input>
+      @error('streetAddress')
+      <span class="invalid-feedback" role="alert">
+      <strong>{{ $message }}</strong>
+      </span>
+    @enderror
 
-      {{-- Zip field --}}
-      <div class="input-group mb-3">
-        <input type="text" name="postalCode" class="form-control @error('postalCode') is-invalid @enderror"
-              value="{{ old('postalCode') }}" placeholder="{{ __('adminlte::adminlte.postalCode') }}" autofocus>
-        <div class="input-group-append">
-          <div class="input-group-text">
-              
-          </div>
-        </div>
-        @error('postalCode')
-          <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-          </span>
-        @enderror
-      </div>
+      {{-- AdminLTE postalcode field --}}
+      <x-adminlte-input name="postalCode" label="{{ __('adminlte::adminlte.postalCode') }}"
+        enable-old-support></x-adminlte-input>
+      @error('postalCode')
+      <span class="invalid-feedback" role="alert">
+      <strong>{{ $message }}</strong>
+      </span>
+    @enderror
 
       <x-slot name="footerSlot">
-        <x-adminlte-button type="submit" class="block mr-auto" theme="success" label="Add Campus" form="newCampus"/>
-        <x-adminlte-button type="button" class="block ml-auto" theme="danger" label="Cancel" data-dismiss="modal"/>
-      </x-slot>  
+        <x-adminlte-button type="submit" class="block mr-auto" theme="success" label="Add Campus" form="newCampus" />
+        <x-adminlte-button type="button" class="block ml-auto" theme="danger" label="Cancel" data-dismiss="modal" />
+      </x-slot>
     </form>
   </div>
 </x-adminlte-modal>

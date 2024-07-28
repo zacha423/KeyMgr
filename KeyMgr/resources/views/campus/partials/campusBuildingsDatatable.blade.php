@@ -12,12 +12,12 @@ $config = [
 ];
 @endphp
 
-<x-adminlte-datatable id="table5" :heads="$heads" bordered compressed hoverable>
-    @foreach($config['data'] as $row)
-        <tr>
-            @foreach($row as $cell)
-                <td>{!! $cell !!}</td>
-            @endforeach
-        </tr>
-    @endforeach
+<x-adminlte-datatable id="table5" :heads="$heads" :config="$config" bordered compressed hoverable>
+  @foreach($config['data'] as $row)
+    <tr>
+      @foreach($row as $cell)
+        <td>{!! $cell !!}</td>
+      @endforeach
+    </tr>
+  @endforeach
 </x-adminlte-datatable>

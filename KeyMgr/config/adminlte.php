@@ -15,7 +15,7 @@ return [
     */
 
     'title' => 'KeyMgr',
-    'title_prefix' => 'KeyMgr | ',
+    'title_prefix' => '',
     'title_postfix' => '',
 
     /*

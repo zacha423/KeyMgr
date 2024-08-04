@@ -20,7 +20,7 @@ $crumbs=[
     </div>
   </div>
 @stop
-@section('plugins.datatables', true)
+@section('plugins.Datatables', true)
 @section ("content")
   
   <x-adminlte-card> {{-- Temporary placeholder card just for visual benefit--}}
@@ -29,7 +29,11 @@ $crumbs=[
     </div>  
   </x-adminlte-card>
 
-  @include('campus.partials.createCampusModal')
+  @include('campus.partials.campusModalForm', [
+    'formTitle' => 'Campus Creation Form', 
+    'submitURL' => '{{ route("campus.store") }}', 
+    'submitMethod' => 'POST'
+  ])
 
   <x-adminlte-card theme="info" theme-mode="outline">
   <div class="flex-container">

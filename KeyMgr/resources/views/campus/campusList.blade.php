@@ -21,23 +21,33 @@ $crumbs=[
   </div>
 @stop
 @section('plugins.Datatables', true)
-@section ("content")
-  
-  <x-adminlte-card> {{-- Temporary placeholder card just for visual benefit--}}
-    <div class="col text-right">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#campusForm">New Campus</button>
-    </div>  
-  </x-adminlte-card>
 
+@section('content_top_nav_left')
+  <x-adminlte-button type='submit' theme="success" data-toggle="modal" data-target="#campusForm" label="New Campus" icon='fas fa-file'></x-adminlte-button>
   @include('campus.partials.campusModalForm', [
+    'formID' => 'campusForm',
     'formTitle' => 'Campus Creation Form', 
     'submitURL' => '{{ route("campus.store") }}', 
     'submitMethod' => 'POST'
   ])
+@stop
 
+@section ("content")  
+  {{-- Filter Tool Card --}}
+  <x-adminlte-card theme="info" theme-mode="outline" title="Limit Results By">
+
+  </x-adminlte-card>
+
+  {{-- Datatable Card --}}
   <x-adminlte-card theme="info" theme-mode="outline">
   <div class="flex-container">
     @include('campus.partials.campusesDatatable')
+    @include ('campus.partials.campusModalForm', [
+      'formID' => 'editForm',
+      'formTitle' => 'Campus Update Form',
+      'submitURL' => '', // This has be to set using JS
+      'submitMethod' => 'POST',
+    ])
   </div>
   </x-adminlte-card>
 @stop
@@ -48,7 +58,7 @@ $crumbs=[
       $('.btn-delete').click(function(e) {
         e.preventDefault();
         const campusId = $(this).data('campus-id');
-        if (confirm('Are you sure you want to delete this campus?')) {
+        if (confirm('Are you sure you want to delete this campus?')) { 
           $.ajax({
             url: '/campus/' + campusId,
             method: 'POST',
@@ -65,6 +75,14 @@ $crumbs=[
           });
         }
       });
+      $('.btn-edit').click(function(e) {
+        const campusID = $(this).attr('dataVal');
+        var zachsample = this;
+        console.log(zachsample)
+        console.log (campusID)
+        // need to select data from table and fill into form...
+        // Datatables API
+      })
     });
   </script>
 @stop

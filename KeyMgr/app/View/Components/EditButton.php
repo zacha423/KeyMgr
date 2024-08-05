@@ -10,15 +10,22 @@ use Illuminate\View\Component;
 
 class EditButton extends Component
 {
-  const FA_ICON = "fa fa-lg fa-fw fa-pen";
-  const TITLE = "Edit";
+  public const FA_ICON = "fa fa-lg fa-fw fa-pen";
+  public const TITLE = "Edit";
+  
+  // deeets?
+  public $route;
+  public $formID;
+  public $itemID;
   
   /**
    * Create a new component instance.
    */
-  public function __construct(public string $route)
+  public function __construct(string $route = null, string $formID = null, string $itemID = null)
   {
-    //
+    $this->route = $route;
+    $this->formID = $formID;
+    $this->itemID = $itemID;
   }
 
   /**

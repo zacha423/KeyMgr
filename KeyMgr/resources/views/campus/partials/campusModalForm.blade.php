@@ -1,4 +1,4 @@
-<x-adminlte-modal id="campusForm" :title="$formTitle" theme="lightblue" size="sm1" 
+<x-adminlte-modal :id="$formID" :title="$formTitle" theme="lightblue" size="sm1" 
   v-centered static-backdrop scrollable>
   <div>
     <form id="newCampus" :action="$submitURL" :method="$submitMethod">

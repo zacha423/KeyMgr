@@ -1,7 +1,7 @@
 <x-adminlte-modal :id="$formID" :title="$formTitle" theme="lightblue" size="sm1" 
   v-centered static-backdrop scrollable>
   <div>
-    <form id="newCampus" :action="$submitURL" :method="$submitMethod">
+    <form id="newCampus" action="{{$submitURL}}" method="{{$submitMethod}}">
       @csrf
 
       {{-- AdminLTE Name Field --}}

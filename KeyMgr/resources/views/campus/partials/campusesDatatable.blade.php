@@ -26,7 +26,7 @@
           @endforeach
           <td>
             <div class="row">
-              <x-edit-button formID="#editForm" :itemID="$row[0]"></x-edit-button>
+              <x-edit-button formID="#editForm"></x-edit-button>
               <x-delete-button data-attribute="data-campus-id" campus-ID="{{$row[0]}}"></x-delete-button>
               <x-details-button route="{{route('campus.show', $row[0])}}"></x-details-button>
             </div>

@@ -11,9 +11,9 @@ use App\View\Components\EditButton;
     <a href="{{$route}}" class="btn btn-xs btn-default text-primary mx-1 shadow btn-edit" title="{{EditButton::TITLE}}">
       <i class="{{EditButton::FA_ICON}}"></i>
     </a>
-  @elseif(isset($formID) && isset($itemID))
+  @elseif(isset($formID))
     {{-- Sample: <x-edit-button formID="#editForm" :itemID="$row[0]"></x-edit-button>--}}
-    <button data-toggle="modal" data-target="{{$formID}}" dataVal="{{$itemID}}" class="btn btn-xs btn-default text-primary mx-1 shadow btn-edit">
+    <button data-toggle="modal" data-target="{{$formID}}" class="btn btn-xs btn-default text-primary mx-1 shadow btn-edit">
       <i class="{{EditButton::FA_ICON}}"></i>
     </button>
   @endif

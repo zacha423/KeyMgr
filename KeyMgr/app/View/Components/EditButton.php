@@ -13,19 +13,24 @@ class EditButton extends Component
   public const FA_ICON = "fa fa-lg fa-fw fa-pen";
   public const TITLE = "Edit";
   
-  // deeets?
+  /**
+   * The URL the button should send a request to.
+   * @var 
+   */
   public $route;
+  /**
+   * The form the button should open.
+   * @var 
+   */
   public $formID;
-  public $itemID;
   
   /**
    * Create a new component instance.
    */
-  public function __construct(string $route = null, string $formID = null, string $itemID = null)
+  public function __construct(string $route = null, string $formID = null)
   {
     $this->route = $route;
     $this->formID = $formID;
-    $this->itemID = $itemID;
   }
 
   /**

@@ -78,12 +78,8 @@ $crumbs=[
 
       // Only importing edit form once, use JQuery to dynamically fill and update form.
       $('.btn-edit').click(function(e) {
-        const campusID = $(this).attr('dataVal'); // not likely needed given Datatables API
-        console.log(this)
-        console.log (campusID)
-        console.log($('#table5').DataTable().row($(this).closest('tr')).data()); // returns array
         /*
-        (8) ['2', 'College of Health Professions', 'United States of America', 'Oregon', 'Cornelius', '97113', '222 SE 8th Ave', '<div class="row">\n              <div>\n      \n    <…fw fa-eye"></i>\n    </a>\n</div>            </div>']
+        (8) ['2', 'College of Health Professions', 'United States of America', 'Oregon', 'Cornelius', '97113', '222 SE 8th Ave']
         0:"2"
         1:"College of Health Professions"
         2:"United States of America"
@@ -91,8 +87,7 @@ $crumbs=[
         4:"Cornelius"
         5:"97113"
         6:"222 SE 8th Ave"
-        7:"<div class=\"row\">\n              <div>\n      \n    <button data-toggle=\"modal\" data-target=\"#editForm\" dataval=\"2\" class=\"btn btn-xs btn-default text-primary mx-1 shadow btn-edit\">\n      <i class=\"fa fa-lg fa-fw fa-pen\"></i>\n    </button>\n  </div>              <div>\n  <button class=\"btn btn-xs btn-default text-danger mx-1 shadow btn-delete\" title=\"Delete\" data-campus-id=\"2\">\n    <i class=\"fa fa-lg fa-fw fa-trash\"></i>\n  </button>\n</div>              <div>\n    <a href=\"http://localhost:8080/campus/2\" class=\"btn btn-xs btn-default text-teal mx-1 shadow\" title=\"Details\">\n      <i class=\"fa fa-lg fa-fw fa-eye\"></i>\n    </a>\n</div>            </div>"
-        length:8
+        length:7
         */
 
         const CAMPUS = $('#table5').DataTable().row($(this).closest('tr')).data();

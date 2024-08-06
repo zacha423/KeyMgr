@@ -21,15 +21,15 @@ $crumbs=[
   </div>
 @stop
 @section('plugins.Datatables', true)
-
-@section('content_top_nav_left')
-  <x-adminlte-button type='submit' theme="success" data-toggle="modal" data-target="#campusForm" label="New Campus" icon='fas fa-file'></x-adminlte-button>
-  @include('campus.partials.campusModalForm', [
+@include('campus.partials.campusModalForm', [
     'formID' => 'campusForm',
     'formTitle' => 'Campus Creation Form', 
     'submitURL' => '{{ route("campus.store") }}', 
     'submitMethod' => 'POST'
   ])
+@section('content_top_nav_left')
+  <x-adminlte-button type='submit' theme="success" data-toggle="modal" data-target="#campusForm" label="New Campus" icon='fas fa-file'></x-adminlte-button>
+
 @stop
 
 @section ("content")  

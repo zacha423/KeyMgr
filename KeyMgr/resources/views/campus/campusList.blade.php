@@ -24,7 +24,7 @@ $crumbs=[
 @include('campus.partials.campusModalForm', [
     'formID' => 'campusForm',
     'formTitle' => 'Campus Creation Form', 
-    'submitURL' => '{{ route("campus.store") }}', 
+    'submitURL' => route("campus.store"), 
     'submitMethod' => 'POST'
   ])
 @section('content_top_nav_left')
@@ -93,14 +93,14 @@ $crumbs=[
         const CAMPUS = $('#table5').DataTable().row($(this).closest('tr')).data();
         
         // Update the action URL for the current campus.
-        $('#editForm #newCampus').attr('action', '/campus/' + CAMPUS[0]); //need to update the @.method() call to include PUT/PATCH for update version.
+        $('#form_editForm #newCampus').attr('action', '/campus/' + CAMPUS[0]); //need to update the @.method() call to include PUT/PATCH for update version.
         // Pre-fill the existing fields.
-        $('#editForm #name').val(CAMPUS[1]);
-        $('#editForm #country').val(CAMPUS[2]);
-        $('#editForm #state').val(CAMPUS[3]);
-        $('#editForm #city').val(CAMPUS[4]);
-        $('#editForm #streetAddress').val(CAMPUS[5]);
-        $('#editForm #postalCode').val(CAMPUS[6]);
+        $('#form_editForm #name').val(CAMPUS[1]);
+        $('#form_editForm #country').val(CAMPUS[2]);
+        $('#form_editForm #state').val(CAMPUS[3]);
+        $('#form_editForm #city').val(CAMPUS[4]);
+        $('#form_editForm #streetAddress').val(CAMPUS[5]);
+        $('#form_editForm #postalCode').val(CAMPUS[6]);
 
         
         

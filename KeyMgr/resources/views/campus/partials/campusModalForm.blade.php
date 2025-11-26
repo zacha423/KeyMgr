@@ -1,7 +1,7 @@
 <x-adminlte-modal :id="$formID" :title="$formTitle" theme="lightblue" size="sm1" 
   v-centered static-backdrop scrollable>
   <div>
-    <form id="newCampus" action="{{$submitURL}}" method="{{$submitMethod}}">
+    <form id="form_{{ $formID }}" action="{{$submitURL}}" method="{{$submitMethod}}">
       @csrf
 
       {{-- AdminLTE Name Field --}}
@@ -58,7 +58,7 @@
       @enderror
 
       <x-slot name="footerSlot">
-        <x-adminlte-button type="submit" class="block mr-auto" theme="success" label="Add Campus" form="newCampus" />
+        <x-adminlte-button type="submit" class="block mr-auto" theme="success" label="Add Campus" form="form_{{ $formID }}" />
         <x-adminlte-button type="button" class="block ml-auto" theme="danger" label="Cancel" data-dismiss="modal" />
       </x-slot>
     </form>

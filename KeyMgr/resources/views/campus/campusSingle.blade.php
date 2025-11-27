@@ -19,7 +19,7 @@ $crumbs=[
   </div>
 </div>
 @stop
-
+@section('plugins.Datatables', true)
 @section('content_top_nav_left')
   <x-adminlte-button type="submit" theme="info" icon="fas fa-edit" label="Edit"></x-adminlte-button>
   <x-adminlte-button type="submit" theme="danger" icon="fas fa-trash-alt" label="Delete" form="deleteCampus"></x-adminlte-button>
@@ -32,7 +32,7 @@ $crumbs=[
 @endsection
 
 @section("content")
-@section('plugins.DataTables', true)
+
 
 
 <div class="row">
@@ -41,11 +41,6 @@ $crumbs=[
       <x-slot name="toolsSlot">
         <div class="btn-group">
           <a href="{{ route('campus.edit', ['campus' => $campus['id']]) }}" class="btn btn-info mr-1"><i class="fas fa-edit"></i> Edit</a>
-          <form action="{{ route('campus.destroy', ['campus' => $campus['id']]) }}" method="POST">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>
-          </form>
         </div>
       </x-slot>
       <p><strong>Country:</strong> @if(($campus['country'])){{$campus['country']}}@else Country information not available @endif</p>
@@ -62,7 +57,7 @@ $crumbs=[
           <li class="breadcrumb-item"><a href="{{ route('building.index') }}">View all Buildings</a></li>
         </ol>
       </x-slot>
-      {{--@include('campus.partials.campusBuildingsDatatable')--}}
+      @include('campus.partials.campusBuildingsDatatable')
     </x-adminlte-card>
   </div>
   

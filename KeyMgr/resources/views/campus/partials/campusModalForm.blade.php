@@ -1,8 +1,12 @@
 <x-adminlte-modal :id="$formID" :title="$formTitle" theme="lightblue" size="sm1" 
   v-centered static-backdrop scrollable>
   <div>
-    <form id="form_{{ $formID }}" action="{{$submitURL}}" method="{{$submitMethod}}">
+    <form id="form_{{ $formID }}" action="{{$submitURL}}" method="post">
       @csrf
+
+      @isset($submitMethod)
+        @method($submitMethod)
+      @endisset
 
       {{-- AdminLTE Name Field --}}
       <x-adminlte-input name="name" label="{{ __('adminlte::adminlte.campus_name') }}" enable-old-support></x-adminlte-input>

@@ -3,7 +3,6 @@
 @section('title', __('Campuses'))
 
 @php
-// Details for breadcrumb navigation
 $crumbs=[
   ['link' => '/locations', 'text' => 'Locations'],
   ['link' => '/campus', 'text' => 'Campuses'],
@@ -25,7 +24,6 @@ $crumbs=[
     'formID' => 'campusForm',
     'formTitle' => 'Campus Creation Form', 
     'submitURL' => route("campus.store"), 
-    'submitMethod' => 'POST'
   ])
 @section('content_top_nav_left')
   <x-adminlte-button type='submit' theme="success" data-toggle="modal" data-target="#campusForm" label="New Campus" icon='fas fa-file'></x-adminlte-button>
@@ -46,7 +44,7 @@ $crumbs=[
       'formID' => 'editForm',
       'formTitle' => 'Campus Update Form',
       'submitURL' => '', // This has be to set using JS
-      'submitMethod' => 'POST',
+      'submitMethod' => 'PUT',
     ])
   </div>
   </x-adminlte-card>
@@ -83,14 +81,14 @@ $crumbs=[
 
         const DATA = TABLE.row($(this).closest('tr')).data();
 
-        $('#form_editForm').attr('action', '/campus/' + DATA[0]); //need to update the @.method() call to include PUT/PATCH for update version.
+        $('#form_editForm').attr('action', '/campus/' + DATA[0]);
         // Pre-fill the existing fields.
         $('#form_editForm #name').val(DATA[1]);
         $('#form_editForm #country').val(DATA[2]);
         $('#form_editForm #state').val(DATA[3]);
         $('#form_editForm #city').val(DATA[4]);
-        $('#form_editForm #streetAddress').val(DATA[5]);
-        $('#form_editForm #postalCode').val(DATA[6]);
+        $('#form_editForm #streetAddress').val(DATA[6]);
+        $('#form_editForm #postalCode').val(DATA[5]);
       });
 
 

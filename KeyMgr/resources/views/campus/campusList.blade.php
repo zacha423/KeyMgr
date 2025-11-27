@@ -77,34 +77,23 @@ $crumbs=[
       });
 
       // Only importing edit form once, use JQuery to dynamically fill and update form.
-      $('.btn-edit').click(function(e) {
-        /*
-        (8) ['2', 'College of Health Professions', 'United States of America', 'Oregon', 'Cornelius', '97113', '222 SE 8th Ave']
-        0:"2"
-        1:"College of Health Professions"
-        2:"United States of America"
-        3:"Oregon"
-        4:"Cornelius"
-        5:"97113"
-        6:"222 SE 8th Ave"
-        length:7
-        */
+      const TABLE = $('#table5').DataTable();
+      $('#table5').on('click', '.btn-edit', function () {
+        console.log("Oh my god a second event has struck the tower!");
 
-        const CAMPUS = $('#table5').DataTable().row($(this).closest('tr')).data();
-        
-        // Update the action URL for the current campus.
-        $('#form_editForm #newCampus').attr('action', '/campus/' + CAMPUS[0]); //need to update the @.method() call to include PUT/PATCH for update version.
+        const DATA = TABLE.row($(this).closest('tr')).data();
+
+        $('#form_editForm').attr('action', '/campus/' + DATA[0]); //need to update the @.method() call to include PUT/PATCH for update version.
         // Pre-fill the existing fields.
-        $('#form_editForm #name').val(CAMPUS[1]);
-        $('#form_editForm #country').val(CAMPUS[2]);
-        $('#form_editForm #state').val(CAMPUS[3]);
-        $('#form_editForm #city').val(CAMPUS[4]);
-        $('#form_editForm #streetAddress').val(CAMPUS[5]);
-        $('#form_editForm #postalCode').val(CAMPUS[6]);
+        $('#form_editForm #name').val(DATA[1]);
+        $('#form_editForm #country').val(DATA[2]);
+        $('#form_editForm #state').val(DATA[3]);
+        $('#form_editForm #city').val(DATA[4]);
+        $('#form_editForm #streetAddress').val(DATA[5]);
+        $('#form_editForm #postalCode').val(DATA[6]);
+      });
 
-        
-        
-      })
+
     });
   </script>
 @stop

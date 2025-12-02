@@ -62,7 +62,7 @@
       @enderror
 
       <x-slot name="footerSlot">
-        <x-adminlte-button type="submit" class="block mr-auto" theme="success" label="Add Campus" form="form_{{ $formID }}" />
+        <x-adminlte-button type="submit" class="block mr-auto" theme="success" label="Save Campus" form="form_{{ $formID }}" />
         <x-adminlte-button type="button" class="block ml-auto" theme="danger" label="Cancel" data-dismiss="modal" />
       </x-slot>
     </form>

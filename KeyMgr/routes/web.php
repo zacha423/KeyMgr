@@ -61,11 +61,12 @@ Route::middleware('auth')->group(function () {
     'building' => BuildingController::class,
     'keys' => KeyController::class,
     'authorizations' => KeyAuthorizationController::class,
-    'campus' => CampusController::class,
   ];
   foreach ($resourceControllers as $name => $controller) {
     Route::resource($name, $controller)->except(['create']);
   }
+
+  Route::resource('campus', CampusController::class)->except(['create','edit']);
 });
 
 require __DIR__ . '/auth.php';

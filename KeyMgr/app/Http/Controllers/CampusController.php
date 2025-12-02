@@ -108,20 +108,6 @@ class CampusController extends Controller
   }
 
   /**
-   * Show the form for editing the specified campus.
-   * 
-   * @todo Update view with appropriate data
-   */
-  public function edit(Campus $campus)
-  {
-    return view('campus.campusEdit', [
-      'campus' => (
-        new CampusResource($campus->load(AddressWrapper::loadRelationships(), 'buildings'))
-      )->toArray(new Request()), //Hacky. This works, but is shitty, and an alternative solution should be found.
-    ]);
-  }
-
-  /**
    * Update the specified campus in storage.
    * 
    * @todo test w/ CSRF enabled
@@ -159,7 +145,7 @@ class CampusController extends Controller
     $address = AddressWrapper::merge($mapped, $campus->address()->getRelated()->first());
     $address->campus()->save($campus);
 
-    return redirect('/campus');
+    return redirect()->back();
   }
 
   /**

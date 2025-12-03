@@ -41,11 +41,11 @@ $crumbs=[
       <form id="editData" name="editData" method="post" action="{{ route('campus.update', ['campus' => $campus['id']]) }}"> <!-- names need updated to maatch expeected form values -->
         @method('PUT')
         @csrf
-        <x-adminlte-input disabled enable-old-support name="country" label="Country" value="{{ $campus['country'] ?? '' }}"></x-adminlte-input>
-        <x-adminlte-input disabled enable-old-support name="state" label="State" value="{{ $campus['state'] ?? '' }}"></x-adminlte-input>
-        <x-adminlte-input disabled enable-old-support name="city" label="City" value="{{ $campus['city'] ?? '' }}"></x-adminlte-input>
-        <x-adminlte-input disabled enable-old-support name="postal" label="Zip Code" value="{{ $campus['postalCode'] ?? '' }}"></x-adminlte-input>
-        <x-adminlte-input disabled enable-old-support name="streetAddress" label="Street Address" value="{{ $campus['streetAddress'] ?? '' }}"></x-adminlte-input>
+        <x-adminlte-input required disabled enable-old-support name="country" label="Country" value="{{ $campus['country'] ?? '' }}"></x-adminlte-input>
+        <x-adminlte-input required disabled enable-old-support name="state" label="State" value="{{ $campus['state'] ?? '' }}"></x-adminlte-input>
+        <x-adminlte-input required disabled enable-old-support name="city" label="City" value="{{ $campus['city'] ?? '' }}"></x-adminlte-input>
+        <x-adminlte-input required disabled enable-old-support name="postal" label="Zip Code" value="{{ $campus['postalCode'] ?? '' }}"></x-adminlte-input>
+        <x-adminlte-input required disabled enable-old-support name="streetAddress" label="Street Address" value="{{ $campus['streetAddress'] ?? '' }}"></x-adminlte-input>
       </form>
     </x-adminlte-card>
   </div>  
